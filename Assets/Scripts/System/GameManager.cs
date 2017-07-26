@@ -7,7 +7,7 @@ using UnityEngine;
 /// ゲームの現在の状態を表す列挙です。
 /// class GameManagerで使用します。
 /// </summary>
-enum GameState{
+public enum GameState{
     Title,
     Lobby,
     ShootingGame,
@@ -17,21 +17,43 @@ enum GameState{
 /// <summary>
 /// ゲームを実行する際の根底部分に当たるクラスです。
 /// このゲームはこのスクリプトから始まり、制御され、終了します。
+/// ミニゲームはゲームごとに別途Managerが存在する。
 /// </summary>
 public class GameManager : MonoBehaviour {
 
-    private const int kSceneCount = (int)GameState.length;
+	/// <summary>
+	/// GameStateに定義されている、シーンの数。
+	/// </summary>
+	const int kSceneCount = (int)GameState.length;
 
-    private GameState state { get; set; }
+    /// <summary>
+    /// ゲームのステータスを指定します。
+    /// </summary>
+    /// <value>The state.</value>
+    GameState state;
+    // public getter
+    public GameState State{
+        get { return this.state; }
+    }
+
 
 	// Use this for initialization
 	void Start () {
-		// TODO デバッグ用
+		// TODO デバッグ用 実行環境で取り除くこと
+        state = GameState.Lobby;
+        changeScene();
+	}
 
+	/// <summary>
+	/// Settings from device.
+    /// デバイスの種類に酔って異なる設定を一括で設定します。
+	/// </summary>
+    void settingFromDevice(){
 #if UNITY_EDITOR
-		
+
 
 #elif UNITY_IPHONE
+        // 画面の向きを右にホームボタンの横画面に変更する
         switch (Screen.orientation)
         {
             // 縦画面のとき
@@ -46,12 +68,10 @@ public class GameManager : MonoBehaviour {
                 break;
         }
 #else
-    Debug.Log("Any other platform");
+    Debug.LogWarning("Any other platform");
 #endif
-
-        state = GameState.Lobby;
-        changeScene();
 	}
+
 	
     void changeScene(){
         
