@@ -1,7 +1,4 @@
-﻿#define BIONOCULAR_DISPARITY 0.3f
-
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +18,6 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     const float kBinocularDisparity = 0.4f;
 
-
     // Use this for initialization
     void Start()
     {
@@ -29,7 +25,14 @@ public class CameraManager : MonoBehaviour
         eyeLeft = gameObject.transform.FindChild("EyeLeft").GetComponent<Camera>();
         eyeRight = gameObject.transform.FindChild("EyeRight").GetComponent<Camera>();
 
-        settingCameraFromDevice();
+
+
+		settingCameraFromDevice();
+    }
+
+    void Update()
+    {
+        cameraControl();
     }
 
     /// <summary>
@@ -41,16 +44,41 @@ public class CameraManager : MonoBehaviour
 #if UNITY_EDITOR
         // カメラは１つで良いのでRightを無効化する
         eyeRight.gameObject.SetActive(false);
-        // #elif UNITY_IPHONE
+
+#elif UNITY_IPHONE
         // カメラの位置をずらす
         Vector3 myPos = transform.position;
 		eyeLeft.gameObject.transform.position = new Vector3(myPos.x - (kBinocularDisparity / 2f), myPos.y, myPos.z);
 		eyeRight.gameObject.transform.position = new Vector3(myPos.x + (kBinocularDisparity / 2f), myPos.y, myPos.z);
+		eyeLeft.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+		eyeRight.rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
 
-        // TODO カメラは規定で１つしか表示されないように変更する それをここで複数になるように指定する(Viewport rectとか)
+        // ジャイロを有効に
+        Input.gyro.enabled = true;
 
 #else
     Debug.LogWarning("Any other platform");
+
 #endif
 	}
+
+
+    void cameraControl(){
+#if UNITY_EDITOR
+		Vector3 keyState = new Vector3(0f, 0f, 0f);
+		if (Input.GetKey(KeyCode.LeftArrow)) --keyState.y;
+		if (Input.GetKey(KeyCode.RightArrow)) ++keyState.y;
+		if (Input.GetKey(KeyCode.UpArrow)) --keyState.x;
+		if (Input.GetKey(KeyCode.DownArrow)) ++keyState.x;
+		keyState.z = 0f;
+        gameObject.transform.Rotate(keyState);
+
+#elif UNITY_IPHONE
+        if (Input.gyro.enabled){
+        Quaternion direction = Input.gyro.attitude;
+            gameObject.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-direction.x, -direction.y, direction.z, direction.w));
+        }
+#endif
+	}
+
 }
