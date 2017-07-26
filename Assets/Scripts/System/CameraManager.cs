@@ -65,13 +65,11 @@ public class CameraManager : MonoBehaviour
 
     void cameraControl(){
 #if UNITY_EDITOR
-		Vector3 keyState = new Vector3(0f, 0f, 0f);
-		if (Input.GetKey(KeyCode.LeftArrow)) --keyState.y;
-		if (Input.GetKey(KeyCode.RightArrow)) ++keyState.y;
-		if (Input.GetKey(KeyCode.UpArrow)) --keyState.x;
-		if (Input.GetKey(KeyCode.DownArrow)) ++keyState.x;
-		keyState.z = 0f;
-        gameObject.transform.Rotate(keyState);
+		float X_Rotation = Input.GetAxis("Mouse X");
+		float Y_Rotation = Input.GetAxis("Mouse Y");
+		gameObject.transform.Rotate(-Y_Rotation * 2f, X_Rotation * 2f, 0f);
+        // gameObject.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w);
+        transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x, gameObject.transform.rotation.eulerAngles.y, 0f);
 
 #elif UNITY_IPHONE
         if (Input.gyro.enabled){
