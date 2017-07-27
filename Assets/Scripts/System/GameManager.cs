@@ -44,9 +44,11 @@ public class GameManager : MonoBehaviour {
         changeScene();
 	}
 
+    
+
 	/// <summary>
 	/// Settings from device.
-    /// デバイスの種類に酔って異なる設定を一括で設定します。
+    /// デバイスの種類によって異なる設定を一括で設定します。
 	/// </summary>
     void settingFromDevice(){
 #if UNITY_EDITOR
