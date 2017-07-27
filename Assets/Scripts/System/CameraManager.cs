@@ -68,7 +68,6 @@ public class CameraManager : MonoBehaviour
 		float X_Rotation = Input.GetAxis("Mouse X");
 		float Y_Rotation = Input.GetAxis("Mouse Y");
 		gameObject.transform.Rotate(-Y_Rotation * 2f, X_Rotation * 2f, 0f);
-        // gameObject.transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0f, transform.rotation.w);
         transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x, gameObject.transform.rotation.eulerAngles.y, 0f);
 
 #elif UNITY_IPHONE
