@@ -25,8 +25,6 @@ public class CameraManager : MonoBehaviour
         eyeLeft = gameObject.transform.FindChild("EyeLeft").GetComponent<Camera>();
         eyeRight = gameObject.transform.FindChild("EyeRight").GetComponent<Camera>();
 
-
-
 		settingCameraFromDevice();
     }
 
