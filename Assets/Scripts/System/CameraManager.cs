@@ -66,9 +66,11 @@ public class CameraManager : MonoBehaviour
     void cameraControl(){
 #if UNITY_EDITOR
         // マウスの移動でカメラ回転
-		float X_Rotation = Input.GetAxis("Mouse X");
-		float Y_Rotation = Input.GetAxis("Mouse Y");
-        transform.rotation = Quaternion.Euler(gameObject.transform.rotation.eulerAngles.x -Y_Rotation * 2f , gameObject.transform.rotation.eulerAngles.y + X_Rotation * 2f, 0f);
+        transform.rotation = Quaternion.Euler(
+            gameObject.transform.rotation.eulerAngles.x - Input.GetAxis("Mouse Y") * 2f,
+            gameObject.transform.rotation.eulerAngles.y + Input.GetAxis("Mouse X") * 2f,
+            0f
+        );
 
 #elif UNITY_IPHONE
         // ジャイロを利用してカメラ回転
@@ -77,6 +79,6 @@ public class CameraManager : MonoBehaviour
             gameObject.transform.localRotation = Quaternion.Euler(90, 0, 0) * (new Quaternion(-direction.x, -direction.y, direction.z, direction.w));
         }
 #endif
-	}
+    }
 
 }
