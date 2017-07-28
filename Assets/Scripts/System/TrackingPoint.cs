@@ -33,14 +33,18 @@ public class TrackingPoint : MonoBehaviour {
         if(Physics.Raycast(ray, out hit, 1000.0f, TargetLayer)) {
             Indicator.IsWatchSomeone = true;
 
-            /*            
-            if(prevHit == hit.collider.gameObject.GetInstanceID()){
+            if(Indicator.ProgressState){
+                if(prevHit == hit.collider.gameObject.GetInstanceID()){
                 Debug.Log("[" + ++count + "] selecting: " + hit.collider.gameObject.name);
-            }else{
-                prevHit = hit.collider.gameObject.GetInstanceID();
-            }
- */
+                hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
+                hit.collider.enabled = false;
 
+                }else{
+                    prevHit = hit.collider.gameObject.GetInstanceID();
+                }
+            }else{
+                count = 0;
+            }
 
 
             // hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
