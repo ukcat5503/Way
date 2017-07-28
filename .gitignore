@@ -29,3 +29,13 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Mac system files
+*.DS_Store
+
+# VSCode files
+/.vscode
+
+# WakaTime
+/Assets/Editor/WakaTime/*
+/Assets/Editor/WakaTime.meta
