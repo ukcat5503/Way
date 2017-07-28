@@ -3,9 +3,6 @@ using Debug = UnityEngine.Debug;
 
 public static class ForLogExtensions
 {
-
-// 引数持ちはConditionalできないので
-#if UNITY_EDITOR
     /// <summary>
     /// テキストを決められたフォーマットで整形します。
     /// </summary>
@@ -14,7 +11,6 @@ public static class ForLogExtensions
     private static string formatText(string colorCode){
         return "<color=" + colorCode + "><b>[{0}]</b></color> {1}";
     }
-#endif
 
     [Conditional("UNITY_EDITOR")]
     /// <summary>
