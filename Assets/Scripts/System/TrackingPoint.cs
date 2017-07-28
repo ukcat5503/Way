@@ -25,25 +25,33 @@ public class TrackingPoint : MonoBehaviour {
     public LayerMask TargetLayer;
 
     void Update(){
+
         ray = new Ray(transform.position, transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 0f, true);
 
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 1000.0f, TargetLayer)) {
+            Indicator.IsWatchSomeone = true;
+
+            /*            
             if(prevHit == hit.collider.gameObject.GetInstanceID()){
                 Debug.Log("[" + ++count + "] selecting: " + hit.collider.gameObject.name);
             }else{
                 prevHit = hit.collider.gameObject.GetInstanceID();
             }
+ */
 
 
 
-            hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
-            // TODO hitからスクリプトを得たいけどgetcomponent使いたくねぇよなぁ？
+            // hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
+            // TODO hitからスクリプトを得たいけどgetcomponent使いたくない
+            //  → 見続けたときだけ判定出すから負荷的にok?
             // CollisionObject a = hit.collider.gameObject;
 
 
             // hit.collider.enabled = false;
+        }else{
+            Indicator.IsWatchSomeone = false;
         }
     }
 }

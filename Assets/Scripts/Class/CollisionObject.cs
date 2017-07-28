@@ -15,7 +15,6 @@ public class CollisionObject : MonoBehaviour {
 	}
 
 	public void Hit(){
-		Debug.Log("hoge");
 	}
 	
 }

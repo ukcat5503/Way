@@ -39,6 +39,11 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        "test".Log();
+        gameObject.transform.position.Log();
+        gameObject.transform.rotation.Log();
+
+
 		// TODO デバッグ用 実行環境で取り除くこと
         state = GameState.Lobby;
         changeScene();
