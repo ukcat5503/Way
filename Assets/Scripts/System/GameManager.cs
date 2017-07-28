@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour {
         get { return this.state; }
     }
 
+    void Awake(){
+        Application.targetFrameRate = 60;
+    }
 
 	// Use this for initialization
 	void Start () {
