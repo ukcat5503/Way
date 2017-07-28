@@ -13,13 +13,22 @@ public class Indicator : MonoBehaviour {
 	/// <summary>
 	/// 何かに視線が合っているか
 	/// </summary>	
-	public static bool IsWatchSomeone = false;
+	private static bool isWatchSomeone = false;
+	/// <summary>
+	/// 何かに視線が合っているか
+	/// </summary>
+	public static bool IsWatchSomeone{
+		set{ isWatchSomeone = value; }
+	}
 	
 	/// <summary>
 	/// プログレスバーの現在の状況 0.0~1.0
 	/// </summary>
     static float progressState = 0f;
-    // public getter
+	/// <summary>
+	/// プログレスバーがたまりきっている(選択確定)状態か
+	/// </summary>
+	/// <returns>trueで選択中</returns>
     public static bool ProgressState{
         get { return Indicator.progressState >= 1f; }
     }
@@ -54,7 +63,7 @@ public class Indicator : MonoBehaviour {
 
 	void Update(){
 		// ゲージの変動
-		if(IsWatchSomeone){
+		if(isWatchSomeone){
 			progressState += kAddToProgressBar;
 			if(progressState > 1f){
 				progressState = 1f;
