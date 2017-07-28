@@ -11,42 +11,62 @@ using UnityEngine.UI;
 public class Indicator : MonoBehaviour {
 
 	/// <summary>
-	/// プログレスバーの現在の値
-	/// </summary>
-	
+	/// 何かに視線が合っているか
+	/// </summary>	
 	public static bool IsWatchSomeone = false;
-	static float ProgressState = 0f;
+	
+	/// <summary>
+	/// プログレスバーの現在の状況 0.0~1.0
+	/// </summary>
+    static float progressState = 0f;
+    // public getter
+    public static bool ProgressState{
+        get { return Indicator.progressState >= 1f; }
+    }
+	/// <summary>
+	/// プログレスバーが１フレームでどのぐらい増加するか
+	/// </summary>
 	const float kAddToProgressBar = 0.02f;
+	/// <summary>
+	/// プログレスバーが１フレームでどのぐらい減少するか
+	/// </summary>
 	const float kRemoveToProgressBar = 0.05f;
 
+	/// <summary>
+	/// プログレスバーで操作するimageコンポーネント
+	/// </summary>
 	Image childImage;
 
 	void Awake(){
 		// 既にインジケーターが生成されていればログを吐いてこのオブジェクトは消える
+		/* TODO 未実装
 		if(GameObject.Find("Indicator").GetComponent<Indicator>() != null){
 			"このオブジェクトは既に存在しています。".Log();
-			// Destroy(gameObject);
+			Destroy(gameObject);
 		}
+		*/
 	}
 
 	void Start(){
+		// 子要素のimageコンポーネントを取得しておく
 		childImage = gameObject.transform.FindChild("Top").GetComponent<Image>();
 	}
 
 	void Update(){
 		// ゲージの変動
 		if(IsWatchSomeone){
-			ProgressState += kAddToProgressBar;
-			if(ProgressState > 1f){
-				ProgressState = 1f;
+			progressState += kAddToProgressBar;
+			if(progressState > 1f){
+				progressState = 1f;
 			}
 		}else{
-			ProgressState -= kRemoveToProgressBar;
-			if(ProgressState < 0f){
-				ProgressState = 0f;
+			progressState -= kRemoveToProgressBar;
+			if(progressState < 0f){
+				progressState = 0f;
 			}
 		}
 
-		childImage.fillAmount = ProgressState;
+		// 画像の表示を変更する
+		childImage.fillAmount = progressState;
 	}
 }
