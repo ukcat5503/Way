@@ -1,6 +1,10 @@
 ﻿using System.Diagnostics;
 using Debug = UnityEngine.Debug;
 
+/// <summary>
+/// 整形したテキストをDebug.Logで出力します。
+/// 実行環境では無効になり、関数の呼び出しも発生しません。
+/// </summary>
 public static class ForLogExtensions
 {
     /// <summary>
