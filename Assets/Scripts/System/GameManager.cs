@@ -1,6 +1,7 @@
 ﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 /// <summary>
@@ -8,9 +9,6 @@ using UnityEngine;
 /// class GameManagerで使用します。
 /// </summary>
 public enum GameState{
-    Title,
-    Lobby,
-    ShootingGame,
     length
 }
 
@@ -21,6 +19,11 @@ public enum GameState{
 /// </summary>
 public class GameManager : MonoBehaviour {
 
+    /// <summary>
+    /// 自身のシーン
+    /// </summary>
+    static Scene myScene;
+
 	/// <summary>
 	/// GameStateに定義されている、シーンの数。
 	/// </summary>
@@ -30,11 +33,7 @@ public class GameManager : MonoBehaviour {
     /// ゲームのステータスを指定します。
     /// </summary>
     /// <value>The state.</value>
-    GameState state;
-    // public getter
-    public GameState State{
-        get { return this.state; }
-    }
+    static GameState state;
 
     void Awake(){
         Application.targetFrameRate = 60;
@@ -42,17 +41,16 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        myScene = SceneManager.GetActiveScene();
+
         "test".Log();
         gameObject.transform.position.Log();
         gameObject.transform.rotation.Log();
 
 
 		// TODO デバッグ用 実行環境で取り除くこと
-        state = GameState.Lobby;
-        changeScene();
+        // changeScene(GameState.Lobby);
 	}
-
-    
 
 	/// <summary>
 	/// Settings from device.
@@ -60,7 +58,6 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
     void settingFromDevice(){
 #if UNITY_EDITOR
-
 
 #elif UNITY_IPHONE
         // 画面の向きを右にホームボタンの横画面に変更する
@@ -82,8 +79,22 @@ public class GameManager : MonoBehaviour {
 #endif
 	}
 
-	
-    void changeScene(){
-        
+    /// <summary>
+    /// シーンを指定したものに変更します
+    /// </summary>
+    static void changeScene(GameState changeState){
+        // GameManager以外のシーンをすべて削除する
+        int sceneCount = SceneManager.sceneCount;
+        for (int i = 0; i < sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if(scene.name != myScene.name){
+                SceneManager.UnloadSceneAsync(scene); 
+            }
+        }
+
+        // シーンを追加する
+        state = changeState;
+        SceneManager.LoadScene(changeState.ToString(), LoadSceneMode.Additive);
     }
 }
