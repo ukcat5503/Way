@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// ゲームの現在の状態を表す列挙です。
 /// class GameManagerで使用します。
+/// ゲーム内に存在しているシーンと同じ名前をつけること。
 /// </summary>
 public enum GameState{
     Title,
