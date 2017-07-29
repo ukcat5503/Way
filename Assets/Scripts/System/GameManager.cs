@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 /// class GameManagerで使用します。
 /// </summary>
 public enum GameState{
+    Title,
     length
 }
 
@@ -47,9 +48,8 @@ public class GameManager : MonoBehaviour {
         gameObject.transform.position.Log();
         gameObject.transform.rotation.Log();
 
-
-		// TODO デバッグ用 実行環境で取り除くこと
-        // changeScene(GameState.Lobby);
+        // タイトル画面を追加する
+        changeScene(GameState.Title);
 	}
 
 	/// <summary>
