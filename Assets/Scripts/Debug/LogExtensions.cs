@@ -7,6 +7,8 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 public static class ForLogExtensions
 {
+    delegate void LogType(string s);
+    
     /// <summary>
     /// テキストを決められたフォーマットで整形します。
     /// </summary>
@@ -16,20 +18,51 @@ public static class ForLogExtensions
         return "<color=" + colorCode + "><b>[{0}]</b></color> {1}";
     }
 
+
     [Conditional("UNITY_EDITOR")]
     /// <summary>
-    /// 出力するオブジェクトの型によって出力形式を変えて出力する。
+    /// Debug.Logを実行します。
+    /// 型によって自動的に色が設定されます。
     /// </summary>
     /// <param name="t">出力したいオブジェクト</param>
     public static void Log(this object t){
+        output(t, Debug.Log);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    /// <summary>
+    /// Debug.LogWarningを実行します。
+    /// 型によって自動的に色が設定されます。
+    /// </summary>
+    /// <param name="t">出力したいオブジェクト</param>
+    public static void LogWarning(this object t){
+        output(t, Debug.LogWarning);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    /// <summary>
+    /// Debug.LogErrorを実行します。
+    /// 型によって自動的に色が設定されます。
+    /// </summary>
+    /// <param name="t">出力したいオブジェクト</param>
+    public static void LogError(this object t){
+        output(t, Debug.LogError);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    /// <summary>
+    /// 出力する根底のスクリプト
+    /// </summary>
+    /// <param name="t"></param>
+    private static void output(this object t, LogType type){
         if(t is UnityEngine.Vector3){
-            Debug.Log(string.Format(formatText("Blue"), "Vector3", t));
+            type(string.Format(formatText("Blue"), "Vector3", t));
         }else if(t is UnityEngine.Quaternion){
-            Debug.Log(string.Format(formatText("Yellow"), "Quaternion", t));
+            type(string.Format(formatText("Yellow"), "Quaternion", t));
         }else if(t is string){
-            Debug.Log(string.Format(formatText("Black"), "string", t));
+            type(string.Format(formatText("Black"), "string", t));
         }else{
-            Debug.Log(string.Format(formatText("#333333ff"), "Other", t));
+            type(string.Format(formatText("#333333ff"), "Other", t));
         }
     }
 }
