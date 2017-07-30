@@ -27,6 +27,12 @@ public class SpriteManager : MonoBehaviour {
 	int animationPerFrame = 0;
 
 	/// <summary>
+	/// オブジェクトが常にカメラの方向を向くか
+	/// </summary>
+	[SerializeField]
+	bool useBillBoard;	
+
+	/// <summary>
 	/// アニメーション時、変更してから何フレーム目か。
 	/// </summary>
 	int currentFrameCount = 0;
@@ -52,14 +58,21 @@ public class SpriteManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// ２枚以上なければアニメーションの必要なし
-		if(animationSprite.Length < 2) return;
-
-		if(++currentFrameCount >= animationPerFrame){
-			if(++currentSprite >= animationSprite.Length){
-				currentSprite = 0;
+		if(animationSprite.Length >= 2){
+			// アニメーションすべきフレームになったらスプライトを変更
+			if(++currentFrameCount >= animationPerFrame){
+				if(++currentSprite >= animationSprite.Length){
+					currentSprite = 0;
+				}
+				spriteRenderer.sprite = animationSprite[currentSprite];
+				currentFrameCount = 0;
 			}
-			spriteRenderer.sprite = animationSprite[currentSprite];
-			currentFrameCount = 0;
+		}
+
+		if(useBillBoard){
+			Vector3 p = Camera.main.transform.position;
+			p.y = transform.position.y;
+			transform.LookAt (p);
 		}
 	}
 }
