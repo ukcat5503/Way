@@ -45,10 +45,6 @@ public class GameManager : MonoBehaviour {
 	void Start () {
         myScene = SceneManager.GetActiveScene();
 
-        "test".Log();
-        gameObject.transform.position.Log();
-        gameObject.transform.rotation.Log();
-
         // タイトル画面を追加する
         changeScene(GameState.Title);
 	}

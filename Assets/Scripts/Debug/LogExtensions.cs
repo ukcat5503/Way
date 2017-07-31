@@ -54,7 +54,7 @@ public static class ForLogExtensions
     /// 出力する根底のスクリプト
     /// </summary>
     /// <param name="t"></param>
-    private static void output(this object t, LogType type){
+    private static void output(object t, LogType type){
         if(t is UnityEngine.Vector3){
             type(string.Format(formatText("Blue"), "Vector3", t));
         }else if(t is UnityEngine.Quaternion){
