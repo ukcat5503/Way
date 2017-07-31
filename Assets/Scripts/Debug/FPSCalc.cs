@@ -37,7 +37,7 @@ public class FPSCalc : MonoBehaviour
             if (UseFpsToDebugLog)
                 (frameCount / time + "fps").Log();
 
-            DebugText.UpdateInfo("FPS", (frameCount / time + "fps" + "\n"));
+            DebugText.UpdateInfo("FPS", (frameCount / time + "fps"));
 
             //フレームカウントを戻して秒数を更新
             frameCount = 0;

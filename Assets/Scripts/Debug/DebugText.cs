@@ -20,7 +20,7 @@ public class DebugText : MonoBehaviour
     void Update(){
         string output = "";
         foreach (KeyValuePair<string, string> pair in outputMessage){
-            output += pair.Key + ": " + pair.Value;
+            output += String.Format("{0, -20}",pair.Key + ": ") + pair.Value + "\n";
         }
         text.text = output;
     }

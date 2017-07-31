@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ロビーでの挙動を
+/// ロビーでの制御を行うスクリプトです。
 /// </summary>
 public class LobbyManager : MonoBehaviour {
+
+	/// <summary>
+	/// ミニゲームを選択するための看板のプレハブ
+	/// </summary>
+	GameObject[] minigameSigns;
 
 	// Use this for initialization
 	void Start () {
