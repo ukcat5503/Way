@@ -8,6 +8,15 @@ using UnityEngine;
 /// </summary>
 public class TrackingPoint : MonoBehaviour {
 
+    enum MovementDirection{
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
+    MovementDirection movementDirection;
+
     /// <summary>
     /// マウスの向いている方向を表すRay
     /// </summary>
@@ -64,8 +73,8 @@ public class TrackingPoint : MonoBehaviour {
 
     
     void Start(){
+        DebugText.AddInfo("HeadState");
         DebugText.AddInfo("CheckAxis");
-        DebugText.AddInfo("Head-Y");
         DebugText.AddInfo("FrameCount");
         DebugText.AddInfo("HeadCount");
     }
@@ -107,21 +116,45 @@ public class TrackingPoint : MonoBehaviour {
     void checkHeadGesture(){
         ++headGesturePassedFrame;
         if(headGestureCurrentCount == 0){
-            if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.25f || transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.25f){
+            if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.15f){
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
+                movementDirection = MovementDirection.Right;
+            }else if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.15f){
+                ++headGestureCurrentCount;
+                headGesturePassedFrame = 0;
+                movementDirection = MovementDirection.Left;
             }
         }else{
             if(headGesturePassedFrame >= headGestureWaitFrame){
                 // 入力時間切れ
                 headGestureCurrentCount = 0;
             }else{
+                switch(movementDirection){
+                    case MovementDirection.Left:
+                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.15f){
+                            ++headGestureCurrentCount;
+                            headGesturePassedFrame = 0;
+                            movementDirection = MovementDirection.Right;
+                        }
+                    break;
 
+                    case MovementDirection.Right:
+                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.15f){
+                            ++headGestureCurrentCount;
+                            headGesturePassedFrame = 0;
+                            movementDirection = MovementDirection.Left;
+                        }
+                    break;
+                }
 
             }
         }
 
 
+        DebugText.UpdateInfo("HeadState-X", (transform.rotation.eulerAngles.x - prevFrameRotate.x).ToString("F6"));
+        DebugText.UpdateInfo("HeadState-Y", (transform.rotation.eulerAngles.y - prevFrameRotate.y).ToString("F6"));
+        DebugText.UpdateInfo("CheckAxis", movementDirection.ToString());
         DebugText.UpdateInfo("FrameCount", headGesturePassedFrame.ToString());
         DebugText.UpdateInfo("HeadCount", headGestureCurrentCount.ToString());
 
