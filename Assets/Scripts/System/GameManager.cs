@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
         myScene = SceneManager.GetActiveScene();
 
+
         // タイトル画面を追加する
         changeScene(GameState.Title);
 	}

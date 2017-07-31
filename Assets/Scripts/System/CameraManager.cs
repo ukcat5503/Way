@@ -43,7 +43,7 @@ public class CameraManager : MonoBehaviour
         // カメラは１つで良いのでRightを無効化する
         eyeRight.gameObject.SetActive(false);
 
-#elif UNITY_IPHONE
+#elif UNITY_IOS
         // カメラの位置をずらす
         Vector3 myPos = transform.position;
 		eyeLeft.gameObject.transform.position = new Vector3(myPos.x - (kBinocularDisparity / 2f), myPos.y, myPos.z);
@@ -55,7 +55,7 @@ public class CameraManager : MonoBehaviour
         Input.gyro.enabled = true;
 
 #else
-    Debug.LogWarning("Any other platform");
+    "Any other platform".LogWarning();
 
 #endif
 	}
