@@ -24,6 +24,52 @@ public class TrackingPoint : MonoBehaviour {
     /// </summary>
     public LayerMask TargetLayer;
 
+    /// <summary>
+    /// 前回の移動地点の場所を記録しておくため
+    /// </summary>
+    Vector3 prevPointRotate;
+
+        /// <summary>
+    /// 前フレームの場所を記録しておくため
+    /// </summary>
+    Vector3 prevFrameRotate;
+
+    /// <summary>
+    /// 何回やったらヘッドジェスチャーと認識するか
+    /// </summary>
+    int headGestureCount = 4;
+
+    /// <summary>
+    /// 現在何回ジェスチャーをしたか。
+    /// </summary>
+    int headGestureCurrentCount = 0;
+
+    /// <summary>
+    /// 一回のアクションは何秒まで入力許容されるか。
+    /// </summary>
+    int headGestureWaitFrame = 30;
+
+    // 前回のジェスチャーから何フレーム経過したか
+    int headGesturePassedFrame = 0;
+
+    /// <summary>
+    /// どのぐらいの距離を移動したら１回アクションしたとみなすか
+    /// </summary>
+    float headGestureDistance = 20f;
+
+    /// <summary>
+    /// 違う軸にどのぐらいまで移動しているなら許容されるか ±指定
+    /// </summary>
+    float headGestureDeviation = 20f;
+
+    
+    void Start(){
+        DebugText.AddInfo("CheckAxis");
+        DebugText.AddInfo("Head-Y");
+        DebugText.AddInfo("FrameCount");
+        DebugText.AddInfo("HeadCount");
+    }
+
     void Update(){
 
         ray = new Ray(transform.position, transform.forward);
@@ -51,11 +97,34 @@ public class TrackingPoint : MonoBehaviour {
             // TODO hitからスクリプトを得たいけどgetcomponent使いたくない
             //  → 見続けたときだけ判定出すから負荷的にok?
             // CollisionObject a = hit.collider.gameObject;
-
-
-            // hit.collider.enabled = false;
         }else{
             Indicator.IsWatchSomeone = false;
         }
+        checkHeadGesture();
+    }
+
+
+    void checkHeadGesture(){
+        ++headGesturePassedFrame;
+        if(headGestureCurrentCount == 0){
+            if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.25f || transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.25f){
+                ++headGestureCurrentCount;
+                headGesturePassedFrame = 0;
+            }
+        }else{
+            if(headGesturePassedFrame >= headGestureWaitFrame){
+                // 入力時間切れ
+                headGestureCurrentCount = 0;
+            }else{
+
+
+            }
+        }
+
+
+        DebugText.UpdateInfo("FrameCount", headGesturePassedFrame.ToString());
+        DebugText.UpdateInfo("HeadCount", headGestureCurrentCount.ToString());
+
+        prevFrameRotate = transform.rotation.eulerAngles;
     }
 }
