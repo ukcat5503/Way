@@ -7,11 +7,11 @@ using System;
 /// </summary>
 public class FPSCalc : MonoBehaviour
 {
-    private int _frameCount;
-    private float _prevTime;
+    private int frameCount;
+    private float prevTime;
 
-    // uGUIのテキスト格納用 (使わないなら無しでok)
-    Text text;
+    DebugText debugText;
+
     // FPSをDebugLogで出力するかどうか。 使うとログが荒れるけど正確な値が見られる。
     public bool UseFpsToDebugLog;
 
@@ -20,30 +20,28 @@ public class FPSCalc : MonoBehaviour
     /// </summary>
     void Start()
     {
-        _frameCount = 0;
-        _prevTime = 0.0f;
+        frameCount = 0;
+        prevTime = 0.0f;
 
-		text = gameObject.GetComponent<Text>();
+        DebugText.AddInfo("FPS");
     }
 
     void Update()
     {
-        ++_frameCount;
-        float time = Time.realtimeSinceStartup - _prevTime;
+        ++frameCount;
+        float time = Time.realtimeSinceStartup - prevTime;
 
-        // 0.5秒ごとに変更
-        if (time >= 0.5f)
+        // 変更頻度
+        if (time >= 0.25f)
         {
             if (UseFpsToDebugLog)
-                (_frameCount / time + "fps").Log();
+                (frameCount / time + "fps").Log();
 
-            if (text)
-                //少数2位で四捨五入
-                text.text = Math.Round(_frameCount / time, 1, MidpointRounding.AwayFromZero) + "fps";
+            DebugText.UpdateInfo("FPS", (frameCount / time + "fps" + "\n"));
 
             //フレームカウントを戻して秒数を更新
-            _frameCount = 0;
-            _prevTime = Time.realtimeSinceStartup;
+            frameCount = 0;
+            prevTime = Time.realtimeSinceStartup;
         }
     }
 }
