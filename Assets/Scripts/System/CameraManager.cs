@@ -16,6 +16,7 @@ public class CameraManager : MonoBehaviour
     /// <summary>
     /// 両眼視差距離 この値/2づつ左右のカメラが横にずれる
     /// </summary>
+    [SerializeField]
     const float kBinocularDisparity = 0.4f;
 
     // Use this for initialization

@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public enum GameState{
     Title,
+    Lobby,
     length
 }
 
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour {
 
 
         // タイトル画面を追加する
-        changeScene(GameState.Title);
+        ChangeScene(GameState.Lobby);
 	}
 
 	/// <summary>
@@ -80,7 +81,7 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// シーンを指定したものに変更します
     /// </summary>
-    static void changeScene(GameState changeState){
+    public static void ChangeScene(GameState changeState){
         // GameManager以外のシーンをすべて削除する
         int sceneCount = SceneManager.sceneCount;
         for (int i = 0; i < sceneCount; i++)
