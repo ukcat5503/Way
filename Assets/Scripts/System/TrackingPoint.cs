@@ -15,7 +15,15 @@ public class TrackingPoint : MonoBehaviour {
         Right
     }
 
+    enum JudgeType{
+        None,
+        Yes,
+        No
+    }
+
     MovementDirection movementDirection;
+
+    JudgeType judgeType;
 
     /// <summary>
     /// マウスの向いている方向を表すRay
@@ -36,9 +44,9 @@ public class TrackingPoint : MonoBehaviour {
     /// <summary>
     /// 前回の移動地点の場所を記録しておくため
     /// </summary>
-    Vector3 prevPointRotate;
+    Vector3 prevPointRelativeRotate;
 
-        /// <summary>
+    /// <summary>
     /// 前フレームの場所を記録しておくため
     /// </summary>
     Vector3 prevFrameRotate;
@@ -105,127 +113,118 @@ public class TrackingPoint : MonoBehaviour {
         // 相対的にどのぐらい移動しているかを計算
         if(prevFrameRotate.x - transform.rotation.eulerAngles.x < -180f){
             // 下から上へ
-            prevPointRotate.x += 360 + prevFrameRotate.x - transform.rotation.eulerAngles.x;
+            prevPointRelativeRotate.x += 360 + prevFrameRotate.x - transform.rotation.eulerAngles.x;
         }else if(prevFrameRotate.x - transform.rotation.eulerAngles.x > 180f){
             // 上から下へ
-            prevPointRotate.x += 360 - prevFrameRotate.x - transform.rotation.eulerAngles.x;
+            prevPointRelativeRotate.x += 360 - prevFrameRotate.x - transform.rotation.eulerAngles.x;
         }else{
-            prevPointRotate.x += prevFrameRotate.x - transform.rotation.eulerAngles.x;
+            prevPointRelativeRotate.x += prevFrameRotate.x - transform.rotation.eulerAngles.x;
         }
         
         if(prevFrameRotate.y - transform.rotation.eulerAngles.y < -180f){
             // 左から右へ
-            prevPointRotate.y += 360 + prevFrameRotate.y - transform.rotation.eulerAngles.y;
+            prevPointRelativeRotate.y += 360 + prevFrameRotate.y - transform.rotation.eulerAngles.y;
         }else if(prevFrameRotate.y - transform.rotation.eulerAngles.y > 180f){
             // 右から左へ
-            prevPointRotate.y += 360 - prevFrameRotate.y - transform.rotation.eulerAngles.y;
+            prevPointRelativeRotate.y += 360 - prevFrameRotate.y - transform.rotation.eulerAngles.y;
         }else{
-            prevPointRotate.y += prevFrameRotate.y - transform.rotation.eulerAngles.y;
+            prevPointRelativeRotate.y += prevFrameRotate.y - transform.rotation.eulerAngles.y;
         }
 
-        DebugText.UpdateInfo("Relative", prevPointRotate);
-        DebugText.UpdateInfo("rotate", transform.rotation.eulerAngles);
+        // 入力時間切れ
+        if(++headGesturePassedFrame >= headGestureWaitFrame){
+                headGestureCurrentCount = 0;
+                prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
+                judgeType = JudgeType.None;
+        }
 
-        /* 
-        ++headGesturePassedFrame;
+        // 初回判定
         if(headGestureCurrentCount == 0){
             if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.15f){
                 movementDirection = MovementDirection.Up;
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
-                prevPointRotate = transform.rotation.eulerAngles;
+                prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
 
             }else if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.15f){
                 movementDirection = MovementDirection.Down;
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
-                prevPointRotate = transform.rotation.eulerAngles;
+                prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
 
             }else if(transform.rotation.eulerAngles.y - prevFrameRotate.y > 0.15f){
                 movementDirection = MovementDirection.Right;
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
-                prevPointRotate = transform.rotation.eulerAngles;
+                prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
 
             }else if(transform.rotation.eulerAngles.y - prevFrameRotate.y < -0.15f){
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
                 movementDirection = MovementDirection.Left;
-                prevPointRotate = transform.rotation.eulerAngles;
+                prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
 
             }
-        }else{
-            if(headGesturePassedFrame >= headGestureWaitFrame){
-                // 入力時間切れ
-                headGestureCurrentCount = 0;
+        }else{ // headGestureCurrentCount > 0
+            switch(movementDirection){
+                case MovementDirection.Left:
+                    if(prevPointRelativeRotate.y < -headGestureDeviation && 
+                    (prevPointRelativeRotate.x > -headGestureDeviation && 
+                    prevPointRelativeRotate.x < headGestureDeviation)){
+                        ++headGestureCurrentCount;
+                        headGesturePassedFrame = 0;
+                        movementDirection = MovementDirection.Right;
+                        prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
+                    }
+                break;
 
-            }else{
-                DebugText.UpdateInfo("X-Deviation", (prevPointRotate.x + headGestureDeviation) + "~" + (prevPointRotate.x - headGestureDeviation));
-                DebugText.UpdateInfo("Y-Deviation", (prevPointRotate.y + headGestureDeviation) + "~" + (prevPointRotate.y - headGestureDeviation));
-                DebugText.UpdateInfo("rotate", transform.rotation.eulerAngles);
+                case MovementDirection.Right:
+                    if(prevPointRelativeRotate.y > headGestureDeviation && 
+                    (prevPointRelativeRotate.x > -headGestureDeviation && 
+                    prevPointRelativeRotate.x < headGestureDeviation)){
+                        ++headGestureCurrentCount;
+                        headGesturePassedFrame = 0;
+                        movementDirection = MovementDirection.Left;
+                        prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
+                        
+                    }
+                break;
 
-                switch(movementDirection){
-                    case MovementDirection.Left:
-                        if(transform.rotation.eulerAngles.y - prevFrameRotate.y > headGestureDeviation && 
-                        ((prevPointRotate.x + headGestureDeviation) > transform.rotation.eulerAngles.x || 
-                        (prevPointRotate.x - headGestureDeviation) < transform.rotation.eulerAngles.x)){
-                            ++headGestureCurrentCount;
-                            headGesturePassedFrame = 0;
-                            movementDirection = MovementDirection.Right;
-                            prevPointRotate = transform.rotation.eulerAngles;
-                            
-                        }
-                    break;
+                case MovementDirection.Up:
+                    if(prevPointRelativeRotate.x < -headGestureDeviation && 
+                    (prevPointRelativeRotate.y > -headGestureDeviation && 
+                    prevPointRelativeRotate.y < headGestureDeviation)){
+                        ++headGestureCurrentCount;
+                        headGesturePassedFrame = 0;
+                        movementDirection = MovementDirection.Down;
+                        prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
+                        
+                    }
+                break;
 
-                    case MovementDirection.Right:
-                        if(transform.rotation.eulerAngles.y - prevFrameRotate.y < -headGestureDeviation && 
-                        ((prevPointRotate.x + headGestureDeviation) > transform.rotation.eulerAngles.x || 
-                        (prevPointRotate.x - headGestureDeviation) < transform.rotation.eulerAngles.x)){
-                            ++headGestureCurrentCount;
-                            headGesturePassedFrame = 0;
-                            movementDirection = MovementDirection.Left;
-                            prevPointRotate = transform.rotation.eulerAngles;
-                            
-                        }
-                    break;
+                case MovementDirection.Down:
+                     if(prevPointRelativeRotate.x > headGestureDeviation && 
+                    (prevPointRelativeRotate.y > -headGestureDeviation && 
+                    prevPointRelativeRotate.y < headGestureDeviation)){
+                        ++headGestureCurrentCount;
+                        headGesturePassedFrame = 0;
+                        movementDirection = MovementDirection.Up;
+                        prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
+                        
+                    }
+                break;
 
-                    case MovementDirection.Down:
-                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -headGestureDeviation && 
-                        ((prevPointRotate.y + headGestureDeviation) > transform.rotation.eulerAngles.y || 
-                        (prevPointRotate.y - headGestureDeviation) < transform.rotation.eulerAngles.y)){
-                            ++headGestureCurrentCount;
-                            headGesturePassedFrame = 0;
-                            movementDirection = MovementDirection.Up;
-                            prevPointRotate = transform.rotation.eulerAngles;
-                            
-                        }
-                    break;
-
-                    case MovementDirection.Up:
-                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x > headGestureDeviation && 
-                        ((prevPointRotate.y + headGestureDeviation) > transform.rotation.eulerAngles.y || 
-                        (prevPointRotate.y - headGestureDeviation) < transform.rotation.eulerAngles.y)){
-                            ++headGestureCurrentCount;
-                            headGesturePassedFrame = 0;
-                            movementDirection = MovementDirection.Down;
-                            prevPointRotate = transform.rotation.eulerAngles;
-                            
-                        }
-                    break;
-                }
             }
         }
 
-        float x = transform.rotation.eulerAngles.x - prevFrameRotate.x;
-        float y = transform.rotation.eulerAngles.y - prevFrameRotate.y;
-
-        DebugText.UpdateInfo("HeadState-X", (x < 0 ? x.ToString("F6") : " " + (x.ToString("F6"))));
-        DebugText.UpdateInfo("HeadState-Y", (y < 0 ? y.ToString("F6") : " " + (y.ToString("F6"))));
         DebugText.UpdateInfo("CheckAxis", movementDirection.ToString());
         DebugText.UpdateInfo("FrameCount", headGesturePassedFrame.ToString());
         DebugText.UpdateInfo("HeadCount", headGestureCurrentCount.ToString());
-        */
+        DebugText.UpdateInfo("=======", "");
         
+
+        DebugText.UpdateInfo("Relative", prevPointRelativeRotate);
+        DebugText.UpdateInfo("rotate", transform.rotation.eulerAngles);
 
         prevFrameRotate = transform.rotation.eulerAngles;
     }
