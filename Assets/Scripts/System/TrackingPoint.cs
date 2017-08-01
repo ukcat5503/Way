@@ -213,14 +213,29 @@ public class TrackingPoint : MonoBehaviour {
                         
                     }
                 break;
+            }
+            if(headGestureCount <= headGestureCurrentCount){
+                switch(movementDirection){
+                    case MovementDirection.Up:
+                    case MovementDirection.Down:
+                        judgeType = JudgeType.Yes;
+                    break;
 
+                    case MovementDirection.Right:
+                    case MovementDirection.Left:
+                        judgeType = JudgeType.No;
+                    break;
+                }
+                headGestureCurrentCount = 0;
+                headGesturePassedFrame = 0;
+                prevPointRelativeRotate = new Vector3(0f, 0f, 0f);
             }
         }
 
         DebugText.UpdateInfo("CheckAxis", movementDirection.ToString());
         DebugText.UpdateInfo("FrameCount", headGesturePassedFrame.ToString());
         DebugText.UpdateInfo("HeadCount", headGestureCurrentCount.ToString());
-        DebugText.UpdateInfo("=======", "");
+        DebugText.UpdateInfo("JudgeType", judgeType.ToString());
         
 
         DebugText.UpdateInfo("Relative", prevPointRelativeRotate);
