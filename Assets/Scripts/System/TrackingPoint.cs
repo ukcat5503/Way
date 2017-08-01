@@ -56,7 +56,7 @@ public class TrackingPoint : MonoBehaviour {
     /// <summary>
     /// 一回のアクションは何秒まで入力許容されるか。
     /// </summary>
-    int headGestureWaitFrame = 30;
+    int headGestureWaitFrame = 90;
 
     // 前回のジェスチャーから何フレーム経過したか
     int headGesturePassedFrame = 0;
@@ -64,21 +64,14 @@ public class TrackingPoint : MonoBehaviour {
     /// <summary>
     /// どのぐらいの距離を移動したら１回アクションしたとみなすか
     /// </summary>
-    float headGestureDistance = 20f;
+    float headGestureDistance = 10f;
 
     /// <summary>
     /// 違う軸にどのぐらいまで移動しているなら許容されるか ±指定
     /// </summary>
-    float headGestureDeviation = 20f;
+    float headGestureDeviation = 10f;
 
     
-    void Start(){
-        DebugText.AddInfo("HeadState");
-        DebugText.AddInfo("CheckAxis");
-        DebugText.AddInfo("FrameCount");
-        DebugText.AddInfo("HeadCount");
-    }
-
     void Update(){
 
         ray = new Ray(transform.position, transform.forward);
@@ -116,14 +109,16 @@ public class TrackingPoint : MonoBehaviour {
     void checkHeadGesture(){
         ++headGesturePassedFrame;
         if(headGestureCurrentCount == 0){
-            if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.15f){
+            if(transform.rotation.eulerAngles.y - prevFrameRotate.y > 0.15f){
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
                 movementDirection = MovementDirection.Right;
-            }else if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.15f){
+                prevPointRotate = transform.rotation.eulerAngles;
+            }else if(transform.rotation.eulerAngles.y - prevFrameRotate.y < -0.15f){
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
                 movementDirection = MovementDirection.Left;
+                prevPointRotate = transform.rotation.eulerAngles;
             }
         }else{
             if(headGesturePassedFrame >= headGestureWaitFrame){
@@ -132,7 +127,9 @@ public class TrackingPoint : MonoBehaviour {
             }else{
                 switch(movementDirection){
                     case MovementDirection.Left:
-                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.15f){
+                        if(transform.rotation.eulerAngles.y - prevFrameRotate.y > headGestureDeviation && 
+                        ((prevPointRotate.x + headGestureDeviation) > transform.rotation.eulerAngles.x || 
+                        (prevPointRotate.x - headGestureDeviation) < transform.rotation.eulerAngles.x)){
                             ++headGestureCurrentCount;
                             headGesturePassedFrame = 0;
                             movementDirection = MovementDirection.Right;
@@ -140,14 +137,13 @@ public class TrackingPoint : MonoBehaviour {
                     break;
 
                     case MovementDirection.Right:
-                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.15f){
+                        if(transform.rotation.eulerAngles.y - prevFrameRotate.y < -headGestureDeviation){
                             ++headGestureCurrentCount;
                             headGesturePassedFrame = 0;
                             movementDirection = MovementDirection.Left;
                         }
                     break;
                 }
-
             }
         }
 

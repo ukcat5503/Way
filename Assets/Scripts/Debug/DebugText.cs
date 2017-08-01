@@ -25,15 +25,15 @@ public class DebugText : MonoBehaviour
         text.text = output;
     }
 
-    public static void AddInfo(string name){
-        outputMessage.Add(name, null);
-    }
-
     public static void RemoveInfo(string name){
         outputMessage.Remove(name);
     }
 
     public static void UpdateInfo(string key, string value){
-        outputMessage[key] = value;
+        if (outputMessage.ContainsKey(key) ){
+            outputMessage[key] = value;
+        }else{
+            outputMessage.Add(key, value);
+        }
     }
 }

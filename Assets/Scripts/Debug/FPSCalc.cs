@@ -22,8 +22,6 @@ public class FPSCalc : MonoBehaviour
     {
         frameCount = 0;
         prevTime = 0.0f;
-
-        DebugText.AddInfo("FPS");
     }
 
     void Update()
