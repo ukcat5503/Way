@@ -84,7 +84,8 @@ public class TrackingPoint : MonoBehaviour {
             if(Indicator.ProgressState){
                 if(prevHit == hit.collider.gameObject.GetInstanceID()){
                 Debug.Log("[" + ++count + "] selecting: " + hit.collider.gameObject.name);
-                hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
+                // hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
+                hit.collider.SendMessageUpwards("HitRayFromPlayer");
                 hit.collider.enabled = false;
 
                 }else{
@@ -104,7 +105,6 @@ public class TrackingPoint : MonoBehaviour {
         }
         checkHeadGesture();
     }
-
 
     void checkHeadGesture(){
         ++headGesturePassedFrame;
@@ -140,6 +140,10 @@ public class TrackingPoint : MonoBehaviour {
                 headGestureCurrentCount = 0;
 
             }else{
+                DebugText.UpdateInfo("X-Deviation", (prevPointRotate.x + headGestureDeviation) + "~" + (prevPointRotate.x - headGestureDeviation));
+                DebugText.UpdateInfo("Y-Deviation", (prevPointRotate.y + headGestureDeviation) + "~" + (prevPointRotate.y - headGestureDeviation));
+                DebugText.UpdateInfo("rotate", transform.rotation.eulerAngles);
+
                 switch(movementDirection){
                     case MovementDirection.Left:
                         if(transform.rotation.eulerAngles.y - prevFrameRotate.y > headGestureDeviation && 
@@ -148,30 +152,44 @@ public class TrackingPoint : MonoBehaviour {
                             ++headGestureCurrentCount;
                             headGesturePassedFrame = 0;
                             movementDirection = MovementDirection.Right;
+                            prevPointRotate = transform.rotation.eulerAngles;
+                            
                         }
                     break;
 
                     case MovementDirection.Right:
-                        if(transform.rotation.eulerAngles.y - prevFrameRotate.y < -headGestureDeviation){
+                        if(transform.rotation.eulerAngles.y - prevFrameRotate.y < -headGestureDeviation && 
+                        ((prevPointRotate.x + headGestureDeviation) > transform.rotation.eulerAngles.x || 
+                        (prevPointRotate.x - headGestureDeviation) < transform.rotation.eulerAngles.x)){
                             ++headGestureCurrentCount;
                             headGesturePassedFrame = 0;
                             movementDirection = MovementDirection.Left;
+                            prevPointRotate = transform.rotation.eulerAngles;
+                            
                         }
                     break;
 
                     case MovementDirection.Down:
-                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -headGestureDeviation){
+                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -headGestureDeviation && 
+                        ((prevPointRotate.y + headGestureDeviation) > transform.rotation.eulerAngles.y || 
+                        (prevPointRotate.y - headGestureDeviation) < transform.rotation.eulerAngles.y)){
                             ++headGestureCurrentCount;
                             headGesturePassedFrame = 0;
                             movementDirection = MovementDirection.Up;
+                            prevPointRotate = transform.rotation.eulerAngles;
+                            
                         }
                     break;
 
                     case MovementDirection.Up:
-                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x > headGestureDeviation){
+                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x > headGestureDeviation && 
+                        ((prevPointRotate.y + headGestureDeviation) > transform.rotation.eulerAngles.y || 
+                        (prevPointRotate.y - headGestureDeviation) < transform.rotation.eulerAngles.y)){
                             ++headGestureCurrentCount;
                             headGesturePassedFrame = 0;
                             movementDirection = MovementDirection.Down;
+                            prevPointRotate = transform.rotation.eulerAngles;
+                            
                         }
                     break;
                 }
