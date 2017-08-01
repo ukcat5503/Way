@@ -12,7 +12,6 @@ public class DebugText : MonoBehaviour
     Text valueText;
 
     RectTransform valueRectTransform;
-
     static int textLength = 0;
 
     static Dictionary<string, string> outputMessage = new Dictionary<string, string>();
@@ -41,15 +40,16 @@ public class DebugText : MonoBehaviour
         outputMessage.Remove(name);
     }
 
-    public static void UpdateInfo(string key, string value){
+    public static void UpdateInfo<Type>(string key, Type value){
         if (outputMessage.ContainsKey(key)){
-            outputMessage[key] = value;
+            outputMessage[key] = value.ToString();
         }else{
-            outputMessage.Add(key, value);
+            outputMessage.Add(key, value.ToString());
             textLength = key.Length > textLength ? key.Length : textLength;
         }
     }
 
+    /*
     public static void UpdateInfo(string key, int value){
         if (outputMessage.ContainsKey(key) ){
             outputMessage[key] = value.ToString();
@@ -59,7 +59,7 @@ public class DebugText : MonoBehaviour
         }
     }
 
-        public static void UpdateInfo(string key, float value){
+    public static void UpdateInfo(string key, float value){
         if (outputMessage.ContainsKey(key) ){
             outputMessage[key] = value.ToString();
         }else{
@@ -67,4 +67,5 @@ public class DebugText : MonoBehaviour
             textLength = key.Length > textLength ? key.Length : textLength;
         }
     }
+     */
 }
