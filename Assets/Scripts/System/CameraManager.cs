@@ -13,11 +13,13 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     Camera eyeLeft, eyeRight;
 
+    /*
     /// <summary>
     /// 両眼視差距離 この値/2づつ左右のカメラが横にずれる
     /// </summary>
     [SerializeField]
-    const float kBinocularDisparity = 0.4f;
+    const float kBinocularDisparity = 0f;
+    */
 
     // Use this for initialization
     void Start()
@@ -47,8 +49,10 @@ public class CameraManager : MonoBehaviour
 #elif UNITY_IOS
         // カメラの位置をずらす
         Vector3 myPos = transform.position;
+        /* 
 		eyeLeft.gameObject.transform.position = new Vector3(myPos.x - (kBinocularDisparity / 2f), myPos.y, myPos.z);
 		eyeRight.gameObject.transform.position = new Vector3(myPos.x + (kBinocularDisparity / 2f), myPos.y, myPos.z);
+        */
 		eyeLeft.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
 		eyeRight.rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
 
