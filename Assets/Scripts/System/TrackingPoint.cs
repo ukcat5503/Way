@@ -64,7 +64,7 @@ public class TrackingPoint : MonoBehaviour {
     /// <summary>
     /// どのぐらいの距離を移動したら１回アクションしたとみなすか
     /// </summary>
-    float headGestureDistance = 10f;
+    float headGestureDistance = 3f;
 
     /// <summary>
     /// 違う軸にどのぐらいまで移動しているなら許容されるか ±指定
@@ -109,21 +109,36 @@ public class TrackingPoint : MonoBehaviour {
     void checkHeadGesture(){
         ++headGesturePassedFrame;
         if(headGestureCurrentCount == 0){
-            if(transform.rotation.eulerAngles.y - prevFrameRotate.y > 0.15f){
+            if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.15f){
+                movementDirection = MovementDirection.Up;
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
-                movementDirection = MovementDirection.Right;
                 prevPointRotate = transform.rotation.eulerAngles;
+
+            }else if(transform.rotation.eulerAngles.x - prevFrameRotate.x > 0.15f){
+                movementDirection = MovementDirection.Down;
+                ++headGestureCurrentCount;
+                headGesturePassedFrame = 0;
+                prevPointRotate = transform.rotation.eulerAngles;
+
+            }else if(transform.rotation.eulerAngles.y - prevFrameRotate.y > 0.15f){
+                movementDirection = MovementDirection.Right;
+                ++headGestureCurrentCount;
+                headGesturePassedFrame = 0;
+                prevPointRotate = transform.rotation.eulerAngles;
+
             }else if(transform.rotation.eulerAngles.y - prevFrameRotate.y < -0.15f){
                 ++headGestureCurrentCount;
                 headGesturePassedFrame = 0;
                 movementDirection = MovementDirection.Left;
                 prevPointRotate = transform.rotation.eulerAngles;
+
             }
         }else{
             if(headGesturePassedFrame >= headGestureWaitFrame){
                 // 入力時間切れ
                 headGestureCurrentCount = 0;
+
             }else{
                 switch(movementDirection){
                     case MovementDirection.Left:
@@ -143,13 +158,31 @@ public class TrackingPoint : MonoBehaviour {
                             movementDirection = MovementDirection.Left;
                         }
                     break;
+
+                    case MovementDirection.Down:
+                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -headGestureDeviation){
+                            ++headGestureCurrentCount;
+                            headGesturePassedFrame = 0;
+                            movementDirection = MovementDirection.Up;
+                        }
+                    break;
+
+                    case MovementDirection.Up:
+                        if(transform.rotation.eulerAngles.x - prevFrameRotate.x > headGestureDeviation){
+                            ++headGestureCurrentCount;
+                            headGesturePassedFrame = 0;
+                            movementDirection = MovementDirection.Down;
+                        }
+                    break;
                 }
             }
         }
 
+        float x = transform.rotation.eulerAngles.x - prevFrameRotate.x;
+        float y = transform.rotation.eulerAngles.y - prevFrameRotate.y;
 
-        DebugText.UpdateInfo("HeadState-X", (transform.rotation.eulerAngles.x - prevFrameRotate.x).ToString("F6"));
-        DebugText.UpdateInfo("HeadState-Y", (transform.rotation.eulerAngles.y - prevFrameRotate.y).ToString("F6"));
+        DebugText.UpdateInfo("HeadState-X", (x < 0 ? x.ToString("F6") : " " + (x.ToString("F6"))));
+        DebugText.UpdateInfo("HeadState-Y", (y < 0 ? y.ToString("F6") : " " + (y.ToString("F6"))));
         DebugText.UpdateInfo("CheckAxis", movementDirection.ToString());
         DebugText.UpdateInfo("FrameCount", headGesturePassedFrame.ToString());
         DebugText.UpdateInfo("HeadCount", headGestureCurrentCount.ToString());
