@@ -33,7 +33,7 @@ public class DebugText : MonoBehaviour
         keyText.text = outputKey;
         valueText.text = outputValue;
 
-        valueRectTransform.localPosition = new Vector3(textLength * 30, -10, 0);
+        valueRectTransform.localPosition = new Vector3((textLength + 3) * 30, -10, 0);
     }
 
     public static void RemoveInfo(string name){

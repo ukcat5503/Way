@@ -84,7 +84,7 @@ public class TrackingPoint : MonoBehaviour {
             if(Indicator.ProgressState){
                 if(prevHit == hit.collider.gameObject.GetInstanceID()){
                 Debug.Log("[" + ++count + "] selecting: " + hit.collider.gameObject.name);
-                // hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
+                // この方法は結構重いので一発で無効にする 改善できたら改善したい
                 hit.collider.SendMessageUpwards("HitRayFromPlayer");
                 hit.collider.enabled = false;
 
@@ -94,12 +94,7 @@ public class TrackingPoint : MonoBehaviour {
             }else{
                 count = 0;
             }
-
-
-            // hit.collider.GetComponent<MeshRenderer>().material.color = Color.red;
-            // TODO hitからスクリプトを得たいけどgetcomponent使いたくない
-            //  → 見続けたときだけ判定出すから負荷的にok?
-            // CollisionObject a = hit.collider.gameObject;
+            
         }else{
             Indicator.IsWatchSomeone = false;
         }
@@ -107,6 +102,31 @@ public class TrackingPoint : MonoBehaviour {
     }
 
     void checkHeadGesture(){
+        // 相対的にどのぐらい移動しているかを計算
+        if(prevFrameRotate.x - transform.rotation.eulerAngles.x < -180f){
+            // 下から上へ
+            prevPointRotate.x += 360 + prevFrameRotate.x - transform.rotation.eulerAngles.x;
+        }else if(prevFrameRotate.x - transform.rotation.eulerAngles.x > 180f){
+            // 上から下へ
+            prevPointRotate.x += 360 - prevFrameRotate.x - transform.rotation.eulerAngles.x;
+        }else{
+            prevPointRotate.x += prevFrameRotate.x - transform.rotation.eulerAngles.x;
+        }
+        
+        if(prevFrameRotate.y - transform.rotation.eulerAngles.y < -180f){
+            // 左から右へ
+            prevPointRotate.y += 360 + prevFrameRotate.y - transform.rotation.eulerAngles.y;
+        }else if(prevFrameRotate.y - transform.rotation.eulerAngles.y > 180f){
+            // 右から左へ
+            prevPointRotate.y += 360 - prevFrameRotate.y - transform.rotation.eulerAngles.y;
+        }else{
+            prevPointRotate.y += prevFrameRotate.y - transform.rotation.eulerAngles.y;
+        }
+
+        DebugText.UpdateInfo("Relative", prevPointRotate);
+        DebugText.UpdateInfo("rotate", transform.rotation.eulerAngles);
+
+        /* 
         ++headGesturePassedFrame;
         if(headGestureCurrentCount == 0){
             if(transform.rotation.eulerAngles.x - prevFrameRotate.x < -0.15f){
@@ -204,6 +224,8 @@ public class TrackingPoint : MonoBehaviour {
         DebugText.UpdateInfo("CheckAxis", movementDirection.ToString());
         DebugText.UpdateInfo("FrameCount", headGesturePassedFrame.ToString());
         DebugText.UpdateInfo("HeadCount", headGestureCurrentCount.ToString());
+        */
+        
 
         prevFrameRotate = transform.rotation.eulerAngles;
     }
