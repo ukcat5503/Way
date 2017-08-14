@@ -10,6 +10,6 @@ public class TitleManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// 現状は何もないのですぐにロビーに
-		GameManager.ChangeScene(GameState.Lobby);
+		GameManager.ChangeScene(GameState.Game);
 	}
 }

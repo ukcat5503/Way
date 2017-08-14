@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public enum GameState{
     Title,
-    Lobby,
+    Game,
     length
 }
 
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
 
 
         // タイトル画面を追加する
-        ChangeScene(GameState.Lobby);
+        ChangeScene(GameState.Title);
 	}
 
 	/// <summary>

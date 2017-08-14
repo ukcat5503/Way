@@ -7,7 +7,7 @@ using UnityEngine;
 /// 主人公の目線との当たり判定を必要とするオブジェクトはすべてこのクラスを継承します。
 /// 主人公と当たると.hit()が呼び出されます。
 /// </summary>
-public class ModelBase : MonoBehaviour {
+abstract public class ModelBase : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +16,6 @@ public class ModelBase : MonoBehaviour {
 	
 
 	public void HitRayFromPlayer(){
-		"ヒット".Log();
 	}
 	
 }
