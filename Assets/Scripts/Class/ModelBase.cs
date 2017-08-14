@@ -10,7 +10,7 @@ using UnityEngine;
 abstract public class ModelBase : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		gameObject.layer = 8;	// レイヤーをプレイヤーのレイキャストが有効なものにする
 	}
 	

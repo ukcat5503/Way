@@ -8,23 +8,6 @@ using UnityEngine;
 /// </summary>
 public class TrackingPoint : MonoBehaviour {
 
-    enum MovementDirection{
-        Up,
-        Down,
-        Left,
-        Right
-    }
-
-    enum JudgeType{
-        None,
-        Yes,
-        No
-    }
-
-    MovementDirection movementDirection;
-
-    JudgeType judgeType;
-
     /// <summary>
     /// マウスの向いている方向を表すRay
     /// </summary>
@@ -41,49 +24,13 @@ public class TrackingPoint : MonoBehaviour {
     /// </summary>
     public LayerMask TargetLayer;
 
-    /// <summary>
-    /// 前回の移動地点の場所を記録しておくため
-    /// </summary>
-    Vector3 prevPointRelativeRotate;
-
-    /// <summary>
-    /// 前フレームの場所を記録しておくため
-    /// </summary>
-    Vector3 prevFrameRotate;
-
-    /// <summary>
-    /// 何回やったらヘッドジェスチャーと認識するか
-    /// </summary>
-    int headGestureCount = 4;
-
-    /// <summary>
-    /// 現在何回ジェスチャーをしたか。
-    /// </summary>
-    int headGestureCurrentCount = 0;
-
-    /// <summary>
-    /// 一回のアクションは何秒まで入力許容されるか。
-    /// </summary>
-    int headGestureWaitFrame = 90;
-
-    // 前回のジェスチャーから何フレーム経過したか
-    int headGesturePassedFrame = 0;
-
-    /// <summary>
-    /// どのぐらいの距離を移動したら１回アクションしたとみなすか
-    /// </summary>
-    float headGestureDistance = 3f;
-
-    /// <summary>
-    /// 違う軸にどのぐらいまで移動しているなら許容されるか ±指定
-    /// </summary>
-    float headGestureDeviation = 10f;
-
-    
     void Update(){
 
         ray = new Ray(transform.position, transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 0f, true);
+
+
+        /* 
 
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 1000.0f, TargetLayer)) {
@@ -106,5 +53,6 @@ public class TrackingPoint : MonoBehaviour {
         }else{
             Indicator.IsWatchSomeone = false;
         }
+        */
     }
 }
