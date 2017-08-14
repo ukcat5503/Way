@@ -29,30 +29,31 @@ public class TrackingPoint : MonoBehaviour {
         ray = new Ray(transform.position, transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 0f, true);
 
-
-        /* 
-
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 1000.0f, TargetLayer)) {
-            Indicator.IsWatchSomeone = true;
-
-            if(Indicator.ProgressState){
+            if(isDecide()){
                 if(prevHit == hit.collider.gameObject.GetInstanceID()){
                 Debug.Log("[" + ++count + "] selecting: " + hit.collider.gameObject.name);
                 // この方法は結構重いので一発で無効にする 改善できたら改善したい
                 hit.collider.SendMessageUpwards("HitRayFromPlayer");
                 hit.collider.enabled = false;
-
                 }else{
                     prevHit = hit.collider.gameObject.GetInstanceID();
                 }
             }else{
                 count = 0;
             }
-            
-        }else{
-            Indicator.IsWatchSomeone = false;
         }
-        */
+    }
+
+
+    bool isDecide(){
+#if UNITY_EDITOR
+        return Input.GetKeyUp(KeyCode.Return);
+#elif UNITY_IOS
+        "未設定".LogWarning();
+        return false;
+#endif
+        return false;
     }
 }
