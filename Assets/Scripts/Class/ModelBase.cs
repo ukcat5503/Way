@@ -13,6 +13,7 @@ public class ModelBase : MonoBehaviour {
 	void Start () {
 		gameObject.layer = 8;	// レイヤーをプレイヤーのレイキャストが有効なものにする
 	}
+	
 
 	public void HitRayFromPlayer(){
 		"ヒット".Log();
