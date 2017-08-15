@@ -56,7 +56,8 @@ public class PuzzleBlock : ModelBase {
 	}
 
 	public void BreakBlock(){
-		transform.name.Log();
+		// 散り散りになる処理
+		
 		puzzleManager.DestroyTheBlock(Coordinate);
 	}
 

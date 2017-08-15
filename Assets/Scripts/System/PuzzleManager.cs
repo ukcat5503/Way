@@ -32,9 +32,13 @@ public class PuzzleManager : MonoBehaviour {
 
 	List<BlockInfo>[,] BlockList = new List<BlockInfo>[blockLength,blockLength];
 
+	List<Vector3> DeleteBlocks = new List<Vector3>();
+
 	[SerializeField]
 	GameObject BlockPrefab;
 	GameObject puzzleObjectParent;
+
+	
 
 	// Use this for initialization
 	void Start () {
@@ -54,6 +58,10 @@ public class PuzzleManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	void LateUpdate(){
+		deleteBlocksFromList();
 	}
 
 	void initializePuzzle(string question){
@@ -77,8 +85,7 @@ public class PuzzleManager : MonoBehaviour {
 					blockinfo.blockScript = obj.GetComponent<PuzzleBlock>();
 					blockinfo.blockScript.SetColorByInt((int)char.GetNumericValue(item.Value[(x * 3 ) + y]));
 					blockinfo.blockScript.Coordinate = new Vector3(x,y,item.Index);
-
-					(BlockList[x,y]).Add(blockinfo);
+					BlockList[x,y].Add(blockinfo);
 				}
 			}
 		++height;
@@ -95,8 +102,19 @@ public class PuzzleManager : MonoBehaviour {
 		b.obj = null;
 		BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z] = b;
 		
-		// BlockList[(int)coordinate.x,(int)coordinate.y].RemoveAt((int)coordinate.z);
+		DeleteBlocks.Add(coordinate);
 		Destroy(obj);
+	}
+
+	void deleteBlocksFromList(){
+		if(DeleteBlocks.Count != 0){
+			DeleteBlocks.Sort((a, b) => (int)b.z - (int)a.z);
+			foreach (var item in DeleteBlocks)
+			{
+				BlockList[(int)item.x,(int)item.y].RemoveAt((int)item.z);
+			}
+			DeleteBlocks.Clear();
+		}
 	}
 
 	void destroyAroundDesignation(Vector3 coordinate){
