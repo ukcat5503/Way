@@ -822,4 +822,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a32ae02c420488bb4198c95f45dc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurnParFrameAngle: -0.1
+  TurnParFrameAngle: 0

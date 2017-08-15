@@ -25,7 +25,9 @@ public class PuzzleManager : MonoBehaviour {
 		public PuzzleBlock blockScript;
 	}
 
-	string question = "012012012012012012012012012012012012";
+	string question = "012012012012012012210210210";
+
+	int height;
 
 	List<BlockInfo[,]> BlockList = new List<BlockInfo[,]>();
 
@@ -52,9 +54,9 @@ public class PuzzleManager : MonoBehaviour {
 		BlockInfo[,] info = new BlockInfo[blockLength,blockLength];
 
 		// 段数ループ
-		for (int i = 0; i < question.Length / blockLength * blockLength; ++i)
+		for (int i = 0; i < (int)(question.Length / (blockLength * blockLength)); ++i)
 		{
-			int height = question.Length / blockLength * blockLength;
+			height = (int)(question.Length / (blockLength * blockLength));
 			for (int x = 0; x < blockLength; ++x)
 			{
 				for (int y = 0; y < blockLength; ++y)
@@ -64,7 +66,7 @@ public class PuzzleManager : MonoBehaviour {
 					obj.transform.parent = puzzleObjectParent.transform;
 					info[x,y].obj = obj;
 					info[x,y].blockScript = obj.GetComponent<PuzzleBlock>();
-					info[x,y].blockScript.SetColor((int)char.GetNumericValue(question[x * y]));
+					info[x,y].blockScript.SetColorByInt((int)char.GetNumericValue(question[(i * blockLength * blockLength) + x * y]));
 					info[x,y].blockScript.Coordinate = new Vector3(x,y,i);
 				}
 			}
@@ -72,12 +74,77 @@ public class PuzzleManager : MonoBehaviour {
 			info = new BlockInfo[blockLength,blockLength];
 		}
 	}
-	public void DestroyAroundDesignation(Vector3 coordinate){
-		// 上
 
-		// BlockList
-		if(coordinate.z != blockLength){
-			BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.BreakBlock();
+	public void DestroyTheBlock(Vector3 coordinate){
+		var obj = BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].obj;
+		BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.BreakWait = true;
+		destroyAroundDesignation(coordinate);
+		BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript = null;
+		BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].obj = null;
+		Destroy(obj);
+	}
+
+	void destroyAroundDesignation(Vector3 coordinate){
+		// 上
+		if(coordinate.z != height - 1){
+			if(BlockList[(int)coordinate.z + 1][(int)coordinate.x,(int)coordinate.y].blockScript != null){
+				if(!BlockList[(int)coordinate.z + 1][(int)coordinate.x,(int)coordinate.y].blockScript.BreakWait){
+					if(BlockList[(int)coordinate.z + 1][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor == BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor){
+						BlockList[(int)coordinate.z + 1][(int)coordinate.x,(int)coordinate.y].blockScript.BreakBlock();
+					}
+				}
+			}
 		}
+		// 下
+		if(coordinate.z != 0){
+			if(BlockList[(int)coordinate.z - 1][(int)coordinate.x,(int)coordinate.y].blockScript != null){
+				if(!BlockList[(int)coordinate.z - 1][(int)coordinate.x,(int)coordinate.y].blockScript.BreakWait){
+					if(BlockList[(int)coordinate.z - 1][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor == BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor){
+						BlockList[(int)coordinate.z - 1][(int)coordinate.x,(int)coordinate.y].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+		// 左
+		if(coordinate.y != 0){
+			if(BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y - 1].blockScript != null){
+				if(!BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y - 1].blockScript.BreakWait){
+					if(BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y - 1].blockScript.MyColor == BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor){
+						BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y - 1].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+		// 右
+		if(coordinate.y != blockLength - 1){
+			if(BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y + 1].blockScript != null){
+				if(!BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y + 1].blockScript.BreakWait){
+					if(BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y + 1].blockScript.MyColor == BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor){
+						BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y + 1].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+		// 手前
+		if(coordinate.x != blockLength - 1){
+			if(BlockList[(int)coordinate.z][(int)coordinate.x + 1,(int)coordinate.y].blockScript != null){
+				if(!BlockList[(int)coordinate.z][(int)coordinate.x + 1,(int)coordinate.y].blockScript.BreakWait){
+					if(BlockList[(int)coordinate.z][(int)coordinate.x + 1,(int)coordinate.y].blockScript.MyColor == BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor){
+						BlockList[(int)coordinate.z][(int)coordinate.x + 1,(int)coordinate.y].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+		// 奥
+		if(coordinate.x != 0){
+			if(BlockList[(int)coordinate.z][(int)coordinate.x - 1,(int)coordinate.y].blockScript != null){
+				if(!BlockList[(int)coordinate.z][(int)coordinate.x - 1,(int)coordinate.y].blockScript.BreakWait){
+					if(BlockList[(int)coordinate.z][(int)coordinate.x - 1,(int)coordinate.y].blockScript.MyColor == BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.MyColor){
+						BlockList[(int)coordinate.z][(int)coordinate.x - 1,(int)coordinate.y].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+		
 	}
 }
