@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
 
-	const float margin = 2;
-	static readonly Vector3[] instantiatePosition = new Vector3[9]{
+	const int blockLength = 3;
+
+	const float margin = 2f;
+	static readonly Vector3[] instantiatePosition = new Vector3[blockLength * blockLength]{
 		new Vector3(margin,0,margin),
 		new Vector3(0,0,margin),
 		new Vector3(-margin,0,margin),
@@ -29,7 +31,6 @@ public class PuzzleManager : MonoBehaviour {
 
 	[SerializeField]
 	GameObject BlockPrefab;
-
 	GameObject puzzleObjectParent;
 
 	// Use this for initialization
@@ -44,47 +45,39 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	void initializePuzzle(string question){
-		if(question.Length % 9 != 0){
-			"問題が9の倍数ではありません。基本的に問題は3x3の空間で展開されます。足りない段は生成されません。".LogWarning();
+		if(question.Length % (blockLength * blockLength) != 0){
+			("問題が" + (blockLength * blockLength) + "の倍数ではありません。基本的に問題は3x3の空間で展開されます。足りない段は生成されません。").LogWarning();
 		}
 
-		BlockInfo[,] info = new BlockInfo[3,3];
+		BlockInfo[,] info = new BlockInfo[blockLength,blockLength];
 
 		// 段数ループ
-		for (int i = 0; i < question.Length / 9; ++i)
+		for (int i = 0; i < question.Length / blockLength * blockLength; ++i)
 		{
-			int height = question.Length / 9;
-			for (int x = 0; x < 3; ++x)
+			int height = question.Length / blockLength * blockLength;
+			for (int x = 0; x < blockLength; ++x)
 			{
-				for (int y = 0; y < 3; ++y)
+				for (int y = 0; y < blockLength; ++y)
 				{
-					GameObject obj = Instantiate(BlockPrefab,new Vector3(instantiatePosition[(x * 3 + y) % 9].x, 2 * (i + 1), instantiatePosition[(x * 3 + y) % 9].z), Quaternion.identity) as GameObject;
-					obj.name = "PuzzleBlock (" + x + "," + y + ":" + height + ")";
+					GameObject obj = Instantiate(BlockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (i + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.identity) as GameObject;
+					obj.name = "PuzzleBlock (" + x + "," + y + ":" + i + ")";
 					obj.transform.parent = puzzleObjectParent.transform;
-					// puzzleObjectParent
 					info[x,y].obj = obj;
 					info[x,y].blockScript = obj.GetComponent<PuzzleBlock>();
 					info[x,y].blockScript.SetColor((int)char.GetNumericValue(question[x * y]));
+					info[x,y].blockScript.Coordinate = new Vector3(x,y,i);
 				}
 			}
 			BlockList.Add(info);
-			info = new BlockInfo[3,3];
+			info = new BlockInfo[blockLength,blockLength];
 		}
+	}
+	public void DestroyAroundDesignation(Vector3 coordinate){
+		// 上
 
-
-/*		foreach (char item in question)
-		{
-			GameObject obj = Instantiate(BlockPrefab, instantiatePosition[count % 9], Quaternion.identity) as GameObject;
-
-			if(count % 9 == 8){
-				BlockList.Add(info);
-				info = new BlockInfo[3,3];
-			}
-			++count;
+		// BlockList
+		if(coordinate.z != blockLength){
+			BlockList[(int)coordinate.z][(int)coordinate.x,(int)coordinate.y].blockScript.BreakBlock();
 		}
-		BlockList.Add(info);
-
-		 */
-
 	}
 }
