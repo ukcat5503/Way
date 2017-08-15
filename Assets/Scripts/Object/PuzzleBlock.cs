@@ -7,7 +7,15 @@ using UnityEngine;
 
 public class PuzzleBlock : ModelBase {
 
-	public Vector3 Coordinate;
+	public int CoordinateX;
+	public int CoordinateY;
+	public int CoordinateZ;
+
+	public void SetCoordinates(int x, int y, int z){
+		CoordinateX = x;
+		CoordinateY = y;
+		CoordinateZ = z;
+	}
 
 	PuzzleManager puzzleManager;
 
@@ -48,7 +56,13 @@ public class PuzzleBlock : ModelBase {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		updateCoordinate();
+	}
+
+	void updateCoordinate(){
+		CoordinateX = 2 - (int)((transform.position.z + 2.1f) / 2f);
+		CoordinateY = 2 - (int)((transform.position.x + 2.1f) / 2f);
+		CoordinateZ = (int)((transform.position.y - 0.9f) / 2f);
 	}
 
 	public void HitRayFromPlayer(){
@@ -58,7 +72,7 @@ public class PuzzleBlock : ModelBase {
 	public void BreakBlock(){
 		// 散り散りになる処理
 		
-		puzzleManager.DestroyTheBlock(Coordinate);
+		puzzleManager.DestroyTheBlock(CoordinateX, CoordinateY, CoordinateZ);
 	}
 
 

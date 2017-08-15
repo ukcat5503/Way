@@ -32,7 +32,7 @@ public class PuzzleManager : MonoBehaviour {
 
 	List<BlockInfo>[,] BlockList = new List<BlockInfo>[blockLength,blockLength];
 
-	List<Vector3> DeleteBlocks = new List<Vector3>();
+	List<int[]> DeleteBlocks = new List<int[]>();
 
 	[SerializeField]
 	GameObject BlockPrefab;
@@ -84,7 +84,7 @@ public class PuzzleManager : MonoBehaviour {
 					blockinfo.obj = obj;
 					blockinfo.blockScript = obj.GetComponent<PuzzleBlock>();
 					blockinfo.blockScript.SetColorByInt((int)char.GetNumericValue(item.Value[(x * 3 ) + y]));
-					blockinfo.blockScript.Coordinate = new Vector3(x,y,item.Index);
+					blockinfo.blockScript.SetCoordinates(x, y, item.Index);
 					BlockList[x,y].Add(blockinfo);
 				}
 			}
@@ -92,91 +92,139 @@ public class PuzzleManager : MonoBehaviour {
 		}
 	}
 
-	public void DestroyTheBlock(Vector3 coordinate){
-		var obj = BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].obj;
-		BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].blockScript.BreakWait = true;
-		destroyAroundDesignation(coordinate);
+	public void DestroyTheBlock(int x, int y, int z){
+		var obj = BlockList[x, y][z].obj;
+		BlockList[x, y][z].blockScript.BreakWait = true;
+		destroyAroundDesignation(x, y, z);
 
 		BlockInfo b = new BlockInfo();
 		b.blockScript = null;
 		b.obj = null;
-		BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z] = b;
+		BlockList[x, y][z] = b;
 		
-		DeleteBlocks.Add(coordinate);
+		int[] c = {x, y, z};
+		DeleteBlocks.Add(c);
 		Destroy(obj);
 	}
 
 	void deleteBlocksFromList(){
 		if(DeleteBlocks.Count != 0){
-			DeleteBlocks.Sort((a, b) => (int)b.z - (int)a.z);
+			DeleteBlocks.Sort((a, b) => (int)b[2] - (int)a[2]);
 			foreach (var item in DeleteBlocks)
 			{
-				BlockList[(int)item.x,(int)item.y].RemoveAt((int)item.z);
+				// 一つ上の要素の座標を変更しておく
+				// BlockList[(int)item[0],(int)item[1]][(int)item[2] + 1].blockScript.SetCoordinates(item[0], item[1], item[2]);
+
+				(item[0] + "," + item[1] + ":" + item[2] + " 削除").Log();
+				BlockList[(int)item[0],(int)item[1]].RemoveAt((int)item[2]);
 			}
 			DeleteBlocks.Clear();
 		}
 	}
 
-	void destroyAroundDesignation(Vector3 coordinate){
-		// 上
-		if(coordinate.z != height - 1){
-			if(BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z + 1].blockScript != null){
-				if(!BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z + 1].blockScript.BreakWait){
-					if(BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z + 1].blockScript.MyColor == BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor){
-						BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z + 1].blockScript.BreakBlock();
+	void destroyAroundDesignation(int x, int y, int z){
+
+		try
+		{
+			// 上
+			if(z != height - 1){
+				if(BlockList[x,y][z + 1].blockScript != null){
+					if(!BlockList[x,y][z + 1].blockScript.BreakWait){
+						if(BlockList[x,y][z + 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+							BlockList[x,y][z + 1].blockScript.BreakBlock();
+						}
 					}
 				}
 			}
 		}
-		// 下
-		if(coordinate.z != 0){
-			if(BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z - 1].blockScript != null){
-				if(!BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z - 1].blockScript.BreakWait){
-					if(BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z - 1].blockScript.MyColor == BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor){
-						BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z - 1].blockScript.BreakBlock();
+		catch (System.ArgumentOutOfRangeException ignored)
+		{
+			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
+		}
+		try
+		{
+			// 下
+			if(z != 0){
+				if(BlockList[x,y][z - 1].blockScript != null){
+					if(!BlockList[x,y][z - 1].blockScript.BreakWait){
+						if(BlockList[x,y][z - 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+							BlockList[x,y][z - 1].blockScript.BreakBlock();
+						}
 					}
 				}
 			}
 		}
-		// 左
-		if(coordinate.y != 0){
-			if(BlockList[(int)coordinate.x,(int)coordinate.y - 1][(int)coordinate.z].blockScript != null){
-				if(!BlockList[(int)coordinate.x,(int)coordinate.y - 1][(int)coordinate.z].blockScript.BreakWait){
-					if(BlockList[(int)coordinate.x,(int)coordinate.y - 1][(int)coordinate.z].blockScript.MyColor == BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor){
-						BlockList[(int)coordinate.x,(int)coordinate.y - 1][(int)coordinate.z].blockScript.BreakBlock();
+		catch (System.ArgumentOutOfRangeException ignored)
+		{
+			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
+		}
+		try
+		{
+			// 左
+			if(y != 0){
+				if(BlockList[x,y - 1][z].blockScript != null){
+					if(!BlockList[x,y - 1][z].blockScript.BreakWait){
+						if(BlockList[x,y - 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+							BlockList[x,y - 1][z].blockScript.BreakBlock();
+						}
 					}
 				}
 			}
 		}
-		// 右
-		if(coordinate.y != blockLength - 1){
-			if(BlockList[(int)coordinate.x,(int)coordinate.y + 1][(int)coordinate.z].blockScript != null){
-				if(!BlockList[(int)coordinate.x,(int)coordinate.y + 1][(int)coordinate.z].blockScript.BreakWait){
-					if(BlockList[(int)coordinate.x,(int)coordinate.y + 1][(int)coordinate.z].blockScript.MyColor == BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor){
-						BlockList[(int)coordinate.x,(int)coordinate.y + 1][(int)coordinate.z].blockScript.BreakBlock();
+		catch (System.ArgumentOutOfRangeException ignored)
+		{
+			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
+		}
+		try
+		{
+			// 右
+			if(y != blockLength - 1){
+				if(BlockList[x,y + 1][z].blockScript != null){
+					if(!BlockList[x,y + 1][z].blockScript.BreakWait){
+						if(BlockList[x,y + 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+							BlockList[x,y + 1][z].blockScript.BreakBlock();
+						}
 					}
 				}
 			}
 		}
-		// 手前
-		if(coordinate.x != blockLength - 1){
-			if(BlockList[(int)coordinate.x + 1,(int)coordinate.y][(int)coordinate.z].blockScript != null){
-				if(!BlockList[(int)coordinate.x + 1,(int)coordinate.y][(int)coordinate.z].blockScript.BreakWait){
-					if(BlockList[(int)coordinate.x + 1,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor == BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor){
-						BlockList[(int)coordinate.x + 1,(int)coordinate.y][(int)coordinate.z].blockScript.BreakBlock();
+		catch (System.ArgumentOutOfRangeException ignored)
+		{
+			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
+		}
+		try
+		{
+			// 手前
+			if(x != blockLength - 1){
+				if(BlockList[x + 1,y][z].blockScript != null){
+					if(!BlockList[x + 1,y][z].blockScript.BreakWait){
+						if(BlockList[x + 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+							BlockList[x + 1,y][z].blockScript.BreakBlock();
+						}
 					}
 				}
 			}
 		}
-		// 奥
-		if(coordinate.x != 0){
-			if(BlockList[(int)coordinate.x - 1,(int)coordinate.y][(int)coordinate.z].blockScript != null){
-				if(!BlockList[(int)coordinate.x - 1,(int)coordinate.y][(int)coordinate.z].blockScript.BreakWait){
-					if(BlockList[(int)coordinate.x - 1,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor == BlockList[(int)coordinate.x,(int)coordinate.y][(int)coordinate.z].blockScript.MyColor){
-						BlockList[(int)coordinate.x - 1,(int)coordinate.y][(int)coordinate.z].blockScript.BreakBlock();
+		catch (System.ArgumentOutOfRangeException ignored)
+		{
+			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
+		}
+		try
+		{
+			// 奥
+			if(x != 0){
+				if(BlockList[x - 1,y][z].blockScript != null){
+					if(!BlockList[x - 1,y][z].blockScript.BreakWait){
+						if(BlockList[x - 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+							BlockList[x - 1,y][z].blockScript.BreakBlock();
+						}
 					}
 				}
 			}
+		}
+		catch (System.ArgumentOutOfRangeException ignored)
+		{
+			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
 		}
 	}
 }
