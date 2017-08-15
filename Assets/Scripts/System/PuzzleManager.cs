@@ -25,7 +25,7 @@ public class PuzzleManager : MonoBehaviour {
 		public PuzzleBlock blockScript;
 	}
 
-	string question = "012012012012012012210210210";
+	string question = "012012012012012012210210210012012012012012012210210210012012012012012012210210210";
 
 	int height;
 
@@ -48,7 +48,7 @@ public class PuzzleManager : MonoBehaviour {
 
 	void initializePuzzle(string question){
 		if(question.Length % (blockLength * blockLength) != 0){
-			("問題が" + (blockLength * blockLength) + "の倍数ではありません。基本的に問題は3x3の空間で展開されます。足りない段は生成されません。").LogWarning();
+			("問題が" + (blockLength * blockLength) + "の倍数ではありません。問題は" + blockLength + "x" + blockLength + "の空間で展開されます。足りない段は生成されません。").LogWarning();
 		}
 
 		BlockInfo[,] info = new BlockInfo[blockLength,blockLength];
@@ -145,6 +145,6 @@ public class PuzzleManager : MonoBehaviour {
 				}
 			}
 		}
-		
+
 	}
 }
