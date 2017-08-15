@@ -124,8 +124,6 @@ public class PuzzleManager : MonoBehaviour {
 	void destroyAroundDesignation(int x, int y, int z){
 		// 上
 		if(z != height - 1){
-			(BlockList[x,y].Count()).Log();
-			z.Log();
 			if(BlockList[x,y].Count() - 1 > z){
 				if(BlockList[x,y][z + 1].blockScript != null){
 					if(!BlockList[x,y][z + 1].blockScript.BreakWait){
