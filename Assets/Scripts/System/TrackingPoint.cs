@@ -13,11 +13,6 @@ public class TrackingPoint : MonoBehaviour {
     /// </summary>
     Ray ray;
 
-    /// <summary>
-    /// 前フレームで選択していたオブジェクトのユニークID
-    /// </summary>
-    int prevHit = 0;
-    int count = 0;
 
     /// <summary>
     /// 選択対象のレイヤー
@@ -28,21 +23,11 @@ public class TrackingPoint : MonoBehaviour {
 
         ray = new Ray(transform.position, transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 0f, true);
-
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 1000.0f, TargetLayer)) {
-            if(isDecide()){
-                if(prevHit == hit.collider.gameObject.GetInstanceID()){
-                Debug.Log("[" + ++count + "] selecting: " + hit.collider.gameObject.name);
-                // この方法は結構重いので一発で無効にする 改善できたら改善したい
-                hit.collider.SendMessageUpwards("HitRayFromPlayer");
-                hit.collider.enabled = false;
-                }else{
-                    prevHit = hit.collider.gameObject.GetInstanceID();
-                }
-            }else{
-                count = 0;
-            }
+        if(isDecide() && Physics.Raycast(ray, out hit, 1000.0f, TargetLayer)) {
+            // この方法は結構重いので一発で無効にする 改善できたら改善したい
+            hit.collider.SendMessageUpwards("HitRayFromPlayer");
+            hit.collider.enabled = false;
         }
     }
 
@@ -53,7 +38,8 @@ public class TrackingPoint : MonoBehaviour {
 #elif UNITY_IOS
         "未設定".LogWarning();
         return false;
-#endif
+#else
         return false;
+#endif
     }
 }
