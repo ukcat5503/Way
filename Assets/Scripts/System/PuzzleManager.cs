@@ -35,10 +35,9 @@ public class PuzzleManager : MonoBehaviour {
 	List<int[]> DeleteBlocks = new List<int[]>();
 
 	[SerializeField]
-	GameObject BlockPrefab;
-	GameObject puzzleObjectParent;
-
+	GameObject blockPrefab;
 	
+	GameObject puzzleObjectParent;
 
 	// Use this for initialization
 	void Start () {
@@ -78,7 +77,7 @@ public class PuzzleManager : MonoBehaviour {
 				{
 					BlockInfo blockinfo = new BlockInfo();
 
-					GameObject obj = Instantiate(BlockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.identity) as GameObject;
+					GameObject obj = Instantiate(blockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.identity) as GameObject;
 					obj.name = "PuzzleBlock (" + x + "," + y + ":" + item.Index + ")";
 					obj.transform.parent = puzzleObjectParent.transform;
 					blockinfo.obj = obj;
@@ -123,11 +122,11 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	void destroyAroundDesignation(int x, int y, int z){
-
-		try
-		{
-			// 上
-			if(z != height - 1){
+		// 上
+		if(z != height - 1){
+			(BlockList[x,y].Count()).Log();
+			z.Log();
+			if(BlockList[x,y].Count() - 1 > z){
 				if(BlockList[x,y][z + 1].blockScript != null){
 					if(!BlockList[x,y][z + 1].blockScript.BreakWait){
 						if(BlockList[x,y][z + 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -137,31 +136,19 @@ public class PuzzleManager : MonoBehaviour {
 				}
 			}
 		}
-		catch (System.ArgumentOutOfRangeException ignored)
-		{
-			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
-		}
-		try
-		{
-			// 下
-			if(z != 0){
-				if(BlockList[x,y][z - 1].blockScript != null){
-					if(!BlockList[x,y][z - 1].blockScript.BreakWait){
-						if(BlockList[x,y][z - 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x,y][z - 1].blockScript.BreakBlock();
-						}
+		// 下
+		if(z != 0){
+			if(BlockList[x,y][z - 1].blockScript != null){
+				if(!BlockList[x,y][z - 1].blockScript.BreakWait){
+					if(BlockList[x,y][z - 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+						BlockList[x,y][z - 1].blockScript.BreakBlock();
 					}
 				}
 			}
 		}
-		catch (System.ArgumentOutOfRangeException ignored)
-		{
-			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
-		}
-		try
-		{
-			// 左
-			if(y != 0){
+		// 左
+		if(y != 0){
+			if(BlockList[x,y - 1].Count() >= z && BlockList[x,y - 1].Count() != 0){
 				if(BlockList[x,y - 1][z].blockScript != null){
 					if(!BlockList[x,y - 1][z].blockScript.BreakWait){
 						if(BlockList[x,y - 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -171,14 +158,9 @@ public class PuzzleManager : MonoBehaviour {
 				}
 			}
 		}
-		catch (System.ArgumentOutOfRangeException ignored)
-		{
-			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
-		}
-		try
-		{
-			// 右
-			if(y != blockLength - 1){
+		// 右
+		if(y != blockLength - 1){
+			if(BlockList[x,y + 1].Count() >= z && BlockList[x,y + 1].Count() != 0){
 				if(BlockList[x,y + 1][z].blockScript != null){
 					if(!BlockList[x,y + 1][z].blockScript.BreakWait){
 						if(BlockList[x,y + 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -188,14 +170,9 @@ public class PuzzleManager : MonoBehaviour {
 				}
 			}
 		}
-		catch (System.ArgumentOutOfRangeException ignored)
-		{
-			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
-		}
-		try
-		{
-			// 手前
-			if(x != blockLength - 1){
+		// 手前
+		if(x != blockLength - 1){
+			if(BlockList[x + 1,y].Count() >= z && BlockList[x + 1,y].Count() != 0){
 				if(BlockList[x + 1,y][z].blockScript != null){
 					if(!BlockList[x + 1,y][z].blockScript.BreakWait){
 						if(BlockList[x + 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -205,14 +182,9 @@ public class PuzzleManager : MonoBehaviour {
 				}
 			}
 		}
-		catch (System.ArgumentOutOfRangeException ignored)
-		{
-			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
-		}
-		try
-		{
-			// 奥
-			if(x != 0){
+		// 奥
+		if(x != 0){
+			if(BlockList[x - 1,y].Count() >= z && BlockList[x - 1,y].Count() != 0){
 				if(BlockList[x - 1,y][z].blockScript != null){
 					if(!BlockList[x - 1,y][z].blockScript.BreakWait){
 						if(BlockList[x - 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -221,10 +193,6 @@ public class PuzzleManager : MonoBehaviour {
 					}
 				}
 			}
-		}
-		catch (System.ArgumentOutOfRangeException ignored)
-		{
-			("例外が発生しました。大半では並びにブロックがない場合の正常な挙動です。\n" + ignored).Log();
 		}
 	}
 }
