@@ -26,7 +26,8 @@ public class PuzzleManager : MonoBehaviour {
 		public PuzzleBlock blockScript;
 	}
 
-	string question = "012012012,012012012,210210210,012012012,012012012,210210210,012012012,012012012,210210210";
+	//string question = "012012012,012012012,210210210,012012012,012012012,210210210,012012012,012012012,210210210";
+	string question = "000000000,000000000,000000000";
 
 	int height;
 
@@ -36,6 +37,9 @@ public class PuzzleManager : MonoBehaviour {
 
 	[SerializeField]
 	GameObject blockPrefab;
+
+	[SerializeField]
+	GameObject breakBlockPrefab;
 	
 	GameObject puzzleObjectParent;
 
@@ -103,6 +107,7 @@ public class PuzzleManager : MonoBehaviour {
 		
 		int[] c = {x, y, z};
 		DeleteBlocks.Add(c);
+		Instantiate(breakBlockPrefab, obj.transform.position, obj.transform.rotation);
 		Destroy(obj);
 	}
 

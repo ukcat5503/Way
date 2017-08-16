@@ -20,7 +20,10 @@ public class PuzzleBlock : ModelBase {
 	PuzzleManager puzzleManager;
 
 	public bool BreakWait = false;
-	
+
+	Vector3 prevPos;
+
+	bool isMove = false;
 
 	public enum ColorName{
 		White,
@@ -50,13 +53,18 @@ public class PuzzleBlock : ModelBase {
 
 	// Use this for initialization
 	void Start () {
+		prevPos = transform.position;
+
 		gameObject.GetComponent<MeshRenderer>().material.color = Colors[MyColor];
 		puzzleManager = GameObject.Find("PuzzleManager").GetComponent<PuzzleManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		isMove = prevPos != transform.position;
+
 		updateCoordinate();
+		prevPos = transform.position;
 	}
 
 	void updateCoordinate(){
@@ -66,7 +74,13 @@ public class PuzzleBlock : ModelBase {
 	}
 
 	public void HitRayFromPlayer(){
-		BreakBlock();
+		if(!isMove){
+			GetComponent<BoxCollider>().enabled = false;
+			BreakBlock();
+		}else{
+			"移動中".Log();
+		}
+		
 	}
 
 	public void BreakBlock(){
