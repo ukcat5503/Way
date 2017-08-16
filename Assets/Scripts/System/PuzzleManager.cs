@@ -125,7 +125,7 @@ public class PuzzleManager : MonoBehaviour {
 					BlockList[(int)item[0],(int)item[1]][i].blockScript.SetCoordinates(item[0], item[1], i - 1);
 				}
 
-				(item[0] + "," + item[1] + ":" + item[2] + " 削除").Log();
+				// (item[0] + "," + item[1] + ":" + item[2] + " 削除").Log();
 				BlockList[(int)item[0],(int)item[1]].RemoveAt((int)item[2]);
 			}
 			DeleteBlocks.Clear();
@@ -135,7 +135,7 @@ public class PuzzleManager : MonoBehaviour {
 	void destroyAroundDesignation(int x, int y, int z){
 		// 上
 		if(z != height - 1){
-			if(BlockList[x,y].Count() - 1 > z){
+			if(BlockList[x,y].Count() > z + 1){
 				if(BlockList[x,y][z + 1].blockScript != null){
 					if(!BlockList[x,y][z + 1].blockScript.BreakWait){
 						if(BlockList[x,y][z + 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -157,7 +157,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		// 左
 		if(y != 0){
-			if(BlockList[x,y - 1].Count() >= z && BlockList[x,y - 1].Count() != 0){
+			if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
 				if(BlockList[x,y - 1][z].blockScript != null){
 					if(!BlockList[x,y - 1][z].blockScript.BreakWait){
 						if(BlockList[x,y - 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -169,7 +169,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		// 右
 		if(y != blockLength - 1){
-			if(BlockList[x,y + 1].Count() >= z && BlockList[x,y + 1].Count() != 0){
+			if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
 				if(BlockList[x,y + 1][z].blockScript != null){
 					if(!BlockList[x,y + 1][z].blockScript.BreakWait){
 						if(BlockList[x,y + 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -181,7 +181,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		// 手前
 		if(x != blockLength - 1){
-			if(BlockList[x + 1,y].Count() >= z && BlockList[x + 1,y].Count() != 0){
+			if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
 				if(BlockList[x + 1,y][z].blockScript != null){
 					if(!BlockList[x + 1,y][z].blockScript.BreakWait){
 						if(BlockList[x + 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
@@ -193,7 +193,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		// 奥
 		if(x != 0){
-			if(BlockList[x - 1,y].Count() >= z && BlockList[x - 1,y].Count() != 0){
+			if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
 				if(BlockList[x - 1,y][z].blockScript != null){
 					if(!BlockList[x - 1,y][z].blockScript.BreakWait){
 						if(BlockList[x - 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){

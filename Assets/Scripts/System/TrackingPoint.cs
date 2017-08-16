@@ -25,6 +25,7 @@ public class TrackingPoint : MonoBehaviour {
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 0f, true);
         RaycastHit hit;
         if(isDecide() && Physics.Raycast(ray, out hit, 1000.0f, TargetLayer)) {
+            hit.transform.name.Log();
             hit.collider.SendMessageUpwards("HitRayFromPlayer");
         }
     }
