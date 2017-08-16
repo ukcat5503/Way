@@ -22,12 +22,13 @@ public class PuzzleManager : MonoBehaviour {
 	};
 
 	struct BlockInfo{
+		public int id;
 		public GameObject obj;
 		public PuzzleBlock blockScript;
 	}
 
-	//string question = "012012012,012012012,210210210,012012012,012012012,210210210,012012012,012012012,210210210";
-	string question = "000000000,000000000,000000000";
+	string question = "012012012,012012012,210210210,012012012,012012012,210210210,012012012,012012012,210210210";
+	// string question = "000000000,000000000,000000000";
 
 	int height;
 
@@ -84,6 +85,7 @@ public class PuzzleManager : MonoBehaviour {
 					GameObject obj = Instantiate(blockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.identity) as GameObject;
 					obj.name = "PuzzleBlock (" + x + "," + y + ":" + item.Index + ")";
 					obj.transform.parent = puzzleObjectParent.transform;
+					blockinfo.id = obj.GetInstanceID();
 					blockinfo.obj = obj;
 					blockinfo.blockScript = obj.GetComponent<PuzzleBlock>();
 					blockinfo.blockScript.SetColorByInt((int)char.GetNumericValue(item.Value[(x * 3 ) + y]));
@@ -116,8 +118,11 @@ public class PuzzleManager : MonoBehaviour {
 			DeleteBlocks.Sort((a, b) => (int)b[2] - (int)a[2]);
 			foreach (var item in DeleteBlocks)
 			{
-				// 一つ上の要素の座標を変更しておく
-				// BlockList[(int)item[0],(int)item[1]][(int)item[2] + 1].blockScript.SetCoordinates(item[0], item[1], item[2]);
+				// 上の要素の座標を変更しておく
+				for (int i = (int)item[2] + 1; i < BlockList[(int)item[0],(int)item[1]].Count; ++i)
+				{
+					BlockList[(int)item[0],(int)item[1]][i].blockScript.SetCoordinates(item[0], item[1], i - 1);
+				}
 
 				(item[0] + "," + item[1] + ":" + item[2] + " 削除").Log();
 				BlockList[(int)item[0],(int)item[1]].RemoveAt((int)item[2]);

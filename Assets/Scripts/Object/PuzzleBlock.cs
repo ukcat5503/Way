@@ -23,8 +23,6 @@ public class PuzzleBlock : ModelBase {
 
 	Vector3 prevPos;
 
-	bool isMove = false;
-
 	public enum ColorName{
 		White,
 		Red,
@@ -61,26 +59,12 @@ public class PuzzleBlock : ModelBase {
 	
 	// Update is called once per frame
 	void Update () {
-		isMove = prevPos != transform.position;
-
-		updateCoordinate();
 		prevPos = transform.position;
 	}
 
-	void updateCoordinate(){
-		CoordinateX = 2 - (int)((transform.position.z + 2.1f) / 2f);
-		CoordinateY = 2 - (int)((transform.position.x + 2.1f) / 2f);
-		CoordinateZ = (int)((transform.position.y - 0.9f) / 2f);
-	}
-
 	public void HitRayFromPlayer(){
-		if(!isMove){
-			GetComponent<BoxCollider>().enabled = false;
-			BreakBlock();
-		}else{
-			"移動中".Log();
-		}
-		
+		GetComponent<BoxCollider>().enabled = false;
+		BreakBlock();
 	}
 
 	public void BreakBlock(){
