@@ -23,6 +23,8 @@ public class PuzzleBlock : ModelBase {
 
 	Vector3 prevPos;
 
+	MeshRenderer meshRenderer;
+
 	public enum ColorName{
 		White,
 		Red,
@@ -49,11 +51,16 @@ public class PuzzleBlock : ModelBase {
 		MyColor = (ColorName)color;
 	}
 
+	public Color GetColor(){
+		return meshRenderer.material.color;
+	}
+
 	// Use this for initialization
 	void Start () {
 		prevPos = transform.position;
+		meshRenderer = GetComponent<MeshRenderer>();
 
-		gameObject.GetComponent<MeshRenderer>().material.color = Colors[MyColor];
+		meshRenderer.material.color = Colors[MyColor];
 		puzzleManager = GameObject.Find("PuzzleManager").GetComponent<PuzzleManager>();
 	}
 	
@@ -68,8 +75,6 @@ public class PuzzleBlock : ModelBase {
 	}
 
 	public void BreakBlock(){
-		// 散り散りになる処理
-		
 		puzzleManager.DestroyTheBlock(CoordinateX, CoordinateY, CoordinateZ);
 	}
 

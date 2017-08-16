@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class BreakBlockFragment : MonoBehaviour {
 
+	MeshRenderer meshRenderer;
+
+	[HideInInspector]
+	public Color CubeColor;
+
 	[SerializeField]
-	float deleteHeight = -15f;
+	int deleteCount = 0;
+	int count = 0;
+
+	void Start(){
+		meshRenderer = gameObject.GetComponent<MeshRenderer>();
+		meshRenderer.material.color = CubeColor;
+	}
 
 	// Update is called once per frame
 	void Update () {
-		if(deleteHeight > transform.position.y){
+		if(++count > deleteCount){
 			Destroy(gameObject);
 		}
+
+		meshRenderer.material.color = new Color(CubeColor.r, CubeColor.g, CubeColor.b, 1f - ((float)count / (float)deleteCount));
 	}
 }

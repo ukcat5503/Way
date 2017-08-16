@@ -98,7 +98,7 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	public void DestroyTheBlock(int x, int y, int z){
-		var obj = BlockList[x, y][z].obj;
+		var obj = BlockList[x, y][z];
 		BlockList[x, y][z].blockScript.BreakWait = true;
 		destroyAroundDesignation(x, y, z);
 
@@ -109,8 +109,9 @@ public class PuzzleManager : MonoBehaviour {
 		
 		int[] c = {x, y, z};
 		DeleteBlocks.Add(c);
-		Instantiate(breakBlockPrefab, obj.transform.position, obj.transform.rotation);
-		Destroy(obj);
+		var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
+		breakObj.GetComponent<BreakBlock>().CubeColor = obj.blockScript.GetColor();
+		Destroy(obj.obj);
 	}
 
 	void deleteBlocksFromList(){

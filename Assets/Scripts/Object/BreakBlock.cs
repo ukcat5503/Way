@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BreakBlock : MonoBehaviour {
 
+	[HideInInspector]
+	public Color CubeColor;
+
 	[SerializeField]
 	GameObject fragment;
 
@@ -23,6 +26,7 @@ public class BreakBlock : MonoBehaviour {
 					Vector3 pos = new Vector3(transform.position.x - 0.75f + ((float)x * cubeSize), (transform.position.y - 0.75f + (float)y * cubeSize), (transform.position.z - 0.75f + (float)z * cubeSize));
 					var obj = Instantiate(fragment, pos, Quaternion.identity) as GameObject;
 					obj.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
+					obj.GetComponent<BreakBlockFragment>().CubeColor = CubeColor;
 				}
 			}
 		}

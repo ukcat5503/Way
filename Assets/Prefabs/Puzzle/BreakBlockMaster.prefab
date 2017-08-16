@@ -51,5 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d86f032f34a475e850bfff26432b23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CubeColor: {r: 0, g: 0, b: 0, a: 0}
   fragment: {fileID: 1526062369733468, guid: 9dc5555d41b514598b5d2efb51311bc6, type: 2}
-  fragmentSizeWidth: 4
+  fragmentSizeWidth: 2
