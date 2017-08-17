@@ -35,8 +35,7 @@ public class TrackingPoint : MonoBehaviour {
 #if UNITY_EDITOR
         return Input.GetKeyUp(KeyCode.Return);
 #elif UNITY_IOS
-        "未設定".LogWarning();
-        return false;
+        return Input.touchCount == 1;
 #else
         return false;
 #endif

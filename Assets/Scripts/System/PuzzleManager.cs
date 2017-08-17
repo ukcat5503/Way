@@ -41,6 +41,8 @@ public class PuzzleManager : MonoBehaviour {
 
 	[SerializeField]
 	GameObject breakBlockPrefab;
+	[SerializeField]
+	GameObject goalBlockPrefab;
 	
 	GameObject puzzleObjectParent;
 
@@ -95,6 +97,11 @@ public class PuzzleManager : MonoBehaviour {
 			}
 		++height;
 		}
+
+		// ゴール生成
+		GameObject goal = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 4, 0), Quaternion.identity) as GameObject;
+		goal.name = "GoalBlock";
+		goal.transform.parent = puzzleObjectParent.transform;
 	}
 
 	public void DestroyTheBlock(int x, int y, int z){
