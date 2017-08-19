@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 419543680}
   - component: {fileID: 419543681}
   m_Layer: 0
-  m_Name: Stage
+  m_Name: StageMaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -364,8 +364,8 @@ GameObject:
   - component: {fileID: 2015474849}
   - component: {fileID: 2015474848}
   m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
+  m_Name: Stage
+  m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

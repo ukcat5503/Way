@@ -44,7 +44,9 @@ public class PuzzleManager : MonoBehaviour {
 	[SerializeField]
 	GameObject goalBlockPrefab;
 	
-	GameObject puzzleObjectParent;
+	GameObject puzzleParentObject;
+	GameObject goalObject;
+	GameObject stageObject;
 
 	// Use this for initialization
 	void Start () {
@@ -57,15 +59,11 @@ public class PuzzleManager : MonoBehaviour {
 			}
 		}
 
-		puzzleObjectParent = GameObject.Find("Stage/PuzzleObject");
+		stageObject = GameObject.Find("StageMaster/Stage");
+		puzzleParentObject = GameObject.Find("StageMaster/PuzzleObject");
 		initializePuzzle(question);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	void LateUpdate(){
 		deleteBlocksFromList();
 	}
@@ -86,7 +84,7 @@ public class PuzzleManager : MonoBehaviour {
 
 					GameObject obj = Instantiate(blockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.identity) as GameObject;
 					obj.name = "PuzzleBlock (" + x + "," + y + ":" + item.Index + ")";
-					obj.transform.parent = puzzleObjectParent.transform;
+					obj.transform.parent = puzzleParentObject.transform;
 					blockinfo.id = obj.GetInstanceID();
 					blockinfo.obj = obj;
 					blockinfo.blockScript = obj.GetComponent<PuzzleBlock>();
@@ -99,26 +97,9 @@ public class PuzzleManager : MonoBehaviour {
 		}
 
 		// ゴール生成
-		GameObject goal = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 4, 0), Quaternion.identity) as GameObject;
-		goal.name = "GoalBlock";
-		goal.transform.parent = puzzleObjectParent.transform;
-	}
-
-	public void DestroyTheBlock(int x, int y, int z){
-		var obj = BlockList[x, y][z];
-		BlockList[x, y][z].blockScript.BreakWait = true;
-		destroyAroundDesignation(x, y, z);
-
-		BlockInfo b = new BlockInfo();
-		b.blockScript = null;
-		b.obj = null;
-		BlockList[x, y][z] = b;
-		
-		int[] c = {x, y, z};
-		DeleteBlocks.Add(c);
-		var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
-		breakObj.GetComponent<BreakBlock>().CubeColor = obj.blockScript.GetColor();
-		Destroy(obj.obj);
+		goalObject = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 4, 0), Quaternion.identity) as GameObject;
+		goalObject.name = "GoalBlock";
+		goalObject.transform.parent = puzzleParentObject.transform;
 	}
 
 	void deleteBlocksFromList(){
@@ -210,5 +191,26 @@ public class PuzzleManager : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void DestroyTheBlock(int x, int y, int z){
+		var obj = BlockList[x, y][z];
+		BlockList[x, y][z].blockScript.BreakWait = true;
+		destroyAroundDesignation(x, y, z);
+
+		BlockInfo b = new BlockInfo();
+		b.blockScript = null;
+		b.obj = null;
+		BlockList[x, y][z] = b;
+		
+		int[] c = {x, y, z};
+		DeleteBlocks.Add(c);
+		var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
+		breakObj.GetComponent<BreakBlock>().CubeColor = obj.blockScript.GetColor();
+		Destroy(obj.obj);
+	}
+
+	public void StageClear(){
+		"clear".Log();
 	}
 }
