@@ -13,7 +13,6 @@ public class TrackingPoint : MonoBehaviour {
     /// </summary>
     Ray ray;
 
-
     /// <summary>
     /// 選択対象のレイヤー
     /// </summary>

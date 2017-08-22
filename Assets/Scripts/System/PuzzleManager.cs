@@ -27,8 +27,9 @@ public class PuzzleManager : MonoBehaviour {
 		public PuzzleBlock blockScript;
 	}
 
-	string question = "012012012,012012012,210210210,012012012,012012012,210210210,012012012,012012012,210210210";
-	// string question = "000000000,000000000,000000000";
+	// string question = "012012012,012012012,333333333,012012012,012012012,210210210,012012012,012012012,210210210";
+	// string question = "123000000";
+	string question = "222222222,111111111,222222222";
 
 	int height;
 
@@ -43,10 +44,13 @@ public class PuzzleManager : MonoBehaviour {
 	GameObject breakBlockPrefab;
 	[SerializeField]
 	GameObject goalBlockPrefab;
+	[SerializeField]
+	GameObject buildingPrefab;
 	
 	GameObject puzzleParentObject;
 	GameObject goalObject;
 	GameObject stageObject;
+
 
 	// Use this for initialization
 	void Start () {
@@ -97,7 +101,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 
 		// ゴール生成
-		goalObject = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 4, 0), Quaternion.identity) as GameObject;
+		goalObject = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 6, 0), Quaternion.identity) as GameObject;
 		goalObject.name = "GoalBlock";
 		goalObject.transform.parent = puzzleParentObject.transform;
 	}
@@ -206,11 +210,11 @@ public class PuzzleManager : MonoBehaviour {
 		int[] c = {x, y, z};
 		DeleteBlocks.Add(c);
 		var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
-		breakObj.GetComponent<BreakBlock>().CubeColor = obj.blockScript.GetColor();
+		breakObj.GetComponent<BreakBlockParticle>().CubeColor = obj.blockScript.GetColor();
 		Destroy(obj.obj);
 	}
 
 	public void StageClear(){
-		"clear".Log();
+		var obj = Instantiate(buildingPrefab, new Vector3(0,4,0), Quaternion.identity) as GameObject;
 	}
 }
