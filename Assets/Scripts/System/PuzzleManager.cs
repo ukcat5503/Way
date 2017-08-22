@@ -73,6 +73,8 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	void initializePuzzle(string question){
+		height = 0;
+
 		string[] questionArr = question.Split(',');
 
 		foreach (var item in questionArr.Select((v, i) => new {Value = v, Index = i }))
@@ -86,7 +88,7 @@ public class PuzzleManager : MonoBehaviour {
 				{
 					BlockInfo blockinfo = new BlockInfo();
 
-					GameObject obj = Instantiate(blockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.identity) as GameObject;
+					GameObject obj = Instantiate(blockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.Euler(Vector3.zero)) as GameObject;
 					obj.name = "PuzzleBlock (" + x + "," + y + ":" + item.Index + ")";
 					obj.transform.parent = puzzleParentObject.transform;
 					blockinfo.id = obj.GetInstanceID();
@@ -101,7 +103,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 
 		// ゴール生成
-		goalObject = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 6, 0), Quaternion.identity) as GameObject;
+		goalObject = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 4, 0), Quaternion.identity) as GameObject;
 		goalObject.name = "GoalBlock";
 		goalObject.transform.parent = puzzleParentObject.transform;
 	}
@@ -116,8 +118,6 @@ public class PuzzleManager : MonoBehaviour {
 				{
 					BlockList[(int)item[0],(int)item[1]][i].blockScript.SetCoordinates(item[0], item[1], i - 1);
 				}
-
-				// (item[0] + "," + item[1] + ":" + item[2] + " 削除").Log();
 				BlockList[(int)item[0],(int)item[1]].RemoveAt((int)item[2]);
 			}
 			DeleteBlocks.Clear();
@@ -215,6 +215,14 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	public void StageClear(){
-		var obj = Instantiate(buildingPrefab, new Vector3(0,4,0), Quaternion.identity) as GameObject;
+		Instantiate(buildingPrefab, new Vector3(0,4,0), Quaternion.identity);
+
+		// 次を生成
+		StartCoroutine("NextStage");
 	}
+
+	IEnumerator NextStage() {  
+        yield return new WaitForSeconds (2.0f);
+		initializePuzzle(question);
+    } 
 }
