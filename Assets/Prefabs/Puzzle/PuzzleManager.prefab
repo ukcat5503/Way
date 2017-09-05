@@ -57,5 +57,5 @@ MonoBehaviour:
     type: 2}
   goalBlockPrefab: {fileID: 1423775543931678, guid: 8d399883fe7d64fe7890e4b1cfa65f74,
     type: 2}
-  buildingPrefab: {fileID: 1348654955843736, guid: f02258f0f76b84bedbedd9fb805013e6,
+  buildingPrefab: {fileID: 1444554501326080, guid: f02258f0f76b84bedbedd9fb805013e6,
     type: 2}

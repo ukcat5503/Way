@@ -215,9 +215,9 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	public void StageClear(){
-		Instantiate(buildingPrefab, new Vector3(0,4,0), Quaternion.identity);
+		Instantiate(buildingPrefab, new Vector3(0 + buildingPrefab.transform.position.x,4 + buildingPrefab.transform.position.y,0 + buildingPrefab.transform.position.z), buildingPrefab.transform.rotation);
 
-		// 次を生成
+		// 次のパズルを生成
 		StartCoroutine("NextStage");
 	}
 
