@@ -124,6 +124,61 @@ public class PuzzleManager : MonoBehaviour {
 		}
 	}
 
+	void changeColorAroundDesignation(int x, int y, int z, PuzzleBlock.ColorName color){
+		// 上
+		if(z != height - 1){
+			if(BlockList[x,y].Count() > z + 1){
+				if(BlockList[x,y][z + 1].blockScript != null){
+					BlockList[x,y][z + 1].blockScript.MyColor = color;
+					BlockList[x,y][z + 1].blockScript.ChangeMyColor();
+				}
+			}
+		}
+		// 下
+		if(z != 0){
+			if(BlockList[x,y][z - 1].blockScript != null){
+					BlockList[x,y][z - 1].blockScript.MyColor = color;
+					BlockList[x,y][z - 1].blockScript.ChangeMyColor();
+			}
+		}
+		// 左
+		if(y != 0){
+			if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
+				if(BlockList[x,y - 1][z].blockScript != null){
+					BlockList[x,y - 1][z].blockScript.MyColor = color;
+					BlockList[x,y - 1][z].blockScript.ChangeMyColor();
+				}
+			}
+		}
+		// 右
+		if(y != blockLength - 1){
+			if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
+				if(BlockList[x,y + 1][z].blockScript != null){
+					BlockList[x,y + 1][z].blockScript.MyColor = color;
+					BlockList[x,y + 1][z].blockScript.ChangeMyColor();
+				}
+			}
+		}
+		// 手前
+		if(x != blockLength - 1){
+			if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
+				if(BlockList[x + 1,y][z].blockScript != null){
+					BlockList[x + 1,y][z].blockScript.MyColor = color;
+					BlockList[x + 1,y][z].blockScript.ChangeMyColor();
+				}
+			}
+		}
+		// 奥
+		if(x != 0){
+			if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
+				if(BlockList[x - 1,y][z].blockScript != null){
+					BlockList[x - 1,y][z].blockScript.MyColor = color;
+					BlockList[x - 1,y][z].blockScript.ChangeMyColor();
+				}
+			}
+		}
+	}
+
 	void destroyAroundDesignation(int x, int y, int z){
 		// 上
 		if(z != height - 1){
@@ -195,6 +250,12 @@ public class PuzzleManager : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void ChangeColorTheBlock(int x, int y, int z, PuzzleBlock.ColorName color){
+		var obj = BlockList[x, y][z];
+		// BlockList[x, y][z].blockScript.
+		changeColorAroundDesignation(x, y, z, color);
 	}
 
 	public void DestroyTheBlock(int x, int y, int z){
