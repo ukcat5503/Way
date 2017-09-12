@@ -42,7 +42,7 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     void settingCameraFromDevice()
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
         // カメラは１つで良いのでRightを無効化する
         eyeRight.gameObject.SetActive(false);
 
@@ -67,7 +67,7 @@ public class CameraManager : MonoBehaviour
 
 
     void cameraControl(){
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
         // マウスの移動でカメラ回転
         transform.rotation = Quaternion.Euler(
             gameObject.transform.rotation.eulerAngles.x - Input.GetAxis("Mouse Y") * 2f,

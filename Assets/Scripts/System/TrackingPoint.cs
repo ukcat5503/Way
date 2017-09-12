@@ -31,7 +31,7 @@ public class TrackingPoint : MonoBehaviour {
 
 
     bool isDecide(){
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
         return Input.GetKeyUp(KeyCode.Return);
 #elif UNITY_IOS
         return Input.touchCount == 1;

@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
     /// デバイスの種類によって異なる設定を一括で設定します。
 	/// </summary>
     void settingFromDevice(){
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
 
 #elif UNITY_IPHONE
         // 画面の向きを右にホームボタンの横画面に変更する
