@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockPrefab: {fileID: 1300432819762712, guid: 13db07d4f651345fa9657cff789ee8e7,
     type: 2}
-  breakBlockPrefab: {fileID: 1616785275089756, guid: 53cfa0746a4f84553a4a59349437fbbc,
+  breakBlockPrefab: {fileID: 1977625410517288, guid: 0f2b98899151a4c479e12a41aae326b8,
     type: 2}
   goalBlockPrefab: {fileID: 1796268367321468, guid: 8d399883fe7d64fe7890e4b1cfa65f74,
     type: 2}
