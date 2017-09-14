@@ -58,27 +58,21 @@ public class PuzzleBlock : ModelBase {
 
 	// Use this for initialization
 	void Start () {
-		prevPos = transform.position;
 		meshRenderer = GetComponent<MeshRenderer>();
-		ChangeMyColor();
+		ChangeMyColor(MyColor);
 		puzzleManager = GameObject.Find("PuzzleManager").GetComponent<PuzzleManager>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		prevPos = transform.position;
-	}
-
-	public void ChangeMyColor(){
-		if(MyColor == ColorName.None){
+	public void ChangeMyColor(ColorName colorName){
+		if(colorName == ColorName.None){
 			BreakBlock();
 		}else{
+			MyColor = colorName;
 			meshRenderer.material.color = Colors[MyColor];
 		}
 	}
 
 	public void HitRayFromPlayer(){
-		// GetComponent<BoxCollider>().enabled = false;
 		ChangeAroundColor();
 	}
 
@@ -87,8 +81,7 @@ public class PuzzleBlock : ModelBase {
 	}
 
 	public void BreakBlock(){
+		// GetComponent<BoxCollider>().enabled = false;
 		puzzleManager.DestroyTheBlock(CoordinateX, CoordinateY, CoordinateZ);
 	}
-
-
 }

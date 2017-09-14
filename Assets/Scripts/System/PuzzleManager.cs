@@ -130,8 +130,7 @@ public class PuzzleManager : MonoBehaviour {
 		// 自分
 		if(BlockList[x,y].Count() > z){
 			if(BlockList[x,y][z].blockScript != null){
-				BlockList[x,y][z].blockScript.MyColor = color;
-				BlockList[x,y][z].blockScript.ChangeMyColor();
+				BlockList[x,y][z].blockScript.ChangeMyColor(color);
 			}
 		}
 
@@ -139,24 +138,21 @@ public class PuzzleManager : MonoBehaviour {
 		if(z != height - 1){
 			if(BlockList[x,y].Count() > z + 1){
 				if(BlockList[x,y][z + 1].blockScript != null){
-					BlockList[x,y][z + 1].blockScript.MyColor = color;
-					BlockList[x,y][z + 1].blockScript.ChangeMyColor();
+					BlockList[x,y][z + 1].blockScript.ChangeMyColor(color);
 				}
 			}
 		}
 		// 下
 		if(z != 0){
 			if(BlockList[x,y][z - 1].blockScript != null){
-					BlockList[x,y][z - 1].blockScript.MyColor = color;
-					BlockList[x,y][z - 1].blockScript.ChangeMyColor();
+					BlockList[x,y][z - 1].blockScript.ChangeMyColor(color);
 			}
 		}
 		// 左
 		if(y != 0){
 			if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
 				if(BlockList[x,y - 1][z].blockScript != null){
-					BlockList[x,y - 1][z].blockScript.MyColor = color;
-					BlockList[x,y - 1][z].blockScript.ChangeMyColor();
+					BlockList[x,y - 1][z].blockScript.ChangeMyColor(color);
 				}
 			}
 		}
@@ -164,8 +160,7 @@ public class PuzzleManager : MonoBehaviour {
 		if(y != blockLength - 1){
 			if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
 				if(BlockList[x,y + 1][z].blockScript != null){
-					BlockList[x,y + 1][z].blockScript.MyColor = color;
-					BlockList[x,y + 1][z].blockScript.ChangeMyColor();
+					BlockList[x,y + 1][z].blockScript.ChangeMyColor(color);
 				}
 			}
 		}
@@ -173,8 +168,7 @@ public class PuzzleManager : MonoBehaviour {
 		if(x != blockLength - 1){
 			if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
 				if(BlockList[x + 1,y][z].blockScript != null){
-					BlockList[x + 1,y][z].blockScript.MyColor = color;
-					BlockList[x + 1,y][z].blockScript.ChangeMyColor();
+					BlockList[x + 1,y][z].blockScript.ChangeMyColor(color);
 				}
 			}
 		}
@@ -182,108 +176,107 @@ public class PuzzleManager : MonoBehaviour {
 		if(x != 0){
 			if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
 				if(BlockList[x - 1,y][z].blockScript != null){
-					BlockList[x - 1,y][z].blockScript.MyColor = color;
-					BlockList[x - 1,y][z].blockScript.ChangeMyColor();
+					BlockList[x - 1,y][z].blockScript.ChangeMyColor(color);
 				}
 			}
 		}
 	}
 
 	void destroyAroundDesignation(int x, int y, int z){
-		// 上
-		if(z != height - 1){
-			if(BlockList[x,y].Count() > z + 1){
-				if(BlockList[x,y][z + 1].blockScript != null){
-					if(!BlockList[x,y][z + 1].blockScript.BreakWait){
-						if(BlockList[x,y][z + 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x,y][z + 1].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
-		}
-		// 下
-		if(z != 0){
-			if(BlockList[x,y][z - 1].blockScript != null){
-				if(!BlockList[x,y][z - 1].blockScript.BreakWait){
-					if(BlockList[x,y][z - 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-						BlockList[x,y][z - 1].blockScript.BreakBlock();
-					}
-				}
-			}
-		}
-		// 左
-		if(y != 0){
-			if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
-				if(BlockList[x,y - 1][z].blockScript != null){
-					if(!BlockList[x,y - 1][z].blockScript.BreakWait){
-						if(BlockList[x,y - 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x,y - 1][z].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
-		}
-		// 右
-		if(y != blockLength - 1){
-			if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
-				if(BlockList[x,y + 1][z].blockScript != null){
-					if(!BlockList[x,y + 1][z].blockScript.BreakWait){
-						if(BlockList[x,y + 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x,y + 1][z].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
-		}
-		// 手前
-		if(x != blockLength - 1){
-			if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
-				if(BlockList[x + 1,y][z].blockScript != null){
-					if(!BlockList[x + 1,y][z].blockScript.BreakWait){
-						if(BlockList[x + 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x + 1,y][z].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
-		}
-		// 奥
-		if(x != 0){
-			if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
-				if(BlockList[x - 1,y][z].blockScript != null){
-					if(!BlockList[x - 1,y][z].blockScript.BreakWait){
-						if(BlockList[x - 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x - 1,y][z].blockScript.BreakBlock();
-						}
+	// 上
+	if(z != height - 1){
+		if(BlockList[x,y].Count() > z + 1){
+			if(BlockList[x,y][z + 1].blockScript != null){
+				if(!BlockList[x,y][z + 1].blockScript.BreakWait){
+					if(BlockList[x,y][z + 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+						BlockList[x,y][z + 1].blockScript.BreakBlock();
 					}
 				}
 			}
 		}
 	}
-
-	public void ChangeColorTheBlock(int x, int y, int z){
-		var obj = BlockList[x, y][z];
-		// BlockList[x, y][z].blockScript.
-		changeColorAroundDesignation(x, y, z, nextColor());
+	// 下
+	if(z != 0){
+		if(BlockList[x,y][z - 1].blockScript != null){
+			if(!BlockList[x,y][z - 1].blockScript.BreakWait){
+				if(BlockList[x,y][z - 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+					BlockList[x,y][z - 1].blockScript.BreakBlock();
+				}
+			}
+		}
 	}
-
-	public void DestroyTheBlock(int x, int y, int z){
-		var obj = BlockList[x, y][z];
-		BlockList[x, y][z].blockScript.BreakWait = true;
-		destroyAroundDesignation(x, y, z);
-
-		BlockInfo b = new BlockInfo();
-		b.blockScript = null;
-		b.obj = null;
-		BlockList[x, y][z] = b;
-		
-		int[] c = {x, y, z};
-		DeleteBlocks.Add(c);
-		var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
-		breakObj.GetComponent<BreakBlockParticle>().CubeColor = obj.blockScript.GetColor();
-		Destroy(obj.obj);
+	// 左
+	if(y != 0){
+		if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
+			if(BlockList[x,y - 1][z].blockScript != null){
+				if(!BlockList[x,y - 1][z].blockScript.BreakWait){
+					if(BlockList[x,y - 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+						BlockList[x,y - 1][z].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
 	}
+	// 右
+	if(y != blockLength - 1){
+		if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
+			if(BlockList[x,y + 1][z].blockScript != null){
+				if(!BlockList[x,y + 1][z].blockScript.BreakWait){
+					if(BlockList[x,y + 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+						BlockList[x,y + 1][z].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+	}
+	// 手前
+	if(x != blockLength - 1){
+		if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
+			if(BlockList[x + 1,y][z].blockScript != null){
+				if(!BlockList[x + 1,y][z].blockScript.BreakWait){
+					if(BlockList[x + 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+						BlockList[x + 1,y][z].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+	}
+	// 奥
+	if(x != 0){
+		if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
+			if(BlockList[x - 1,y][z].blockScript != null){
+				if(!BlockList[x - 1,y][z].blockScript.BreakWait){
+					if(BlockList[x - 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
+						BlockList[x - 1,y][z].blockScript.BreakBlock();
+					}
+				}
+			}
+		}
+	}
+}
+
+public void ChangeColorTheBlock(int x, int y, int z){
+	var obj = BlockList[x, y][z];
+	// BlockList[x, y][z].blockScript.
+	changeColorAroundDesignation(x, y, z, nextColor());
+}
+
+public void DestroyTheBlock(int x, int y, int z){
+	var obj = BlockList[x, y][z];
+	BlockList[x, y][z].blockScript.BreakWait = true;
+	destroyAroundDesignation(x, y, z);
+
+	BlockInfo b = new BlockInfo();
+	b.blockScript = null;
+	b.obj = null;
+	BlockList[x, y][z] = b;
+	
+	int[] c = {x, y, z};
+	DeleteBlocks.Add(c);
+	var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
+	breakObj.GetComponent<BreakBlockParticle>().CubeColor = obj.blockScript.GetColor();
+	Destroy(obj.obj);
+}
 
 	PuzzleBlock.ColorName nextColor(){
 		currentColor = (currentColor + 1 < colorOrder.Length ? ++currentColor : currentColor = 0);
