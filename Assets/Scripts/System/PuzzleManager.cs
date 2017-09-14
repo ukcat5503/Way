@@ -258,7 +258,12 @@ public class PuzzleManager : MonoBehaviour {
 public void ChangeColorTheBlock(int x, int y, int z){
 	var obj = BlockList[x, y][z];
 	// BlockList[x, y][z].blockScript.
-	changeColorAroundDesignation(x, y, z, nextColor());
+	var color = nextColor();
+	if(color == PuzzleBlock.ColorName.None){
+		BlockList[x,y][z].blockScript.ChangeMyColor(color);
+	}else{
+		changeColorAroundDesignation(x, y, z, color);
+	}
 }
 
 public void DestroyTheBlock(int x, int y, int z){
