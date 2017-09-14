@@ -30,8 +30,10 @@ public class PuzzleManager : MonoBehaviour {
 	// string question = "012012012,012012012,333333333,012012012,012012012,210210210,012012012,012012012,210210210";
 	// string question = "123000000";
 	string question = "222222222,111111111,222222222";
+	string colorOrder = "2340";
 
 	int height;
+	int currentColor = 0;
 
 	List<BlockInfo>[,] BlockList = new List<BlockInfo>[blockLength,blockLength];
 
@@ -125,6 +127,14 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	void changeColorAroundDesignation(int x, int y, int z, PuzzleBlock.ColorName color){
+		// 自分
+		if(BlockList[x,y].Count() > z){
+			if(BlockList[x,y][z].blockScript != null){
+				BlockList[x,y][z].blockScript.MyColor = color;
+				BlockList[x,y][z].blockScript.ChangeMyColor();
+			}
+		}
+
 		// 上
 		if(z != height - 1){
 			if(BlockList[x,y].Count() > z + 1){
@@ -252,10 +262,10 @@ public class PuzzleManager : MonoBehaviour {
 		}
 	}
 
-	public void ChangeColorTheBlock(int x, int y, int z, PuzzleBlock.ColorName color){
+	public void ChangeColorTheBlock(int x, int y, int z){
 		var obj = BlockList[x, y][z];
 		// BlockList[x, y][z].blockScript.
-		changeColorAroundDesignation(x, y, z, color);
+		changeColorAroundDesignation(x, y, z, nextColor());
 	}
 
 	public void DestroyTheBlock(int x, int y, int z){
@@ -275,6 +285,12 @@ public class PuzzleManager : MonoBehaviour {
 		Destroy(obj.obj);
 	}
 
+	PuzzleBlock.ColorName nextColor(){
+		currentColor = (currentColor + 1 < colorOrder.Length ? ++currentColor : currentColor = 0);
+		return (PuzzleBlock.ColorName)(int)char.GetNumericValue(colorOrder[currentColor]);
+		// return PuzzleBlock.ColorName.White;
+	}
+
 	public void StageClear(){
 		Instantiate(buildingPrefab, new Vector3(0 + buildingPrefab.transform.position.x,4 + buildingPrefab.transform.position.y,0 + buildingPrefab.transform.position.z), buildingPrefab.transform.rotation);
 
@@ -285,5 +301,5 @@ public class PuzzleManager : MonoBehaviour {
 	IEnumerator NextStage() {  
         yield return new WaitForSeconds (2.0f);
 		initializePuzzle(question);
-    } 
+    }
 }
