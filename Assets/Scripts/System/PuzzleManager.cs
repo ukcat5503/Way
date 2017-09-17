@@ -29,12 +29,17 @@ public class PuzzleManager : MonoBehaviour {
 
 	// string question = "012012012,012012012,333333333,012012012,012012012,210210210,012012012,012012012,210210210";
 	// string question = "123000000";
-	string question = "222222222,111111111,222222222";
-	string colorOrder = "2340";
+	static string question = "222222222,111111111,222222222";
+	static string colorOrder = "2340";
+	public static string ColorOrder{
+		get { return colorOrder; }
+	}
 
 	int height;
-	int currentColor = 0;
-
+	static int currentColor = -1;	
+	public static int CurrentColor{
+		get { return currentColor; }
+	}
 	List<BlockInfo>[,] BlockList = new List<BlockInfo>[blockLength,blockLength];
 
 	List<int[]> DeleteBlocks = new List<int[]>();
@@ -286,7 +291,6 @@ public void DestroyTheBlock(int x, int y, int z){
 	PuzzleBlock.ColorName nextColor(){
 		currentColor = (currentColor + 1 < colorOrder.Length ? ++currentColor : currentColor = 0);
 		return (PuzzleBlock.ColorName)(int)char.GetNumericValue(colorOrder[currentColor]);
-		// return PuzzleBlock.ColorName.White;
 	}
 
 	public void StageClear(){

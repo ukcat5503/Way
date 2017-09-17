@@ -34,8 +34,8 @@ public class PuzzleBlock : ModelBase {
 		length
 	}
 
-	static readonly Dictionary<ColorName,Color32> Colors = new Dictionary<ColorName,Color32>() {
-		{ColorName.None, new Color32(0,0,0,0)},
+	public static readonly Dictionary<ColorName,Color32> Colors = new Dictionary<ColorName,Color32>() {
+		{ColorName.None, new Color32(0,0,0,255)},
 		{ColorName.White, new Color32(255,255,255,255)},
 		{ColorName.Red, new Color32(175,0,0,255)},
 		{ColorName.Green, new Color32(0,175,0,255)},
