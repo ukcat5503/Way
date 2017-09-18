@@ -627,27 +627,27 @@ Prefab:
     - target: {fileID: 224150668294341976, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0.6963643
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224150668294341976, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0.122787856
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 224150668294341976, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0.6963643
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224150668294341976, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.122787856
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 224150668294341976, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -160
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224150668294341976, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
@@ -661,7 +661,7 @@ Prefab:
     - target: {fileID: 224150668294341976, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
       propertyPath: m_LocalScale.y
-      value: 0.001
+      value: 0.00093
       objectReference: {fileID: 0}
     - target: {fileID: 95734556249340662, guid: 941e31ea438ad4f249e01041e4342457,
         type: 2}
@@ -671,6 +671,15 @@ Prefab:
     - target: {fileID: 1532189581098208, guid: 941e31ea438ad4f249e01041e4342457, type: 2}
       propertyPath: m_Name
       value: InfoPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4033391471760096, guid: 941e31ea438ad4f249e01041e4342457, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 65949022095287668, guid: 941e31ea438ad4f249e01041e4342457,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 95734556249340662, guid: 941e31ea438ad4f249e01041e4342457, type: 2}

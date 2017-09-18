@@ -314,6 +314,7 @@ public void DestroyTheBlock(int x, int y, int z){
 	IEnumerator NextStage() {  
         yield return new WaitForSeconds (2.0f);
 		++currentStage;
+		currentColor = -1;
 		initializePuzzle(question);
     }
 }
