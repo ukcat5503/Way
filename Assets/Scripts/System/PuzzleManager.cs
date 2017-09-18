@@ -30,12 +30,23 @@ public class PuzzleManager : MonoBehaviour {
 	// string question = "012012012,012012012,333333333,012012012,012012012,210210210,012012012,012012012,210210210";
 	// string question = "123000000";
 	static string question = "222222222,111111111,222222222";
-	static string colorOrder = "2340";
+	static string colorOrder = "23030";
 	public static string ColorOrder{
 		get { return colorOrder; }
 	}
 
+	static int totalStage = 10;
+	public static int TotalStage{
+		get { return totalStage; }
+	}
+
+	static int currentStage = 1;
+	public static int CurrentStage{
+		get { return currentStage; }
+	}
+
 	int height;
+
 	static int currentColor = -1;	
 	public static int CurrentColor{
 		get { return currentColor; }
@@ -302,6 +313,7 @@ public void DestroyTheBlock(int x, int y, int z){
 
 	IEnumerator NextStage() {  
         yield return new WaitForSeconds (2.0f);
+		++currentStage;
 		initializePuzzle(question);
     }
 }
