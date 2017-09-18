@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
         myScene = SceneManager.GetActiveScene();
 
-
+        settingFromDevice();
         // タイトル画面を追加する
         ChangeScene(GameState.Title);
 	}
@@ -57,6 +57,9 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
     void settingFromDevice(){
 #if UNITY_EDITOR || UNITY_STANDALONE
+        // カーソル 非表示＆固定
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
 #elif UNITY_IPHONE
         // 画面の向きを右にホームボタンの横画面に変更する
@@ -74,7 +77,7 @@ public class GameManager : MonoBehaviour {
                 break;
         }
 #else
-    Debug.LogWarning("Any other platform");
+        Debug.LogWarning("Any other platform");
 #endif
 	}
 

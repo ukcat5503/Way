@@ -663,7 +663,17 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 0.001
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 95734556249340662, guid: 941e31ea438ad4f249e01041e4342457,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1532189581098208, guid: 941e31ea438ad4f249e01041e4342457, type: 2}
+      propertyPath: m_Name
+      value: InfoPanel
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 95734556249340662, guid: 941e31ea438ad4f249e01041e4342457, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 941e31ea438ad4f249e01041e4342457, type: 2}
   m_IsPrefabParent: 0
 --- !u!20 &813492778 stripped
@@ -1061,4 +1071,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a32ae02c420488bb4198c95f45dc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurnParFrameAngle: -0.1
+  TurnParFrameAngle: -0.2
