@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
 
+	public static int hands;
+
 	const int blockLength = 3;
 
 	const float margin = 2f;
@@ -64,11 +66,13 @@ public class PuzzleManager : MonoBehaviour {
 	GameObject goalBlockPrefab;
 	[SerializeField]
 	GameObject buildingPrefab;
+	[SerializeField]
+	GameObject housePrefab;
+	
 	
 	GameObject puzzleParentObject;
 	GameObject goalObject;
 	GameObject stageObject;
-
 
 	// Use this for initialization
 	void Start () {
@@ -305,8 +309,13 @@ public void DestroyTheBlock(int x, int y, int z){
 	}
 
 	public void StageClear(){
-		Instantiate(buildingPrefab, new Vector3(0 + buildingPrefab.transform.position.x,4 + buildingPrefab.transform.position.y,0 + buildingPrefab.transform.position.z), buildingPrefab.transform.rotation);
-
+		if(hands <= 5){
+			Instantiate(buildingPrefab, new Vector3(0 + buildingPrefab.transform.position.x,4 + buildingPrefab.transform.position.y,0 + buildingPrefab.transform.position.z), buildingPrefab.transform.rotation);
+		}else{
+			Instantiate(housePrefab, new Vector3(0 + housePrefab.transform.position.x,4 + housePrefab.transform.position.y,0 + housePrefab.transform.position.z), housePrefab.transform.rotation);
+		}
+		hands = 0;
+		
 		// 次のパズルを生成
 		StartCoroutine("NextStage");
 	}

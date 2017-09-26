@@ -303,12 +303,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114236924563065338, guid: 0b627510b26094992bf77f07ae926700,
-        type: 2}
-      propertyPath: breakBlockPrefab
-      value: 
-      objectReference: {fileID: 1616785275089756, guid: 53cfa0746a4f84553a4a59349437fbbc,
-        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0b627510b26094992bf77f07ae926700, type: 2}
   m_IsPrefabParent: 0

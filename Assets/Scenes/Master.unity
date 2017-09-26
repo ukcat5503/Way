@@ -221,7 +221,9 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 25
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 81577521871402374, guid: ab338df7271d24566a6cd0066a257c83, type: 2}
+    - {fileID: 81491252789171392, guid: ab338df7271d24566a6cd0066a257c83, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: ab338df7271d24566a6cd0066a257c83, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &448156749
@@ -382,6 +384,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770346868974018, guid: d6a2c982aaa0541ddbd1f13f394f98f9, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6a2c982aaa0541ddbd1f13f394f98f9, type: 2}
@@ -675,6 +681,72 @@ Prefab:
     - {fileID: 114241771554953460, guid: 303baf4b83c2242aca2b85151253a06b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 303baf4b83c2242aca2b85151253a06b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &974101070
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1762245252133688, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114846871315400496, guid: 8e2a4721764e0495d922626666cdb400,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82849552939846328, guid: 8e2a4721764e0495d922626666cdb400,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 82849552939846328, guid: 8e2a4721764e0495d922626666cdb400,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82849552939846328, guid: 8e2a4721764e0495d922626666cdb400,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &1319281575 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4329808247916950, guid: 941e31ea438ad4f249e01041e4342457,
@@ -685,6 +757,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224200908358441700, guid: d6a2c982aaa0541ddbd1f13f394f98f9,
     type: 2}
   m_PrefabInternal: {fileID: 491724797}
+--- !u!1 &1968008879 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1293577541933502, guid: ab338df7271d24566a6cd0066a257c83,
+    type: 2}
+  m_PrefabInternal: {fileID: 335054973}
+--- !u!81 &1968008882
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1968008879}
+  m_Enabled: 1
 --- !u!1 &2020042081
 GameObject:
   m_ObjectHideFlags: 0
