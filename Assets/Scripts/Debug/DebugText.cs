@@ -17,8 +17,8 @@ public class DebugText : MonoBehaviour
     static Dictionary<string, string> outputMessage = new Dictionary<string, string>();
 
     void Start(){
-        keyText =  gameObject.transform.FindChild("Key").GetComponent<Text>();
-        valueText =  gameObject.transform.FindChild("Value").GetComponent<Text>();
+        keyText =  gameObject.transform.Find("Key").GetComponent<Text>();
+        valueText =  gameObject.transform.Find("Value").GetComponent<Text>();
         valueRectTransform = valueText.gameObject.GetComponent<RectTransform>();
     }
 

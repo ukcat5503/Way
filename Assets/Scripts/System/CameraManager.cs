@@ -25,8 +25,8 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         // 自身の下に配置されているカメラを取得する
-        eyeLeft = gameObject.transform.FindChild("EyeLeft").GetComponent<Camera>();
-        eyeRight = gameObject.transform.FindChild("EyeRight").GetComponent<Camera>();
+        eyeLeft = gameObject.transform.Find("EyeLeft").GetComponent<Camera>();
+        eyeRight = gameObject.transform.Find("EyeRight").GetComponent<Camera>();
 
 		settingCameraFromDevice();
     }
