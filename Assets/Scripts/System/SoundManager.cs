@@ -37,7 +37,7 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	void Start(){
-		PlayBGM(BGM.RunTrolley);
+		// PlayBGM(BGM.RunTrolley);
 	}
 
 	public static void PlaySE(SE play){
