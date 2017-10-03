@@ -8,6 +8,9 @@ using UnityEngine;
 public class PuzzleSphere : ModelBase {
 
 	[SerializeField]
+	int instantiateQty = 1;
+
+	[SerializeField]
 	GameObject spherePrefab;
 
 	MeshRenderer meshRenderer;
@@ -20,6 +23,13 @@ public class PuzzleSphere : ModelBase {
 		Blue,
 		length
 	}
+
+	public static Vector2[] instantiatePotision = new Vector2[4] {
+		new Vector2(-1,-1),
+		new Vector2(-1,1),
+		new Vector2(1,1),
+		new Vector2(1,-1)
+	};
 
 	public static readonly Dictionary<ColorName,Color32> Colors = new Dictionary<ColorName,Color32>() {
 		{ColorName.None, new Color32(0,0,0,255)},
@@ -59,11 +69,12 @@ public class PuzzleSphere : ModelBase {
 	}
 
 	public void HitRayFromPlayer(){
-		// ChangeAroundColor();
-		for (int i = 0; i < 4; ++i)
+		for (int i = 0; i < instantiateQty; ++i)
 		{
-			var obj = Instantiate(spherePrefab, transform.position, Quaternion.identity) as GameObject;
-			var size = transform.localScale.x * 0.9f;
+			var size = transform.localScale.x * 0.5f;
+			Vector3 pos = new Vector3((instantiatePotision[i].x * size / 2) + transform.position.x, (instantiatePotision[i].y * size / 2) + transform.position.y, transform.position.z);
+			
+			var obj = Instantiate(spherePrefab, pos, Quaternion.identity) as GameObject;
 			obj.transform.localScale = new Vector3(size, size, size);
 			obj.transform.parent = transform.root.gameObject.transform;
 		}
