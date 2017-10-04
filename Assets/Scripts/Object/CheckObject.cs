@@ -14,6 +14,7 @@ public class CheckObject : MonoBehaviour {
 			if(objList[i] != null){
 				objList[i].material.color = new Color(objList[i].material.color.r, objList[i].material.color.g, objList[i].material.color.b, objList[i].material.color.a - (1f / frameToTransparency));
 				if(objList[i].material.color.a < 0){
+					PuzzleManager.DeleteFromList(objList[i].gameObject.GetInstanceID());
 					Destroy(objList[i].gameObject);
 					objList.RemoveAt(i);
 				}

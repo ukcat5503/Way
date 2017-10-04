@@ -7,11 +7,8 @@ using UnityEngine;
 
 public class PuzzleSphere : ModelBase {
 
-
-
 	[SerializeField]
 	GameObject spherePrefab;
-
 	MeshRenderer meshRenderer;
 
 	public static readonly Dictionary<PuzzleManager.ColorName,Color32> Colors = new Dictionary<PuzzleManager.ColorName,Color32>() {
@@ -43,7 +40,7 @@ public class PuzzleSphere : ModelBase {
 		}
 		ChangeMyColor(MyColor);
 	}
-	
+
 	public void ChangeMyColor(PuzzleManager.ColorName colorName){
 		if(colorName == PuzzleManager.ColorName.None){
 		}else{
@@ -54,8 +51,12 @@ public class PuzzleSphere : ModelBase {
 
 	public void HitRayFromPlayer(){
 		GetComponent<Collider>().enabled = false;
-		PuzzleManager.ChangeAroundColor(transform.position);
+		Vector3 pos = transform.position;
+		var color = MyColor;
+
+		PuzzleManager.ChangeAroundColor(pos);
 		PuzzleManager.SplitSperer(gameObject, MyColor);
+		PuzzleManager.DeleteFromList(gameObject.GetInstanceID());
 		Destroy(gameObject);
 	}
 }
