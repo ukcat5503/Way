@@ -69,19 +69,15 @@ public class PuzzleManager : MonoBehaviour {
 
 	GameObject instantiateSphere(ColorName colorName, Vector3 pos, float size = 4){
 		GameObject obj = Instantiate(spherePrefab, pos, Quaternion.identity) as GameObject;
-	 	puzzleList.Add(obj.GetInstanceID(),new ObjectInfo(obj, obj.GetComponent<PuzzleSphere>()));
+	 	var spherer = obj.GetComponent<PuzzleSphere>();
+		spherer.ChangeMyColor(colorName);
+		puzzleList.Add(obj.GetInstanceID(),new ObjectInfo(obj, spherer));
 		obj.transform.localScale = new Vector3(size, size, size);
 		return obj;
 	}
 
-	public static void SplitSperer(GameObject obj, ColorName colorName){
-		//obj.Log();
-		//obj.transform.position.Log();
-		//obj.GetInstanceID().Log();
-		obj.transform.localScale.x.Log();
+	public static void SplitSphere(GameObject obj, ColorName colorName){
 		var size = obj.transform.localScale.x * 0.5f;
-		size.Log();
-
 		for (int i = 0; i < InstantiateQty; ++i)
 		{
 			Vector3 pos = new Vector3((instantiatePotision[i].x * size / 2) + obj.transform.position.x, (instantiatePotision[i].y * size / 2) + obj.transform.position.y, obj.transform.position.z);

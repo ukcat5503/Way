@@ -35,27 +35,29 @@ public class PuzzleSphere : ModelBase {
 
 	// Use this for initialization
 	void Start () {
-		if(!(meshRenderer = GetComponent<MeshRenderer>())){
-			"MeshRendererの取得に失敗しました。".LogWarning();
+		if(meshRenderer == null){
+			if(!(meshRenderer = GetComponent<MeshRenderer>())){
+				"MeshRendererの取得に失敗しました。".LogWarning();
+			}
 		}
 		ChangeMyColor(MyColor);
 	}
 
 	public void ChangeMyColor(PuzzleManager.ColorName colorName){
-		if(colorName == PuzzleManager.ColorName.None){
-		}else{
-			MyColor = colorName;
-			meshRenderer.material.color = Colors[MyColor];
+		if(meshRenderer == null){
+			if(!(meshRenderer = GetComponent<MeshRenderer>())){
+			"MeshRendererの取得に失敗しました。".LogWarning();
+			}
 		}
+		MyColor = colorName;
+		meshRenderer.material.color = Colors[MyColor];
 	}
 
 	public void HitRayFromPlayer(){
 		GetComponent<Collider>().enabled = false;
-		Vector3 pos = transform.position;
-		var color = MyColor;
-
-		PuzzleManager.ChangeAroundColor(pos);
-		PuzzleManager.SplitSperer(gameObject, MyColor);
+		// PuzzleManager.ChangeAroundColor(transform.position);
+		// コレのせいで色変わっちゃう
+		PuzzleManager.SplitSphere(gameObject, MyColor);
 		PuzzleManager.DeleteFromList(gameObject.GetInstanceID());
 		Destroy(gameObject);
 	}
