@@ -15,15 +15,6 @@ public class PuzzleSphere : ModelBase {
 
 	MeshRenderer meshRenderer;
 
-	public enum ColorName{
-		None,
-		White,
-		Red,
-		Green,
-		Blue,
-		length
-	}
-
 	public static Vector2[] instantiatePotision = new Vector2[4] {
 		new Vector2(-1,-1),
 		new Vector2(-1,1),
@@ -31,22 +22,22 @@ public class PuzzleSphere : ModelBase {
 		new Vector2(1,-1)
 	};
 
-	public static readonly Dictionary<ColorName,Color32> Colors = new Dictionary<ColorName,Color32>() {
-		{ColorName.None, new Color32(0,0,0,255)},
-		{ColorName.White, new Color32(255,255,255,255)},
-		{ColorName.Red, new Color32(175,0,0,255)},
-		{ColorName.Green, new Color32(0,175,0,255)},
-		{ColorName.Blue, new Color32(0,0,175,255)}
+	public static readonly Dictionary<PuzzleManager.ColorName,Color32> Colors = new Dictionary<PuzzleManager.ColorName,Color32>() {
+		{PuzzleManager.ColorName.None, new Color32(0,0,0,255)},
+		{PuzzleManager.ColorName.White, new Color32(255,255,255,255)},
+		{PuzzleManager.ColorName.Red, new Color32(175,0,0,255)},
+		{PuzzleManager.ColorName.Green, new Color32(0,175,0,255)},
+		{PuzzleManager.ColorName.Blue, new Color32(0,0,175,255)}
     };
 
-	public ColorName MyColor;
+	public PuzzleManager.ColorName MyColor;
 
 	public void SetColorByInt(int color){
-		if(color >= (int)ColorName.length){
+		if(color >= (int)PuzzleManager.ColorName.length){
 			("色の範囲を超えています。(" + color + ") Whiteとして処理されます。").LogWarning();
 			color = 0;
 		}
-		MyColor = (ColorName)color;
+		MyColor = (PuzzleManager.ColorName)color;
 	}
 
 	public Color GetColor(){
@@ -59,9 +50,9 @@ public class PuzzleSphere : ModelBase {
 		ChangeMyColor(MyColor);
 	}
 	
-	public void ChangeMyColor(ColorName colorName){
-		if(colorName == ColorName.None){
-			BreakBlock();
+	public void ChangeMyColor(PuzzleManager.ColorName colorName){
+		if(colorName == PuzzleManager.ColorName.None){
+			// BreakBlock();
 		}else{
 			MyColor = colorName;
 			meshRenderer.material.color = Colors[MyColor];
@@ -69,6 +60,8 @@ public class PuzzleSphere : ModelBase {
 	}
 
 	public void HitRayFromPlayer(){
+		PuzzleManager.ChangeAroundColor(transform.position);
+		/*
 		for (int i = 0; i < instantiateQty; ++i)
 		{
 			var size = transform.localScale.x * 0.5f;
@@ -78,15 +71,8 @@ public class PuzzleSphere : ModelBase {
 			obj.transform.localScale = new Vector3(size, size, size);
 			obj.transform.parent = transform.root.gameObject.transform;
 		}
+		*/
 
-		Destroy(gameObject);
-	}
-
-	public void ChangeAroundColor(){
-		// puzzleManager.ChangeColorTheBlock(CoordinateX, CoordinateY, CoordinateZ);
-	}
-
-	public void BreakBlock(){
-		// puzzleManager.DestroyTheBlock(CoordinateX, CoordinateY, CoordinateZ);
+		// Destroy(gameObject);
 	}
 }

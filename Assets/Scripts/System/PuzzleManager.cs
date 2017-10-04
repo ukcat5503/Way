@@ -3,327 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// TODO １オブジェクトだけ生成するように
 
 public class PuzzleManager : MonoBehaviour {
-
-	public static int hands;
-
-	const int blockLength = 3;
-
-	const float margin = 2f;
-	static readonly Vector3[] instantiatePosition = new Vector3[blockLength * blockLength]{
-		new Vector3(margin,0,margin),
-		new Vector3(0,0,margin),
-		new Vector3(-margin,0,margin),
-		new Vector3(margin,0,0),
-		new Vector3(0,0,0),
-		new Vector3(-margin,0,0),
-		new Vector3(margin,0,-margin),
-		new Vector3(0,0,-margin),
-		new Vector3(-margin,0,-margin)
-	};
-
-	struct BlockInfo{
-		public int id;
+	class ObjectInfo{
 		public GameObject obj;
-		public PuzzleBlock blockScript;
+		public PuzzleSphere sphere;
+
+		public ObjectInfo(GameObject o, PuzzleSphere s){
+			obj = o;
+			sphere = s;
+		}
 	}
 
-	// string question = "012012012,012012012,333333333,012012012,012012012,210210210,012012012,012012012,210210210";
-	// string question = "123000000";
-	static string question = "222222222,111111111,222222222";
-	static string colorOrder = "23030";
-	public static string ColorOrder{
-		get { return colorOrder; }
+	public enum ColorName{
+		None,
+		White,
+		Red,
+		Green,
+		Blue,
+		length
 	}
 
-	static int totalStage = 10;
-	public static int TotalStage{
-		get { return totalStage; }
-	}
-
-	static int currentStage = 1;
-	public static int CurrentStage{
-		get { return currentStage; }
-	}
-
-	int height;
-
-	static int currentColor = -1;	
-	public static int CurrentColor{
-		get { return currentColor; }
-	}
-	List<BlockInfo>[,] BlockList = new List<BlockInfo>[blockLength,blockLength];
-
-	List<int[]> DeleteBlocks = new List<int[]>();
+	static List<ObjectInfo> puzzleList = new List<ObjectInfo>();
+	[SerializeField]
+	float checkDistance = 2.0f;
+	static float CheckDistance;
 
 	[SerializeField]
-	GameObject blockPrefab;
-
-	[SerializeField]
-	GameObject breakBlockPrefab;
-	[SerializeField]
-	GameObject goalBlockPrefab;
-	[SerializeField]
-	GameObject buildingPrefab;
-	[SerializeField]
-	GameObject housePrefab;
+	GameObject spherePrefab;
 	
-	
-	GameObject puzzleParentObject;
-	GameObject goalObject;
-	GameObject stageObject;
 
-	// Use this for initialization
-	void Start () {
-		// List初期化
-		for (int x = 0; x < blockLength; ++x)
+	int frame = 0;
+
+	void Start(){
+		CheckDistance = checkDistance;
+	}
+
+	void Update(){
+		if(++frame % 20 == 0){
+			instantiateSphere(ColorName.White, new Vector3(Random.Range(-8.0f, 8.0f), 30, 14));
+		}
+	}
+
+	void instantiateSphere(ColorName colorName, Vector3 pos){
+		GameObject obj = Instantiate(spherePrefab, pos, Quaternion.identity) as GameObject;
+	 	puzzleList.Add(new ObjectInfo(obj, obj.GetComponent<PuzzleSphere>()));
+	}
+	
+
+	public static void ChangeAroundColor(Vector3 pos){
+		ColorName colorName = ColorName.Blue;
+
+		foreach (var item in puzzleList)
 		{
-			for (int y = 0; y < blockLength; ++y)
-			{
-				BlockList[x,y] = new List<BlockInfo>();
-			}
-		}
-
-		stageObject = GameObject.Find("StageMaster/Stage");
-		puzzleParentObject = GameObject.Find("StageMaster/PuzzleObject");
-		initializePuzzle(question);
-	}
-	
-	void LateUpdate(){
-		deleteBlocksFromList();
-	}
-
-	void initializePuzzle(string question){
-		height = 0;
-
-		string[] questionArr = question.Split(',');
-
-		foreach (var item in questionArr.Select((v, i) => new {Value = v, Index = i }))
-		{
-			if(item.Value.Length % (blockLength * blockLength) != 0){
-				(item.Index + "段の指定がおかしいです。" + blockLength * blockLength + "桁で指定して下さい。").LogWarning();
-			}
-			for (int x = 0; x < blockLength; ++x)
-			{
-				for (int y = 0; y < blockLength; ++y)
-				{
-					BlockInfo blockinfo = new BlockInfo();
-
-					GameObject obj = Instantiate(blockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.Euler(Vector3.zero)) as GameObject;
-					obj.name = "PuzzleBlock (" + x + "," + y + ":" + item.Index + ")";
-					obj.transform.parent = puzzleParentObject.transform;
-					blockinfo.id = obj.GetInstanceID();
-					blockinfo.obj = obj;
-					blockinfo.blockScript = obj.GetComponent<PuzzleBlock>();
-					blockinfo.blockScript.SetColorByInt((int)char.GetNumericValue(item.Value[(x * 3 ) + y]));
-					blockinfo.blockScript.SetCoordinates(x, y, item.Index);
-					BlockList[x,y].Add(blockinfo);
-				}
-			}
-		++height;
-		}
-
-		// ゴール生成
-		goalObject = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 4, 0), Quaternion.identity) as GameObject;
-		goalObject.name = "GoalBlock";
-		goalObject.transform.parent = puzzleParentObject.transform;
-	}
-
-	void deleteBlocksFromList(){
-		if(DeleteBlocks.Count != 0){
-			DeleteBlocks.Sort((a, b) => (int)b[2] - (int)a[2]);
-			foreach (var item in DeleteBlocks)
-			{
-				// 上の要素の座標を変更しておく
-				for (int i = (int)item[2] + 1; i < BlockList[(int)item[0],(int)item[1]].Count; ++i)
-				{
-					BlockList[(int)item[0],(int)item[1]][i].blockScript.SetCoordinates(item[0], item[1], i - 1);
-				}
-				BlockList[(int)item[0],(int)item[1]].RemoveAt((int)item[2]);
-			}
-			DeleteBlocks.Clear();
-		}
-	}
-
-	void changeColorAroundDesignation(int x, int y, int z, PuzzleBlock.ColorName color){
-		// 自分
-		if(BlockList[x,y].Count() > z){
-			if(BlockList[x,y][z].blockScript != null){
-				BlockList[x,y][z].blockScript.ChangeMyColor(color);
-			}
-		}
-
-		// 上
-		if(z != height - 1){
-			if(BlockList[x,y].Count() > z + 1){
-				if(BlockList[x,y][z + 1].blockScript != null){
-					BlockList[x,y][z + 1].blockScript.ChangeMyColor(color);
-				}
-			}
-		}
-		// 下
-		if(z != 0){
-			if(BlockList[x,y][z - 1].blockScript != null){
-					BlockList[x,y][z - 1].blockScript.ChangeMyColor(color);
-			}
-		}
-		// 左
-		if(y != 0){
-			if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
-				if(BlockList[x,y - 1][z].blockScript != null){
-					BlockList[x,y - 1][z].blockScript.ChangeMyColor(color);
-				}
-			}
-		}
-		// 右
-		if(y != blockLength - 1){
-			if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
-				if(BlockList[x,y + 1][z].blockScript != null){
-					BlockList[x,y + 1][z].blockScript.ChangeMyColor(color);
-				}
-			}
-		}
-		// 手前
-		if(x != blockLength - 1){
-			if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
-				if(BlockList[x + 1,y][z].blockScript != null){
-					BlockList[x + 1,y][z].blockScript.ChangeMyColor(color);
-				}
-			}
-		}
-		// 奥
-		if(x != 0){
-			if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
-				if(BlockList[x - 1,y][z].blockScript != null){
-					BlockList[x - 1,y][z].blockScript.ChangeMyColor(color);
-				}
+			var dist = Vector3.Distance(pos, item.obj.transform.position);
+			if(dist < CheckDistance){
+				item.sphere.ChangeMyColor(colorName);
 			}
 		}
 	}
-
-	void destroyAroundDesignation(int x, int y, int z){
-	// 上
-	if(z != height - 1){
-		if(BlockList[x,y].Count() > z + 1){
-			if(BlockList[x,y][z + 1].blockScript != null){
-				if(!BlockList[x,y][z + 1].blockScript.BreakWait){
-					if(BlockList[x,y][z + 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-						BlockList[x,y][z + 1].blockScript.BreakBlock();
-					}
-				}
-			}
-		}
-	}
-	// 下
-	if(z != 0){
-		if(BlockList[x,y][z - 1].blockScript != null){
-			if(!BlockList[x,y][z - 1].blockScript.BreakWait){
-				if(BlockList[x,y][z - 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-					BlockList[x,y][z - 1].blockScript.BreakBlock();
-				}
-			}
-		}
-	}
-	// 左
-	if(y != 0){
-		if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
-			if(BlockList[x,y - 1][z].blockScript != null){
-				if(!BlockList[x,y - 1][z].blockScript.BreakWait){
-					if(BlockList[x,y - 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-						BlockList[x,y - 1][z].blockScript.BreakBlock();
-					}
-				}
-			}
-		}
-	}
-	// 右
-	if(y != blockLength - 1){
-		if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
-			if(BlockList[x,y + 1][z].blockScript != null){
-				if(!BlockList[x,y + 1][z].blockScript.BreakWait){
-					if(BlockList[x,y + 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-						BlockList[x,y + 1][z].blockScript.BreakBlock();
-					}
-				}
-			}
-		}
-	}
-	// 手前
-	if(x != blockLength - 1){
-		if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
-			if(BlockList[x + 1,y][z].blockScript != null){
-				if(!BlockList[x + 1,y][z].blockScript.BreakWait){
-					if(BlockList[x + 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-						BlockList[x + 1,y][z].blockScript.BreakBlock();
-					}
-				}
-			}
-		}
-	}
-	// 奥
-	if(x != 0){
-		if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
-			if(BlockList[x - 1,y][z].blockScript != null){
-				if(!BlockList[x - 1,y][z].blockScript.BreakWait){
-					if(BlockList[x - 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-						BlockList[x - 1,y][z].blockScript.BreakBlock();
-					}
-				}
-			}
-		}
-	}
-}
-
-public void ChangeColorTheBlock(int x, int y, int z){
-	var obj = BlockList[x, y][z];
-	// BlockList[x, y][z].blockScript.
-	var color = nextColor();
-	if(color == PuzzleBlock.ColorName.None){
-		BlockList[x,y][z].blockScript.ChangeMyColor(color);
-	}else{
-		changeColorAroundDesignation(x, y, z, color);
-	}
-}
-
-public void DestroyTheBlock(int x, int y, int z){
-	var obj = BlockList[x, y][z];
-	BlockList[x, y][z].blockScript.BreakWait = true;
-	destroyAroundDesignation(x, y, z);
-
-	BlockInfo b = new BlockInfo();
-	b.blockScript = null;
-	b.obj = null;
-	BlockList[x, y][z] = b;
-	
-	int[] c = {x, y, z};
-	DeleteBlocks.Add(c);
-	var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
-	breakObj.GetComponent<BreakBlockParticle>().CubeColor = obj.blockScript.GetColor();
-	Destroy(obj.obj);
-}
-
-	PuzzleBlock.ColorName nextColor(){
-		currentColor = (currentColor + 1 < colorOrder.Length ? ++currentColor : currentColor = 0);
-		return (PuzzleBlock.ColorName)(int)char.GetNumericValue(colorOrder[currentColor]);
-	}
-
-	public void StageClear(){
-		if(hands <= 5){
-			Instantiate(buildingPrefab, new Vector3(0 + buildingPrefab.transform.position.x,4 + buildingPrefab.transform.position.y,0 + buildingPrefab.transform.position.z), buildingPrefab.transform.rotation);
-		}else{
-			Instantiate(housePrefab, new Vector3(0 + housePrefab.transform.position.x,4 + housePrefab.transform.position.y,0 + housePrefab.transform.position.z), housePrefab.transform.rotation);
-		}
-		hands = 0;
-		
-		// 次のパズルを生成
-		StartCoroutine("NextStage");
-	}
-
-	IEnumerator NextStage() {  
-        yield return new WaitForSeconds (2.0f);
-		++currentStage;
-		currentColor = -1;
-		initializePuzzle(question);
-    }
 }
