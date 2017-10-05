@@ -14,6 +14,14 @@ public class PuzzleManager : MonoBehaviour {
 		new Vector2(1,-1)
 	};
 
+	public static readonly Dictionary<PuzzleManager.ColorName, Color32> Colors = new Dictionary<PuzzleManager.ColorName, Color32>() {
+		{ColorName.None, new Color32(0,0,0,255)},
+		{ColorName.White, new Color32(255,255,255,255)},
+		{ColorName.Red, new Color32(175,0,0,255)},
+		{ColorName.Green, new Color32(0,175,0,255)},
+		{ColorName.Blue, new Color32(0,0,175,255)}
+	};
+
 	class ObjectInfo{
 		public GameObject obj;
 		public PuzzleSphere sphere;
@@ -36,6 +44,12 @@ public class PuzzleManager : MonoBehaviour {
 	static PuzzleManager instance;
 
 	static Dictionary<int, ObjectInfo> puzzleList = new Dictionary<int, ObjectInfo>();
+	public static int GetPuzzleListCount()
+	{
+		return puzzleList.Count();
+	}
+
+
 	[SerializeField]
 	int instantiateQty = 1;
 	static int InstantiateQty;
@@ -49,6 +63,18 @@ public class PuzzleManager : MonoBehaviour {
 
 	static GameObject parent;
 
+	static int droppedSphere = 0;
+	public static int GetDroppedSphere()
+	{
+		return droppedSphere;
+	}
+	public static void IncrementDroppedSphere()
+	{
+		++droppedSphere;
+	}
+
+	float zPotision = 0;
+
 	int frame = 0;
 
 	void Start(){
@@ -58,19 +84,22 @@ public class PuzzleManager : MonoBehaviour {
 		SpherePrefab = spherePrefab;
 
 		parent = GameObject.Find("PuzzleStage/PuzzleObject");
+
+		zPotision = parent.transform.root.gameObject.transform.position.z;
 	}
 
 	void Update(){
 		if(frame++ % 120 == 1){
-			var obj = instantiateSphere(ColorName.White, new Vector3(Random.Range(-8.0f, 8.0f), 30, 14)) as GameObject;
+			var obj = instantiateSphere(ColorName.White, new Vector3(Random.Range(-8.0f, 8.0f), 30, zPotision)) as GameObject;
 			obj.transform.parent = parent.transform;
 		}
 	}
 
 	GameObject instantiateSphere(ColorName colorName, Vector3 pos, float size = 4){
 		GameObject obj = Instantiate(spherePrefab, pos, Quaternion.identity) as GameObject;
-	 	var spherer = obj.GetComponent<PuzzleSphere>();
+		var spherer = obj.GetComponent<PuzzleSphere>();
 		spherer.ChangeMyColor(colorName);
+		
 		puzzleList.Add(obj.GetInstanceID(),new ObjectInfo(obj, spherer));
 		obj.transform.localScale = new Vector3(size, size, size);
 		return obj;
@@ -88,11 +117,12 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 
-	public static void ChangeAroundColor(Vector3 pos){
+	public static void ChangeAroundColor(int instanceID, Vector3 pos){
 		ColorName colorName = ColorName.Blue;
-
 		foreach (var pair in puzzleList)
 		{
+			if (instanceID == pair.Value.obj.GetInstanceID()) continue;
+
 			var dist = Vector3.Distance(pos, pair.Value.obj.transform.position);
 			if(dist < CheckDistance){
 				pair.Value.sphere.ChangeMyColor(colorName);

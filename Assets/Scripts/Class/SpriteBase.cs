@@ -30,7 +30,7 @@ public class SpriteManager : MonoBehaviour {
 	/// オブジェクトが常にカメラの方向を向くか
 	/// </summary>
 	[SerializeField]
-	bool useBillBoard;	
+	bool useBillBoard = false;	
 
 	/// <summary>
 	/// アニメーション時、変更してから何フレーム目か。

@@ -11,13 +11,7 @@ public class PuzzleSphere : ModelBase {
 	GameObject spherePrefab;
 	MeshRenderer meshRenderer;
 
-	public static readonly Dictionary<PuzzleManager.ColorName,Color32> Colors = new Dictionary<PuzzleManager.ColorName,Color32>() {
-		{PuzzleManager.ColorName.None, new Color32(0,0,0,255)},
-		{PuzzleManager.ColorName.White, new Color32(255,255,255,255)},
-		{PuzzleManager.ColorName.Red, new Color32(175,0,0,255)},
-		{PuzzleManager.ColorName.Green, new Color32(0,175,0,255)},
-		{PuzzleManager.ColorName.Blue, new Color32(0,0,175,255)}
-    };
+
 
 	public PuzzleManager.ColorName MyColor;
 
@@ -50,13 +44,12 @@ public class PuzzleSphere : ModelBase {
 			}
 		}
 		MyColor = colorName;
-		meshRenderer.material.color = Colors[MyColor];
+		meshRenderer.material.color = PuzzleManager.Colors[MyColor];
 	}
 
 	public void HitRayFromPlayer(){
 		GetComponent<Collider>().enabled = false;
-		// PuzzleManager.ChangeAroundColor(transform.position);
-		// コレのせいで色変わっちゃう
+		PuzzleManager.ChangeAroundColor(gameObject.GetInstanceID(), transform.position);
 		PuzzleManager.SplitSphere(gameObject, MyColor);
 		PuzzleManager.DeleteFromList(gameObject.GetInstanceID());
 		Destroy(gameObject);
