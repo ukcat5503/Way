@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311926, g: 0.38074008, b: 0.35872707, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872716, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1968008879}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.76080257, z: 0, w: 0.6489835}
   m_LocalPosition: {x: 0, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -228,7 +228,7 @@ Transform:
   - {fileID: 230382383}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -99.07, z: 0}
 --- !u!1 &448156749
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +289,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &461452355 stripped
 GameObject:
@@ -450,6 +450,21 @@ Prefab:
         type: 2}
       propertyPath: m_Text
       value: DebugText
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277522563303676, guid: d6a2c982aaa0541ddbd1f13f394f98f9,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 114277522563303676, guid: d6a2c982aaa0541ddbd1f13f394f98f9,
+        type: 2}
+      propertyPath: m_FontData.m_MaxSize
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 114796876666873994, guid: d6a2c982aaa0541ddbd1f13f394f98f9,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6a2c982aaa0541ddbd1f13f394f98f9, type: 2}
@@ -815,7 +830,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4371736630841870, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1762245252133688, guid: 8e2a4721764e0495d922626666cdb400, type: 2}
       propertyPath: m_StaticEditorFlags
@@ -872,7 +887,7 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 50
   m_Range: 100
-  m_SpotAngle: 57.4
+  m_SpotAngle: 19
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -902,13 +917,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1333215421}
-  m_LocalRotation: {x: 0.15436551, y: 0, z: 0, w: 0.98801386}
-  m_LocalPosition: {x: 0, y: 40, z: -33.6}
+  m_LocalRotation: {x: 0.19080894, y: 0, z: 0, w: 0.9816273}
+  m_LocalPosition: {x: 0, y: 40, z: -61.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 17.76, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22, y: 0, z: 0}
 --- !u!224 &1668188091 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224200908358441700, guid: d6a2c982aaa0541ddbd1f13f394f98f9,

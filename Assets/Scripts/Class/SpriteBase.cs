@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// スプライトを表示するクラスです。
 /// </summary>
-public class SpriteManager : MonoBehaviour {
+public class SpriteBase : MonoBehaviour {
 
 	/// <summary>
 	/// SpriteRendererをキャッシュしておくため
@@ -56,7 +56,7 @@ public class SpriteManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 		// ２枚以上なければアニメーションの必要なし
 		if(animationSprite.Length >= 2){
 			// アニメーションすべきフレームになったらスプライトを変更
@@ -68,7 +68,6 @@ public class SpriteManager : MonoBehaviour {
 				currentFrameCount = 0;
 			}
 		}
-
 		if(useBillBoard){
 			Vector3 p = Camera.main.transform.position;
 			p.y = transform.position.y;
