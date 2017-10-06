@@ -27,7 +27,7 @@ public class CheckObject : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		MeshRenderer m;
-		PuzzleManager.IncrementDroppedSphere();
+		PuzzleManager.AddDroppedSphere(1);
 		if ((m = other.GetComponent<MeshRenderer>()) == null){
 			"MeshRendererの取得に失敗しました".LogWarning();
 			Destroy(other.gameObject);

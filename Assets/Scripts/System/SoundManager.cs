@@ -7,7 +7,15 @@ public class SoundManager : MonoBehaviour {
 	public enum SE
 	{
 		GenerateBuilding,
-		ShotPlayer
+		ShotPlayer,
+		_1_do,
+		_2_re,
+		_3_mi,
+		_4_fa,
+		_5_so,
+		_6_ra,
+		_7_si,
+		_8_do
 	}
 
 	public enum BGM

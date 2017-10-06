@@ -68,14 +68,16 @@ public class PuzzleManager : MonoBehaviour {
 	{
 		return droppedSphere;
 	}
-	public static void IncrementDroppedSphere()
+	public static void AddDroppedSphere(int add)
 	{
-		++droppedSphere;
+		droppedSphere += add;
 	}
 
 	float zPotision = 0;
 
 	int frame = 0;
+
+	// BallPoint
 
 	void Start(){
 		instance = this;

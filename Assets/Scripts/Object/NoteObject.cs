@@ -14,19 +14,28 @@ public class NoteObject : SpriteBase {
 	void Start () {
 		sr = GetComponent<SpriteRenderer>();
 		sr.enabled = false;
+		
 	}
 	
 	void Update () {
-		++frame;
 		base.Update();
+
+		++frame;
 	}
 
 	void OnTriggerEnter(Collider other){
+		/*
 		if(frame > 120){
 			sr.enabled = true;
 			frame = 0;
 			SoundManager.PlaySE(se);
 
 		}
+		*/
+		if(sr.enabled == false){
+			sr.enabled = true;
+			SoundManager.PlaySE(se);
+		}
+
 	}
 }
