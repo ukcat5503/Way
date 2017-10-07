@@ -8,7 +8,7 @@ public class NoteObject : SpriteBase {
 	SoundManager.SE se;
 
 	SpriteRenderer sr;
-
+	
 	int frame = 0;
 
 	void Start () {
