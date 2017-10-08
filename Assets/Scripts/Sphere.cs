@@ -12,17 +12,48 @@ public class Sphere : MonoBehaviour {
 
 	int frame = 0;
 
+	public int Case = 0;
+
 	// Use this for initialization
 	void Start () {
 		rigidbody = GetComponent<Rigidbody>();
 
 		parent = transform.root.gameObject;
-		
-		(transform.forward * kSpeed).Log();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		switch (Case)
+		{
+			case 1:
+				if (Input.GetKey (KeyCode.UpArrow)) {
+					rigidbody.AddForce(0,0,kSpeed);
+				}
+			break;
+
+			case 2:
+				if (Input.GetKey (KeyCode.DownArrow)) {
+					rigidbody.AddForce(0,0,-kSpeed);
+				}
+			break;
+
+			case 3:
+				if (Input.GetKey (KeyCode.LeftArrow)) {
+					rigidbody.AddForce(-kSpeed,0,0);
+				}
+			break;
+
+			case 4:
+				if (Input.GetKey (KeyCode.RightArrow)) {
+					rigidbody.AddForce(kSpeed,0,0);
+				}
+			break;
+
+		}
+
+
+
+		/*
         if (Input.GetKey (KeyCode.UpArrow)) {
             rigidbody.AddForce(0,0,kSpeed);
         }
@@ -40,6 +71,7 @@ public class Sphere : MonoBehaviour {
 			e.y -= kSpeed;
             parent.transform.eulerAngles = e;
         }
+		 */
 
 		parent.transform.position += transform.localPosition;
 		transform.localPosition = Vector3.zero;
