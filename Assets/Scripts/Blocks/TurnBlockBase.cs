@@ -36,19 +36,19 @@ public class TurnBlockBase : MonoBehaviour {
 
 	void OnCollisionEnter(Collision other)
 	{
-		(transform.position - other.transform.position).Log();
-
-		if(Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.z - other.transform.position.z)){
-			if(transform.position.x - other.transform.position.x > 0){
-				"左からきた".Log();
+		if(!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
+			if(Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.z - other.transform.position.z)){
+				if(transform.position.x - other.transform.position.x > 0){
+					SphereList.Add(other.gameObject.GetInstanceID(), StartPosition.Left);
+				}else{
+					SphereList.Add(other.gameObject.GetInstanceID(), StartPosition.Right);
+				}
 			}else{
-				"右からきた".Log();
-			}
-		}else{
-			if(transform.position.z - other.transform.position.z < 0){
-				"上からきた".Log();
-			}else{
-				"下からきた".Log();
+				if(transform.position.z - other.transform.position.z < 0){
+					SphereList.Add(other.gameObject.GetInstanceID(), StartPosition.Up);
+				}else{
+					SphereList.Add(other.gameObject.GetInstanceID(), StartPosition.Down);
+				}
 			}
 		}
 
