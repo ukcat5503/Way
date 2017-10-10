@@ -14,11 +14,14 @@ public class TurnBlockBase : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Z↑ X→を基準にしたときの方角
+	/// </summary>
 	public enum StartPosition{
-		Left,
-		Up,
-		Right,
-		Down
+		West,
+		North,
+		East,
+		South
 	}
 
 	float[] targetPoint = new float[4];
@@ -26,15 +29,15 @@ public class TurnBlockBase : MonoBehaviour {
 	List<int> waitDelete = new List<int>();
 
 	[SerializeField]
-	float targerFromLeft, targerFromUp, targerFromRight, targerFromDown;
+	float targerFromEast, targerFromUp, targerFromWest, targerFromDown;
 	
 
 	// Use this for initialization
 	void Start () {
-		targetPoint[(int)StartPosition.Left] = targerFromLeft;
-		targetPoint[(int)StartPosition.Up] = targerFromUp;
-		targetPoint[(int)StartPosition.Right] = targerFromRight;
-		targetPoint[(int)StartPosition.Down] = targerFromDown;
+		targetPoint[(int)StartPosition.East] = targerFromEast;
+		targetPoint[(int)StartPosition.North] = targerFromUp;
+		targetPoint[(int)StartPosition.West] = targerFromWest;
+		targetPoint[(int)StartPosition.South] = targerFromDown;
 		
 	}
 	
@@ -67,17 +70,18 @@ public class TurnBlockBase : MonoBehaviour {
 			StartPosition position;
 			if(Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.z - other.transform.position.z)){
 				if(transform.position.x - other.transform.position.x > 0){
-					position = StartPosition.Left;
+					position = StartPosition.West;
 				}else{
-					position = StartPosition.Right;
+					position = StartPosition.East;
 				}
 			}else{
 				if(transform.position.z - other.transform.position.z < 0){
-					position = StartPosition.Up;
+					position = StartPosition.North;
 				}else{
-					position = StartPosition.Down;
+					position = StartPosition.South;
 				}
 			}
+			(position.ToString() + "から来た").Log();
 			SphereList.Add(other.gameObject.GetInstanceID(), new ObjectInfo(position, other.gameObject));
 		}
 	}
