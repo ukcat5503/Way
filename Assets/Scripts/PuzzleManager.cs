@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DegreeQuarter : TurnBlockBase {
+public class PuzzleManager : MonoBehaviour {
+
+	int[,] map = new int[5,5]{
+		{0,0,0,0,0},
+		{0,0,0,0,0},
+		{0,0,0,0,0},
+		{0,0,0,0,0},
+		{0,0,0,0,0}
+	};
+
+	[SerializeField]
+	GameObject[] GenerateBlocks;
 
 	// Use this for initialization
 	void Start () {

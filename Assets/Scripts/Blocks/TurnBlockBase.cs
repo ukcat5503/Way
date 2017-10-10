@@ -28,16 +28,24 @@ public class TurnBlockBase : MonoBehaviour {
 	Dictionary<int, ObjectInfo> SphereList = new Dictionary<int, ObjectInfo>();
 	List<int> waitDelete = new List<int>();
 
-	[SerializeField]
-	float targerFromEast, targerFromUp, targerFromWest, targerFromDown;
+	const float kMaxRange = 180f;
+
+	[SerializeField, Space(6),HeaderAttribute("入って来た角度から見てどのように曲がるかを指定")][Range(-kMaxRange, kMaxRange)]
+	float targetFromEast;
+	[SerializeField][Range(-kMaxRange, kMaxRange)]
+	float targetFromNorth;
+	[SerializeField][Range(-kMaxRange, kMaxRange)]
+	float targetFromWest;
+	[SerializeField][Range(-kMaxRange, kMaxRange)]
+	float targetFromSouth;
 	
 
 	// Use this for initialization
 	void Start () {
-		targetPoint[(int)StartPosition.East] = targerFromEast;
-		targetPoint[(int)StartPosition.North] = targerFromUp;
-		targetPoint[(int)StartPosition.West] = targerFromWest;
-		targetPoint[(int)StartPosition.South] = targerFromDown;
+		targetPoint[(int)StartPosition.East] = targetFromEast;
+		targetPoint[(int)StartPosition.North] = targetFromNorth;
+		targetPoint[(int)StartPosition.West] = targetFromWest;
+		targetPoint[(int)StartPosition.South] = targetFromSouth;
 		
 	}
 	
