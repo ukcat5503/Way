@@ -8,7 +8,7 @@ public class Sphere : MonoBehaviour {
 
 	GameObject parent;
 
-	const float kSpeed = 3f;
+	const float kSpeed = 1f;
 
 	int frame = 0;
 
@@ -19,59 +19,12 @@ public class Sphere : MonoBehaviour {
 		rigidbody = GetComponent<Rigidbody>();
 
 		parent = transform.root.gameObject;
+		parent.transform.Rotate(0,180,0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		switch (Case)
-		{
-			case 1:
-				if (Input.GetKey (KeyCode.UpArrow)) {
-					rigidbody.AddForce(0,0,kSpeed);
-				}
-			break;
-
-			case 2:
-				if (Input.GetKey (KeyCode.DownArrow)) {
-					rigidbody.AddForce(0,0,-kSpeed);
-				}
-			break;
-
-			case 3:
-				if (Input.GetKey (KeyCode.LeftArrow)) {
-					rigidbody.AddForce(-kSpeed,0,0);
-				}
-			break;
-
-			case 4:
-				if (Input.GetKey (KeyCode.RightArrow)) {
-					rigidbody.AddForce(kSpeed,0,0);
-				}
-			break;
-
-		}
-
-
-
-		/*
-        if (Input.GetKey (KeyCode.UpArrow)) {
-            rigidbody.AddForce(0,0,kSpeed);
-        }
-        if (Input.GetKey (KeyCode.DownArrow)) {
-            rigidbody.AddForce(0,0,-kSpeed);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow)) {
-			var e = parent.transform.eulerAngles;
-			e.y += kSpeed;
-            parent.transform.eulerAngles = e;
-        }
-        if (Input.GetKey(KeyCode.RightArrow)) {
-			var e = parent.transform.eulerAngles;
-			e.y -= kSpeed;
-            parent.transform.eulerAngles = e;
-        }
-		 */
+		rigidbody.AddForce(0,0,kSpeed);
 
 		parent.transform.position += transform.localPosition;
 		transform.localPosition = Vector3.zero;
