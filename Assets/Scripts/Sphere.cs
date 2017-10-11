@@ -14,12 +14,16 @@ public class Sphere : MonoBehaviour {
 
 	public int Case = 0;
 
+	Camera camera;
+
 	// Use this for initialization
 	void Start () {
 		rigidbody = GetComponent<Rigidbody>();
 
 		parent = transform.root.gameObject;
 		parent.transform.Rotate(0,180,0);
+		camera = GameObject.Find("Main Camera").GetComponent<Camera>();
+		
 	}
 	
 	// Update is called once per frame
@@ -28,5 +32,7 @@ public class Sphere : MonoBehaviour {
 
 		parent.transform.position += transform.localPosition;
 		transform.localPosition = Vector3.zero;
+
+		// camera.transform.position = new Vector3(parent.transform.position.x, parent.transform.position.y + 3, parent.transform.position.z);
 	}
 }

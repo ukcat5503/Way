@@ -26,45 +26,61 @@ public class TurnBlockBase : MonoBehaviour {
 		South
 	}
 
-	float[] targetPoint = new float[4];
+	public enum RotateAngle {
+		Zero = 0,
+		Right90 = -90,
+		Left90 = 90,
+		Back = 180
+	}
+
+	RotateAngle ValueToRotateAngle(int n) {
+		foreach (RotateAngle a in System.Enum.GetValues(typeof(RotateAngle)))
+		{
+			if ((int)a == n) return a;
+		}
+		("enumに指定する値がありませんでした。" + n).Log();
+		return RotateAngle.Zero;
+	}
+
+
+
+	int[] targetPoint = new int[4];
 	Dictionary<int, ObjectInfo> SphereList = new Dictionary<int, ObjectInfo>();
 	List<int> waitDelete = new List<int>();
 
 	const float kMaxRange = 180f;
 	[SerializeField]
-	bool turnBlock;
+	bool turnBlock = false;
 	bool isTouchSphere;
 
-	[SerializeField, Space(6),HeaderAttribute("入って来た角度から見てどのように曲がるかを指定")][Range(-kMaxRange, kMaxRange)]
-	float targetFromEast;
-	[SerializeField][Range(-kMaxRange, kMaxRange)]
-	float targetFromNorth;
-	[SerializeField][Range(-kMaxRange, kMaxRange)]
-	float targetFromWest;
-	[SerializeField][Range(-kMaxRange, kMaxRange)]
-	float targetFromSouth;
+	[SerializeField, Space(6), Header("入って来た角度から見てどのように曲がるかを指定")]
+	RotateAngle targetFromWest;
+	[SerializeField]
+	RotateAngle targetFromNorth;
+	[SerializeField]
+	RotateAngle targetFromEast;
+	[SerializeField]
+	RotateAngle targetFromSouth;
 	
 
 	// Use this for initialization
 	void Start () {
-		targetPoint[(int)StartPosition.West] = -targetFromWest;
-		targetPoint[(int)StartPosition.East] = -targetFromEast;
-		targetPoint[(int)StartPosition.North] = -targetFromNorth;
-		targetPoint[(int)StartPosition.South] = -targetFromSouth;
-		
+		Setup();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// ブロック回転
-		if(turnBlock && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
+		if (turnBlock && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
 			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90f, transform.eulerAngles.z);
-			// 制御も回す
-			var temp = targetPoint[0];
-			targetPoint[0] = targetPoint[1];
-			targetPoint[1] = targetPoint[2];
-			targetPoint[2] = targetPoint[3];
-			targetPoint[3] = targetPoint[0];
+
+
+			targetFromSouth = ValueToRotateAngle(targetPoint[(int)StartPosition.West]);
+			targetFromNorth = ValueToRotateAngle(targetPoint[(int)StartPosition.East]);
+			targetFromWest = ValueToRotateAngle(targetPoint[(int)StartPosition.North]);
+			targetFromEast = ValueToRotateAngle(targetPoint[(int)StartPosition.South]);
+
+			Setup();
 		}
 
 		// ボール制御
@@ -75,7 +91,7 @@ public class TurnBlockBase : MonoBehaviour {
 			var target = item.Value.currentRotate + item.Value.targetRotate;
 		
 			bool isDelete = (item.Value.targetRotate < 0) ? item.Value.obj.transform.root.transform.eulerAngles.y < target : item.Value.obj.transform.root.transform.eulerAngles.y > target;
-			(target + " / " + item.Value.targetRotate + " / " + item.Value.obj.transform.root.transform.eulerAngles.y + " / " + isDelete).Log();
+			// (target + " / " + item.Value.targetRotate + " / " + item.Value.obj.transform.root.transform.eulerAngles.y + " / " + isDelete).Log();
 			if(isDelete){
 				"消せ!".Log();
 				item.Value.obj.transform.root.transform.eulerAngles = new Vector3(0f, target, 0f);
@@ -86,6 +102,26 @@ public class TurnBlockBase : MonoBehaviour {
 		{
 			SphereList.Remove(item);
 		}
+	}
+
+	void Setup()
+	{
+		targetPoint[(int)StartPosition.West] = (int)targetFromWest;
+		targetPoint[(int)StartPosition.East] = (int)targetFromEast;
+		targetPoint[(int)StartPosition.North] = (int)targetFromNorth;
+		targetPoint[(int)StartPosition.South] = (int)targetFromSouth;
+	}
+
+	[ContextMenu("Output")]
+	public void Output()
+	{
+		(
+			"name: " + gameObject.name + "\n" +
+			"←: " + targetPoint[(int)StartPosition.West] + "\n" +
+			"↑: " + targetPoint[(int)StartPosition.North] + "\n" +
+			"→: " + targetPoint[(int)StartPosition.East] + "\n" +
+			"↓: " + targetPoint[(int)StartPosition.South] + "\n"
+		).Log();
 	}
 	
 
@@ -106,7 +142,7 @@ public class TurnBlockBase : MonoBehaviour {
 					position = StartPosition.South;
 				}
 			}
-			(position.ToString() + "から来た").Log();
+			// (position.ToString() + "から来た").Log();
 			if(targetPoint[(int)position] != 0f){
 				if(targetPoint[(int)position] == 180f || targetPoint[(int)position] == 180f){
 					other.gameObject.transform.root.transform.Rotate(0,180,0);
