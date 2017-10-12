@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent (typeof(BoxCollider))]
 public class TurnBlockBase : MonoBehaviour {
 
-	class ObjectInfo{
+	protected class ObjectInfo{
 		public float currentRotate;
 		public float targetRotate;
 		public GameObject obj;
@@ -55,8 +55,8 @@ public class TurnBlockBase : MonoBehaviour {
 
 
 
-	int[] targetPoint = new int[4];
-	Dictionary<int, ObjectInfo> SphereList = new Dictionary<int, ObjectInfo>();
+	protected int[] targetPoint = new int[4];
+	protected Dictionary<int, ObjectInfo> SphereList = new Dictionary<int, ObjectInfo>();
 	List<int> waitDelete = new List<int>();
 
 	const float kMaxRange = 180f;
@@ -81,7 +81,7 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	virtual protected void Update () {
 		// ブロック回転
 		if (turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
 			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90f * (int)turnBlockAngle, transform.eulerAngles.z);
@@ -96,9 +96,9 @@ public class TurnBlockBase : MonoBehaviour {
 			bool isDelete = (item.Value.currentRotate < item.Value.currentRotate + item.Value.targetRotate) ?
 				item.Value.sphere.RotateY > item.Value.currentRotate + item.Value.targetRotate:
 				item.Value.sphere.RotateY < item.Value.currentRotate + item.Value.targetRotate;
-			isDelete.Log();
+			// isDelete.Log();
 			if (isDelete){
-				(item.Value.currentRotate + item.Value.targetRotate).Log();
+				// (item.Value.currentRotate + item.Value.targetRotate).Log();
 				item.Value.obj.transform.eulerAngles = new Vector3(0f, item.Value.currentRotate + item.Value.targetRotate, 0f);
 				waitDelete.Add(item.Key);
 			}
@@ -152,7 +152,7 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 	
 
-	void OnCollisionEnter(Collision other)
+	virtual protected void OnCollisionEnter(Collision other)
 	{
 		if(!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
 			StartPosition position;
@@ -181,12 +181,12 @@ public class TurnBlockBase : MonoBehaviour {
 			}
 		}
 	}
-	void OnCollisionStay(Collision other)
+	virtual protected void OnCollisionStay(Collision other)
 	{
 		isTouchSphere = true;
 	}
 
-	void OnCollisionExit(Collision other)
+	virtual protected void OnCollisionExit(Collision other)
 	{
 		isTouchSphere = false;
 	}

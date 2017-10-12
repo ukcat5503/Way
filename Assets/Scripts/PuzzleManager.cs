@@ -26,13 +26,11 @@ public class PuzzleManager : MonoBehaviour {
 			for (int x = map.GetLength(1) - 1; x >= 0; --x)
 			{
 				Vector3 pos = new Vector3(x, 5, y);
+				if(map[y,x] == 0) continue;
 				var obj = Instantiate(GenerateBlocks[map[y,x]],pos, Quaternion.identity);
+				obj.transform.parent = transform;
+				obj.name = "[" + x + "," + y +"] " + obj.name;
 			}
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }
