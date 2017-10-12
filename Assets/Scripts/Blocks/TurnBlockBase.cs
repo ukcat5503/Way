@@ -9,10 +9,13 @@ public class TurnBlockBase : MonoBehaviour {
 		public float currentRotate;
 		public float targetRotate;
 		public GameObject obj;
-		public ObjectInfo(float c, float t, GameObject o){
+		public SphereController sphere;
+
+		public ObjectInfo(float c, float t, GameObject o, SphereController s){
 			currentRotate = c;
 			targetRotate = t;
 			obj = o;
+			sphere = s;
 		}
 	}
 
@@ -28,10 +31,18 @@ public class TurnBlockBase : MonoBehaviour {
 
 	public enum RotateAngle {
 		Zero = 0,
-		Right90 = -90,
-		Left90 = 90,
+		Right90 = 90,
+		Left90 = -90,
 		Back = 180
 	}
+
+	public enum TurnAngle {
+		NotTurn,
+		TurnRight,
+		TurnFlip,
+		TurnLeft
+	}
+
 
 	RotateAngle ValueToRotateAngle(int n) {
 		foreach (RotateAngle a in System.Enum.GetValues(typeof(RotateAngle)))
@@ -49,8 +60,6 @@ public class TurnBlockBase : MonoBehaviour {
 	List<int> waitDelete = new List<int>();
 
 	const float kMaxRange = 180f;
-	[SerializeField]
-	bool turnBlock = false;
 	bool isTouchSphere;
 
 	[SerializeField, Space(6), Header("入って来た角度から見てどのように曲がるかを指定")]
@@ -61,7 +70,10 @@ public class TurnBlockBase : MonoBehaviour {
 	RotateAngle targetFromEast;
 	[SerializeField]
 	RotateAngle targetFromSouth;
-	
+
+	[SerializeField, Space(6), Header("1動作でどちらにブロックが動作するか")]
+	TurnAngle turnBlockAngle;
+
 
 	// Use this for initialization
 	void Start () {
@@ -71,36 +83,51 @@ public class TurnBlockBase : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// ブロック回転
-		if (turnBlock && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
-			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90f, transform.eulerAngles.z);
+		if (turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
+			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90f * (int)turnBlockAngle, transform.eulerAngles.z);
 
-
-			targetFromSouth = ValueToRotateAngle(targetPoint[(int)StartPosition.West]);
-			targetFromNorth = ValueToRotateAngle(targetPoint[(int)StartPosition.East]);
-			targetFromWest = ValueToRotateAngle(targetPoint[(int)StartPosition.North]);
-			targetFromEast = ValueToRotateAngle(targetPoint[(int)StartPosition.South]);
-
+			TurnBlock((int)turnBlockAngle);
 			Setup();
 		}
 
 		// ボール制御
 		foreach (var item in SphereList)
 		{
-			item.Value.obj.transform.root.transform.Rotate(0,item.Value.targetRotate / 20,0);
-
-			var target = item.Value.currentRotate + item.Value.targetRotate;
-		
-			bool isDelete = (item.Value.targetRotate < 0) ? item.Value.obj.transform.root.transform.eulerAngles.y < target : item.Value.obj.transform.root.transform.eulerAngles.y > target;
-			// (target + " / " + item.Value.targetRotate + " / " + item.Value.obj.transform.root.transform.eulerAngles.y + " / " + isDelete).Log();
-			if(isDelete){
-				"消せ!".Log();
-				item.Value.obj.transform.root.transform.eulerAngles = new Vector3(0f, target, 0f);
+			bool isDelete = (item.Value.currentRotate < item.Value.currentRotate + item.Value.targetRotate) ?
+				item.Value.sphere.RotateY > item.Value.currentRotate + item.Value.targetRotate:
+				item.Value.sphere.RotateY < item.Value.currentRotate + item.Value.targetRotate;
+			isDelete.Log();
+			if (isDelete){
+				(item.Value.currentRotate + item.Value.targetRotate).Log();
+				item.Value.obj.transform.eulerAngles = new Vector3(0f, item.Value.currentRotate + item.Value.targetRotate, 0f);
 				waitDelete.Add(item.Key);
+			}
+			else
+			{
+				item.Value.sphere.RotationY(item.Value.targetRotate / 20);
 			}
 		}
 		foreach (var item in waitDelete)
 		{
 			SphereList.Remove(item);
+		}
+
+		waitDelete.Clear();
+	}
+
+	void TurnBlock(int turnCount)
+	{
+		targetFromEast = ValueToRotateAngle(targetPoint[(int)StartPosition.East]);
+		targetFromNorth = ValueToRotateAngle(targetPoint[(int)StartPosition.North]);
+		targetFromWest = ValueToRotateAngle(targetPoint[(int)StartPosition.West]);
+		targetFromSouth = ValueToRotateAngle(targetPoint[(int)StartPosition.South]);
+		for (;turnCount > 0; --turnCount)
+		{
+			var temp = targetFromEast;
+			targetFromEast = targetFromNorth;
+			targetFromNorth = targetFromWest;
+			targetFromWest = targetFromSouth;
+			targetFromSouth = temp;
 		}
 	}
 
@@ -144,11 +171,12 @@ public class TurnBlockBase : MonoBehaviour {
 			}
 			// (position.ToString() + "から来た").Log();
 			if(targetPoint[(int)position] != 0f){
-				if(targetPoint[(int)position] == 180f || targetPoint[(int)position] == 180f){
-					other.gameObject.transform.root.transform.Rotate(0,180,0);
+				var s = other.gameObject.GetComponent<SphereController>();
+				if (targetPoint[(int)position] == 180f){
+					s.RotationY(180);
 				}else{
-					("from " + position.ToString() + " / " + targetPoint[(int)position] + "する").Log();
-					SphereList.Add(other.gameObject.GetInstanceID(), new ObjectInfo(other.gameObject.transform.root.transform.eulerAngles.y, targetPoint[(int)position], other.gameObject));
+					("from " + position.ToString() + " / " + targetPoint[(int)position] + "する" + " 現在:" + s.RotateY + " 目標:" + (s.RotateY + targetPoint[(int)position])).Log();
+					SphereList.Add(other.gameObject.GetInstanceID(), new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s));
 				}
 			}
 		}

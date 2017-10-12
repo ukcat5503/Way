@@ -5,11 +5,11 @@ using UnityEngine;
 public class PuzzleManager : MonoBehaviour {
 
 	int[,] map = new int[5,5]{
-		{3,2,2,2,4},
+		{4,2,2,2,4},
 		{3,0,0,0,3},
 		{3,0,0,0,3},
-		{3,2,2,0,3},
-		{0,0,0,0,3}
+		{4,2,4,0,3},
+		{0,0,3,0,3}
 	};
 
 	[SerializeField]
