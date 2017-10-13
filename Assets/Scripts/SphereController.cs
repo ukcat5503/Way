@@ -22,7 +22,7 @@ public class SphereController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		child = transform.FindChild("SphereBody").gameObject;
+		child = transform.Find("SphereBody").gameObject;
 		RotationY(180f);
 	}
 	
