@@ -23,7 +23,7 @@ public class SphereController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		child = transform.Find("SphereBody").gameObject;
-		RotationY(180f);
+		// RotationY(180f);
 	}
 	
 	// Update is called once per frame

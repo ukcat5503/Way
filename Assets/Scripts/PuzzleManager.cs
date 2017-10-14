@@ -4,32 +4,59 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
 
-	int[,] map = new int[5,5]{
-		{4,2,2,2,5},
-		{3,0,0,0,3},
-		{3,0,0,0,3},
-		{4,2,4,0,3},
-		{0,0,3,0,3}
-	};
+	int[,,] map;
 
 	[SerializeField]
 	GameObject[] GenerateBlocks;
 	[SerializeField, Space(6)]
 	GameObject SphereController;
 
+	GameObject cameraObject;
+
 	List<Vector3> generateSpherePos = new List<Vector3>();
 
 	// Use this for initialization
 	void Start () {
+		map = new int[3,5,5]{
+			{
+				{4,2,2,2,5},
+				{3,0,0,0,3},
+				{3,0,0,0,3},
+				{4,2,4,0,3},
+				{0,0,3,0,3}
+			},
+			{
+				{4,2,2,2,5},
+				{3,0,0,0,3},
+				{3,0,0,0,3},
+				{4,2,4,0,3},
+				{0,0,3,0,3}
+			},
+			{
+				{4,2,2,2,5},
+				{3,0,0,0,3},
+				{3,0,0,0,3},
+				{4,2,4,0,3},
+				{0,0,3,0,3}
+			}
+		};
+
+		cameraObject = GameObject.Find("Main Camera");
+		cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
+
 		for (int y = map.GetLength(0) - 1; y >= 0; --y)
 		{
-			for (int x = map.GetLength(1) - 1; x >= 0; --x)
+			
+			for (int z = map.GetLength(1) - 1; z >= 0; --z)
 			{
-				Vector3 pos = new Vector3(x, 5, y);
-				if(map[y,x] == 0) continue;
-				var obj = Instantiate(GenerateBlocks[map[y,x]],pos, Quaternion.identity);
-				obj.transform.parent = transform;
-				obj.name = "[" + x + "," + y +"] " + obj.name;
+				for (int x = map.GetLength(2) - 1; x >= 0; --x)
+				{
+					Vector3 pos = new Vector3(x, y, (map.GetLength(1) - z - 1));
+					if(map[y,z,x] == 0) continue;
+					var obj = Instantiate(GenerateBlocks[map[y,z,x]],pos, Quaternion.identity);
+					obj.transform.parent = transform;
+					obj.name = "[" + x + "," + y +"," + z + "] " + obj.name;
+				}
 			}
 		}
 	}

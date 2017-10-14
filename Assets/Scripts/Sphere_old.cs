@@ -16,8 +16,8 @@ public class Sphere_old : MonoBehaviour {
 
 	Camera camera;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		rigidbody = GetComponent<Rigidbody>();
 
 		parent = transform.root.gameObject;
