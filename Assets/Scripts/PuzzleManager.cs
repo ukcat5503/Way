@@ -60,7 +60,7 @@ public class PuzzleManager : MonoBehaviour {
 		};
 
 		objInfo.Clear();
-		objInfo.Add(new ObjectInfo(4,4,3,0));
+		objInfo.Add(new ObjectInfo(4,3,1,0));
 
 		for (int y = map.GetLength(0) - 1; y >= 0; --y)
 		{
@@ -72,9 +72,16 @@ public class PuzzleManager : MonoBehaviour {
 					if(map[y,z,x] == 0) continue;
 					var obj = Instantiate(GenerateBlocks[map[y,z,x]],pos, GenerateBlocks[map[y,z,x]].transform.rotation);
 					obj.transform.parent = transform;
-					obj.name = "[" + x + "," + y +"," + z + "] " + obj.name;
+					obj.name = "◯[" + x + "," + y +"," + z + "] " + obj.name;
 				}
 			}
+		}
+
+		foreach (var item in objInfo)
+		{
+			var obj = Instantiate(GenerateObjects[item.obj], item.pos, GenerateObjects[item.obj].transform.rotation);
+			obj.transform.parent = transform;
+			obj.name = "●[" + item.pos.x + "," + item.pos.y +"," + item.pos.z + "] " + obj.name;
 		}
 	}
 }
