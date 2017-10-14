@@ -7,17 +7,15 @@ public class NoteObject : SpriteBase {
 	[SerializeField]
 	SoundManager.SE se;
 
-	SpriteRenderer sr;
-	
 	int frame = 0;
 
-	void Start () {
-		sr = GetComponent<SpriteRenderer>();
-		sr.enabled = false;
+	new void Start () {
+		base.Start();
+		spriteRenderer.enabled = false;
 		
 	}
 	
-	void Update () {
+	new void Update () {
 		base.Update();
 
 		++frame;
@@ -26,14 +24,14 @@ public class NoteObject : SpriteBase {
 	void OnTriggerEnter(Collider other){
 		/*
 		if(frame > 120){
-			sr.enabled = true;
+			spriteRenderer.enabled = true;
 			frame = 0;
 			SoundManager.PlaySE(se);
 
 		}
 		*/
-		if(sr.enabled == false){
-			sr.enabled = true;
+		if(spriteRenderer.enabled == false){
+			spriteRenderer.enabled = true;
 			SoundManager.PlaySE(se);
 		}
 

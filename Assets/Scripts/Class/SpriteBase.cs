@@ -12,7 +12,7 @@ public class SpriteBase : MonoBehaviour {
 	/// <summary>
 	/// SpriteRendererをキャッシュしておくため
 	/// </summary>
-	SpriteRenderer spriteRenderer;
+	protected SpriteRenderer spriteRenderer;
 
 	/// <summary>
 	/// アニメーションに使用するスプライトの配列
@@ -43,7 +43,7 @@ public class SpriteBase : MonoBehaviour {
 	int currentSprite = 0;
 
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
 		if(animationSprite.Length == 1){

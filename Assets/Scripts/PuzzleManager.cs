@@ -70,7 +70,7 @@ public class PuzzleManager : MonoBehaviour {
 				{
 					Vector3 pos = new Vector3(x, y, (map.GetLength(1) - z - 1));
 					if(map[y,z,x] == 0) continue;
-					var obj = Instantiate(GenerateBlocks[map[y,z,x]],pos, Quaternion.identity);
+					var obj = Instantiate(GenerateBlocks[map[y,z,x]],pos, GenerateBlocks[map[y,z,x]].transform.rotation);
 					obj.transform.parent = transform;
 					obj.name = "[" + x + "," + y +"," + z + "] " + obj.name;
 				}
