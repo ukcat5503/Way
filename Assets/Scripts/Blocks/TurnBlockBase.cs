@@ -74,20 +74,55 @@ public class TurnBlockBase : MonoBehaviour {
 	[SerializeField, Space(6), Header("1動作でどちらにブロックが動作するか")]
 	TurnAngle turnBlockAngle;
 
+	bool isAnimating = false;
+	float targetAngle = 0f;
+	float finalAngle = 0f;
+	float finalViewAngle = 0f;
+	public float currentAngle = 0f;
+	bool leftRotate = false;
 
-	// Use this for initialization
+	const int kAnimationFrame = 20;
+
 	void Start () {
 		Setup();
 	}
 	
-	// Update is called once per frame
 	virtual protected void Update () {
 		// ブロック回転
-		if (turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
-			transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 90f * (int)turnBlockAngle, transform.eulerAngles.z);
+		if (!isAnimating && turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
+
+			leftRotate = false;
+			isAnimating = true;
+			if(turnBlockAngle == TurnAngle.TurnLeft){
+				targetAngle = -90f;
+				leftRotate = true;
+			}else if(turnBlockAngle == TurnAngle.TurnRight){
+				targetAngle = 90f;
+			}else if(turnBlockAngle == TurnAngle.TurnFlip){
+				targetAngle = 180f;
+			}
+
+			finalAngle = currentAngle + targetAngle;
+			finalViewAngle = transform.eulerAngles.y + targetAngle;
 
 			TurnBlock((int)turnBlockAngle);
 			Setup();
+		}
+
+		if(isAnimating){
+			rotateY(targetAngle / kAnimationFrame);
+
+			if(!leftRotate){
+				if(currentAngle > finalAngle){
+					rotateYFixedValue(finalViewAngle);
+					isAnimating = false;
+				}
+			}else{
+				if(currentAngle < finalAngle){
+					rotateYFixedValue(finalViewAngle);
+					isAnimating = false;
+				}
+			}
 		}
 
 		// ボール制御
@@ -149,6 +184,16 @@ public class TurnBlockBase : MonoBehaviour {
 			"→: " + targetPoint[(int)StartPosition.East] + "\n" +
 			"↓: " + targetPoint[(int)StartPosition.South] + "\n"
 		).Log();
+	}
+
+	void rotateY(float angle){
+		transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + angle,transform.eulerAngles.z);
+		currentAngle += angle;
+	}
+
+	void rotateYFixedValue(float angle){
+		transform.eulerAngles = new Vector3(transform.eulerAngles.x, angle,transform.eulerAngles.z);
+		// currentAngle = angle;
 	}
 	
 
