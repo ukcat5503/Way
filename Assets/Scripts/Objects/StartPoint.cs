@@ -28,8 +28,11 @@ public class StartPoint : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(playingAnimation){
-			"あああ".Log();
-			currentObj.transform.position = new Vector3(currentObj.transform.position.x, currentObj.transform.position.y + 0.04f, currentObj.transform.position.z);
+			currentObj.transform.position = new Vector3(currentObj.transform.position.x, currentObj.transform.position.y + 0.06f, currentObj.transform.position.z);
+			var target = currentObj.transform.localScale.x + 0.08f;
+			float scale = (target >= 1.0f ? 1.0f : currentObj.transform.localScale.x + 0.08f);
+			
+			currentObj.transform.localScale = new Vector3(scale, scale, scale);
 			if(targetPosY < currentObj.transform.position.y){
 				playingAnimation = false;
 				currentCollider.enabled = true;
@@ -52,6 +55,7 @@ public class StartPoint : MonoBehaviour {
 		currentSphereController = currentObj.GetComponent<SphereController>();
 
 		currentSphereController.RotationY(RotateY);
+		currentObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
 		targetPosY = transform.position.y + 0.6f;
 		currentCollider.enabled = false;
