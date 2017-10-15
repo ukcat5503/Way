@@ -28,14 +28,11 @@ public class PuzzleManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*
-		// オブジェクトリスト生成
-
-		*/
-		var str = "";
+		// オブジェクトリスト生成 リリース時取り除く
+		var str = "\n";
 		for (int i = 0; i < GenerateBlocks.Length; ++i)
 		{
-			str += i + "," + GenerateBlocks[i].name + "\n";
+			str += i + "\t" + GenerateBlocks[i].name + "\n";
 		}
 		
 		str.Log();
@@ -67,12 +64,13 @@ public class PuzzleManager : MonoBehaviour {
 				{4,0,0,0,4},
 				{0,0,0,0,4},
 				{0,0,0,0,4},
-				{0,0,0,0,4}
+				{0,0,0,0,1}
 			}
 		};
 
 		objInfo.Clear();
-		objInfo.Add(new ObjectInfo(4,3,1,0));
+		objInfo.Add(new ObjectInfo(4,2,0,0));
+		objInfo.Add(new ObjectInfo(4,3,1,4));
 
 		for (int y = map.GetLength(0) - 1; y >= 0; --y)
 		{

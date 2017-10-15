@@ -9,6 +9,8 @@ public class SphereController : MonoBehaviour {
 
 	Rigidbody rigidBody;
 
+	public bool IsActive = false;
+
 	const float kSpeedPerSecond = 2.5f;
 
 	[SerializeField]
@@ -29,15 +31,17 @@ public class SphereController : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		child.transform.Rotate(kSpeedPerSecond * 2f, 0, 0);
+		if(IsActive){
+			child.transform.Rotate(kSpeedPerSecond * 2f, 0, 0);
 
-		var radian = (transform.eulerAngles.y) * Mathf.Deg2Rad;
-		Vector2 vector = new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));
-		transform.position = new Vector3(
-			(vector.x * kSpeedPerSecond / 60f) + transform.position.x,
-			transform.position.y,
-			(vector.y * kSpeedPerSecond / 60f) + transform.position.z
-		);
+			var radian = (transform.eulerAngles.y) * Mathf.Deg2Rad;
+			Vector2 vector = new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));
+			transform.position = new Vector3(
+				(vector.x * kSpeedPerSecond / 60f) + transform.position.x,
+				transform.position.y,
+				(vector.y * kSpeedPerSecond / 60f) + transform.position.z
+			);
+		}
 	}
 
 	public void RotationY(float rotate)
