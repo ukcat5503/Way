@@ -28,6 +28,18 @@ public class PuzzleManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		/*
+		// オブジェクトリスト生成
+
+		*/
+		var str = "";
+		for (int i = 0; i < GenerateBlocks.Length; ++i)
+		{
+			str += i + "," + GenerateBlocks[i].name + "\n";
+		}
+		
+		str.Log();
+
 		initialize();
 
 		cameraObject = GameObject.Find("Main Camera");
