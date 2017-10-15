@@ -40,10 +40,12 @@ public class StartPoint : MonoBehaviour {
 			}
 		}
 
-		if(currentObj.transform.position.y < -30f){
-			Destroy(currentObj);
-			currentObj = null;
+		if(currentObj == null){
 			generate();
+		}else{
+			if(currentObj.transform.position.y < -30f){
+				deleteSphere();
+			}
 		}
 	}
 
@@ -63,5 +65,10 @@ public class StartPoint : MonoBehaviour {
 		currentRigidbody.isKinematic = true;
 		currentSphereController.IsActive = false;
 		playingAnimation = true;
+	}
+
+	void deleteSphere(){
+		Destroy(currentObj);
+		currentObj = null;
 	}
 }

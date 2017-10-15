@@ -46,7 +46,7 @@ public class PuzzleManager : MonoBehaviour {
 	void initialize(){
 		map = new int[3,5,5]{
 			{
-				{0,3,3,16,0},
+				{2,3,3,16,0},
 				{0,0,0,4,0},
 				{0,0,0,4,0},
 				{0,0,0,0,0},
