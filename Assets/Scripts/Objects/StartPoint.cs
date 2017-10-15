@@ -21,8 +21,7 @@ public class StartPoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-		
+		generate();
 	}
 	
 	// Update is called once per frame
@@ -41,7 +40,9 @@ public class StartPoint : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetKeyDown(KeyCode.A)){
+		if(currentObj.transform.position.y < -30f){
+			Destroy(currentObj);
+			currentObj = null;
 			generate();
 		}
 	}
