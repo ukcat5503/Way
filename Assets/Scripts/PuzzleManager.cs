@@ -79,7 +79,19 @@ public class PuzzleManager : MonoBehaviour {
 
 		objInfo.Clear();
 		objInfo.Add(new ObjectInfo(4,2,0,0));
-		objInfo.Add(new ObjectInfo(4,3,1,4));
+
+		objInfo.Add(new ObjectInfo(4,3,2,4));
+		objInfo.Add(new ObjectInfo(4,3,4,5));
+		objInfo.Add(new ObjectInfo(2,3,4,6));
+
+		objInfo.Add(new ObjectInfo(0,2,2,7));
+		objInfo.Add(new ObjectInfo(0,2,0,8));
+		objInfo.Add(new ObjectInfo(2,2,0,9));
+		// objInfo.Add(new ObjectInfo(4,2,0,9));
+		objInfo.Add(new ObjectInfo(3,1,4,10));
+		objInfo.Add(new ObjectInfo(0,1,4,11));
+		
+
 
 		for (int y = map.GetLength(0) - 1; y >= 0; --y)
 		{

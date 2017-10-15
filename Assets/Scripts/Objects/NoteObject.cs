@@ -12,7 +12,6 @@ public class NoteObject : SpriteBase {
 	new void Start () {
 		base.Start();
 		spriteRenderer.enabled = false;
-		
 	}
 	
 	new void Update () {
@@ -22,18 +21,10 @@ public class NoteObject : SpriteBase {
 	}
 
 	void OnTriggerEnter(Collider other){
-		/*
-		if(frame > 120){
-			spriteRenderer.enabled = true;
-			frame = 0;
-			SoundManager.PlaySE(se);
-
-		}
-		*/
-		if(spriteRenderer.enabled == false){
+		// if(spriteRenderer.enabled == false){
 			spriteRenderer.enabled = true;
 			SoundManager.PlaySE(se);
-		}
+		// }
 
 	}
 }
