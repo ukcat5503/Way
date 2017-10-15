@@ -6,6 +6,8 @@ public class StartPoint : MonoBehaviour {
 
 	[SerializeField]
 	GameObject sphere;
+	[SerializeField]
+	float RotateY;
 
 	GameObject currentObj;
 	Collider currentCollider;
@@ -14,6 +16,8 @@ public class StartPoint : MonoBehaviour {
 
 	bool playingAnimation = false;
 	float targetPosY = 0f;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -46,6 +50,8 @@ public class StartPoint : MonoBehaviour {
 		currentCollider = currentObj.GetComponent<Collider>();
 		currentRigidbody = currentObj.GetComponent<Rigidbody>();
 		currentSphereController = currentObj.GetComponent<SphereController>();
+
+		currentSphereController.RotationY(RotateY);
 
 		targetPosY = transform.position.y + 0.6f;
 		currentCollider.enabled = false;
