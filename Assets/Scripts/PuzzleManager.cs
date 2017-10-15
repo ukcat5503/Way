@@ -22,12 +22,21 @@ public class PuzzleManager : MonoBehaviour {
 	GameObject[] GenerateObjects;
 	[SerializeField, Space(6)]
 	GameObject SphereController;
+
+	[SerializeField]
+	Color notTurnColor, rightColor, flipColor, leftColor;
+	public static Color NotTurnColor, RightColor, FlipColor, LeftColor;
 	
 
 	GameObject cameraObject;
 
 	// Use this for initialization
 	void Start () {
+		NotTurnColor = notTurnColor;
+		RightColor = rightColor;
+		FlipColor = flipColor;
+		LeftColor = leftColor;
+
 		// オブジェクトリスト生成 リリース時取り除く
 		var str = "\n";
 		for (int i = 0; i < GenerateBlocks.Length; ++i)

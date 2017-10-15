@@ -84,6 +84,22 @@ public class TurnBlockBase : MonoBehaviour {
 	const int kAnimationFrame = 20;
 
 	void Start () {
+		var material = GetComponentsInChildren<MeshRenderer>()[0].material;
+		switch (turnBlockAngle)
+		{
+			case TurnAngle.NotTurn:
+				material.color = PuzzleManager.NotTurnColor;
+				break;
+			case TurnAngle.TurnRight:
+				material.color = PuzzleManager.RightColor;
+				break;
+			case TurnAngle.TurnLeft:
+				material.color = PuzzleManager.LeftColor;
+				break;
+			case TurnAngle.TurnFlip:
+				material.color = PuzzleManager.FlipColor;
+				break;
+		}
 		Setup();
 	}
 	
