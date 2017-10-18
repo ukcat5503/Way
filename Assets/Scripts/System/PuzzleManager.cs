@@ -59,7 +59,9 @@ public class PuzzleManager : MonoBehaviour {
 	public static Color NotTurnColor, RightColor, FlipColor, LeftColor;
 	
 
-	GameObject cameraObject;
+	public static GameObject CameraObject;
+
+	public static float MapHeight = 0.5f;
 
 	// Use this for initialization
 	void Start () {
@@ -79,7 +81,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		initialize();
 
-		cameraObject = GameObject.Find("Main Camera");
+		CameraObject = GameObject.Find("Main Camera");
 		// cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
 	}
 
@@ -91,26 +93,26 @@ public class PuzzleManager : MonoBehaviour {
 			{4,0,0,0,4},
 			{4,0,0,0,4},
 			{4,0,0,0,4},
-			{6,3,3,3,5},
+			{6,3,3,2,5}
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(4,3,0);
 
 		map = new int[5, 5]{
-			{0,0,0,0,0},
-			{0,7,3,8,0},
-			{0,4,0,4,0},
-			{0,6,3,5,0},
-			{0,0,0,0,0},
+			{7,2,3,3,8},
+			{4,0,0,0,4},
+			{4,0,0,0,4},
+			{4,0,0,0,4},
+			{6,3,3,3,5}
 		};
 		StageData.Add(new StageInfo(map));
 
 		map = new int[5, 5]{
-			{0,0,0,0,0},
-			{0,0,0,0,0},
-			{0,0,2,0,0},
-			{0,0,0,0,0},
-			{0,0,0,0,0},
+			{7,3,3,3,8},
+			{4,0,0,0,4},
+			{4,0,0,0,4},
+			{4,0,0,0,4},
+			{6,3,3,2,5}
 		};
 		StageData.Add(new StageInfo(map));
 
@@ -128,7 +130,7 @@ public class PuzzleManager : MonoBehaviour {
 			{
 				for (int x = 0; x < item.Map.GetLength(0); ++x)
 				{
-					Vector3 pos = new Vector3(x, -height * 0.5f, (item.Map.GetLength(0) - z) +0.25f);
+					Vector3 pos = new Vector3(x, -height * MapHeight, (item.Map.GetLength(0) - z) +0.25f);
 					if(item.Map[z,x] == 0) continue;
 					var obj = Instantiate(GenerateBlocks[item.Map[z,x]],pos, GenerateBlocks[item.Map[z,x]].transform.rotation);
 					obj.transform.parent = mapObj.transform;

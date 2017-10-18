@@ -151,7 +151,6 @@ public class TurnBlockBase : MonoBehaviour {
 				item.Value.sphere.RotateY <= item.Value.currentRotate + item.Value.targetRotate;
 			if (isDelete){
 				item.Value.obj.transform.eulerAngles = new Vector3(0f, item.Value.currentRotate + item.Value.targetRotate, 0f);
-				(item.Value.currentRotate + item.Value.targetRotate).Log();
 				waitDelete.Add(item.Key);
 			}
 			else
