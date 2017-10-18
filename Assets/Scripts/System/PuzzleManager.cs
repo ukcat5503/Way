@@ -37,8 +37,8 @@ public class PuzzleManager : MonoBehaviour {
 			obj = objectNumber;
 		}
 
-		public Vector3 GetPos(float height){
-			return new Vector3(pos.x, height, pos.y);
+		public Vector3 GetPos(float height, int length){
+			return new Vector3(pos.x, height, length - pos.y);
 		}
 	}
 
@@ -94,7 +94,7 @@ public class PuzzleManager : MonoBehaviour {
 			{6,3,3,3,5},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(4,4,0);
+		StageData[StageData.Count - 1].AddObject(4,3,0);
 
 		map = new int[5, 5]{
 			{0,0,0,0,0},
@@ -128,7 +128,7 @@ public class PuzzleManager : MonoBehaviour {
 			{
 				for (int x = 0; x < item.Map.GetLength(0); ++x)
 				{
-					Vector3 pos = new Vector3(x, -height * 0.5f, (item.Map.GetLength(0) - z));
+					Vector3 pos = new Vector3(x, -height * 0.5f, (item.Map.GetLength(0) - z) +0.25f);
 					if(item.Map[z,x] == 0) continue;
 					var obj = Instantiate(GenerateBlocks[item.Map[z,x]],pos, GenerateBlocks[item.Map[z,x]].transform.rotation);
 					obj.transform.parent = mapObj.transform;
@@ -138,7 +138,7 @@ public class PuzzleManager : MonoBehaviour {
 
 			foreach (var objItem in item.Objects)
 			{
-				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height), GenerateObjects[objItem.obj].transform.rotation);
+				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height, item.Map.GetLength(0)), GenerateObjects[objItem.obj].transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 			}

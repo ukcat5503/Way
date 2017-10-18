@@ -7,12 +7,45 @@ public class StraightBlock : TurnBlockBase {
 	[SerializeField]
 	bool isVertical;
 
+	const float kToleranceRotateFix = 1.0f;
+
 	protected new void Update () {
 		base.Update();
 	}
 
 	new void OnCollisionEnter(Collision other){
-		// base.OnCollisionEnter(other);
+		return;
+		var position = base.CalcStartPosition(other);
+		position.Log();
+		var eular = other.transform.eulerAngles;
+
+		bool isRotate = false;
+		switch (position)
+		{
+			case StartPosition.North:
+				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+				eular.y = 180f;
+			break;
+			case StartPosition.South:
+				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+				eular.y = 0f;
+			break;
+			case StartPosition.West:
+				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+				eular.y = 90f;
+			break;
+			case StartPosition.East:
+				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+				eular.y = 270f;
+			break;
+
+		}
+
+		isRotate.Log();
+		if(isRotate){
+			other.transform.eulerAngles = eular;
+		}
+		
 	}
 
 	void OnCollisionStay(Collision other){

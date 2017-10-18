@@ -145,17 +145,18 @@ public class TurnBlockBase : MonoBehaviour {
 		foreach (var item in SphereList)
 		{
 			bool isDelete = (item.Value.currentRotate < item.Value.currentRotate + item.Value.targetRotate) ?
-				item.Value.sphere.RotateY > item.Value.currentRotate + item.Value.targetRotate:
-				item.Value.sphere.RotateY < item.Value.currentRotate + item.Value.targetRotate;
-			// isDelete.Log();
+				// 右折
+				item.Value.sphere.RotateY >= item.Value.currentRotate + item.Value.targetRotate:
+				// 左折
+				item.Value.sphere.RotateY <= item.Value.currentRotate + item.Value.targetRotate;
 			if (isDelete){
-				// (item.Value.currentRotate + item.Value.targetRotate).Log();
 				item.Value.obj.transform.eulerAngles = new Vector3(0f, item.Value.currentRotate + item.Value.targetRotate, 0f);
+				(item.Value.currentRotate + item.Value.targetRotate).Log();
 				waitDelete.Add(item.Key);
 			}
 			else
 			{
-				item.Value.sphere.RotationY(item.Value.targetRotate / 20);
+				item.Value.sphere.RotationY(item.Value.targetRotate / 30);
 			}
 		}
 		foreach (var item in waitDelete)
@@ -211,28 +212,33 @@ public class TurnBlockBase : MonoBehaviour {
 		transform.eulerAngles = new Vector3(transform.eulerAngles.x, angle,transform.eulerAngles.z);
 		// currentAngle = angle;
 	}
+
+	protected StartPosition CalcStartPosition(Collision other){
+		StartPosition position;
+		if(Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.z - other.transform.position.z)){
+			if(transform.position.x - other.transform.position.x > 0){
+				position = StartPosition.West;
+			}else{
+				position = StartPosition.East;
+			}
+		}else{
+			if(transform.position.z - other.transform.position.z < 0){
+				position = StartPosition.North;
+			}else{
+				position = StartPosition.South;
+			}
+		}
+		// (position.ToString() + "から来た").Log();
+		return position;
+	}
 	
 
 	virtual protected void OnCollisionEnter(Collision other)
 	{
-		isTouchSphere = true;
-
 		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
-			StartPosition position;
-			if(Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.z - other.transform.position.z)){
-				if(transform.position.x - other.transform.position.x > 0){
-					position = StartPosition.West;
-				}else{
-					position = StartPosition.East;
-				}
-			}else{
-				if(transform.position.z - other.transform.position.z < 0){
-					position = StartPosition.North;
-				}else{
-					position = StartPosition.South;
-				}
-			}
-			// (position.ToString() + "から来た").Log();
+			var position = CalcStartPosition(other);
+
+			isTouchSphere = true;
 			if(targetPoint[(int)position] != 0f){
 				var s = other.gameObject.GetComponent<SphereController>();
 				if (targetPoint[(int)position] == 180f){
