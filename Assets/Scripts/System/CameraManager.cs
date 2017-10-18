@@ -36,7 +36,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        cameraControl();
+        // cameraControl();
     }
 
     /// <summary>

@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
 	class StageInfo {
-		int[,] Map;
-		List<ObjectInfo> Objects;
+		public int[,] Map{ get; private set; }
+		public List<ObjectInfo> Objects{ get; private set; }
 
 		public StageInfo(int[,] map)
 		{
+			Objects = new List<ObjectInfo>();
 			Map = new int[map.GetLength(0), map.GetLength(1)];
-			Map.CopyTo(map, 0);
+			for (int z = 0; z < map.GetLength(1); ++z)
+			{
+				for (int x = 0; x < map.GetLength(0); ++x)
+				{
+					Map[x,z] = map[x,z];
+				}
+			}
 		}
 
 		public void AddObject(float x, float z, int objectNumber)
@@ -28,6 +35,10 @@ public class PuzzleManager : MonoBehaviour {
 		{
 			pos = new Vector2(x, z);
 			obj = objectNumber;
+		}
+
+		public Vector3 GetPos(float height){
+			return new Vector3(pos.x, height, pos.y);
 		}
 	}
 
@@ -69,58 +80,72 @@ public class PuzzleManager : MonoBehaviour {
 		initialize();
 
 		cameraObject = GameObject.Find("Main Camera");
-		cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
+		// cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
 	}
 
 	void initialize(){
 		StageData = new List<StageInfo>();
 
 		map = new int[5, 5]{
-			{2,3,3,16,0},
-			{0,0,0,4,0},
-			{0,0,0,4,0},
+			{7,3,3,3,8},
+			{4,0,0,0,4},
+			{4,0,0,0,4},
+			{4,0,0,0,4},
+			{6,3,3,3,5},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddObject(4,4,0);
+
+		map = new int[5, 5]{
+			{0,0,0,0,0},
+			{0,7,3,8,0},
+			{0,4,0,4,0},
+			{0,6,3,5,0},
+			{0,0,0,0,0},
+		};
+		StageData.Add(new StageInfo(map));
+
+		map = new int[5, 5]{
+			{0,0,0,0,0},
+			{0,0,0,0,0},
+			{0,0,2,0,0},
 			{0,0,0,0,0},
 			{0,0,0,0,0},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count].AddObject(4,0,0);
 
-
-		/*
-		objInfo.Add(new ObjectInfo(4,3,2,4));
-		objInfo.Add(new ObjectInfo(4,3,4,5));
-		objInfo.Add(new ObjectInfo(2,3,4,6));
-
-		objInfo.Add(new ObjectInfo(0,2,2,7));
-		objInfo.Add(new ObjectInfo(0,2,0,8));
-		objInfo.Add(new ObjectInfo(2,2,0,9));
-
-		objInfo.Add(new ObjectInfo(3,1,4,10));
-		objInfo.Add(new ObjectInfo(0,1,4,11));
-		*/
-
-		/*
-		for (int y = map.GetLength(0) - 1; y >= 0; --y)
+		
+		var height = 0;
+		foreach (var item in StageData)
 		{
-			for (int z = map.GetLength(1) - 1; z >= 0; --z)
+			var stageObj = new GameObject("Stage " + height);
+			var mapObj = new GameObject("Maps");
+			var objObj = new GameObject("Objects");
+			stageObj.transform.parent = transform;
+			mapObj.transform.parent = stageObj.transform;
+			objObj.transform.parent = stageObj.transform;
+			for (int z = 0; z < item.Map.GetLength(1); ++z)
 			{
-				for (int x = map.GetLength(2) - 1; x >= 0; --x)
+				for (int x = 0; x < item.Map.GetLength(0); ++x)
 				{
-					Vector3 pos = new Vector3(x, y, (map.GetLength(1) - z - 1));
-					if(map[y,z,x] == 0) continue;
-					var obj = Instantiate(GenerateBlocks[map[y,z,x]],pos, GenerateBlocks[map[y,z,x]].transform.rotation);
-					obj.transform.parent = transform;
-					obj.name = "◯[" + x + "," + y +"," + z + "] " + obj.name;
+					Vector3 pos = new Vector3(x, -height * 0.5f, (item.Map.GetLength(0) - z));
+					if(item.Map[z,x] == 0) continue;
+					var obj = Instantiate(GenerateBlocks[item.Map[z,x]],pos, GenerateBlocks[item.Map[z,x]].transform.rotation);
+					obj.transform.parent = mapObj.transform;
+					obj.name = "[" + x + "," + z + "] " + obj.name;
 				}
 			}
+
+			foreach (var objItem in item.Objects)
+			{
+				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height), GenerateObjects[objItem.obj].transform.rotation);
+				obj.transform.parent = objObj.transform;
+				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
+			}
+
+			++height;
 		}
 
-		foreach (var item in objInfo)
-		{
-			var obj = Instantiate(GenerateObjects[item.obj], item.pos, GenerateObjects[item.obj].transform.rotation);
-			obj.transform.parent = transform;
-			obj.name = "●[" + item.pos.x + "," + item.pos.y +"," + item.pos.z + "] " + obj.name;
-		}
-		*/
+
 	}
 }
