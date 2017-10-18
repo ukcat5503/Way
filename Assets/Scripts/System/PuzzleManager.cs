@@ -3,18 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
-	class ObjectInfo{
+	class StageInfo {
+		int[,] Map;
+		List<ObjectInfo> Objects;
+
+		public StageInfo(int[,] map)
+		{
+			Map = new int[map.GetLength(0), map.GetLength(1)];
+			Map.CopyTo(map, 0);
+		}
+
+		public void AddObject(float x, float z, int objectNumber)
+		{
+			Objects.Add(new ObjectInfo(x, z, objectNumber));
+		}
+	}
+
+	class ObjectInfo
+	{
 		public Vector3 pos;
 		public int obj;
 
-		public ObjectInfo(float x, float y, float z, int objectNumber){
-			pos = new Vector3(x,y,z);
+		public ObjectInfo(float x, float z, int objectNumber)
+		{
+			pos = new Vector2(x, z);
 			obj = objectNumber;
 		}
 	}
 
-	int[,,] map;
-	List<ObjectInfo> objInfo = new List<ObjectInfo>();
+
+
+	int[,] map;
+	List<StageInfo> StageData;
 
 	[SerializeField]
 	GameObject[] GenerateBlocks;
@@ -53,33 +73,20 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	void initialize(){
-		map = new int[3,5,5]{
-			{
-				{2,3,3,16,0},
-				{0,0,0,4,0},
-				{0,0,0,4,0},
-				{0,0,0,0,0},
-				{0,0,0,0,0},
-			},
-			{
-				{0,0,0,0,0},
-				{0,0,0,0,0},
-				{4,0,0,0,0},
-				{4,0,0,4,0},
-				{12,3,3,13,0},
-			},
-			{
-				{18,3,3,3,16},
-				{4,0,0,0,4},
-				{0,0,0,0,4},
-				{0,0,0,0,4},
-				{0,0,0,0,1}
-			}
+		StageData = new List<StageInfo>();
+
+		map = new int[5, 5]{
+			{2,3,3,16,0},
+			{0,0,0,4,0},
+			{0,0,0,4,0},
+			{0,0,0,0,0},
+			{0,0,0,0,0},
 		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count].AddObject(4,0,0);
 
-		objInfo.Clear();
-		objInfo.Add(new ObjectInfo(4,2,0,0));
 
+		/*
 		objInfo.Add(new ObjectInfo(4,3,2,4));
 		objInfo.Add(new ObjectInfo(4,3,4,5));
 		objInfo.Add(new ObjectInfo(2,3,4,6));
@@ -87,12 +94,12 @@ public class PuzzleManager : MonoBehaviour {
 		objInfo.Add(new ObjectInfo(0,2,2,7));
 		objInfo.Add(new ObjectInfo(0,2,0,8));
 		objInfo.Add(new ObjectInfo(2,2,0,9));
-		// objInfo.Add(new ObjectInfo(4,2,0,9));
+
 		objInfo.Add(new ObjectInfo(3,1,4,10));
 		objInfo.Add(new ObjectInfo(0,1,4,11));
-		
+		*/
 
-
+		/*
 		for (int y = map.GetLength(0) - 1; y >= 0; --y)
 		{
 			for (int z = map.GetLength(1) - 1; z >= 0; --z)
@@ -114,5 +121,6 @@ public class PuzzleManager : MonoBehaviour {
 			obj.transform.parent = transform;
 			obj.name = "●[" + item.pos.x + "," + item.pos.y +"," + item.pos.z + "] " + obj.name;
 		}
+		*/
 	}
 }

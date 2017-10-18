@@ -15,7 +15,7 @@ public class StraightBlock : TurnBlockBase {
 		// base.OnCollisionEnter(other);
 	}
 
-	new void OnCollisionStay(Collision other){
+	void OnCollisionStay(Collision other){
 		var pos = other.transform.position;
 		if(isVertical){
 			var difference = other.transform.position.x - transform.position.x;

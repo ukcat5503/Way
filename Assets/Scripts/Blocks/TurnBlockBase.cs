@@ -215,7 +215,9 @@ public class TurnBlockBase : MonoBehaviour {
 
 	virtual protected void OnCollisionEnter(Collision other)
 	{
-		if(!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
+		isTouchSphere = true;
+
+		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
 			StartPosition position;
 			if(Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.z - other.transform.position.z)){
 				if(transform.position.x - other.transform.position.x > 0){
@@ -241,10 +243,6 @@ public class TurnBlockBase : MonoBehaviour {
 				}
 			}
 		}
-	}
-	virtual protected void OnCollisionStay(Collision other)
-	{
-		isTouchSphere = true;
 	}
 
 	virtual protected void OnCollisionExit(Collision other)
