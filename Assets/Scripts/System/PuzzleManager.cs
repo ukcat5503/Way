@@ -37,8 +37,8 @@ public class PuzzleManager : MonoBehaviour {
 			obj = objectNumber;
 		}
 
-		public Vector3 GetPos(float height, int length){
-			return new Vector3(pos.x, height, length - pos.y);
+		public Vector3 GetPos(float height){
+			return new Vector3(pos.x, height, pos.y);
 		}
 	}
 
@@ -59,9 +59,7 @@ public class PuzzleManager : MonoBehaviour {
 	public static Color NotTurnColor, RightColor, FlipColor, LeftColor;
 	
 
-	public static GameObject CameraObject;
-
-	public static float MapHeight = 0.5f;
+	GameObject cameraObject;
 
 	// Use this for initialization
 	void Start () {
@@ -81,38 +79,45 @@ public class PuzzleManager : MonoBehaviour {
 
 		initialize();
 
-		CameraObject = GameObject.Find("Main Camera");
+		cameraObject = GameObject.Find("Main Camera");
 		// cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
 	}
 
 	void initialize(){
 		StageData = new List<StageInfo>();
 
-		map = new int[5, 5]{
-			{7,3,3,3,8},
-			{4,0,0,0,4},
-			{4,0,0,0,4},
-			{4,0,0,0,4},
-			{6,3,3,2,5}
+		map = new int[12, 12]{
+			{4,15,3,3,3,3,3,3,3,3,16,4},
+			{4,4,0,0,0,0,0,0,0,0,4,4},
+			{4,4,0,0,0,0,0,0,0,0,4,4},
+			{4,24,0,0,0,0,0,0,0,0,0,4},
+			{4,24,0,0,0,0,0,0,0,0,0,4},
+			{4,24,0,0,0,0,0,0,0,0,0,4},
+			{4,24,0,0,0,0,0,0,0,0,0,4},
+			{4,24,0,0,0,0,0,0,0,0,0,4},
+			{4,24,0,0,0,0,0,0,0,0,0,4},
+			{4,4,0,0,0,0,0,0,0,0,4,4},
+			{4,4,0,0,0,0,0,0,0,0,4,4},
+			{4,14,3,3,3,3,3,3,3,3,13,4},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(4,3,0);
+		StageData[StageData.Count - 1].AddObject(1,5,0);
 
 		map = new int[5, 5]{
-			{7,2,3,3,8},
-			{4,0,0,0,4},
-			{4,0,0,0,4},
-			{4,0,0,0,4},
-			{6,3,3,3,5}
+			{0,0,0,0,0},
+			{0,7,3,8,0},
+			{0,4,0,4,0},
+			{0,6,3,5,0},
+			{0,0,0,0,0},
 		};
 		StageData.Add(new StageInfo(map));
 
 		map = new int[5, 5]{
-			{7,3,3,3,8},
-			{4,0,0,0,4},
-			{4,0,0,0,4},
-			{4,0,0,0,4},
-			{6,3,3,2,5}
+			{0,0,0,0,0},
+			{0,0,0,0,0},
+			{0,0,2,0,0},
+			{0,0,0,0,0},
+			{0,0,0,0,0},
 		};
 		StageData.Add(new StageInfo(map));
 
@@ -130,7 +135,7 @@ public class PuzzleManager : MonoBehaviour {
 			{
 				for (int x = 0; x < item.Map.GetLength(0); ++x)
 				{
-					Vector3 pos = new Vector3(x, -height * MapHeight, (item.Map.GetLength(0) - z) +0.25f);
+					Vector3 pos = new Vector3(x, -height * 0.5f, (item.Map.GetLength(0) - z));
 					if(item.Map[z,x] == 0) continue;
 					var obj = Instantiate(GenerateBlocks[item.Map[z,x]],pos, GenerateBlocks[item.Map[z,x]].transform.rotation);
 					obj.transform.parent = mapObj.transform;
@@ -140,7 +145,7 @@ public class PuzzleManager : MonoBehaviour {
 
 			foreach (var objItem in item.Objects)
 			{
-				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height, item.Map.GetLength(0)), GenerateObjects[objItem.obj].transform.rotation);
+				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height), GenerateObjects[objItem.obj].transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 			}

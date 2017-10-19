@@ -13,9 +13,6 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     Camera eyeLeft, eyeRight;
 
-    static float downSpeed = 0.01f;
-	static float leftOverDown = 0f;
-
     /*
     /// <summary>
     /// 両眼視差距離 この値/2づつ左右のカメラが横にずれる
@@ -40,11 +37,6 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         // cameraControl();
-
-        if(leftOverDown > 0f){
-			PuzzleManager.CameraObject.transform.position = new Vector3(PuzzleManager.CameraObject.transform.position.x, PuzzleManager.CameraObject.transform.position.y - downSpeed, PuzzleManager.CameraObject.transform.position.z);
-			leftOverDown = leftOverDown - downSpeed > 0f ? leftOverDown - downSpeed : 0f;
-		}
     }
 
     /// <summary>
@@ -95,10 +87,6 @@ public class CameraManager : MonoBehaviour
         }
 #endif
  */
-    }
-
-    public static void CameraDown(float distance){
-        leftOverDown = distance;
     }
 
 }
