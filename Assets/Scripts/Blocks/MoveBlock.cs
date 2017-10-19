@@ -18,7 +18,7 @@ public class MoveBlock : TurnBlockBase
 	[SerializeField]
 	LayerMask targetLayer;
 
-	bool isAnimating = false;
+	// bool isAnimating = false;
 	Vector3 movePos;
 	Vector3 moveLocalPos;
 	int currentFrame = kAnimationFrame + 1;
