@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class CameraManager : MonoBehaviour
 {
+    [SerializeField]
+    LayerMask targetLayerMask;
+
     /// <summary>
     /// 左右の目に対するカメラ
     /// </summary>
@@ -40,11 +43,21 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         // cameraControl();
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit = new RaycastHit();
+            if (Physics.Raycast(ray, out hit, 100f, targetLayerMask)) {
+                var s = hit.transform.gameObject.GetComponent<TurnBlockBase>();
+                if(s != null){
+                    s.ClickObject();
+                }
+            }
 
-        if(leftOverDown > 0f){
-			PuzzleManager.CameraObject.transform.position = new Vector3(PuzzleManager.CameraObject.transform.position.x, PuzzleManager.CameraObject.transform.position.y - downSpeed, PuzzleManager.CameraObject.transform.position.z);
-			leftOverDown = leftOverDown - downSpeed > 0f ? leftOverDown - downSpeed : 0f;
-		}
+            if(leftOverDown > 0f){
+                PuzzleManager.CameraObject.transform.position = new Vector3(PuzzleManager.CameraObject.transform.position.x, PuzzleManager.CameraObject.transform.position.y - downSpeed, PuzzleManager.CameraObject.transform.position.z);
+                leftOverDown = leftOverDown - downSpeed > 0f ? leftOverDown - downSpeed : 0f;
+            }
+        }
     }
 
     /// <summary>

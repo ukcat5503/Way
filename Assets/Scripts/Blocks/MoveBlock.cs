@@ -34,16 +34,6 @@ public class MoveBlock : TurnBlockBase
 	new void Update () {
 		base.Update();
 
-		if (Input.GetKeyDown(KeyCode.Return) && currentFrame > kAnimationFrame)
-		{
-			isAnimating = true;
-			currentFrame = 0;
-			movePos = GetCollidePosition();
-			moveLocalPos = transform.InverseTransformDirection(movePos - transform.position);
-			// transform.position = pos;
-			changeDirection();
-		}
-
 		if (++currentFrame < kAnimationFrame)
 		{
 			transform.position += moveLocalPos / kAnimationFrame;
@@ -102,6 +92,18 @@ public class MoveBlock : TurnBlockBase
 			case MoveDirection.South:
 				moveDirection = MoveDirection.North;
 				break;
+		}
+	}
+
+	override protected void clickAction(){
+		if (currentFrame > kAnimationFrame)
+		{
+			isAnimating = true;
+			currentFrame = 0;
+			movePos = GetCollidePosition();
+			moveLocalPos = transform.InverseTransformDirection(movePos - transform.position);
+			// transform.position = pos;
+			changeDirection();
 		}
 	}
 }

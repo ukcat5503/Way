@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(BoxCollider))]
-public class TurnBlockBase : MonoBehaviour, IPointerClickHandler {
+public class TurnBlockBase : MonoBehaviour {
 
 	protected class ObjectInfo{
 		public float currentRotate;
@@ -105,27 +105,6 @@ public class TurnBlockBase : MonoBehaviour, IPointerClickHandler {
 	}
 	
 	virtual protected void Update () {
-		// ブロック回転
-		if (!isAnimating && turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere && Input.GetKeyDown(KeyCode.Return)){
-
-			leftRotate = false;
-			isAnimating = true;
-			if(turnBlockAngle == TurnAngle.TurnLeft){
-				targetAngle = -90f;
-				leftRotate = true;
-			}else if(turnBlockAngle == TurnAngle.TurnRight){
-				targetAngle = 90f;
-			}else if(turnBlockAngle == TurnAngle.TurnFlip){
-				targetAngle = 180f;
-			}
-
-			finalAngle = currentAngle + targetAngle;
-			finalViewAngle = transform.eulerAngles.y + targetAngle;
-
-			TurnBlock((int)turnBlockAngle);
-			Setup();
-		}
-
 		if(isAnimating){
 			rotateY(targetAngle / kAnimationFrame);
 
@@ -257,8 +236,29 @@ public class TurnBlockBase : MonoBehaviour, IPointerClickHandler {
 		isTouchSphere = false;
 	}
 
-	public void OnPointerClick(PointerEventData eventData)
-    {
-		(transform.name + "をClick").Log();
-    } 
+	public void ClickObject(){
+		(transform.name + "をクリック").Log();
+		clickAction();
+	}
+	
+	virtual protected void clickAction(){
+		if (!isAnimating && turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere){
+			leftRotate = false;
+			isAnimating = true;
+			if(turnBlockAngle == TurnAngle.TurnLeft){
+				targetAngle = -90f;
+				leftRotate = true;
+			}else if(turnBlockAngle == TurnAngle.TurnRight){
+				targetAngle = 90f;
+			}else if(turnBlockAngle == TurnAngle.TurnFlip){
+				targetAngle = 180f;
+			}
+
+			finalAngle = currentAngle + targetAngle;
+			finalViewAngle = transform.eulerAngles.y + targetAngle;
+
+			TurnBlock((int)turnBlockAngle);
+			Setup();
+		}
+	}
 }
