@@ -43,19 +43,41 @@ public class CameraManager : MonoBehaviour
     void Update()
     {
         // cameraControl();
-        if (Input.GetMouseButtonDown(0)) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit, 100f, targetLayerMask)) {
-                var s = hit.transform.gameObject.GetComponent<TurnBlockBase>();
-                if(s != null){
-                    s.ClickObject();
-                }
-            }
 
-            if(leftOverDown > 0f){
-                PuzzleManager.CameraObject.transform.position = new Vector3(PuzzleManager.CameraObject.transform.position.x, PuzzleManager.CameraObject.transform.position.y - downSpeed, PuzzleManager.CameraObject.transform.position.z);
-                leftOverDown = leftOverDown - downSpeed > 0f ? leftOverDown - downSpeed : 0f;
+        if (Input.GetMouseButtonDown(0)) {
+            sendEventToHit(TurnBlockBase.ClickEventType.LeftClick);
+        }
+
+        if (Input.GetMouseButtonDown(1)) {
+            sendEventToHit(TurnBlockBase.ClickEventType.RightClick);
+        }
+
+        if (Input.GetMouseButtonDown(2)) {
+            sendEventToHit(TurnBlockBase.ClickEventType.MiddleClick);
+        }
+
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f){
+            sendEventToHit(TurnBlockBase.ClickEventType.WheelUp);
+        }
+
+        if(Input.GetAxis("Mouse ScrollWheel") < 0f){
+            sendEventToHit(TurnBlockBase.ClickEventType.WheelDown);
+        }
+
+
+        if(leftOverDown > 0f){
+            PuzzleManager.CameraObject.transform.position = new Vector3(PuzzleManager.CameraObject.transform.position.x, PuzzleManager.CameraObject.transform.position.y - downSpeed, PuzzleManager.CameraObject.transform.position.z);
+            leftOverDown = leftOverDown - downSpeed > 0f ? leftOverDown - downSpeed : 0f;
+        }
+    }
+
+    void sendEventToHit(TurnBlockBase.ClickEventType type){
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit = new RaycastHit();
+        if (Physics.Raycast(ray, out hit, 100f, targetLayerMask)) {
+            var s = hit.transform.gameObject.GetComponent<TurnBlockBase>();
+            if(s != null){
+                s.ClickObject(type);
             }
         }
     }

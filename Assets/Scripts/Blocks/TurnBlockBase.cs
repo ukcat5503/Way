@@ -44,6 +44,14 @@ public class TurnBlockBase : MonoBehaviour {
 		TurnLeft
 	}
 
+	public enum ClickEventType{
+		LeftClick,
+		RightClick,
+		MiddleClick,
+		WheelUp,
+		WheelDown
+	}
+
 
 	RotateAngle ValueToRotateAngle(int n) {
 		foreach (RotateAngle a in System.Enum.GetValues(typeof(RotateAngle)))
@@ -236,8 +244,8 @@ public class TurnBlockBase : MonoBehaviour {
 		isTouchSphere = false;
 	}
 
-	public void ClickObject(){
-		(transform.name + "をクリック").Log();
+	public void ClickObject(ClickEventType type){
+		(transform.name + "をクリック" + "  type: " + type).Log();
 		clickAction();
 	}
 	
