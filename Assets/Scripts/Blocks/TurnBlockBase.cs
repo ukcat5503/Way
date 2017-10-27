@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(BoxCollider))]
-public class TurnBlockBase : MonoBehaviour {
+public class TurnBlockBase : MonoBehaviour, IPointerClickHandler {
 
 	protected class ObjectInfo{
 		public float currentRotate;
@@ -255,4 +256,9 @@ public class TurnBlockBase : MonoBehaviour {
 	{
 		isTouchSphere = false;
 	}
+
+	public void OnPointerClick(PointerEventData eventData)
+    {
+		(transform.name + "をClick").Log();
+    } 
 }
