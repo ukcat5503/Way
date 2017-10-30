@@ -98,12 +98,27 @@ public class MoveBlock : TurnBlockBase
 	override protected void clickAction(ClickEventType type){
 		if (currentFrame > kAnimationFrame)
 		{
-			isAnimating = true;
-			currentFrame = 0;
-			movePos = GetCollidePosition();
-			moveLocalPos = transform.InverseTransformDirection(movePos - transform.position);
-			// transform.position = pos;
-			changeDirection();
+			bool decide = false;
+			switch(moveDirection){
+				case MoveDirection.North:
+				case MoveDirection.West:
+					decide = type == ClickEventType.WheelUp;
+				break;
+
+				case MoveDirection.South:
+				case MoveDirection.East:
+					 decide = type == ClickEventType.WheelDown;
+				break;
+			}
+
+			if(decide){
+				isAnimating = true;
+				currentFrame = 0;
+				movePos = GetCollidePosition();
+				moveLocalPos = transform.InverseTransformDirection(movePos - transform.position);
+				// transform.position = pos;
+				changeDirection();
+			}
 		}
 	}
 }
