@@ -76,6 +76,8 @@ public class TurnBlockBase : MonoBehaviour {
 
 	const float kMaxRange = 180f;
 	bool isTouchSphere;
+	[HideInInspector]
+	public bool CanMoveFromMouse;
 
 	[SerializeField, Space(6), Header("入って来た角度から見てどのように曲がるかを指定")]
 	RotateAngle targetFromWest;
@@ -111,6 +113,9 @@ public class TurnBlockBase : MonoBehaviour {
 			case BlockType.Move:
 				material.color = PuzzleManager.MoveColor;
 				break;
+		}
+		if(CanMoveFromMouse){
+			material.color -= new Color32(50, 50, 50, 0);
 		}
 		Setup();
 	}
@@ -224,16 +229,19 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 
 	public void ClickObject(ClickEventType type){
-		(transform.name + "をクリック" + "  type: " + type).Log();
+		// (transform.name + "をクリック" + "  type: " + type).Log();
 		clickAction(type);
 	}
 	
 	virtual protected void clickAction(ClickEventType type){
+		if(CanMoveFromMouse && type == ClickEventType.RightClick){
+			"あああああ".Log();
+			Destroy(gameObject);
+			return;
+		}
+
 		if (!isAnimating && turnBlockType != BlockType.NotTurn && !isTouchSphere){
-
-
 			TurnAngle turnBlockAngle;
-
 			switch (type)
 			{
 				case ClickEventType.WheelUp:
@@ -272,12 +280,9 @@ public class TurnBlockBase : MonoBehaviour {
 	
 	virtual protected void OnCollisionEnter(Collision other)
 	{
-		"あああああ".Log();
-
-
 		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
 			var position = CalcStartPosition(other);
-			
+
 			isTouchSphere = true;
 			if(targetPoint[(int)position] != 0f){
 				var s = other.gameObject.GetComponent<SphereController>();

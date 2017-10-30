@@ -42,8 +42,6 @@ public class PuzzleManager : MonoBehaviour {
 		}
 	}
 
-
-
 	int[,] map;
 	List<StageInfo> StageData;
 
