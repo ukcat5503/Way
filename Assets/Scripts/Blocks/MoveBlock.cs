@@ -95,7 +95,7 @@ public class MoveBlock : TurnBlockBase
 		}
 	}
 
-	override protected void clickAction(){
+	override protected void clickAction(ClickEventType type){
 		if (currentFrame > kAnimationFrame)
 		{
 			isAnimating = true;

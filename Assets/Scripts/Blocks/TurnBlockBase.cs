@@ -246,13 +246,31 @@ public class TurnBlockBase : MonoBehaviour {
 
 	public void ClickObject(ClickEventType type){
 		(transform.name + "をクリック" + "  type: " + type).Log();
-		clickAction();
+		clickAction(type);
 	}
 	
-	virtual protected void clickAction(){
+	virtual protected void clickAction(ClickEventType type){
 		if (!isAnimating && turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere){
-			leftRotate = false;
-			isAnimating = true;
+
+
+			TurnAngle turnBlockAngle;
+
+			switch (type)
+			{
+				case ClickEventType.WheelUp:
+					targetAngle = -90f;
+					leftRotate = true;
+					turnBlockAngle = TurnAngle.TurnLeft;
+				break;
+				case ClickEventType.WheelDown:
+					targetAngle = 90f;
+					leftRotate = false;
+					turnBlockAngle = TurnAngle.TurnRight;
+				break;
+				default:
+				return;
+			}
+			/*
 			if(turnBlockAngle == TurnAngle.TurnLeft){
 				targetAngle = -90f;
 				leftRotate = true;
@@ -261,6 +279,9 @@ public class TurnBlockBase : MonoBehaviour {
 			}else if(turnBlockAngle == TurnAngle.TurnFlip){
 				targetAngle = 180f;
 			}
+			*/
+
+			isAnimating = true;
 
 			finalAngle = currentAngle + targetAngle;
 			finalViewAngle = transform.eulerAngles.y + targetAngle;
