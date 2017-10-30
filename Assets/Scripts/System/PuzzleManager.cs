@@ -55,8 +55,8 @@ public class PuzzleManager : MonoBehaviour {
 	GameObject SphereController;
 
 	[SerializeField]
-	Color notTurnColor, rightColor, flipColor, leftColor;
-	public static Color NotTurnColor, RightColor, FlipColor, LeftColor;
+	Color notTurnColor, turnColor, moveColor;
+	public static Color NotTurnColor, TurnColor, MoveColor;
 	
 
 	public static GameObject CameraObject;
@@ -66,9 +66,8 @@ public class PuzzleManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		NotTurnColor = notTurnColor;
-		RightColor = rightColor;
-		FlipColor = flipColor;
-		LeftColor = leftColor;
+		TurnColor = turnColor;
+		MoveColor = moveColor;
 
 		// オブジェクトリスト生成 リリース時取り除く
 		var str = "\n";

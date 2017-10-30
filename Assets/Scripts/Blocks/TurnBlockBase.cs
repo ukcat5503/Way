@@ -44,6 +44,12 @@ public class TurnBlockBase : MonoBehaviour {
 		TurnLeft
 	}
 
+	enum BlockType{
+		NotTurn,
+		Turn,
+		Move,
+	}
+
 	public enum ClickEventType{
 		LeftClick,
 		RightClick,
@@ -81,7 +87,7 @@ public class TurnBlockBase : MonoBehaviour {
 	RotateAngle targetFromSouth;
 
 	[SerializeField, Space(6), Header("1動作でどちらにブロックが動作するか")]
-	TurnAngle turnBlockAngle;
+	BlockType turnBlockType;
 
 	protected bool isAnimating = false;
 	float targetAngle = 0f;
@@ -94,19 +100,16 @@ public class TurnBlockBase : MonoBehaviour {
 
 	protected void Start () {
 		var material = GetComponentsInChildren<MeshRenderer>()[0].material;
-		switch (turnBlockAngle)
+		switch (turnBlockType)
 		{
-			case TurnAngle.NotTurn:
+			case BlockType.NotTurn:
 				material.color = PuzzleManager.NotTurnColor;
 				break;
-			case TurnAngle.TurnRight:
-				material.color = PuzzleManager.RightColor;
+			case BlockType.Turn:
+				material.color = PuzzleManager.TurnColor;
 				break;
-			case TurnAngle.TurnLeft:
-				material.color = PuzzleManager.LeftColor;
-				break;
-			case TurnAngle.TurnFlip:
-				material.color = PuzzleManager.FlipColor;
+			case BlockType.Move:
+				material.color = PuzzleManager.MoveColor;
 				break;
 		}
 		Setup();
@@ -250,7 +253,7 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 	
 	virtual protected void clickAction(ClickEventType type){
-		if (!isAnimating && turnBlockAngle != TurnAngle.NotTurn && !isTouchSphere){
+		if (!isAnimating && turnBlockType != BlockType.NotTurn && !isTouchSphere){
 
 
 			TurnAngle turnBlockAngle;
