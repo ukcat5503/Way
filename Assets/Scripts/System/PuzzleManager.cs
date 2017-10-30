@@ -87,16 +87,21 @@ public class PuzzleManager : MonoBehaviour {
 	void initialize(){
 		StageData = new List<StageInfo>();
 
-		map = new int[5, 5]{
-			{15,3,3,3,6},
-			{4,0,0,0,4},
-			{4,0,0,0,4},
-			{14,27,27,16,4},
-			{0,2,3,13,4},
+		map = new int[10, 10]{
+			{22, 3, 3,25, 3, 3,25, 3, 3,23},
+			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
+			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
+			{25, 3, 3,24, 3, 3,25, 3, 3,27},
+			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
+			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
+			{25, 3, 3,27, 3, 3,26, 3, 3,27},
+			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
+			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
+			{21, 3, 3,24, 3, 3,24, 3, 3,20}
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(4,3,0);
-
+		StageData[StageData.Count - 1].AddObject(9,8,0);
+		/*
 		map = new int[5, 5]{
 			{0,0,15,2,0},
 			{0,0,4,0,0},
@@ -114,7 +119,7 @@ public class PuzzleManager : MonoBehaviour {
 			{2,3,3,3,13},
 		};
 		StageData.Add(new StageInfo(map));
-
+		 */
 		
 		var height = 0;
 		foreach (var item in StageData)

@@ -219,32 +219,8 @@ public class TurnBlockBase : MonoBehaviour {
 				position = StartPosition.South;
 			}
 		}
-		// (position.ToString() + "から来た").Log();
+		(position.ToString() + "から来た").Log();
 		return position;
-	}
-	
-
-	virtual protected void OnCollisionEnter(Collision other)
-	{
-		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
-			var position = CalcStartPosition(other);
-
-			isTouchSphere = true;
-			if(targetPoint[(int)position] != 0f){
-				var s = other.gameObject.GetComponent<SphereController>();
-				if (targetPoint[(int)position] == 180f){
-					s.RotationY(180);
-				}else{
-					("from " + position.ToString() + " / " + targetPoint[(int)position] + "する" + " 現在:" + s.RotateY + " 目標:" + (s.RotateY + targetPoint[(int)position])).Log();
-					SphereList.Add(other.gameObject.GetInstanceID(), new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s));
-				}
-			}
-		}
-	}
-
-	virtual protected void OnCollisionExit(Collision other)
-	{
-		isTouchSphere = false;
 	}
 
 	public void ClickObject(ClickEventType type){
@@ -293,4 +269,31 @@ public class TurnBlockBase : MonoBehaviour {
 			Setup();
 		}
 	}
+	
+	virtual protected void OnCollisionEnter(Collision other)
+	{
+		"あああああ".Log();
+
+
+		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
+			var position = CalcStartPosition(other);
+			
+			isTouchSphere = true;
+			if(targetPoint[(int)position] != 0f){
+				var s = other.gameObject.GetComponent<SphereController>();
+				if (targetPoint[(int)position] == 180f){
+					s.RotationY(180);
+				}else{
+					("from " + position.ToString() + " / " + targetPoint[(int)position] + "する" + " 現在:" + s.RotateY + " 目標:" + (s.RotateY + targetPoint[(int)position])).Log();
+					SphereList.Add(other.gameObject.GetInstanceID(), new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s));
+				}
+			}
+		}
+	}
+
+	virtual protected void OnCollisionExit(Collision other)
+	{
+		isTouchSphere = false;
+	}
+
 }
