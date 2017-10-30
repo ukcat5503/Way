@@ -91,12 +91,17 @@ public class TurnBlockBase : MonoBehaviour {
 	[SerializeField, Space(6), Header("1動作でどちらにブロックが動作するか")]
 	BlockType turnBlockType;
 
+	// 回転アニメーション系
 	protected bool isAnimating = false;
 	float targetAngle = 0f;
 	float finalAngle = 0f;
 	float finalViewAngle = 0f;
 	public float currentAngle = 0f;
 	bool leftRotate = false;
+
+	// ドラッグの幻影系
+	GameObject ghostObject;
+	Vector3 ghostPos;
 
 	const int kAnimationFrame = 20;
 
@@ -300,5 +305,29 @@ public class TurnBlockBase : MonoBehaviour {
 	{
 		isTouchSphere = false;
 	}
+
+	virtual protected void OnMouseDrag(){
+        Vector3 objectPointInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
+
+        Vector3 mousePointInScreen = new Vector3(Input.mousePosition.x, Input.mousePosition.y, objectPointInScreen.z);
+        
+        Vector3 mousePointInWorld = Camera.main.ScreenToWorldPoint(mousePointInScreen);
+        mousePointInWorld.y = this.transform.position.y;
+        ghostPos = mousePointInWorld;
+
+		if(ghostObject == null){
+			ghostObject = Instantiate(gameObject.transform.GetChild(0).gameObject);
+			ghostObject.name = "Ghost Block";
+			var m = ghostObject.GetComponent<MeshRenderer>();
+			m.material.color = new Color(m.material.color.r, m.material.color.g, m.material.color.b, 0.3f);
+		}
+		ghostObject.transform.position = ghostPos;
+    }
+
+	virtual protected void OnMouseUp() {
+        Destroy(ghostObject);
+		ghostObject = null;
+    }
+
 
 }
