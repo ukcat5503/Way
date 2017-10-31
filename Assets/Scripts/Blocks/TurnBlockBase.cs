@@ -106,6 +106,10 @@ public class TurnBlockBase : MonoBehaviour {
 	const int kAnimationFrame = 20;
 
 	protected void Start () {
+		if(Random.Range(0,2) == 1){
+			CanMoveFromMouse = true;
+		}
+
 		var material = GetComponentsInChildren<MeshRenderer>()[0].material;
 		switch (turnBlockType)
 		{
@@ -327,6 +331,17 @@ public class TurnBlockBase : MonoBehaviour {
 
 	virtual protected void OnMouseUp() {
 		if(CanMoveFromMouse){
+			ghostObject.transform.position.Log();
+			(
+				(
+					(int)(ghostObject.transform.position.x + 0.5f)
+				) + ":" + 
+				(
+					10 - (int)ghostObject.transform.position.z
+				)
+				).Log();
+			
+
 			Destroy(ghostObject);
 			ghostObject = null;
 		}
