@@ -61,6 +61,8 @@ public static class ForLogExtensions
             type(string.Format(formatText("Yellow"), "Quaternion", t));
         }else if(t is string){
             type(string.Format(formatText("Black"), "string", t));
+        }else if(t is bool){
+            type(string.Format(formatText("Red"), "bool", t));
         }else{
             type(string.Format(formatText("#333333ff"), "Other", t));
         }

@@ -75,6 +75,7 @@ public class TurnBlockBase : MonoBehaviour {
 	List<int> waitDelete = new List<int>();
 
 	const float kMaxRange = 180f;
+	[SerializeField]
 	bool isTouchSphere;
 	[HideInInspector]
 	public bool CanMoveFromMouse;
@@ -287,7 +288,8 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 
 	public bool ChangeBlock(Vector3 originPos){
-		if(CanMoveFromMouse){
+		isTouchSphere.Log();
+		if(CanMoveFromMouse && !isTouchSphere){
 			transform.position = originPos;
 			return true;
 		}
@@ -295,10 +297,9 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 	
 	virtual protected void OnCollisionEnter(Collision other){
+		isTouchSphere = true;
 		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
 			var position = CalcStartPosition(other);
-
-			isTouchSphere = true;
 			if(targetPoint[(int)position] != 0f){
 				var s = other.gameObject.GetComponent<SphereController>();
 				if (targetPoint[(int)position] == 180f){
@@ -340,16 +341,18 @@ public class TurnBlockBase : MonoBehaviour {
 			// (((int)(ghostObject.transform.position.x + 0.5f)) + ":" + (10 - (int)ghostObject.transform.position.z)).Log();
 
 			var objs = Physics.OverlapSphere(ghostObject.transform.position, 0.05f);
-			(gameObject.name + " ⇔ " + objs[0].name).Log();
-			TurnBlockBase s;
-			if(s = objs[0].GetComponent<TurnBlockBase>()){
-				var pos = transform.position;
-				transform.position = s.transform.position;
-				s.ChangeBlock(pos);
+			if(objs.Length > 0){
+				(gameObject.name + " ⇔ " + objs[0].name).Log();
+				TurnBlockBase s;
+				if(!isTouchSphere && (s = objs[0].GetComponent<TurnBlockBase>())){
+					var objPos = s.transform.position;
+					if(s.ChangeBlock(transform.position)){
+						transform.position = objPos;
+					}
+				}
 			}
-
-			Destroy(ghostObject);
-			ghostObject = null;
+		Destroy(ghostObject);
+		ghostObject = null;
 		}
     }
 }
