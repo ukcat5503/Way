@@ -240,7 +240,6 @@ public class TurnBlockBase : MonoBehaviour {
 	
 	virtual protected void clickAction(ClickEventType type){
 		if(CanMoveFromMouse && type == ClickEventType.RightClick){
-			"あああああ".Log();
 			Destroy(gameObject);
 			return;
 		}
@@ -307,27 +306,29 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 
 	virtual protected void OnMouseDrag(){
-        Vector3 objectPointInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
+		if(CanMoveFromMouse){
+			Vector3 objectPointInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
 
-        Vector3 mousePointInScreen = new Vector3(Input.mousePosition.x, Input.mousePosition.y, objectPointInScreen.z);
-        
-        Vector3 mousePointInWorld = Camera.main.ScreenToWorldPoint(mousePointInScreen);
-        mousePointInWorld.y = this.transform.position.y;
-        ghostPos = mousePointInWorld;
+			Vector3 mousePointInScreen = new Vector3(Input.mousePosition.x, Input.mousePosition.y, objectPointInScreen.z);
+			
+			Vector3 mousePointInWorld = Camera.main.ScreenToWorldPoint(mousePointInScreen);
+			mousePointInWorld.y = this.transform.position.y;
+			ghostPos = mousePointInWorld;
 
-		if(ghostObject == null){
-			ghostObject = Instantiate(gameObject.transform.GetChild(0).gameObject);
-			ghostObject.name = "Ghost Block";
-			var m = ghostObject.GetComponent<MeshRenderer>();
-			m.material.color = new Color(m.material.color.r, m.material.color.g, m.material.color.b, 0.3f);
+			if(ghostObject == null){
+				ghostObject = Instantiate(gameObject.transform.GetChild(0).gameObject);
+				ghostObject.name = "Ghost Block";
+				var m = ghostObject.GetComponent<MeshRenderer>();
+				m.material.color = new Color(m.material.color.r, m.material.color.g, m.material.color.b, 0.3f);
+			}
+			ghostObject.transform.position = ghostPos;
 		}
-		ghostObject.transform.position = ghostPos;
     }
 
 	virtual protected void OnMouseUp() {
-        Destroy(ghostObject);
-		ghostObject = null;
+		if(CanMoveFromMouse){
+			Destroy(ghostObject);
+			ghostObject = null;
+		}
     }
-
-
 }
