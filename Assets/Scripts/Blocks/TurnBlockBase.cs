@@ -285,9 +285,16 @@ public class TurnBlockBase : MonoBehaviour {
 			Setup();
 		}
 	}
+
+	public bool ChangeBlock(Vector3 originPos){
+		if(CanMoveFromMouse){
+			transform.position = originPos;
+			return true;
+		}
+		return false;
+	}
 	
-	virtual protected void OnCollisionEnter(Collision other)
-	{
+	virtual protected void OnCollisionEnter(Collision other){
 		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
 			var position = CalcStartPosition(other);
 
@@ -304,8 +311,7 @@ public class TurnBlockBase : MonoBehaviour {
 		}
 	}
 
-	virtual protected void OnCollisionExit(Collision other)
-	{
+	virtual protected void OnCollisionExit(Collision other){
 		isTouchSphere = false;
 	}
 
@@ -331,16 +337,16 @@ public class TurnBlockBase : MonoBehaviour {
 
 	virtual protected void OnMouseUp() {
 		if(CanMoveFromMouse){
-			ghostObject.transform.position.Log();
-			(
-				(
-					(int)(ghostObject.transform.position.x + 0.5f)
-				) + ":" + 
-				(
-					10 - (int)ghostObject.transform.position.z
-				)
-				).Log();
-			
+			// (((int)(ghostObject.transform.position.x + 0.5f)) + ":" + (10 - (int)ghostObject.transform.position.z)).Log();
+
+			var objs = Physics.OverlapSphere(ghostObject.transform.position, 0.05f);
+			(gameObject.name + " ⇔ " + objs[0].name).Log();
+			TurnBlockBase s;
+			if(s = objs[0].GetComponent<TurnBlockBase>()){
+				var pos = transform.position;
+				transform.position = s.transform.position;
+				s.ChangeBlock(pos);
+			}
 
 			Destroy(ghostObject);
 			ghostObject = null;
