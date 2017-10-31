@@ -99,12 +99,19 @@ public class TurnBlockBase : MonoBehaviour {
 	float finalViewAngle = 0f;
 	public float currentAngle = 0f;
 	bool leftRotate = false;
+	const int kAnimationFrame = 20;
 
 	// ドラッグの幻影系
 	GameObject ghostObject;
 	Vector3 ghostPos;
 
-	const int kAnimationFrame = 20;
+	// ドラッグ交換 スムース移動系
+	int smoothMoveFrame = kSmoothMoveFrame + 1;
+	Vector3 targetPos;
+	Vector3 targetLocalPos;
+	const int kSmoothMoveFrame = 10;
+	
+
 
 	protected void Start () {
 		if(Random.Range(0,2) == 1){
@@ -145,6 +152,15 @@ public class TurnBlockBase : MonoBehaviour {
 					isAnimating = false;
 				}
 			}
+		}
+
+		// スムース移動
+		if (++smoothMoveFrame < kSmoothMoveFrame)
+		{
+			transform.position += targetLocalPos / kSmoothMoveFrame;
+		}else if (smoothMoveFrame == kSmoothMoveFrame)
+		{
+			transform.position = targetPos;
 		}
 
 		// ボール制御
@@ -234,7 +250,7 @@ public class TurnBlockBase : MonoBehaviour {
 				position = StartPosition.South;
 			}
 		}
-		(position.ToString() + "から来た").Log();
+		// (position.ToString() + "から来た").Log();
 		return position;
 	}
 
@@ -288,9 +304,12 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 
 	public bool ChangeBlock(Vector3 originPos){
-		isTouchSphere.Log();
 		if(CanMoveFromMouse && !isTouchSphere){
-			transform.position = originPos;
+			// transform.position = originPos;
+				smoothMoveFrame = 0;
+				targetPos = originPos;
+				//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
+				targetLocalPos = targetPos - transform.position;
 			return true;
 		}
 		return false;
@@ -305,7 +324,7 @@ public class TurnBlockBase : MonoBehaviour {
 				if (targetPoint[(int)position] == 180f){
 					s.RotationY(180);
 				}else{
-					("from " + position.ToString() + " / " + targetPoint[(int)position] + "する" + " 現在:" + s.RotateY + " 目標:" + (s.RotateY + targetPoint[(int)position])).Log();
+					// ("from " + position.ToString() + " / " + targetPoint[(int)position] + "する" + " 現在:" + s.RotateY + " 目標:" + (s.RotateY + targetPoint[(int)position])).Log();
 					SphereList.Add(other.gameObject.GetInstanceID(), new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s));
 				}
 			}
@@ -327,7 +346,9 @@ public class TurnBlockBase : MonoBehaviour {
 			ghostPos = mousePointInWorld;
 
 			if(ghostObject == null){
-				ghostObject = Instantiate(gameObject.transform.GetChild(0).gameObject);
+				var obj = gameObject.transform.GetChild(0).gameObject;
+				ghostObject = Instantiate(obj);
+				ghostObject.transform.rotation = gameObject.transform.GetChild(0).transform.rotation;
 				ghostObject.name = "Ghost Block";
 				var m = ghostObject.GetComponent<MeshRenderer>();
 				m.material.color = new Color(m.material.color.r, m.material.color.g, m.material.color.b, 0.3f);
@@ -347,7 +368,12 @@ public class TurnBlockBase : MonoBehaviour {
 				if(!isTouchSphere && (s = objs[0].GetComponent<TurnBlockBase>())){
 					var objPos = s.transform.position;
 					if(s.ChangeBlock(transform.position)){
-						transform.position = objPos;
+						// transform.position = objPos;
+						// isAnimating = true;
+						smoothMoveFrame = 0;
+						targetPos = objPos;
+						//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
+						targetLocalPos = targetPos - transform.position;
 					}
 				}
 			}
