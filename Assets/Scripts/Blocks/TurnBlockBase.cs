@@ -110,7 +110,7 @@ public class TurnBlockBase : MonoBehaviour {
 	Vector3 targetPos;
 	Vector3 targetLocalPos;
 	const int kSmoothMoveFrame = 10;
-	const float	popupHeight = 0.1f;
+	const float	popupHeight = 0.3f;
 	
 
 
