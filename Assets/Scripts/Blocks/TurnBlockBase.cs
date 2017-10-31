@@ -110,6 +110,7 @@ public class TurnBlockBase : MonoBehaviour {
 	Vector3 targetPos;
 	Vector3 targetLocalPos;
 	const int kSmoothMoveFrame = 10;
+	const float	popupHeightPerFrame = 0.2f;
 	
 
 
@@ -157,7 +158,13 @@ public class TurnBlockBase : MonoBehaviour {
 		// スムース移動
 		if (++smoothMoveFrame < kSmoothMoveFrame)
 		{
-			transform.position += targetLocalPos / kSmoothMoveFrame;
+			var pos = targetLocalPos / kSmoothMoveFrame;
+			if(smoothMoveFrame < kSmoothMoveFrame / 2){
+				pos.y += popupHeightPerFrame;
+			}else{
+				pos.y -= popupHeightPerFrame;
+			}
+			transform.position += pos;
 		}else if (smoothMoveFrame == kSmoothMoveFrame)
 		{
 			transform.position = targetPos;
