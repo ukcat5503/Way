@@ -30,9 +30,10 @@ public class HeldBlockManager : MonoBehaviour {
 					objs = Physics.OverlapBox(pos, new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, blockParentLayerMask);
 				} while (objs.Length > 0);
 			}
+			int blockType = Random.Range(0,childPrefabs.Length);
 
 			var parent = Instantiate(parentPrefab, pos, Quaternion.identity) as GameObject;
-			var child = Instantiate(childPrefabs[0], pos, childPrefabs[0].transform.rotation);
+			var child = Instantiate(childPrefabs[blockType], pos, childPrefabs[blockType].transform.rotation);
 			parent.transform.parent = blocksParentObject.transform;
 			child.transform.parent = parent.transform;
 
