@@ -366,7 +366,7 @@ public class TurnBlockBase : MonoBehaviour {
     }
 
 	virtual protected void OnMouseUp() {
-		if(CanMoveFromMouse){
+		if(CanMoveFromMouse && ghostObject != null){
 			// (((int)(ghostObject.transform.position.x + 0.5f)) + ":" + (10 - (int)ghostObject.transform.position.z)).Log();
 
 			var objs = Physics.OverlapSphere(ghostObject.transform.position, 0.05f);
