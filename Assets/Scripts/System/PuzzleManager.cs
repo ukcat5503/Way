@@ -86,7 +86,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData = new List<StageInfo>();
 
 		map = new int[10, 10]{
-			{22, 3, 3,25, 3, 3,25, 3, 3,23},
+			{ 2, 3, 3,25, 3, 3,25, 3, 3,23},
 			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
 			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
 			{25, 3, 3,24, 3, 3,15, 3, 3,27},
