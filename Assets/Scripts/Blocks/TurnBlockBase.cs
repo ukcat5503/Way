@@ -115,9 +115,12 @@ public class TurnBlockBase : MonoBehaviour {
 
 
 	protected void Start () {
+		/*
 		if(Random.Range(0,2) == 1){
 			CanMoveFromMouse = true;
 		}
+		*/
+		CanMoveFromMouse = true;
 
 		var material = GetComponentsInChildren<MeshRenderer>()[0].material;
 		switch (turnBlockType)
