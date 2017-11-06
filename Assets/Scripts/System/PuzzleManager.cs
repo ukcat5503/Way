@@ -83,7 +83,18 @@ public class PuzzleManager : MonoBehaviour {
 		// cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
 	}
 
+	void Update(){
+		if(Input.GetKeyDown(KeyCode.R)){
+			initialize();
+		}
+	}
+
 	void initialize(){
+		foreach (Transform child in transform)
+		{
+			Destroy(child.gameObject);
+		}
+
 		StageData = new List<StageInfo>();
 
 		map = new int[10, 10]{

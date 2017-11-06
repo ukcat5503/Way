@@ -91,7 +91,7 @@ public class HeldBlockParent : MonoBehaviour {
 			var pos = new Vector3((int)(ghostObject.transform.position.x + 0.5f), 0, ((int)(ghostObject.transform.position.z + 0.5f )) + 0.25f);	// 絶対位置
 			mapPos.Log();
 			var objs = Physics.OverlapSphere(pos, 0.05f);
-			if(objs.Length == 0){
+			if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.StageNumber)){
 				(gameObject.name + " → " + pos).Log();
 				// transform.position = objPos;
 				// isAnimating = true;

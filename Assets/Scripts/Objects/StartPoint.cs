@@ -17,10 +17,11 @@ public class StartPoint : MonoBehaviour {
 	bool playingAnimation = false;
 	float targetPosY = 0f;
 
-
+	Transform parentTransform;
 
 	// Use this for initialization
 	void Start () {
+		parentTransform = transform.root.root;
 		generate();
 	}
 	
@@ -53,6 +54,7 @@ public class StartPoint : MonoBehaviour {
 		var pos = transform.position;
 
 		currentObj = Instantiate(sphere, pos, Quaternion.identity) as GameObject;
+		currentObj.transform.parent = parentTransform;
 		currentCollider = currentObj.GetComponent<Collider>();
 		currentRigidbody = currentObj.GetComponent<Rigidbody>();
 		currentSphereController = currentObj.GetComponent<SphereController>();
