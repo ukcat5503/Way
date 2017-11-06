@@ -59,6 +59,7 @@ public class PuzzleManager : MonoBehaviour {
 
 	public static GameObject CameraObject;
 
+	public static int StageNumber = 0;
 	public static float MapHeight = 0.5f;
 
 	// Use this for initialization
