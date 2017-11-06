@@ -45,6 +45,7 @@ public class HeldBlockParent : MonoBehaviour {
 			childCollider.enabled = true;
 			childCollider.gameObject.transform.parent = GameObject.Find("Stage " + PuzzleManager.StageNumber).transform;
 			childCollider.gameObject.GetComponent<TurnBlockBase>().CanMoveFromMouse = true;
+			childCollider.gameObject.GetComponent<TurnBlockBase>().enabled = true;
 		}else if(transform.position.y < kDestroyHeight){
 			// 流れきったら破棄
 			Destroy(gameObject);

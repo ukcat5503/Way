@@ -41,6 +41,7 @@ public class HeldBlockManager : MonoBehaviour {
 			float angle = 180f;
 			var shotVector = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad),0f , Mathf.Cos(angle * Mathf.Deg2Rad));
 			parent.GetComponent<Rigidbody>().AddForce(shotVector * 100f);
+			child.GetComponent<TurnBlockBase>().enabled = false;
 		}
 	}
 }
