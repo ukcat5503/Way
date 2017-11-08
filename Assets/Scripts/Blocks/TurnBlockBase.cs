@@ -71,8 +71,7 @@ public class TurnBlockBase : MonoBehaviour {
 
 
 	protected int[] targetPoint = new int[4];
-	protected Dictionary<int, ObjectInfo> SphereList = new Dictionary<int, ObjectInfo>();
-	List<int> waitDelete = new List<int>();
+	protected ObjectInfo sphereObjectInfo = null;
 
 	const float kMaxRange = 180f;
 	[SerializeField]
@@ -177,35 +176,29 @@ public class TurnBlockBase : MonoBehaviour {
 		}
 
 		// ボール制御
-		foreach (var item in SphereList)
-		{
-			bool isDelete = (item.Value.currentRotate < item.Value.currentRotate + item.Value.targetRotate) ?
-				// 右折
-				item.Value.sphere.RotateY >= item.Value.currentRotate + item.Value.targetRotate:
-				// 左折
-				item.Value.sphere.RotateY <= item.Value.currentRotate + item.Value.targetRotate;
+		if(sphereObjectInfo != null){
+			bool isDelete = (sphereObjectInfo.currentRotate < sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate) ?
+			// 右折
+			sphereObjectInfo.sphere.RotateY >= sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate:
+			// 左折
+			sphereObjectInfo.sphere.RotateY <= sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate;
 			if (isDelete){
-				item.Value.obj.transform.eulerAngles = new Vector3(0f, item.Value.currentRotate + item.Value.targetRotate, 0f);
-				// (item.Value.currentRotate + item.Value.targetRotate).Log();
-				waitDelete.Add(item.Key);
+				sphereObjectInfo.obj.transform.eulerAngles = new Vector3(0f, sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate, 0f);
+				// (sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate).Log();
+				sphereObjectInfo = null;
 			}
 			else
 			{
-				var localPos = item.Value.obj.transform.position - transform.position;
+				var localPos = sphereObjectInfo.obj.transform.position - transform.position;
 				// localPos.Log();
 				// 回転していい位置まで行っていれば回転スタート
 				if((localPos.x >= -kTolerancePotisionToStartRotate && localPos.x < kTolerancePotisionToStartRotate) && (localPos.z >= -kTolerancePotisionToStartRotate && localPos.z < kTolerancePotisionToStartRotate)){
-					item.Value.sphere.RotationY(item.Value.targetRotate / 10);
+					sphereObjectInfo.sphere.RotationY(sphereObjectInfo.targetRotate / 10);
 				}
-				// item.Value.sphere.RotationY(item.Value.targetRotate / 17);
+				// sphereObjectInfo.sphere.RotationY(sphereObjectInfo.targetRotate / 17);
 			}
 		}
-		foreach (var item in waitDelete)
-		{
-			SphereList.Remove(item);
-		}
-
-		waitDelete.Clear();
+		
 	}
 
 	void TurnBlock(int turnCount)
@@ -336,7 +329,7 @@ public class TurnBlockBase : MonoBehaviour {
 	
 	virtual protected void OnCollisionEnter(Collision other){
 		isTouchSphere = true;
-		if (!SphereList.ContainsKey(other.gameObject.GetInstanceID())){
+		if (sphereObjectInfo == null){
 			var position = CalcStartPosition(other);
 			if(targetPoint[(int)position] != 0f){
 				var s = other.gameObject.GetComponent<SphereController>();
@@ -344,7 +337,7 @@ public class TurnBlockBase : MonoBehaviour {
 					s.RotationY(180);
 				}else{
 					// ("from " + position.ToString() + " / " + targetPoint[(int)position] + "する" + " 現在:" + s.RotateY + " 目標:" + (s.RotateY + targetPoint[(int)position])).Log();
-					SphereList.Add(other.gameObject.GetInstanceID(), new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s));
+					sphereObjectInfo = new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s);
 				}
 			}
 		}
@@ -352,6 +345,8 @@ public class TurnBlockBase : MonoBehaviour {
 
 	virtual protected void OnCollisionExit(Collision other){
 		isTouchSphere = false;
+		sphereObjectInfo = null;
+		//TODO ここで角度を無理やり変える処理入れとく？
 	}
 
 	virtual protected void OnMouseDrag(){
