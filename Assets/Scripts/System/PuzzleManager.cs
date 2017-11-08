@@ -55,12 +55,12 @@ public class PuzzleManager : MonoBehaviour {
 	[SerializeField]
 	Color notTurnColor, turnColor, moveColor;
 	public static Color NotTurnColor, TurnColor, MoveColor;
-	
 
 	public static GameObject CameraObject;
 
 	public static int StageNumber = 0;
 	public static float MapHeight = 0.5f;
+	public static int MapSize = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -86,6 +86,9 @@ public class PuzzleManager : MonoBehaviour {
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.R)){
 			initialize();
+		}
+		if(MapSize != StageData[StageNumber].Map.GetLength(0)){
+			MapSize = StageData[StageNumber].Map.GetLength(0);
 		}
 	}
 

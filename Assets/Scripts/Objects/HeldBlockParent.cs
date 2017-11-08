@@ -94,20 +94,25 @@ public class HeldBlockParent : MonoBehaviour {
 			var mapPos = new Vector3((int)(ghostObject.transform.position.x + 0.5f), 0, (10 - (int)ghostObject.transform.position.z));	// 相対位置
 			var pos = new Vector3((int)(ghostObject.transform.position.x + 0.5f), 0, ((int)(ghostObject.transform.position.z + 0.5f )) + 0.25f);	// 絶対位置
 			mapPos.Log();
-			var objs = Physics.OverlapSphere(pos, 0.05f);
-			if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.StageNumber)){
-				(gameObject.name + " → " + pos).Log();
-				// transform.position = objPos;
-				// isAnimating = true;
-				smoothMoveFrame = 0;
-				targetPos = pos;
-				//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
-				targetLocalPos = targetPos - transform.position;
+			if(mapPos.x >= 0 && mapPos.x < PuzzleManager.MapSize && mapPos.y >= 0 && mapPos.y < PuzzleManager.MapSize ){
+				var objs = Physics.OverlapSphere(pos, 0.05f);
+				if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.StageNumber)){
+					(gameObject.name + " → " + pos).Log();
+					// transform.position = objPos;
+					// isAnimating = true;
+					smoothMoveFrame = 0;
+					targetPos = pos;
+					//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
+					targetLocalPos = targetPos - transform.position;
+				}else{
+				switchGhost(false);
+				}
 			}else{
 				switchGhost(false);
 			}
 			Destroy(ghostObject);
 			ghostObject = null;
+			
 		}
     }
 }
