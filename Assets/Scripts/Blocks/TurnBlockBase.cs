@@ -100,6 +100,8 @@ public class TurnBlockBase : MonoBehaviour {
 	public float currentAngle = 0f;
 	bool leftRotate = false;
 	const int kAnimationFrame = 20;
+	const float kTolerancePotisionToStartRotate = 0.30f;
+	
 
 	// ドラッグの幻影系
 	GameObject ghostObject;
@@ -189,7 +191,13 @@ public class TurnBlockBase : MonoBehaviour {
 			}
 			else
 			{
-				item.Value.sphere.RotationY(item.Value.targetRotate / 20);
+				var localPos = item.Value.obj.transform.position - transform.position;
+				// localPos.Log();
+				// 回転していい位置まで行っていれば回転スタート
+				if((localPos.x >= -kTolerancePotisionToStartRotate && localPos.x < kTolerancePotisionToStartRotate) && (localPos.z >= -kTolerancePotisionToStartRotate && localPos.z < kTolerancePotisionToStartRotate)){
+					item.Value.sphere.RotationY(item.Value.targetRotate / 10);
+				}
+				// item.Value.sphere.RotationY(item.Value.targetRotate / 17);
 			}
 		}
 		foreach (var item in waitDelete)
