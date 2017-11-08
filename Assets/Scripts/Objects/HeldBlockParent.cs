@@ -10,6 +10,9 @@ public class HeldBlockParent : MonoBehaviour {
 	Collider childCollider;
 	Rigidbody _rigidbody;
 
+	[SerializeField]
+	int frame = 0;
+
 	// ドラッグの幻影系
 	GameObject ghostObject;
 	Vector3 ghostPos;
@@ -28,9 +31,8 @@ public class HeldBlockParent : MonoBehaviour {
 	}
 
 	void Update () {
-		// スムース移動
-		if (++smoothMoveFrame < kSmoothMoveFrame)
-		{
+		++frame;
+		if (++smoothMoveFrame < kSmoothMoveFrame){
 			var pos = targetLocalPos / kSmoothMoveFrame;
 			if(smoothMoveFrame < kSmoothMoveFrame / 2){
 				
@@ -39,8 +41,7 @@ public class HeldBlockParent : MonoBehaviour {
 				pos.y -= popupHeight * (smoothMoveFrame % kSmoothMoveFrame / 2);
 			}
 			transform.position += pos;
-		}else if (smoothMoveFrame == kSmoothMoveFrame)
-		{
+		}else if (smoothMoveFrame == kSmoothMoveFrame){
 			transform.position = targetPos;
 			childCollider.enabled = true;
 			childCollider.gameObject.transform.parent = GameObject.Find("Stage " + PuzzleManager.StageNumber).transform;
@@ -48,6 +49,9 @@ public class HeldBlockParent : MonoBehaviour {
 			childCollider.gameObject.GetComponent<TurnBlockBase>().enabled = true;
 		}else if(transform.position.y < kDestroyHeight){
 			// 流れきったら破棄
+			OnMouseUp();
+			Destroy(gameObject);
+		}else if(frame > 450 && ghostObject == null){
 			Destroy(gameObject);
 		}
 	}
