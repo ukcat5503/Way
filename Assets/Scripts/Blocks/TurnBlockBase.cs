@@ -345,8 +345,10 @@ public class TurnBlockBase : MonoBehaviour {
 
 	virtual protected void OnCollisionExit(Collision other){
 		isTouchSphere = false;
-		sphereObjectInfo = null;
-		//TODO ここで角度を無理やり変える処理入れとく？
+		if(sphereObjectInfo != null){
+			sphereObjectInfo.obj.transform.eulerAngles = new Vector3(0f, sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate, 0f);
+			sphereObjectInfo = null;
+		}
 	}
 
 	virtual protected void OnMouseDrag(){
