@@ -57,6 +57,7 @@ public class PuzzleManager : MonoBehaviour {
 	public static Color NotTurnColor, TurnColor, MoveColor;
 
 	public static GameObject CameraObject;
+	public static GameObject GroundPlane;
 
 	public static int StageNumber = 0;
 	public static float MapHeight = 0.5f;
@@ -86,6 +87,7 @@ public class PuzzleManager : MonoBehaviour {
 		initialize();
 
 		CameraObject = GameObject.Find("Main Camera");
+		GroundPlane = GameObject.Find("GroundPlane");
 		// cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
 	}
 
