@@ -9,7 +9,7 @@ public class StartPoint : MonoBehaviour {
 	[SerializeField]
 	float RotateY;
 
-	GameObject currentObj;
+	static GameObject currentObj = null;
 	Collider currentCollider;
 	Rigidbody currentRigidbody;
 	SphereController currentSphereController;
@@ -22,7 +22,7 @@ public class StartPoint : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		parentTransform = transform.root.root;
-		generate();
+		// generate();
 	}
 	
 	// Update is called once per frame
