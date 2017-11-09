@@ -123,11 +123,11 @@ public class PuzzleManager : MonoBehaviour {
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{22, 3, 3, 3, 3,23, 0, 0, 0, 0},
-			{ 1, 0, 0, 0, 0, 4, 0, 0, 0, 0},
-			{25, 3, 3, 3, 3,15, 3, 3,23, 0},
-			{ 4, 0, 0, 0, 0, 4, 0, 0, 4, 0},
-			{21, 3, 3, 3, 3,20, 0, 0, 4, 0},
+			{22, 3, 3, 3,23, 0, 0, 0, 0, 0},
+			{ 1, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{25, 3, 3, 3,15, 3, 3, 3,23, 0},
+			{ 4, 0, 0, 0, 4, 0, 0, 0, 4, 0},
+			{21, 3, 3, 3,20, 0, 0, 0, 4, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 2, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -135,25 +135,21 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(0, 2, 0);
-		/*
-		map = new int[5, 5]{
-			{0,0,15,2,0},
-			{0,0,4,0,0},
-			{15,3,10,0,0},
-			{4,0,4,0,0},
-			{14,3,14,2,0},
-		};
-		StageData.Add(new StageInfo(map));
 
-		map = new int[5, 5]{
-			{15,3,20,3,16},
-			{4,0,4,3,4},
-			{4,0,14,3,13},
-			{8,3,3,3,16},
-			{2,3,3,3,13},
+		map = new int[10, 10]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
+			{ 0, 5,12, 0, 0, 0, 5, 0, 0, 0},
+			{ 0, 5,12, 0, 0, 0, 5, 0, 0, 0},
+			{ 0, 5,12, 0, 0, 0, 5, 0, 1, 0},
+			{ 0, 0, 0, 0, 0, 4, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 4, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0,21, 3, 3,20, 0}
 		};
 		StageData.Add(new StageInfo(map));
-		 */
+		StageData[StageData.Count - 1].AddObject(8, 6, 2);
 
 		var height = 0;
 		foreach (var item in StageData)
@@ -178,7 +174,7 @@ public class PuzzleManager : MonoBehaviour {
 
 			foreach (var objItem in item.Objects)
 			{
-				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height, item.Map.GetLength(0)), GenerateObjects[objItem.obj].transform.rotation);
+				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), GenerateObjects[objItem.obj].transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 			}

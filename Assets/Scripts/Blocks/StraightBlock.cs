@@ -15,7 +15,7 @@ public class StraightBlock : TurnBlockBase {
 
 	new void OnCollisionEnter(Collision other){
 		var position = base.CalcStartPosition(other);
-		position.Log();
+		// position.Log();
 		var eular = other.transform.eulerAngles;
 
 		bool isRotate = false;
@@ -40,7 +40,7 @@ public class StraightBlock : TurnBlockBase {
 
 		}
 
-		isRotate.Log();
+		// isRotate.Log();
 		if(isRotate){
 			other.transform.eulerAngles = eular;
 		}
