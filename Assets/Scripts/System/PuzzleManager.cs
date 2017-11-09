@@ -84,10 +84,11 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		str.Log();
 
-		initialize();
-
 		CameraObject = GameObject.Find("Main Camera");
 		GroundPlane = GameObject.Find("GroundPlane");
+
+		initialize();
+
 		// cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
 	}
 
@@ -105,6 +106,8 @@ public class PuzzleManager : MonoBehaviour {
 		{
 			Destroy(child.gameObject);
 		}
+
+		GroundPlane.transform.position = new Vector3(GroundPlane.transform.position.x, 0, GroundPlane.transform.position.z);
 
 		StageData = new List<StageInfo>();
 
