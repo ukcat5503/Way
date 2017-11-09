@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour {
 
 	public enum BGM
 	{
-		RunTrolley
+		Blue_Ever
 	}
 
 	static List<AudioClip> se = new List<AudioClip>();
@@ -45,7 +45,7 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	void Start(){
-		// PlayBGM(BGM.RunTrolley);
+		PlayBGM(BGM.Blue_Ever);
 	}
 
 	public static void PlaySE(SE play){

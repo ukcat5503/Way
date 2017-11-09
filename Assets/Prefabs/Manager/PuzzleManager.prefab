@@ -80,6 +80,8 @@ MonoBehaviour:
   - {fileID: 1465251259976858, guid: 219e5a82b461341efb96fe4f5e6e9744, type: 2}
   - {fileID: 1774125024148412, guid: 54c168d5112c74305ba3e466b34664cc, type: 2}
   - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
+  - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
+  - {fileID: 1332277413175422, guid: 553de5e5fc7a34cabb2a8599545869ec, type: 2}
   GenerateObjects:
   - {fileID: 1367978722639676, guid: c25d9147a72e84b68835827c4f7ff073, type: 2}
   - {fileID: 1658432892955260, guid: c4af16c049ccf4e9fa93b812c69a5926, type: 2}
@@ -93,6 +95,9 @@ MonoBehaviour:
   - {fileID: 1083819276278894, guid: efb67075789794163905e8908f2ad907, type: 2}
   - {fileID: 1871522217959146, guid: 2ddaf2abd7c4343fb84218ef69796f45, type: 2}
   - {fileID: 1186718006562212, guid: da4eb4b21fa8746989426cf25f95789f, type: 2}
+  - {fileID: 1401624621902160, guid: 013051202b0044f10a08d4f5c40ebac7, type: 2}
+  - {fileID: 1016183986978644, guid: 7489b201c67a44e2fbff4f16fee3fd11, type: 2}
+  - {fileID: 1533180052134070, guid: 87d221a4a20d14ed39d28399b45fec9f, type: 2}
   SphereController: {fileID: 1970713005888410, guid: 585963bb0a5f24afe8f2e312497fa9b4,
     type: 2}
   notTurnColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}

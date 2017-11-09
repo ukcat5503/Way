@@ -122,6 +122,7 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(9,6,3);
+		StageData[StageData.Count - 1].AddObject(5,2.5f,12);
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -136,22 +137,24 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(0, 2, 0);
+		StageData[StageData.Count - 1].AddObject(0,2,0);
+		StageData[StageData.Count - 1].AddObject(3,7.5f,13);
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
-			{ 0, 5,12, 0, 0, 0, 5, 0, 0, 0},
-			{ 0, 5,12, 0, 0, 0, 5, 0, 0, 0},
-			{ 0, 5,12, 0, 0, 0, 5, 0, 1, 0},
+			{ 0, 0, 0, 0,29, 0, 0,14, 4, 0},
+			{ 0, 0, 0, 0,29, 0, 0,14, 4, 0},
+			{ 0, 0, 0, 0,29, 0, 0,14, 1, 0},
 			{ 0, 0, 0, 0, 0, 4, 0, 0, 4, 0},
 			{ 0, 0, 0, 0, 0, 4, 0, 0, 4, 0},
 			{ 0, 0, 0, 0, 0,21, 3, 3,20, 0}
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(8, 6, 2);
+		StageData[StageData.Count - 1].AddObject(1.5f,1.5f,14);
 
 		var height = 0;
 		foreach (var item in StageData)

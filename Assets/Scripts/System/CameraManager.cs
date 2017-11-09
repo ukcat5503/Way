@@ -67,7 +67,7 @@ public class CameraManager : MonoBehaviour
 
         if(leftOverDown > 0f){
             PuzzleManager.CameraObject.transform.position = new Vector3(PuzzleManager.CameraObject.transform.position.x, PuzzleManager.CameraObject.transform.position.y - downSpeed, PuzzleManager.CameraObject.transform.position.z);
-			PuzzleManager.GroundPlane.transform.position = new Vector3(PuzzleManager.GroundPlane.transform.position.x, PuzzleManager.GroundPlane.transform.position.y - downSpeed, PuzzleManager.GroundPlane.transform.position.z);
+			
 			leftOverDown = leftOverDown - downSpeed > 0f ? leftOverDown - downSpeed : 0f;
 		}
     }
@@ -135,6 +135,7 @@ public class CameraManager : MonoBehaviour
 
     public static void CameraDown(float distance){
         leftOverDown = distance;
+        PuzzleManager.GroundPlane.transform.position = new Vector3(PuzzleManager.GroundPlane.transform.position.x, PuzzleManager.GroundPlane.transform.position.y - leftOverDown, PuzzleManager.GroundPlane.transform.position.z);
     }
 
 }
