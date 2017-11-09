@@ -38,7 +38,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 
 		public Vector3 GetPos(float height, int length){
-			return new Vector3(pos.x, height, length - pos.y);
+			return new Vector3(pos.x, height, length - pos.y + 0.2f);
 		}
 	}
 
@@ -69,12 +69,18 @@ public class PuzzleManager : MonoBehaviour {
 		MoveColor = moveColor;
 
 		// オブジェクトリスト生成 リリース時取り除く
-		var str = "\n";
+		var str = "\n ■ Blocks ■\n";
 		for (int i = 0; i < GenerateBlocks.Length; ++i)
 		{
 			str += i + "\t" + GenerateBlocks[i].name + "\n";
 		}
-		
+		str.Log();
+
+		str = "\n □ Objects □\n";
+		for (int i = 0; i < GenerateObjects.Length; ++i)
+		{
+			str += i + "\t" + GenerateObjects[i].name + "\n";
+		}
 		str.Log();
 
 		initialize();
@@ -101,19 +107,34 @@ public class PuzzleManager : MonoBehaviour {
 		StageData = new List<StageInfo>();
 
 		map = new int[10, 10]{
-			{ 2, 3, 3,25, 3, 3,25, 3, 3,23},
-			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
-			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
-			{25, 3, 3,24, 3, 3,15, 3, 3,27},
-			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
-			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
-			{25, 3, 3,15, 3, 3,26, 3, 3,27},
-			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
-			{ 4, 0, 0, 4, 0, 0, 4, 0, 0, 4},
-			{21, 3, 3,24, 3, 3,24, 3, 3,20}
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{21, 3, 3, 3, 3, 3, 3, 3, 3, 1},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(9,8,0);
+		StageData[StageData.Count - 1].AddObject(9,6,3);
+
+		map = new int[10, 10]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{22, 3, 3, 3, 3,23, 0, 0, 0, 0},
+			{ 1, 0, 0, 0, 0, 4, 0, 0, 0, 0},
+			{21, 3, 3, 3, 3,15, 3, 3,23, 0},
+			{ 4, 0, 0, 0, 0, 4, 0, 0, 4, 0},
+			{21, 3, 3, 3, 3,20, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 2, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddObject(0, 2, 1);
 		/*
 		map = new int[5, 5]{
 			{0,0,15,2,0},
@@ -133,7 +154,7 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		 */
-		
+
 		var height = 0;
 		foreach (var item in StageData)
 		{
