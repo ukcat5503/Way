@@ -15,7 +15,7 @@ public class HeldBlockManager : MonoBehaviour {
 	[SerializeField]
 	GameObject[] childPrefabs;
 	
-	float[] generatePosX = {-7.5f, -6.5f, -5.5f, -4.5f};
+	float[] generatePosX = {-7f, -6f, -5f, -4f, -3f, -2f};
 
 	static HeldBlockManager instance;
 
@@ -29,7 +29,7 @@ public class HeldBlockManager : MonoBehaviour {
 		int length = PuzzleManager.StageData[PuzzleManager.StageNumber].HeldBlocks.Count;
 
 		for (int i = 0; i < length; ++i){
-			Vector3 pos = new Vector3(instance.generatePosX[i % instance.generatePosX.Length], 0f, 11.5f);
+			Vector3 pos = new Vector3(instance.generatePosX[i % instance.generatePosX.Length], 1f, 11.5f + (i / instance.generatePosX.Length));
 			int blockType = PuzzleManager.StageData[PuzzleManager.StageNumber].HeldBlocks[i];
 			var parent = Instantiate(instance.parentPrefab, pos, Quaternion.identity) as GameObject;
 
@@ -41,7 +41,7 @@ public class HeldBlockManager : MonoBehaviour {
 			catch (System.IndexOutOfRangeException e)
 			{
 				("指定されたブロックはありません: " + blockType + "\n" + e).Log();
-				
+
 				Destroy(parent);
 				continue;
 			}
