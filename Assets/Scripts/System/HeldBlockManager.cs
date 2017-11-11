@@ -4,37 +4,48 @@ using UnityEngine;
 
 public class HeldBlockManager : MonoBehaviour {
 
+	/*
 	[SerializeField]
 	LayerMask blockParentLayerMask;
+	*/
 	[SerializeField]
 	GameObject blocksParentObject;
 	[SerializeField]
 	GameObject parentPrefab;
 	[SerializeField]
 	GameObject[] childPrefabs;
+	
+	float[] generatePosX = {-7.5f, -6.5f, -5.5f, -4.5f};
 
-	int frame = 0;
+	static HeldBlockManager instance;
 
-	void Update () {
-		if(++frame % 20 == 0){
-			Vector3 pos;
+	void Awake()
+	{
+		instance = this;
+	}
+
+	public static void GenerateBlocks(){
+		// まずブロック全削除
+		int length = PuzzleManager.StageData[PuzzleManager.StageNumber].HeldBlocks.Count;
+
+		for (int i = 0; i < length; ++i){
+			Vector3 pos = new Vector3(instance.generatePosX[i % instance.generatePosX.Length], 0f, 11.5f);
+			int blockType = PuzzleManager.StageData[PuzzleManager.StageNumber].HeldBlocks[i];
+			var parent = Instantiate(instance.parentPrefab, pos, Quaternion.identity) as GameObject;
+
+			GameObject child;
+			try
 			{
-				Collider[] objs;
-				int count = 0;
-				do{
-					if(++count > 5){
-						"どうしても空いていなかったのでスキップしたよ".Log();
-						return;
-					}
-					pos = new Vector3(Random.Range(-2.5f,-6.5f), 0f, 11.5f);
-					objs = Physics.OverlapBox(pos, new Vector3(0.5f, 0.5f, 0.5f), Quaternion.identity, blockParentLayerMask);
-				} while (objs.Length > 0);
+				child = Instantiate(instance.childPrefabs[blockType], pos, instance.childPrefabs[blockType].transform.rotation);
 			}
-			int blockType = Random.Range(0,childPrefabs.Length);
-
-			var parent = Instantiate(parentPrefab, pos, Quaternion.identity) as GameObject;
-			var child = Instantiate(childPrefabs[blockType], pos, childPrefabs[blockType].transform.rotation);
-			parent.transform.parent = blocksParentObject.transform;
+			catch (System.IndexOutOfRangeException e)
+			{
+				("指定されたブロックはありません: " + blockType + "\n" + e).Log();
+				
+				Destroy(parent);
+				continue;
+			}
+			parent.transform.parent = instance.blocksParentObject.transform;
 			child.transform.parent = parent.transform;
 
 			// float angle = Random.Range(150f,210f);

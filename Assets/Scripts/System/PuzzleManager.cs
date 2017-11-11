@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
-	class StageInfo {
+	public class StageInfo {
 		public int[,] Map{ get; private set; }
 		public List<ObjectInfo> Objects{ get; private set; }
+		public List<int> HeldBlocks{ get; private set; }
 
 		public StageInfo(int[,] map)
 		{
 			Objects = new List<ObjectInfo>();
+			HeldBlocks = new List<int>();
+
 			Map = new int[map.GetLength(0), map.GetLength(1)];
 			for (int z = 0; z < map.GetLength(1); ++z)
 			{
@@ -24,9 +27,16 @@ public class PuzzleManager : MonoBehaviour {
 		{
 			Objects.Add(new ObjectInfo(x, z, objectNumber));
 		}
+
+		public void AddHeldBlocks(int blockId, int blockQty = 1){
+			for (int i = 0; i < blockQty; ++i)
+			{
+				HeldBlocks.Add(blockId);
+			}
+		}
 	}
 
-	class ObjectInfo
+	public class ObjectInfo
 	{
 		public Vector3 pos;
 		public int obj;
@@ -43,7 +53,7 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	int[,] map;
-	List<StageInfo> StageData;
+	public static List<StageInfo> StageData { get; private set; }
 
 	[SerializeField]
 	GameObject[] GenerateBlocks;
@@ -107,6 +117,9 @@ public class PuzzleManager : MonoBehaviour {
 			Destroy(child.gameObject);
 		}
 
+		StageNumber = 0;
+
+
 		GroundPlane.transform.position = new Vector3(GroundPlane.transform.position.x, 0, GroundPlane.transform.position.z);
 
 		StageData = new List<StageInfo>();
@@ -126,6 +139,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(9,6,3);
 		StageData[StageData.Count - 1].AddObject(5,2.5f,12);
+		StageData[StageData.Count - 1].AddHeldBlocks(0,10);
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -159,6 +173,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(8, 6, 2);
 		StageData[StageData.Count - 1].AddObject(1.5f,1.5f,14);
 
+		HeldBlockManager.GenerateBlocks();
 		var height = 0;
 		foreach (var item in StageData)
 		{
