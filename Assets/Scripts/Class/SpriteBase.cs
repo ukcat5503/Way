@@ -64,7 +64,9 @@ public class SpriteBase : MonoBehaviour {
 				if(++currentSprite >= animationSprite.Length){
 					currentSprite = 0;
 				}
-				spriteRenderer.sprite = animationSprite[currentSprite];
+				if(animationSprite[currentSprite]){
+					spriteRenderer.sprite = animationSprite[currentSprite];
+				}
 				currentFrameCount = 0;
 			}
 		}
