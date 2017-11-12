@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GoalBlock : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
-		"ゴール".Log();
-		++PuzzleManager.CurrentStage;
-		CameraManager.CameraDown(PuzzleManager.MapHeight);
-		HeldBlockManager.GenerateBlocks();
-		Destroy(transform.parent.parent.gameObject);
+		PuzzleManager.NextStage(transform.parent.parent.gameObject);
 	}
 }

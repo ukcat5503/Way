@@ -54,6 +54,8 @@ public class PuzzleManager : MonoBehaviour {
 
 	int[,] map;
 	public static List<StageInfo> StageData { get; private set; }
+	public static List<GameObject> StageObject { get; private set; }
+
 
 	[SerializeField]
 	GameObject[] GenerateBlocks;
@@ -106,9 +108,17 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.R)){
 			initialize();
 		}
-		if(MapSize != StageData[CurrentStage].Map.GetLength(0)){
-			MapSize = StageData[CurrentStage].Map.GetLength(0);
+		if(Input.GetKeyDown(KeyCode.N)){
+			"Stage Skip".Log();
+			Destroy(GameObject.Find("SphereController(Clone)"));
+			NextStage();
 		}
+		if(StageData.Count > CurrentStage){
+			if(MapSize != StageData[CurrentStage].Map.GetLength(0)){
+				MapSize = StageData[CurrentStage].Map.GetLength(0);
+			}
+		}
+		
 	}
 
 	void initialize(){
@@ -123,6 +133,7 @@ public class PuzzleManager : MonoBehaviour {
 		GroundPlane.transform.position = new Vector3(GroundPlane.transform.position.x, 0, GroundPlane.transform.position.z);
 
 		StageData = new List<StageInfo>();
+		StageObject = new List<GameObject>();
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -180,6 +191,8 @@ public class PuzzleManager : MonoBehaviour {
 			var stageObj = new GameObject("Stage " + height);
 			var mapObj = new GameObject("Maps");
 			var objObj = new GameObject("Objects");
+			StageObject.Add(stageObj);
+
 			stageObj.transform.parent = transform;
 			mapObj.transform.parent = stageObj.transform;
 			objObj.transform.parent = stageObj.transform;
@@ -202,9 +215,26 @@ public class PuzzleManager : MonoBehaviour {
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 			}
 
+			StageObject[StageObject.Count - 1].SetActive(false);
 			++height;
 		}
+		StageObject[0].SetActive(true);
+	}
 
-
+	public static void NextStage(GameObject destroyObj = null){
+		"Next Stage".Log();
+		if(destroyObj == null){
+			destroyObj = GameObject.Find("Stage " + CurrentStage);
+		}
+		Destroy(destroyObj);
+		++CurrentStage;
+		CameraManager.CameraDown(MapHeight);
+		
+		if(StageObject.Count > CurrentStage){
+			StageObject[CurrentStage].SetActive(true);
+			HeldBlockManager.GenerateBlocks();
+		}else{
+			"AllClear!".Log();
+		}
 	}
 }
