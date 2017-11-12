@@ -19,9 +19,15 @@ public class StartPoint : MonoBehaviour {
 
 	Transform parentTransform;
 
+	int myStage;
+
 	// Use this for initialization
 	void Start () {
-		parentTransform = transform.root.root;
+		parentTransform = transform.root;
+		if(!int.TryParse(transform.parent.parent.name.Remove(0,6), out myStage)){
+			("ステージ数を取得できませんでした。" + transform.parent.parent.name).LogError();
+			Destroy(gameObject);
+		}
 		// generate();
 	}
 	
@@ -42,7 +48,10 @@ public class StartPoint : MonoBehaviour {
 		}
 
 		if(currentObj == null){
-			generate();
+			if(myStage == PuzzleManager.CurrentStage){
+				generate();
+			}
+			
 		}else{
 			if(currentObj.transform.position.y < -30f){
 				deleteSphere();

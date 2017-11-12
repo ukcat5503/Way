@@ -44,7 +44,7 @@ public class HeldBlockParent : MonoBehaviour {
 		}else if (smoothMoveFrame == kSmoothMoveFrame){
 			transform.position = targetPos;
 			childCollider.enabled = true;
-			childCollider.gameObject.transform.parent = GameObject.Find("Stage " + PuzzleManager.StageNumber).transform;
+			childCollider.gameObject.transform.parent = GameObject.Find("Stage " + PuzzleManager.CurrentStage).transform;
 			childCollider.gameObject.GetComponent<TurnBlockBase>().CanMoveFromMouse = true;
 			childCollider.gameObject.GetComponent<TurnBlockBase>().enabled = true;
 		}else if(transform.position.y < kDestroyHeight){
@@ -96,7 +96,7 @@ public class HeldBlockParent : MonoBehaviour {
 			mapPos.Log();
 			if(mapPos.x >= 0 && mapPos.x < PuzzleManager.MapSize && mapPos.y >= 0 && mapPos.y < PuzzleManager.MapSize ){
 				var objs = Physics.OverlapSphere(pos, 0.05f);
-				if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.StageNumber)){
+				if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.CurrentStage)){
 					(gameObject.name + " → " + pos).Log();
 					// transform.position = objPos;
 					// isAnimating = true;

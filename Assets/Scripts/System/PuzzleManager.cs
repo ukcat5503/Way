@@ -69,7 +69,7 @@ public class PuzzleManager : MonoBehaviour {
 	public static GameObject CameraObject;
 	public static GameObject GroundPlane;
 
-	public static int StageNumber = 0;
+	public static int CurrentStage = 0;
 	public static float MapHeight = 0.5f;
 	public static int MapSize = 0;
 
@@ -106,8 +106,8 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.R)){
 			initialize();
 		}
-		if(MapSize != StageData[StageNumber].Map.GetLength(0)){
-			MapSize = StageData[StageNumber].Map.GetLength(0);
+		if(MapSize != StageData[CurrentStage].Map.GetLength(0)){
+			MapSize = StageData[CurrentStage].Map.GetLength(0);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class PuzzleManager : MonoBehaviour {
 			Destroy(child.gameObject);
 		}
 
-		StageNumber = 0;
+		CurrentStage = 0;
 
 
 		GroundPlane.transform.position = new Vector3(GroundPlane.transform.position.x, 0, GroundPlane.transform.position.z);

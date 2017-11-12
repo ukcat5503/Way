@@ -26,11 +26,11 @@ public class HeldBlockManager : MonoBehaviour {
 
 	public static void GenerateBlocks(){
 		// まずブロック全削除
-		int length = PuzzleManager.StageData[PuzzleManager.StageNumber].HeldBlocks.Count;
+		int length = PuzzleManager.StageData[PuzzleManager.CurrentStage].HeldBlocks.Count;
 
 		for (int i = 0; i < length; ++i){
 			Vector3 pos = new Vector3(instance.generatePosX[i % instance.generatePosX.Length], 1f, 11.5f + (i / instance.generatePosX.Length));
-			int blockType = PuzzleManager.StageData[PuzzleManager.StageNumber].HeldBlocks[i];
+			int blockType = PuzzleManager.StageData[PuzzleManager.CurrentStage].HeldBlocks[i];
 			var parent = Instantiate(instance.parentPrefab, pos, Quaternion.identity) as GameObject;
 
 			GameObject child;
