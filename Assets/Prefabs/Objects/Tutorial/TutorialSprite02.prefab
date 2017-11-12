@@ -57,10 +57,22 @@ MonoBehaviour:
   - {fileID: 21300000, guid: be260b63961f146328c5437fc09b65dd, type: 3}
   - {fileID: 21300000, guid: 97ccb6b5d199d474a94c6530be179e2e, type: 3}
   - {fileID: 21300000, guid: 3014be65a5d3b4a0d8afa18c804d69e3, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 21300000, guid: 9caa53b48c8584ea9a115b5329e26b5e, type: 3}
   - {fileID: 21300000, guid: 86283063184e84dd9a1cb410f77a89ad, type: 3}
   - {fileID: 21300000, guid: 184a54dc6cc354511acc3dec2d9cb6f1, type: 3}
   - {fileID: 21300000, guid: 21af3a1c47cc64097818e899ccac186f, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   animationPerFrame: 10
   useBillBoard: 0
   visibleFrame: 30
@@ -100,7 +112,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c38a664c5d8b84e6ebeb6e7f3dcd3929, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.33088237, g: 1, b: 0.4185598, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
