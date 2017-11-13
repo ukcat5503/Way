@@ -10,9 +10,9 @@ public class TurnBlockBase : MonoBehaviour {
 		public float currentRotate;
 		public float targetRotate;
 		public GameObject obj;
-		public SphereController sphere;
+		public PlayerController sphere;
 
-		public ObjectInfo(float c, float t, GameObject o, SphereController s){
+		public ObjectInfo(float c, float t, GameObject o, PlayerController s){
 			currentRotate = c;
 			targetRotate = t;
 			obj = o;
@@ -332,7 +332,7 @@ public class TurnBlockBase : MonoBehaviour {
 		if (sphereObjectInfo == null){
 			var position = CalcStartPosition(other);
 			if(targetPoint[(int)position] != 0f){
-				var s = other.gameObject.GetComponent<SphereController>();
+				var s = other.gameObject.GetComponent<PlayerController>();
 				if (targetPoint[(int)position] == 180f){
 					s.RotationY(180);
 				}else{

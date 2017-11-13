@@ -783,6 +783,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114311155871625162, guid: f517c7d992d0e4665905d53b8d41f0dd,
+        type: 2}
+      propertyPath: sphereController
+      value: 
+      objectReference: {fileID: 1557631676358324, guid: 14e5baa4e9be2432089f180b45aebcfd,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f517c7d992d0e4665905d53b8d41f0dd, type: 2}
   m_IsPrefabParent: 0

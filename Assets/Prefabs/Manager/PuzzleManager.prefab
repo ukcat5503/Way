@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d677c40d7ef284d0b89af3db9d3fdeae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GenerateBlocks:
+  generateBlocks:
   - {fileID: 1921976209133338, guid: 018eb062982054547bbc69f3559e4d8e, type: 2}
   - {fileID: 1806149517846172, guid: 43805246b4bb746588fa303c6acfab99, type: 2}
   - {fileID: 1034391030566798, guid: 4da29d74261e14bba96b3e59fd394d00, type: 2}
@@ -82,7 +82,7 @@ MonoBehaviour:
   - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
   - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
   - {fileID: 1332277413175422, guid: 553de5e5fc7a34cabb2a8599545869ec, type: 2}
-  GenerateObjects:
+  generateObjects:
   - {fileID: 1367978722639676, guid: c25d9147a72e84b68835827c4f7ff073, type: 2}
   - {fileID: 1658432892955260, guid: c4af16c049ccf4e9fa93b812c69a5926, type: 2}
   - {fileID: 1572328899166890, guid: 4aa52483264bc483bb07c7b52455aeb4, type: 2}
@@ -98,7 +98,7 @@ MonoBehaviour:
   - {fileID: 1401624621902160, guid: 013051202b0044f10a08d4f5c40ebac7, type: 2}
   - {fileID: 1016183986978644, guid: 7489b201c67a44e2fbff4f16fee3fd11, type: 2}
   - {fileID: 1533180052134070, guid: 87d221a4a20d14ed39d28399b45fec9f, type: 2}
-  SphereController: {fileID: 1970713005888410, guid: 585963bb0a5f24afe8f2e312497fa9b4,
+  SphereController: {fileID: 1557631676358324, guid: 14e5baa4e9be2432089f180b45aebcfd,
     type: 2}
   notTurnColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}

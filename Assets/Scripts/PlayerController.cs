@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SphereController : MonoBehaviour {
-
-	GameObject child;
+public class PlayerController : MonoBehaviour {
 
 	Rigidbody rigidBody;
 
@@ -21,17 +19,11 @@ public class SphereController : MonoBehaviour {
 			return rotateY;
 		}
 	}
-
-	// Use this for initialization
-	void Start () {
-		child = transform.Find("SphereBody").gameObject;
-	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		if(IsActive){
-			child.transform.Rotate(kSpeedPerSecond * 2f, 0, 0);
 
 			var radian = (transform.eulerAngles.y) * Mathf.Deg2Rad;
 			Vector2 vector = new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));

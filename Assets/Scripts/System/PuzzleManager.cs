@@ -58,11 +58,12 @@ public class PuzzleManager : MonoBehaviour {
 
 
 	[SerializeField]
-	GameObject[] GenerateBlocks;
+	GameObject[] generateBlocks;
 	[SerializeField]
-	GameObject[] GenerateObjects;
+	GameObject[] generateObjects;
 	[SerializeField, Space(6)]
-	GameObject SphereController;
+	GameObject sphereController;
+	public static GameObject SphereController;
 
 	[SerializeField]
 	Color notTurnColor, turnColor, moveColor;
@@ -77,22 +78,23 @@ public class PuzzleManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		SphereController = sphereController;
 		NotTurnColor = notTurnColor;
 		TurnColor = turnColor;
 		MoveColor = moveColor;
 
 		// オブジェクトリスト生成 リリース時取り除く
 		var str = "\n ■ Blocks ■\n";
-		for (int i = 0; i < GenerateBlocks.Length; ++i)
+		for (int i = 0; i < generateBlocks.Length; ++i)
 		{
-			str += i + "\t" + GenerateBlocks[i].name + "\n";
+			str += i + "\t" + generateBlocks[i].name + "\n";
 		}
 		str.Log();
 
 		str = "\n □ Objects □\n";
-		for (int i = 0; i < GenerateObjects.Length; ++i)
+		for (int i = 0; i < generateObjects.Length; ++i)
 		{
-			str += i + "\t" + GenerateObjects[i].name + "\n";
+			str += i + "\t" + generateObjects[i].name + "\n";
 		}
 		str.Log();
 
@@ -202,7 +204,7 @@ public class PuzzleManager : MonoBehaviour {
 				{
 					Vector3 pos = new Vector3(x, -height * MapHeight, (item.Map.GetLength(0) - z) +0.25f);
 					if(item.Map[z,x] == 0) continue;
-					var obj = Instantiate(GenerateBlocks[item.Map[z,x]],pos, GenerateBlocks[item.Map[z,x]].transform.rotation);
+					var obj = Instantiate(generateBlocks[item.Map[z,x]],pos, generateBlocks[item.Map[z,x]].transform.rotation);
 					obj.transform.parent = mapObj.transform;
 					obj.name = "[" + x + "," + z + "] " + obj.name;
 				}
@@ -210,7 +212,7 @@ public class PuzzleManager : MonoBehaviour {
 
 			foreach (var objItem in item.Objects)
 			{
-				var obj = Instantiate(GenerateObjects[objItem.obj], objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), GenerateObjects[objItem.obj].transform.rotation);
+				var obj = Instantiate(generateObjects[objItem.obj], objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), generateObjects[objItem.obj].transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 			}
