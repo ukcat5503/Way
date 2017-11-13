@@ -135,7 +135,7 @@ public class CameraManager : MonoBehaviour
 
     public static void CameraDown(float distance){
         leftOverDown = distance;
-        PuzzleManager.GroundPlane.transform.position = new Vector3(PuzzleManager.GroundPlane.transform.position.x, PuzzleManager.GroundPlane.transform.position.y - leftOverDown, PuzzleManager.GroundPlane.transform.position.z);
+        PuzzleManager.GroundPlane.transform.position = new Vector3(PuzzleManager.GroundPlane.transform.position.x, PuzzleManager.GroundPlane.transform.position.y - leftOverDown - 0.5f, PuzzleManager.GroundPlane.transform.position.z);
     }
 
 }
