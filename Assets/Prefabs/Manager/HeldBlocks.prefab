@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1647277492889162}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.5, y: 0, z: 5.75}
+  m_LocalPosition: {x: -6.46, y: 0, z: 5.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4305378572286738}
@@ -114,8 +114,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1050656429153016}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 0.6, y: 1, z: 1.3}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0.54}
+  m_LocalScale: {x: 1, y: 1, z: 1.17}
   m_Children: []
   m_Father: {fileID: 4273075525973114}
   m_RootOrder: 0
@@ -196,8 +196,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1, z: 13}
-  m_Center: {x: -3.25, y: 0, z: 0}
+  m_Size: {x: 0.5, y: 1, z: 12.78}
+  m_Center: {x: -5.25, y: 0, z: 0}
 --- !u!65 &65288774660163524
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -206,10 +206,10 @@ BoxCollider:
   m_GameObject: {fileID: 1202293315238468}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 1, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 6.75}
+  m_Size: {x: 10, y: 1, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 6.14}
 --- !u!65 &65772588467710646
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -220,8 +220,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1, z: 13}
-  m_Center: {x: 3.25, y: 0, z: 0}
+  m_Size: {x: 0.5, y: 1, z: 12.78}
+  m_Center: {x: 5.25, y: 0, z: 0}
 --- !u!114 &114168627391644912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,9 +233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933ee585f8cf743138dfb19524e618c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockParentLayerMask:
-    serializedVersion: 2
-    m_Bits: 1024
   blocksParentObject: {fileID: 1070026164550774}
   parentPrefab: {fileID: 1311475017349468, guid: 8ca0a5f37949a4605ad640ee1aeac31d,
     type: 2}
