@@ -98,7 +98,7 @@ MonoBehaviour:
   - {fileID: 1401624621902160, guid: 013051202b0044f10a08d4f5c40ebac7, type: 2}
   - {fileID: 1016183986978644, guid: 7489b201c67a44e2fbff4f16fee3fd11, type: 2}
   - {fileID: 1533180052134070, guid: 87d221a4a20d14ed39d28399b45fec9f, type: 2}
-  SphereController: {fileID: 1557631676358324, guid: 14e5baa4e9be2432089f180b45aebcfd,
+  sphereController: {fileID: 1557631676358324, guid: 14e5baa4e9be2432089f180b45aebcfd,
     type: 2}
   notTurnColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}
