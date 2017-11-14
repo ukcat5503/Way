@@ -9,6 +9,9 @@ public class TurnLeftSprite : MonoBehaviour {
 	[SerializeField]
 	GameObject upAllow;
 
+	[SerializeField]
+	bool turnRight;	
+
 	Vector3 startPosition;
 	SpriteRenderer _spriteRenderer;
 
@@ -31,9 +34,11 @@ public class TurnLeftSprite : MonoBehaviour {
 		}
 
 		if(frame % 60 >= 0 && frame % 60 < kRotateFrame){
-			pivot.transform.eulerAngles = new Vector3(pivot.transform.eulerAngles.x, pivot.transform.eulerAngles.y, pivot.transform.eulerAngles.z + kRotateSpeed);
+			var zRotate = (!turnRight ? pivot.transform.eulerAngles.z + kRotateSpeed : pivot.transform.eulerAngles.z - kRotateSpeed);
+			pivot.transform.eulerAngles = new Vector3(pivot.transform.eulerAngles.x, pivot.transform.eulerAngles.y, zRotate);
 
-			upAllow.transform.position = new Vector3(upAllow.transform.position.x, upAllow.transform.position.y, upAllow.transform.position.z + (kMovePosition / kRotateFrame));
+			var zPos = (!turnRight ? upAllow.transform.position.z + (kMovePosition / kRotateFrame) : upAllow.transform.position.z - (kMovePosition / kRotateFrame));
+			upAllow.transform.position = new Vector3(upAllow.transform.position.x, upAllow.transform.position.y, zPos);
 		}
 
 		if(frame % 60 >= 0 && frame % 60 < kRotateFrame / 4){
