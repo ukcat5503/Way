@@ -70,6 +70,7 @@ public class PuzzleManager : MonoBehaviour {
 
 	public static GameObject CameraObject;
 	public static GameObject GroundPlane;
+	public static GameObject HeldBlockSlot;
 
 	public static int CurrentStage = 0;
 	public static float MapHeight = 0.5f;
@@ -98,6 +99,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		CameraObject = GameObject.Find("Main Camera");
 		GroundPlane = GameObject.Find("GroundPlane");
+		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
 
 		initialize();
 

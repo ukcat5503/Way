@@ -351,49 +351,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 1070026164550774, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1050656429153016, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 65288774660163524, guid: 61f9890f486994ac88eb33b94906be3e,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65288774660163524, guid: 61f9890f486994ac88eb33b94906be3e,
-        type: 2}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: bd343c6dc2e184d559e4c988d06b91d5,
-        type: 2}
-    - target: {fileID: 1202293315238468, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
-      propertyPath: m_Layer
-      value: 11
+    - target: {fileID: 1647277492889162, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
+      propertyPath: m_Name
+      value: HeldBlockSlot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &464087120 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1202293315238468, guid: 61f9890f486994ac88eb33b94906be3e,
-    type: 2}
-  m_PrefabInternal: {fileID: 394924587}
---- !u!65 &464087125
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 464087120}
-  m_Material: {fileID: 13400000, guid: bd343c6dc2e184d559e4c988d06b91d5, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 1, z: 0.5}
-  m_Center: {x: 0, y: 0, z: -5.39}
 --- !u!1 &515713561
 GameObject:
   m_ObjectHideFlags: 0
