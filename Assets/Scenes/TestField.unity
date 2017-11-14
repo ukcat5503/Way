@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657642, g: 0.49641156, b: 0.5748181, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465769, g: 0.4964121, b: 0.5748183, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.29411763, g: 0.29411763, b: 0.29411763, a: 0}
+  m_BackGroundColor: {r: 1, g: 0, b: 1, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -191,13 +191,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 11558780}
-  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 4.25, y: 6.45, z: 0.75}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 2.85, y: 8, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!114 &11558786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4273075525973114, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.5
+      value: -6.46
       objectReference: {fileID: 0}
     - target: {fileID: 4273075525973114, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
       propertyPath: m_LocalPosition.y
@@ -352,27 +352,8 @@ Prefab:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1647277492889162, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114168627391644912, guid: 61f9890f486994ac88eb33b94906be3e,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65288774660163524, guid: 61f9890f486994ac88eb33b94906be3e,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 65288774660163524, guid: 61f9890f486994ac88eb33b94906be3e,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4305378572286738, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 2
+      propertyPath: m_Name
+      value: HeldBlockSlot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 61f9890f486994ac88eb33b94906be3e, type: 2}
@@ -738,8 +719,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1518981512}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.13, y: -0.5, z: 0}
-  m_LocalScale: {x: 2.12, y: 1, z: 4.18}
+  m_LocalPosition: {x: 6.58, y: -0.5, z: 6.31}
+  m_LocalScale: {x: 1.61, y: 1, z: 1.165}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
