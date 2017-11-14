@@ -129,7 +129,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		CurrentStage = 0;
 
-		CameraObject.transform.position = new Vector3(CameraObject.transform.position.x, 6.45f, CameraObject.transform.position.z);
+		CameraObject.transform.position = new Vector3(CameraObject.transform.position.x, 8f, CameraObject.transform.position.z);
 		GroundPlane.transform.position = new Vector3(GroundPlane.transform.position.x, -0.5f, GroundPlane.transform.position.z);
 
 		StageData = new List<StageInfo>();
