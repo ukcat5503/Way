@@ -72,7 +72,7 @@ public class SpriteBase : MonoBehaviour {
 		}
 		if(useBillBoard){
 			Vector3 p = Camera.main.transform.position;
-			p.y = transform.position.y;
+			// p.y = transform.position.y;
 			transform.LookAt (p);
 		}
 	}
