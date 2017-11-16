@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
 	public class StageInfo {
-		public int[,] Map{ get; private set; }
-		public List<ObjectInfo> Objects{ get; private set; }
-		public List<int> HeldBlocks{ get; private set; }
+		public int[,] Map { get; private set; }
+		public List<ObjectInfo> Objects { get; private set; }
+		public List<int> HeldBlocks { get; private set; }
 
 		public StageInfo(int[,] map)
 		{
@@ -18,7 +18,7 @@ public class PuzzleManager : MonoBehaviour {
 			{
 				for (int x = 0; x < map.GetLength(0); ++x)
 				{
-					Map[x,z] = map[x,z];
+					Map[x, z] = map[x, z];
 				}
 			}
 		}
@@ -28,7 +28,7 @@ public class PuzzleManager : MonoBehaviour {
 			Objects.Add(new ObjectInfo(x, z, objectNumber));
 		}
 
-		public void AddHeldBlocks(int blockId, int blockQty = 1){
+		public void AddHeldBlocks(int blockId, int blockQty = 1) {
 			for (int i = 0; i < blockQty; ++i)
 			{
 				HeldBlocks.Add(blockId);
@@ -47,7 +47,7 @@ public class PuzzleManager : MonoBehaviour {
 			obj = objectNumber;
 		}
 
-		public Vector3 GetPos(float height, int length){
+		public Vector3 GetPos(float height, int length) {
 			return new Vector3(pos.x, height, length - pos.y + 0.2f);
 		}
 	}
@@ -77,7 +77,9 @@ public class PuzzleManager : MonoBehaviour {
 	public static float MapHeight = 0.5f;
 	public static int MapSize = 0;
 
-	// Use this for initialization
+	// スコア
+	public static float Coin;
+
 	void Start () {
 		SphereController = sphereController;
 		NotTurnColor = notTurnColor;

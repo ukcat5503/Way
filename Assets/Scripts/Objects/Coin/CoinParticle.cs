@@ -33,10 +33,10 @@ public class CoinParticle : MonoBehaviour {
 	void Start () {
 		objList = new List<ParticleInfo>();
 
-		int particleQty = (int)(coin / coinPerParticle);
+		int particleQty = (int)(coin / coinPerParticle + 0.01f);
 		for (int i = 0; i < particleQty; ++i){
 
-			var obj = Instantiate(particlePrefab) as GameObject;
+			var obj = Instantiate(particlePrefab, transform.position, Quaternion.identity) as GameObject;
 			float angle = Random.Range(0f,360f);
 			var shotVector = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad),0f , Mathf.Cos(angle * Mathf.Deg2Rad));
 			var r = obj.GetComponent<Rigidbody>();
@@ -50,7 +50,6 @@ public class CoinParticle : MonoBehaviour {
 		if(++frame >= 30){
 			int length = objList.Count;
 			for (int i = length - 1; i >= 0; --i){
-				i.Log();
 				objList[i]._Rigidbody.velocity = CloseToZero(objList[i]._Rigidbody.velocity);
 				if(frame >= 90){
 					objList[i].Obj.transform.position = Vector3.Lerp(objList[i].Obj.transform.position, flyTargetObject.transform.position, Time.deltaTime * 2f);
@@ -60,6 +59,7 @@ public class CoinParticle : MonoBehaviour {
 					if(objList[i]._SpriteRenderer.color.a < 0){
 						Destroy(objList[i].Obj);
 						objList.RemoveAt(i);
+						PuzzleManager.Coin += coinPerParticle;
 					}
 					
 				}
