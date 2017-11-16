@@ -70,6 +70,7 @@ public class SpriteBase : MonoBehaviour {
 				currentFrameCount = 0;
 			}
 		}
+		
 		if(useBillBoard){
 			Vector3 p = Camera.main.transform.position;
 			// p.y = transform.position.y;

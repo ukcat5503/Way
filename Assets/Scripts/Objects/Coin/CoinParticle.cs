@@ -76,7 +76,6 @@ public class CoinParticle : MonoBehaviour {
 						PuzzleManager.MicroCoin += objList[i].Coin;
 						objList.RemoveAt(i);
 					}
-					
 				}
 			}
 		}

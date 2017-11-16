@@ -365,9 +365,10 @@ public class TurnBlockBase : MonoBehaviour {
 				var obj = gameObject.transform.GetChild(0).gameObject;
 				ghostObject = Instantiate(obj);
 				ghostObject.transform.rotation = gameObject.transform.GetChild(0).transform.rotation;
-				ghostObject.name = "Ghost Block";
+				ghostObject.name = "Ghost Block (" + transform.name + ")";
 				var m = ghostObject.GetComponent<MeshRenderer>();
 				m.material.color = new Color(m.material.color.r, m.material.color.g, m.material.color.b, 0.3f);
+				ghostObject.transform.parent = transform.parent.parent;
 			}
 			ghostObject.transform.position = ghostPos;
 		}
