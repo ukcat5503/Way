@@ -78,7 +78,7 @@ public class PuzzleManager : MonoBehaviour {
 	public static int MapSize = 0;
 
 	// スコア
-	public static float Coin;
+	public static int MicroCoin;
 
 	void Start () {
 		SphereController = sphereController;

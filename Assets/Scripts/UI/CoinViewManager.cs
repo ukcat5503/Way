@@ -9,13 +9,20 @@ public class CoinViewManager : MonoBehaviour {
 	GameObject textObject;
 	Text _text;
 
+	int currentViewCoin;
+	int fixedViewCoin;
+
 	void Start(){
 		_text = textObject.GetComponent<Text>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		// PuzzleManager.Coin.Log();
-		_text.text = ((int)(PuzzleManager.Coin * 1000f + 0.1f)).ToString();
+		fixedViewCoin = PuzzleManager.MicroCoin;
+		if(currentViewCoin < fixedViewCoin){
+			currentViewCoin += 1;
+		}
+
+		_text.text = (currentViewCoin).ToString() + "m";
 	}
 }
