@@ -53,7 +53,7 @@ public class StartPoint : MonoBehaviour {
 			}
 			
 		}else{
-			if(currentObj.transform.position.y < -30f){
+			if(currentObj.transform.position.y < -30f + -PuzzleManager.CurrentStage){
 				deleteSphere();
 			}
 		}
