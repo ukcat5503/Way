@@ -16,7 +16,7 @@ public class WorldSpaceText : MonoBehaviour {
 		if(canvas == null){
 			canvas = GameObject.Find("Canvas");
 		}
-		transform.parent = canvas.transform;
+		transform.SetParent(canvas.transform);
 		
 		_text = GetComponent<Text>();
 		_rectTransform = GetComponent<RectTransform>();
