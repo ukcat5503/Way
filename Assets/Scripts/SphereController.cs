@@ -31,7 +31,7 @@ public class SphereController : MonoBehaviour {
 	void Update ()
 	{
 		if(IsActive){
-			child.transform.Rotate(kSpeedPerSecond * 2f, 0, 0);
+			// child.transform.Rotate(kSpeedPerSecond * 2f, 0, 0);
 
 			var radian = (transform.eulerAngles.y) * Mathf.Deg2Rad;
 			Vector2 vector = new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));

@@ -119,6 +119,9 @@ public class PuzzleManager : MonoBehaviour {
 			Destroy(GameObject.Find("SphereController(Clone)"));
 			NextStage();
 		}
+		if(Input.GetKey(KeyCode.A)){
+			++MicroCoin;
+		}
 		if(StageData.Count > CurrentStage){
 			if(MapSize != StageData[CurrentStage].Map.GetLength(0)){
 				MapSize = StageData[CurrentStage].Map.GetLength(0);
