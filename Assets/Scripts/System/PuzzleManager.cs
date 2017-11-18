@@ -122,6 +122,9 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.A)){
 			++MicroCoin;
 		}
+		if(Input.GetKey(KeyCode.S)){
+			--MicroCoin;
+		}
 		if(StageData.Count > CurrentStage){
 			if(MapSize != StageData[CurrentStage].Map.GetLength(0)){
 				MapSize = StageData[CurrentStage].Map.GetLength(0);
