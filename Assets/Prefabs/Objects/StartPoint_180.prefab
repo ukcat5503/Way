@@ -51,5 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c06eff6f8d6f4f768654fe97f261ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: {fileID: 1970713005888410, guid: 585963bb0a5f24afe8f2e312497fa9b4, type: 2}
   RotateY: 180
+  worldSpaceText: {fileID: 1347527771685602, guid: bdf14da8da3ac4f2fa6044281c2bcf7c,
+    type: 2}

@@ -21,6 +21,9 @@ public class StartPoint : MonoBehaviour {
 
 	const float kTargetSize = 0.75f;
 
+	[SerializeField]
+	GameObject worldSpaceText;
+
 	// Use this for initialization
 	void Start () {
 		parentTransform = transform.root;
@@ -53,7 +56,7 @@ public class StartPoint : MonoBehaviour {
 			}
 			
 		}else{
-			if(currentObj.transform.position.y < -30f + -PuzzleManager.CurrentStage){
+			if(currentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.MapHeight)){
 				deleteSphere();
 			}
 		}
@@ -79,6 +82,15 @@ public class StartPoint : MonoBehaviour {
 	}
 
 	void deleteSphere(){
+		int subCoin = PuzzleManager.MicroCoin / 5;
+		PuzzleManager.MicroCoin -= subCoin;
+		var text = (Instantiate(worldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
+		text.Text = "Reject!!";
+		if(subCoin != 0){
+			text.Text += "\n    -" + subCoin + "mCRC";
+		}
+		
+		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);
 		Destroy(currentObj);
 		currentObj = null;
 	}
