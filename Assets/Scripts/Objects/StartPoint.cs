@@ -82,12 +82,12 @@ public class StartPoint : MonoBehaviour {
 	}
 
 	void deleteSphere(){
-		int subCoin = PuzzleManager.MicroCoin / 5;
-		PuzzleManager.MicroCoin -= subCoin;
+		int addCoin = -(PuzzleManager.MicroCoin / 5) < 0 ? -(PuzzleManager.MicroCoin / 5) : 0;
+		PuzzleManager.MicroCoin += addCoin;
 		var text = (Instantiate(worldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
 		text.Text = "Reject!!";
-		if(subCoin != 0){
-			text.Text += "\n    -" + subCoin + "mCRC";
+		if(addCoin < 0){
+			text.Text += "\n    " + addCoin + "mCRC";
 		}
 		
 		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);
