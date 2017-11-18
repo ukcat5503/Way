@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 11558782}
   - component: {fileID: 11558781}
   - component: {fileID: 11558786}
+  - component: {fileID: 11558787}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -212,6 +213,18 @@ MonoBehaviour:
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &11558787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 11558780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: dc6b6b5b0539144479763f2a516f7807, type: 2}
 --- !u!1001 &15319019
 Prefab:
   m_ObjectHideFlags: 0
@@ -1366,7 +1379,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.25
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
