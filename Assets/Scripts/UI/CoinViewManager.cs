@@ -12,6 +12,8 @@ public class CoinViewManager : MonoBehaviour {
 	int currentViewCoin;
 	int fixedViewCoin;
 
+	const int kAddViewCoinParFrame = 1;
+
 	void Start(){
 		_text = textObject.GetComponent<Text>();
 	}
@@ -20,7 +22,9 @@ public class CoinViewManager : MonoBehaviour {
 	void Update () {
 		fixedViewCoin = PuzzleManager.MicroCoin;
 		if(currentViewCoin < fixedViewCoin){
-			currentViewCoin += 1;
+			currentViewCoin += kAddViewCoinParFrame;
+		}else if(currentViewCoin > fixedViewCoin){
+			currentViewCoin -= kAddViewCoinParFrame;
 		}
 
 		_text.text = (currentViewCoin).ToString() + "m";
