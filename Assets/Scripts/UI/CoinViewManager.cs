@@ -27,6 +27,6 @@ public class CoinViewManager : MonoBehaviour {
 			currentViewCoin -= kAddViewCoinParFrame;
 		}
 
-		_text.text = (currentViewCoin).ToString() + "m";
+		_text.text = (currentViewCoin).ToString();
 	}
 }
