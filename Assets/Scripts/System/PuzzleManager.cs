@@ -70,7 +70,6 @@ public class PuzzleManager : MonoBehaviour {
 	public static Color NotTurnColor, TurnColor, MoveColor;
 
 	public static GameObject CameraObject;
-	public static GameObject GroundPlane;
 	public static GameObject HeldBlockSlot;
 
 	public static int CurrentStage = 0;
@@ -102,7 +101,6 @@ public class PuzzleManager : MonoBehaviour {
 		str.Log();
 
 		CameraObject = GameObject.Find("Main Camera");
-		GroundPlane = GameObject.Find("GroundPlane");
 		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
 
 		initialize();
@@ -142,7 +140,6 @@ public class PuzzleManager : MonoBehaviour {
 		CurrentStage = 0;
 
 		CameraObject.transform.position = new Vector3(CameraObject.transform.position.x, 8f, CameraObject.transform.position.z);
-		GroundPlane.transform.position = new Vector3(GroundPlane.transform.position.x, -0.5f, GroundPlane.transform.position.z);
 
 		StageData = new List<StageInfo>();
 		StageObject = new List<GameObject>();
