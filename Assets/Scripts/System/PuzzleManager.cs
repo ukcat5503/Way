@@ -222,15 +222,15 @@ public class PuzzleManager : MonoBehaviour {
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0,22, 3, 3,27, 0, 0, 0, 0, 0},
+			{ 0,22, 3, 3,23, 0, 0, 0, 0, 0},
 			{ 0, 1, 0, 0, 4, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
-			{ 0, 0, 2, 3, 6, 3, 3,27, 0, 0},
+			{ 0, 0, 2, 3, 6, 3, 3,23, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
-			{ 0, 0, 0, 0,25, 3, 3,24, 0, 0}
+			{ 0, 0, 0, 0,21, 3, 3,20, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(1, 2, 0);
@@ -270,7 +270,7 @@ public class PuzzleManager : MonoBehaviour {
 			foreach (var objItem in item.Coins)
 			{
 				var obj = Instantiate(coinPrefabs, objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), coinPrefabs.transform.rotation);
-				// obj.transform.parent = objObj.transform;
+				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 				obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
 			}

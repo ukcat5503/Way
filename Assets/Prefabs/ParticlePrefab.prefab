@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212747243737586622}
   - component: {fileID: 114115487454887668}
   - component: {fileID: 54677567038413944}
+  - component: {fileID: 114763418169319500}
   m_Layer: 0
   m_Name: ParticlePrefab
   m_TagString: Untagged
@@ -72,6 +73,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d97d8f784b3854b08bfe35efe79e242e, type: 3}
   animationPerFrame: 0
   useBillBoard: 1
+--- !u!114 &114763418169319500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1422054175246352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe52f940903543debfcedde626d8927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212747243737586622
 SpriteRenderer:
   m_ObjectHideFlags: 1
