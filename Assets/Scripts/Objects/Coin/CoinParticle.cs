@@ -34,7 +34,7 @@ public class CoinParticle : MonoBehaviour {
 	void Start () {
 		objList = new List<ParticleInfo>();
 
-		float color = 3f + microCoin / 50;
+		float color = 3f + microCoin / 10;
 		_spriteRenderer = GetComponent<SpriteRenderer>();
 		_spriteRenderer.material.SetColor("_EmissionColor", new Color(color,color,0f));
 	}

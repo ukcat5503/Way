@@ -27,13 +27,14 @@
 25	J_Turn90
 26	J_Turn180
 27	J_Turn270
-
+28	J_Turn270
+29	BarricadeBlock
 
  □ Objects □
-0 StartPoint_0
-1 StartPoint_90
-2 StartPoint_180
-3 StartPoint_270
+0 StartPoint_0 (↑)
+1 StartPoint_90 (→)
+2 StartPoint_180 (↓)
+3 StartPoint_270 (←)
 4 NoteObject_1
 5 NoteObject_2
 6 NoteObject_3
