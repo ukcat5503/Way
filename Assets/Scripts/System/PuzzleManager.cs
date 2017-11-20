@@ -6,11 +6,13 @@ public class PuzzleManager : MonoBehaviour {
 	public class StageInfo {
 		public int[,] Map { get; private set; }
 		public List<ObjectInfo> Objects { get; private set; }
+		public List<CoinObjectInfo> Coins { get; private set; }
 		public List<int> HeldBlocks { get; private set; }
 
 		public StageInfo(int[,] map)
 		{
 			Objects = new List<ObjectInfo>();
+			Coins = new List<CoinObjectInfo>();
 			HeldBlocks = new List<int>();
 
 			Map = new int[map.GetLength(0), map.GetLength(1)];
@@ -26,6 +28,11 @@ public class PuzzleManager : MonoBehaviour {
 		public void AddObject(float x, float z, int objectNumber)
 		{
 			Objects.Add(new ObjectInfo(x, z, objectNumber));
+		}
+
+		public void AddCoin(float x, float z, int microCoin)
+		{
+			Coins.Add(new CoinObjectInfo(x, z, microCoin));
 		}
 
 		public void AddHeldBlocks(int blockId, int blockQty = 1) {
@@ -52,6 +59,22 @@ public class PuzzleManager : MonoBehaviour {
 		}
 	}
 
+	public class CoinObjectInfo
+	{
+		public Vector3 pos;
+		public int microCoin;
+
+		public CoinObjectInfo(float x, float z, int microCoin)
+		{
+			pos = new Vector2(x, z);
+			this.microCoin = microCoin;
+		}
+
+		public Vector3 GetPos(float height, int length) {
+			return new Vector3(pos.x, height + 1f, length - pos.y + 0.2f);
+		}
+	}
+
 	int[,] map;
 	public static List<StageInfo> StageData { get; private set; }
 	public static List<GameObject> StageObject { get; private set; }
@@ -63,7 +86,11 @@ public class PuzzleManager : MonoBehaviour {
 	GameObject[] generateObjects;
 	[SerializeField, Space(6)]
 	GameObject sphereController;
+	[SerializeField]
+	GameObject coinPrefabs;
+
 	public static GameObject SphereController;
+	public static GameObject CoinParticleFlyCoinTarget{ get; private set;}
 
 	[SerializeField]
 	Color notTurnColor, turnColor, moveColor;
@@ -102,6 +129,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		CameraObject = GameObject.Find("Main Camera");
 		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
+		CoinParticleFlyCoinTarget = GameObject.Find("CoinTargetPoint");
 
 		initialize();
 
@@ -114,7 +142,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		if(Input.GetKeyDown(KeyCode.N)){
 			"Stage Skip".Log();
-			Destroy(GameObject.Find("SphereController(Clone)"));
+			Destroy(GameObject.Find("Player(Clone)"));
 			NextStage();
 		}
 		if(Input.GetKey(KeyCode.A)){
@@ -123,6 +151,7 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S)){
 			--MicroCoin;
 		}
+
 		if(StageData.Count > CurrentStage){
 			if(MapSize != StageData[CurrentStage].Map.GetLength(0)){
 				MapSize = StageData[CurrentStage].Map.GetLength(0);
@@ -143,7 +172,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		StageData = new List<StageInfo>();
 		StageObject = new List<GameObject>();
-
+		
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -158,40 +187,54 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(9,6,3);
-		StageData[StageData.Count - 1].AddObject(5,2.5f,12);
-		// StageData[StageData.Count - 1].AddHeldBlocks(0,10);
+		StageData[StageData.Count - 1].AddObject(5,3.5f,12);
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{22, 3, 3, 3,23, 0, 0, 0, 0, 0},
-			{ 1, 0, 0, 0, 4, 0, 0, 0, 0, 0},
-			{25, 3, 3, 3,15, 3, 3, 3,23, 0},
-			{ 4, 0, 0, 0, 4, 0, 0, 0, 4, 0},
-			{21, 3, 3, 3,20, 0, 0, 0, 4, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 2, 0},
+			{22, 3, 3, 3, 3, 3, 3,23, 0, 0},
+			{ 1, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(0,2,0);
-		StageData[StageData.Count - 1].AddObject(3,7.5f,13);
+		StageData[StageData.Count - 1].AddCoin(4,1,100);
 
 		map = new int[10, 10]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
-			{ 0, 0, 0, 0,29, 0, 0,14, 4, 0},
-			{ 0, 0, 0, 0,29, 0, 0,14, 4, 0},
-			{ 0, 0, 0, 0,29, 0, 0,14, 1, 0},
-			{ 0, 0, 0, 0, 0, 4, 0, 0, 4, 0},
-			{ 0, 0, 0, 0, 0, 4, 0, 0, 4, 0},
-			{ 0, 0, 0, 0, 0,21, 3, 3,20, 0}
+			{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0,21,26, 3, 3, 3, 3,23, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 1, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0,21, 3, 3, 3, 3,20, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(8, 6, 2);
-		StageData[StageData.Count - 1].AddObject(1.5f,1.5f,14);
+		StageData[StageData.Count - 1].AddObject(7, 6, 2);
+
+		map = new int[10, 10]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0,22, 3, 3,27, 0, 0, 0, 0, 0},
+			{ 0, 1, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 2, 3, 6, 3, 3,27, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0,25, 3, 3,24, 0, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddObject(1, 2, 0);
+
 
 		HeldBlockManager.GenerateBlocks();
 		var height = 0;
@@ -222,6 +265,14 @@ public class PuzzleManager : MonoBehaviour {
 				var obj = Instantiate(generateObjects[objItem.obj], objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), generateObjects[objItem.obj].transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
+			}
+
+			foreach (var objItem in item.Coins)
+			{
+				var obj = Instantiate(coinPrefabs, objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), coinPrefabs.transform.rotation);
+				// obj.transform.parent = objObj.transform;
+				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
+				obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
 			}
 
 			StageObject[StageObject.Count - 1].SetActive(false);
