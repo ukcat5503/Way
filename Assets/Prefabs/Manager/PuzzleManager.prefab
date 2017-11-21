@@ -96,10 +96,12 @@ MonoBehaviour:
   - {fileID: 1871522217959146, guid: 2ddaf2abd7c4343fb84218ef69796f45, type: 2}
   - {fileID: 1186718006562212, guid: da4eb4b21fa8746989426cf25f95789f, type: 2}
   - {fileID: 1401624621902160, guid: 013051202b0044f10a08d4f5c40ebac7, type: 2}
-  - {fileID: 0}
-  - {fileID: 1533180052134070, guid: 87d221a4a20d14ed39d28399b45fec9f, type: 2}
+  - {fileID: 1404284206903620, guid: ff92410ef01c34dc9b3f30265a90bcfe, type: 2}
+  - {fileID: 1367039494367920, guid: 4bafc97a8b5b2478ea032262afa35129, type: 2}
   sphereController: {fileID: 1557631676358324, guid: 14e5baa4e9be2432089f180b45aebcfd,
+    type: 2}
+  coinPrefabs: {fileID: 1555496120189526, guid: d6a8ba4d629f847c5b37839b25ea1c1d,
     type: 2}
   notTurnColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}
-  moveColor: {r: 0.29411763, g: 1, b: 1, a: 1}
+  moveColor: {r: 0, g: 0, b: 1, a: 1}
