@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4997407820970736}
-  - component: {fileID: 114270677689093526}
+  - component: {fileID: 114630058720944014}
   - component: {fileID: 65664335827976852}
   m_Layer: 9
   m_Name: -_Turn0
@@ -123,7 +123,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.224, z: 1}
   m_Center: {x: 0, y: 0.112, z: 0}
---- !u!114 &114270677689093526
+--- !u!114 &114630058720944014
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1812988001123674}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f302da9128f4c02897ac94b04c2fb5, type: 3}
+  m_Script: {fileID: 11500000, guid: ccac9e9c36da3410197227e679768d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isTouchSphere: 0
@@ -142,4 +142,3 @@ MonoBehaviour:
   targetFromSouth: 180
   turnBlockType: 1
   currentAngle: 0
-  isVertical: 0
