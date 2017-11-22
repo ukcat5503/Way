@@ -15,36 +15,51 @@ public class StraightBlock : TurnBlockBase {
 
 	new void OnCollisionEnter(Collision other){
 		var position = base.CalcStartPosition(other);
-		// position.Log();
-		var eular = other.transform.eulerAngles;
-
-		bool isRotate = false;
-		switch (position)
+		isTouchSphere = true;
+		if (sphereObjectInfo == null)
 		{
-			case StartPosition.North:
-				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
-				eular.y = 180f;
-			break;
-			case StartPosition.South:
-				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
-				eular.y = 0f;
-			break;
-			case StartPosition.West:
-				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
-				eular.y = 90f;
-			break;
-			case StartPosition.East:
-				isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
-				eular.y = 270f;
-			break;
+			if (targetPoint[(int)position] != 0f)
+			{
+				var s = other.gameObject.GetComponent<PlayerController>();
+				if (targetPoint[(int)position] == 180f)
+				{
+					s.RotationY(180);
+				}
+				else
+				{
+					// position.Log();
+					var eular = other.transform.eulerAngles;
 
-		}
+					bool isRotate = false;
+					switch (position)
+					{
+						case StartPosition.North:
+							isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+							eular.y = 180f;
+							break;
+						case StartPosition.South:
+							isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+							eular.y = 0f;
+							break;
+						case StartPosition.West:
+							isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+							eular.y = 90f;
+							break;
+						case StartPosition.East:
+							isRotate = (eular.y < eular.y + kToleranceRotateFix && eular.y > eular.y - kToleranceRotateFix);
+							eular.y = 270f;
+							break;
 
-		// isRotate.Log();
-		if(isRotate){
-			other.transform.eulerAngles = eular;
+					}
+
+					// isRotate.Log();
+					if (isRotate)
+					{
+						other.transform.eulerAngles = eular;
+					}
+				}
+			}
 		}
-		
 	}
 
 	void OnCollisionStay(Collision other){
