@@ -38,8 +38,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b08a83cf7c64bf0beebb91558c2762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotSize: 6
+  slotLength: 6
   slotPrefab: {fileID: 1973911972429982, guid: 6e0f1b141b83f4a65ad0d7eebfe7e7bf, type: 2}
+  basePosition: {x: 0, y: 940}
+  slotSize: {x: 440, y: 110}
+  positionMargin: {x: 0, y: -160}
+  buttonPosition:
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  rect: {fileID: 1731704454271012, guid: a4ba34ee04ba3504182df7a536e6385f, type: 2}
 --- !u!224 &224412579305533596
 RectTransform:
   m_ObjectHideFlags: 1
