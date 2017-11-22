@@ -229,8 +229,8 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 2, 3, 6, 3, 3,23, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
-			{ 0, 0, 0, 0, 4, 0, 0, 4, 0, 0},
-			{ 0, 0, 0, 0,21, 3, 3,20, 0, 0}
+			{ 0, 0, 0, 0,21, 3, 3,20, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(1, 2, 0);
