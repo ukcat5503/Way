@@ -75,7 +75,7 @@ public class TurnBlockBase : MonoBehaviour {
 
 	const float kMaxRange = 180f;
 	[SerializeField]
-	bool isTouchSphere;
+	protected bool isTouchSphere;
 	[HideInInspector]
 	public bool CanMoveFromMouse;
 
