@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465769, g: 0.4964121, b: 0.5748183, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657642, g: 0.49641156, b: 0.5748181, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -497,24 +497,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114019023757399916, guid: a6eeb6df10bd649069a33e63fb6c9948,
         type: 2}
-      propertyPath: slotSize.y
-      value: 130
-      objectReference: {fileID: 0}
-    - target: {fileID: 114019023757399916, guid: a6eeb6df10bd649069a33e63fb6c9948,
+      propertyPath: block
+      value: 
+      objectReference: {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844,
         type: 2}
-      propertyPath: positionMargin.y
-      value: -150
-      objectReference: {fileID: 0}
-    - target: {fileID: 114019023757399916, guid: a6eeb6df10bd649069a33e63fb6c9948,
-        type: 2}
-      propertyPath: basePosition.y
-      value: 930
-      objectReference: {fileID: 0}
-    - target: {fileID: 114019023757399916, guid: a6eeb6df10bd649069a33e63fb6c9948,
-        type: 2}
-      propertyPath: slotSize.x
-      value: 445
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6eeb6df10bd649069a33e63fb6c9948, type: 2}
   m_IsPrefabParent: 0
@@ -837,6 +823,7 @@ SpriteRenderer:
   m_Size: {x: 10.8, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!1 &812880808
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,6 +893,7 @@ SpriteRenderer:
   m_Size: {x: 10.8, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!224 &1331728900 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224412579305533596, guid: a6eeb6df10bd649069a33e63fb6c9948,
