@@ -19,8 +19,6 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	[SerializeField]
 	GameObject rect;
 
-	int? clickingObject = null;
-
 	// ドラッグ時の幻影
 	GameObject ghostObject = null;
 	Vector3 ghostPos;
@@ -49,42 +47,45 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetMouseButtonDown(0))
-		{
+
+		// 最初にUIクリック
+		if(Input.GetMouseButtonDown(0) && ghostObject == null){
+			// Vector3でマウス位置座標を取得する
+			var position = Input.mousePosition;
+			// Z軸修正
+			position.z = 10f;
+			// マウス位置座標をスクリーン座標からワールド座標に変換する
+			var screenToWorldPointPosition = Camera.main.ScreenToWorldPoint(position);
+			// ワールド座標に変換されたマウス座標を代入
+			ghostPos = screenToWorldPointPosition;
 			var length = buttonPosition.Length;
-			for (int i = 0; i < length; ++i)
-			{
-				if (buttonPosition[i].Contains(Input.mousePosition))
-				{
-					("クリック obj:" + i).Log();
-					clickingObject = i;
+			for (int i = 0; i < length; ++i){
+				if (buttonPosition[i].Contains(Input.mousePosition)){
+					ghostObject = Instantiate(block);
+					ghostObject.transform.rotation = block.transform.rotation;
+					ghostObject.name = "Ghost Block [" + i + "]";
+					ghostObject.transform.position = ghostPos;
+					break;
 				}
 			}
 		}
 
-		if(Input.GetMouseButton(0) && clickingObject != null){
-		
-		// Vector3でマウス位置座標を取得する
-		var position = Input.mousePosition;
-		// Z軸修正
-		position.z = 10f;
-		// マウス位置座標をスクリーン座標からワールド座標に変換する
-		var screenToWorldPointPosition = Camera.main.ScreenToWorldPoint(position);
-		// ワールド座標に変換されたマウス座標を代入
-		ghostPos = screenToWorldPointPosition;
+		// ドラッグ 位置更新
+		if(Input.GetMouseButton(0) && ghostObject != null){
+			// Vector3でマウス位置座標を取得する
+			var position = Input.mousePosition;
+			// Z軸修正
+			position.z = 10f;
+			// マウス位置座標をスクリーン座標からワールド座標に変換する
+			var screenToWorldPointPosition = Camera.main.ScreenToWorldPoint(position);
+			// ワールド座標に変換されたマウス座標を代入
+			ghostPos = screenToWorldPointPosition;
 
-			ghostPos.Log();
-
-			if(ghostObject == null){
-				// var obj = gameObject.transform.GetChild(0).GetChild(0).gameObject;
-				ghostObject = Instantiate(block);
-				ghostObject.transform.rotation = block.transform.rotation;
-				ghostObject.name = "Ghost Block";
-			}
 			ghostObject.transform.position = ghostPos;
 		}
-
-		if(Input.GetMouseButtonUp(0) && clickingObject != null){
+		
+		// 置く判定
+		if(Input.GetMouseButtonUp(0) && ghostObject != null){
 			if(ghostObject != null){
 				var mapPos = new Vector3((int)(ghostObject.transform.position.x + 0.5f), PuzzleManager.CurrentStage, (10 - (int)ghostObject.transform.position.z));	// 相対位置
 				var pos = new Vector3((int)(ghostObject.transform.position.x + 0.5f), 0, ((int)(ghostObject.transform.position.z + 0.5f )) + 0.25f);	// 絶対位置
