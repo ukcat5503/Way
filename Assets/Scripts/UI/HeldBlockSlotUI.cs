@@ -34,7 +34,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 
 		var length = SlotObject.Length;
 		for (int i = 0; i < length; ++i){
-			SlotObject[i] = (Instantiate(slotPrefab, new Vector3(230f, -110f + -(i * 150), 0), Quaternion.identity) as GameObject).GetComponent<RectTransform>();
+			SlotObject[i] = (Instantiate(slotPrefab, new Vector3(80f, -110f + -(i * 150), 0), Quaternion.identity) as GameObject).GetComponent<RectTransform>();
 			SlotObject[i].SetParent(transform, false);
 			SlotObject[i].transform.name = "BlockSlot " + i;
 			buttonPosition[i] = new Rect(basePosition.x + (positionMargin.x * i), basePosition.y + (positionMargin.y * i), slotSize.x, slotSize.y);

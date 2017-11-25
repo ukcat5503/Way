@@ -39,12 +39,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotLength: 6
-  slotPrefab: {fileID: 1973911972429982, guid: 6e0f1b141b83f4a65ad0d7eebfe7e7bf, type: 2}
+  slotPrefab: {fileID: 1368615098807224, guid: cc457d2ba4c354f03803e6c2ce39a53a, type: 2}
   basePosition: {x: 0, y: 930}
-  slotSize: {x: 445, y: 130}
+  slotSize: {x: 300, y: 130}
   positionMargin: {x: 0, y: -150}
   rect: {fileID: 1731704454271012, guid: a4ba34ee04ba3504182df7a536e6385f, type: 2}
-  block: {fileID: 100000, guid: 1db6160a90f984914846458f561641b4, type: 3}
+  block: {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
 --- !u!224 &224412579305533596
 RectTransform:
   m_ObjectHideFlags: 1
