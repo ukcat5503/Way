@@ -205,9 +205,9 @@ public class PuzzleManager : MonoBehaviour {
 			stageObj.transform.parent = transform;
 			mapObj.transform.parent = stageObj.transform;
 			objObj.transform.parent = stageObj.transform;
-			for (int z = 0; z < item.Map.GetLength(1); ++z)
+			for (int z = 0; z < item.Map.GetLength(0); ++z)
 			{
-				for (int x = 0; x < item.Map.GetLength(0); ++x)
+				for (int x = 0; x < item.Map.GetLength(1); ++x)
 				{
 					Vector3 pos = new Vector3(x, -height * MapHeight, (item.Map.GetLength(0) - z) +0.25f);
 					if(item.Map[z,x] == 0) continue;
