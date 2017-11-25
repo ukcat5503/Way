@@ -68,6 +68,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 					ghostObject.transform.rotation = block.transform.rotation;
 					ghostObject.name = "Ghost Block [" + i + "]";
 					ghostObject.transform.position = ghostPos;
+					ghostObject.layer = 0;
 					break;
 				}
 			}
@@ -122,8 +123,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				// (mapPos.x + "," + mapPos.z).Log();
 
 				if(mapPos.x >= 0 && mapPos.x < PuzzleManager.kMapWidth && mapPos.z >= 0 && mapPos.z < PuzzleManager.kMapHeight ){
-					var objs = Physics.OverlapSphere(pos, 0.5f);
-
+					var objs = Physics.OverlapSphere(pos, 0.05f, targetLayer);
+					objs.Length.Log();
 					if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.CurrentStage)){
 						// (gameObject.name + " → " + mapPos + " [" + pos + "]").Log();
 						("pos: " + pos).Log();
@@ -144,9 +145,10 @@ public class HeldBlockSlotUI : MonoBehaviour {
 						//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
 						targetLocalPos = targetPos - transform.position;
 						*/
-
+						ghostObject.layer = LayerMask.NameToLayer("Block");
 						ghostObject = null;
 					}else{
+						Destroy(ghostObject);
 					}
 				}else{
 					Destroy(ghostObject);
