@@ -128,15 +128,15 @@ public class TurnBlockBase : MonoBehaviour {
 		{
 			case BlockType.NotTurn:
 				material.color = PuzzleManager.NotTurnColor;
-				material.SetColor("_EmissionColor", new Color(1.2f,1.2f,1.2f));
+				material.SetColor("_EmissionColor", new Color(1f,1f,1f));
 				break;
 			case BlockType.Turn:
 				material.color = PuzzleManager.TurnColor;
-				material.SetColor("_EmissionColor", new Color(1.7f,1.7f,1.7f));
+				material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2f));
 				break;
 			case BlockType.Move:
 				material.color = PuzzleManager.MoveColor;
-				material.SetColor("_EmissionColor", new Color(3f,3f,3f));
+				material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2.5f));
 				break;
 		}
 		if(CanMoveFromMouse){
