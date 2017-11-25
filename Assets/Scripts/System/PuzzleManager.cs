@@ -100,8 +100,9 @@ public class PuzzleManager : MonoBehaviour {
 	public static GameObject HeldBlockSlot;
 
 	public static int CurrentStage = 0;
-	public static float MapHeight = 0.5f;
-	public static int MapSize = 0;
+	public const float kMapDepth = 0.5f;
+	public const int kMapWidth = 13;
+	public const int kMapHeight = 10;
 
 	// スコア
 	public static int MicroCoin;
@@ -151,13 +152,6 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S)){
 			--MicroCoin;
 		}
-
-		if(StageData.Count > CurrentStage){
-			if(MapSize != StageData[CurrentStage].Map.GetLength(0)){
-				MapSize = StageData[CurrentStage].Map.GetLength(0);
-			}
-		}
-		
 	}
 
 	void initialize(){
@@ -166,13 +160,14 @@ public class PuzzleManager : MonoBehaviour {
 			Destroy(child.gameObject);
 		}
 
+
 		CurrentStage = 0;
 
 
 		StageData = new List<StageInfo>();
 		StageObject = new List<GameObject>();
 
-		map = new int[10, 13]{
+		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11, 0},
 			{ 0,12,13,14,15,16,17,18,19,20,21,22, 0},
@@ -182,11 +177,11 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+			{29,29,29,29,29,29,29,29,29,29,29,29,29}
 		};
 		StageData.Add(new StageInfo(map));
 		
-		map = new int[10, 13]{
+		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -220,7 +215,7 @@ public class PuzzleManager : MonoBehaviour {
 			{
 				for (int x = 0; x < item.Map.GetLength(1); ++x)
 				{
-					Vector3 pos = new Vector3(x, -height * MapHeight, (item.Map.GetLength(0) - z) +0.25f);
+					Vector3 pos = new Vector3(x, -height * kMapDepth, (item.Map.GetLength(0) - z) +0.25f);
 					if(item.Map[z,x] == 0) continue;
 					var obj = Instantiate(generateBlocks[item.Map[z,x]],pos, generateBlocks[item.Map[z,x]].transform.rotation);
 					obj.transform.parent = mapObj.transform;
@@ -230,14 +225,14 @@ public class PuzzleManager : MonoBehaviour {
 
 			foreach (var objItem in item.Objects)
 			{
-				var obj = Instantiate(generateObjects[objItem.obj], objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), generateObjects[objItem.obj].transform.rotation);
+				var obj = Instantiate(generateObjects[objItem.obj], objItem.GetPos(-height * kMapDepth, item.Map.GetLength(0)), generateObjects[objItem.obj].transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 			}
 
 			foreach (var objItem in item.Coins)
 			{
-				var obj = Instantiate(coinPrefabs, objItem.GetPos(-height * MapHeight, item.Map.GetLength(0)), coinPrefabs.transform.rotation);
+				var obj = Instantiate(coinPrefabs, objItem.GetPos(-height * kMapDepth, item.Map.GetLength(0)), coinPrefabs.transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
 				obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
@@ -256,7 +251,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		Destroy(destroyObj);
 		++CurrentStage;
-		CameraManager.CameraDown(MapHeight);
+		CameraManager.CameraDown(kMapDepth);
 		
 		if(StageObject.Count > CurrentStage){
 			StageObject[CurrentStage].SetActive(true);

@@ -56,7 +56,7 @@ public class StartPoint : MonoBehaviour {
 			}
 			
 		}else{
-			if(currentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.MapHeight)){
+			if(currentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.kMapDepth)){
 				deleteSphere();
 			}
 		}
@@ -74,7 +74,7 @@ public class StartPoint : MonoBehaviour {
 		currentSphereController.RotationY(RotateY);
 		currentObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
 
-		targetPosY = transform.position.y + PuzzleManager.MapHeight;
+		targetPosY = transform.position.y + PuzzleManager.kMapDepth;
 		currentCollider.enabled = false;
 		currentRigidbody.isKinematic = true;
 		currentSphereController.IsActive = false;

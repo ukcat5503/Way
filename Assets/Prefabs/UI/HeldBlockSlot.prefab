@@ -45,6 +45,9 @@ MonoBehaviour:
   positionMargin: {x: 0, y: -150}
   rect: {fileID: 1731704454271012, guid: a4ba34ee04ba3504182df7a536e6385f, type: 2}
   block: {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!224 &224412579305533596
 RectTransform:
   m_ObjectHideFlags: 1

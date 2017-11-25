@@ -26,6 +26,9 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	[SerializeField]
 	GameObject block;
 
+	[SerializeField]
+	LayerMask targetLayer;
+
 	void Start () {
 		SlotObject = new RectTransform[slotLength];
 		buttonPosition = new Rect[slotLength];
@@ -81,21 +84,50 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			// ワールド座標に変換されたマウス座標を代入
 			ghostPos = screenToWorldPointPosition;
 
-			ghostObject.transform.position = ghostPos;
+			// ghostObject.transform.position = ghostPos;
+
+			var pos = new Vector3(
+				(int)(ghostPos.x + 0.5f),
+				PuzzleManager.CurrentStage,
+				((int)(ghostPos.z + 0.5f )) + 0.25f
+			);	// ワールド座標
+
+			var mapPos = new Vector3(
+				(int)(ghostPos.x + 0.5f),
+				-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
+				(10 - (int)ghostPos.z + 0.5f)
+			);	// ローカル座標
+
+			ghostObject.transform.position = pos;
+			("world: " + pos + " local:" + mapPos).Log();
 		}
 		
 		// 置く判定
 		if(Input.GetMouseButtonUp(0) && ghostObject != null){
 			if(ghostObject != null){
-				var mapPos = new Vector3((int)(ghostObject.transform.position.x + 0.5f), PuzzleManager.CurrentStage, (10 - (int)ghostObject.transform.position.z));	// 相対位置
-				var pos = new Vector3((int)(ghostObject.transform.position.x + 0.5f), 0, ((int)(ghostObject.transform.position.z + 0.5f )) + 0.25f);	// 絶対位置
-				
-				if(mapPos.x >= 0 && mapPos.x < PuzzleManager.MapSize && mapPos.y >= 0 && mapPos.y < PuzzleManager.MapSize ){
-					var objs = Physics.OverlapSphere(pos, 0.05f);
-					if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.CurrentStage)){
-						(gameObject.name + " → " + mapPos + " [" + pos + "]").Log();
+				var pos = new Vector3(
+					(int)(ghostPos.x + 0.5f),
+					PuzzleManager.CurrentStage,
+					((int)(ghostPos.z + 0.5f )) + 0.25f
+				);	// ワールド座標
 
-						ghostObject.transform.position = mapPos;
+				var mapPos = new Vector3(
+					(int)(ghostPos.x + 0.5f),
+					-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
+					(10 - (int)ghostPos.z + 0.5f)
+				);	// ローカル座標
+				
+				(mapPos + " / " + pos).Log();
+
+				// (mapPos.x + "," + mapPos.z).Log();
+
+				if(mapPos.x >= 0 && mapPos.x < PuzzleManager.kMapWidth && mapPos.z >= 0 && mapPos.z < PuzzleManager.kMapHeight ){
+					var objs = Physics.OverlapSphere(pos, 0.5f);
+
+					if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.CurrentStage)){
+						// (gameObject.name + " → " + mapPos + " [" + pos + "]").Log();
+						("pos: " + pos).Log();
+						ghostObject.transform.position = pos;
 						ghostObject.gameObject.transform.parent = GameObject.Find("Stage " + PuzzleManager.CurrentStage).transform;
 						/*
 						childCollider.enabled = true;
@@ -112,9 +144,12 @@ public class HeldBlockSlotUI : MonoBehaviour {
 						//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
 						targetLocalPos = targetPos - transform.position;
 						*/
+
+						ghostObject = null;
 					}else{
 					}
 				}else{
+					Destroy(ghostObject);
 				}
 				// Destroy(ghostObject);
 				ghostObject = null;
