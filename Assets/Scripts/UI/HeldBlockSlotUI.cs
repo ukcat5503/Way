@@ -107,13 +107,13 @@ public class HeldBlockSlotUI : MonoBehaviour {
 
 			var pos = new Vector3(
 				(int)(ghostPos.x + 0.5f),
-				PuzzleManager.CurrentStage,
+				-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
 				((int)(ghostPos.z + 0.5f )) + 0.25f
 			);	// ワールド座標
 
 			var mapPos = new Vector3(
 				(int)(ghostPos.x + 0.5f),
-				-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
+				PuzzleManager.CurrentStage,
 				(10 - (int)ghostPos.z + 0.5f)
 			);	// ローカル座標
 
@@ -126,13 +126,13 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			if(ghostObject != null){
 				var pos = new Vector3(
 					(int)(ghostPos.x + 0.5f),
-					PuzzleManager.CurrentStage,
+					-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
 					((int)(ghostPos.z + 0.5f )) + 0.25f
 				);	// ワールド座標
 
 				var mapPos = new Vector3(
 					(int)(ghostPos.x + 0.5f),
-					-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
+					PuzzleManager.CurrentStage,
 					(10 - (int)ghostPos.z + 0.5f)
 				);	// ローカル座標
 				

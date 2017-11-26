@@ -7,13 +7,13 @@ public class PuzzleManager : MonoBehaviour {
 		public int[,] Map { get; private set; }
 		public List<ObjectInfo> Objects { get; private set; }
 		public List<CoinObjectInfo> Coins { get; private set; }
-		public List<int> HeldBlocks { get; private set; }
+		public int[] HeldBlocks { get; private set; }
 
 		public StageInfo(int[,] map)
 		{
 			Objects = new List<ObjectInfo>();
 			Coins = new List<CoinObjectInfo>();
-			HeldBlocks = new List<int>();
+			HeldBlocks = new int[6];
 
 			Map = new int[map.GetLength(0), map.GetLength(1)];
 			for (int z = 0; z < map.GetLength(1); ++z)
@@ -35,11 +35,13 @@ public class PuzzleManager : MonoBehaviour {
 			Coins.Add(new CoinObjectInfo(x, z, microCoin));
 		}
 
-		public void AddHeldBlocks(int blockId, int blockQty = 1) {
-			for (int i = 0; i < blockQty; ++i)
-			{
-				HeldBlocks.Add(blockId);
-			}
+		public void AddHeldBlocks(int block1, int block2, int block3, int block4, int block5, int block6){
+			HeldBlocks[0] = block1;
+			HeldBlocks[1] = block2;
+			HeldBlocks[2] = block3;
+			HeldBlocks[3] = block4;
+			HeldBlocks[4] = block5;
+			HeldBlocks[5] = block6;
 		}
 	}
 
