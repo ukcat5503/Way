@@ -41,7 +41,7 @@ MonoBehaviour:
   slotLength: 6
   slotPrefab: {fileID: 1368615098807224, guid: cc457d2ba4c354f03803e6c2ce39a53a, type: 2}
   basePosition: {x: 0, y: 930}
-  slotSize: {x: 300, y: 130}
+  slotSize: {x: 280, y: 130}
   positionMargin: {x: 0, y: -150}
   rect: {fileID: 1731704454271012, guid: a4ba34ee04ba3504182df7a536e6385f, type: 2}
   heldObjSprite:

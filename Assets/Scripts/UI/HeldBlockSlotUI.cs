@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class HeldBlockSlotUI : MonoBehaviour {
 
+	static HeldBlockSlotUI instance;
+
 	RectTransform[] SlotObject;
 
 	[SerializeField]
@@ -23,6 +25,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	// ドラッグ時の幻影
 	GameObject ghostObject = null;
 	Vector3 ghostPos;
+	int currentObjNumber;
 
 	[SerializeField]
 	Sprite[] heldObjSprite;
@@ -36,6 +39,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	Text[] textObj;
 
 	void Start () {
+		instance = this;
+
 		SlotObject = new RectTransform[slotLength];
 		buttonPosition = new Rect[slotLength];
 		partsQty = new int[slotLength];
@@ -43,14 +48,14 @@ public class HeldBlockSlotUI : MonoBehaviour {
 
 		var length = SlotObject.Length;
 		for (int i = 0; i < length; ++i){
-			SlotObject[i] = (Instantiate(slotPrefab, new Vector3(80f, -110f + -(i * 150), 0), Quaternion.identity) as GameObject).GetComponent<RectTransform>();
+			SlotObject[i] = (Instantiate(slotPrefab, new Vector3(60f, -110f + -(i * 150), 0), Quaternion.identity) as GameObject).GetComponent<RectTransform>();
 			SlotObject[i].SetParent(transform, false);
 			SlotObject[i].transform.name = "BlockSlot " + i;
 			buttonPosition[i] = new Rect(basePosition.x + (positionMargin.x * i), basePosition.y + (positionMargin.y * i), slotSize.x, slotSize.y);
 			
 			SlotObject[i].Find("BlockImage").GetComponent<Image>().sprite = heldObjSprite[i];
 			textObj[i] = SlotObject[i].Find("BlockQty").GetComponent<Text>();
-			textObj[i].text = "88";
+			textObj[i].text = "<color=grey>0</color>";
 
 			if (false)
 			{
@@ -81,6 +86,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 					ghostObject.name = "Ghost Block [" + i + "]";
 					ghostObject.transform.position = ghostPos;
 					ghostObject.layer = 0;
+					currentObjNumber = i;
 					break;
 				}
 			}
@@ -144,6 +150,16 @@ public class HeldBlockSlotUI : MonoBehaviour {
 						ghostObject.transform.position = pos;
 						ghostObject.gameObject.transform.parent = parentObj.transform;
 						
+						var num = --partsQty[currentObjNumber];
+						string str;
+						if(num > 0){
+							str = "<color=blue>" + (num).ToString() + "</color>";
+						}else if(num == 0){
+							str = "<color=gray>0</color>";
+						}else{
+							str = "<color=red>" + (-num).ToString() + "</color>";
+						}
+						textObj[currentObjNumber].text = str;
 
 						/* 
 						// transform.position = objPos;
@@ -165,5 +181,14 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				ghostObject = null;
 			}	
 		}
+	}
+
+	public static void ResetAndAddBlocks(int block1, int block2, int block3, int block4, int block5, int block6){
+		instance.partsQty[0] = block1;
+		instance.partsQty[1] = block2;
+		instance.partsQty[2] = block3;
+		instance.partsQty[3] = block4;
+		instance.partsQty[4] = block5;
+		instance.partsQty[5] = block6;
 	}
 }
