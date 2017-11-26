@@ -125,17 +125,13 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				if(mapPos.x >= 0 && mapPos.x < PuzzleManager.kMapWidth && mapPos.z >= 0 && mapPos.z < PuzzleManager.kMapHeight ){
 					var objs = Physics.OverlapSphere(pos, 0.05f, targetLayer);
 					objs.Length.Log();
-					if(objs.Length == 0 && GameObject.Find("Stage " + PuzzleManager.CurrentStage)){
+					var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
+					if(objs.Length == 0 && parentObj){
 						// (gameObject.name + " → " + mapPos + " [" + pos + "]").Log();
 						("pos: " + pos).Log();
 						ghostObject.transform.position = pos;
-						ghostObject.gameObject.transform.parent = GameObject.Find("Stage " + PuzzleManager.CurrentStage).transform;
-						/*
-						childCollider.enabled = true;
-						childCollider.gameObject.transform.parent = GameObject.Find("Stage " + PuzzleManager.CurrentStage).transform;
-						childCollider.gameObject.GetComponent<TurnBlockBase>().CanMoveFromMouse = true;
-						childCollider.gameObject.GetComponent<TurnBlockBase>().enabled = true;
-						*/
+						ghostObject.gameObject.transform.parent = parentObj.transform;
+						
 
 						/* 
 						// transform.position = objPos;
