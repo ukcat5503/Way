@@ -87,7 +87,7 @@ public class StartPoint : MonoBehaviour {
 		var text = (Instantiate(worldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
 		text.Text = "Reject!!";
 		if(addCoin < 0){
-			text.Text += "\n    " + addCoin + "mCRC";
+			text.Text += "\n    " + addCoin + "Coin";
 		}
 		
 		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);

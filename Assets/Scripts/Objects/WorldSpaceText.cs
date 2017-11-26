@@ -9,8 +9,10 @@ public class WorldSpaceText : MonoBehaviour {
 	RectTransform _rectTransform;
 	public string Text;
 	public Vector3 WorldPosition;
-
+	
 	static GameObject canvas;
+
+	int frame;
 
 	void Start () {
 		if(canvas == null){
@@ -26,6 +28,12 @@ public class WorldSpaceText : MonoBehaviour {
 	}
 	
 	void Update () {
+		if(++frame > 50){
+			_text.color = new Color(_text.color.r, _text.color.g, _text.color.b, _text.color.a - 0.02f);
+		}
+		if(_text.color.a < 0){
+			Destroy(gameObject);
+		}
 		_rectTransform.position = new Vector3(_rectTransform.position.x, _rectTransform.position.y + 5f,
 		_rectTransform.position.z);
 	}
