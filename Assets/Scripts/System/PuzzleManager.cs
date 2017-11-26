@@ -203,9 +203,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(12,6,3);
 		StageData[StageData.Count - 1].AddObject(7,3.5f,12);
 
+		HeldBlockSlotUI.ResetAndAddBlocks(1,2,3,4,5,6);
 
-
-		HeldBlockManager.GenerateBlocks();
 		var height = 0;
 		foreach (var item in StageData)
 		{
@@ -261,7 +260,7 @@ public class PuzzleManager : MonoBehaviour {
 		
 		if(StageObject.Count > CurrentStage){
 			StageObject[CurrentStage].SetActive(true);
-			HeldBlockManager.GenerateBlocks();
+
 		}else{
 			"AllClear!".Log();
 		}

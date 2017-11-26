@@ -38,9 +38,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	public int[] partsQty;
 	Text[] textObj;
 
-	void Start () {
+	void Awake () {
 		instance = this;
-
 		SlotObject = new RectTransform[slotLength];
 		buttonPosition = new Rect[slotLength];
 		partsQty = new int[slotLength];
@@ -155,7 +154,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 						if(num > 0){
 							str = "<color=blue>" + (num).ToString() + "</color>";
 						}else if(num == 0){
-							str = "<color=gray>0</color>";
+							str = "<color=grey>0</color>";
 						}else{
 							str = "<color=red>" + (-num).ToString() + "</color>";
 						}
@@ -183,6 +182,22 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		}
 	}
 
+	void refreshView(){
+		for (int i = 0; i < partsQty.Length; ++i){
+			var num = partsQty[i];
+				string str;
+				if(num > 0){
+					str = "<color=blue>" + (num).ToString() + "</color>";
+				}else if(num == 0){
+					str = "<color=grey>0</color>";
+				}else{
+					str = "<color=red>" + (-num).ToString() + "</color>";
+				}
+			textObj[i].text = str;
+
+		}
+	}
+
 	public static void ResetAndAddBlocks(int block1, int block2, int block3, int block4, int block5, int block6){
 		instance.partsQty[0] = block1;
 		instance.partsQty[1] = block2;
@@ -190,5 +205,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		instance.partsQty[3] = block4;
 		instance.partsQty[4] = block5;
 		instance.partsQty[5] = block6;
+
+		instance.refreshView();
 	}
 }

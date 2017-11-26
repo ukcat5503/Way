@@ -42,8 +42,6 @@ public class StartPoint : MonoBehaviour {
 			var target = currentObj.transform.localScale.x + 0.08f;
 			float scale = (target >= targetSize ? targetSize : currentObj.transform.localScale.x + 0.08f);
 
-			"dasadsdasdsaads".Log();
-			
 			currentObj.transform.localScale = new Vector3(scale, scale, scale);
 			if(targetPosY < currentObj.transform.position.y){
 				playingAnimation = false;
