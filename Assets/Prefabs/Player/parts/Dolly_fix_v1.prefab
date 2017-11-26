@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4164146307561038}
   m_Layer: 0
-  m_Name: Dolly_fix
+  m_Name: Dolly_fix_v1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

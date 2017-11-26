@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4336356114255060}
   - component: {fileID: 33994511847897348}
   - component: {fileID: 23477048527309762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4826610402629860}
   - component: {fileID: 95293785286535178}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rider_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 33381863689681920}
   - component: {fileID: 23739770776266338}
   - component: {fileID: 95504529679830844}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torokko_Wheel_TopLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4543273342386904}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4475228300122310}
   - component: {fileID: 95046352215603738}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torokko_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 65929410666357028}
   - component: {fileID: 54082008496537200}
   - component: {fileID: 114628230758703442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player_v1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4712483845066828}
   - component: {fileID: 95411429092198694}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rider_Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 4918805118791688}
   - component: {fileID: 33846968999690346}
   - component: {fileID: 23878109634006956}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 4433498101225794}
   - component: {fileID: 33369504189107036}
   - component: {fileID: 23069303878092318}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4912803862917640}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rider_fix_v1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 33580888071550204}
   - component: {fileID: 23698954874260784}
   - component: {fileID: 95148784781053428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torokko_Wheel_BackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 4368683771293922}
   - component: {fileID: 33076187343712074}
   - component: {fileID: 23544205288051364}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4322395697880290}
   - component: {fileID: 95190703413868350}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torokko_Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 4822757878672486}
   - component: {fileID: 33465060369089726}
   - component: {fileID: 23584685446187234}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4200853871950392}
   - component: {fileID: 95392614823441430}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rider_Gear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 4058254174293156}
   - component: {fileID: 33786842885581570}
   - component: {fileID: 23743321064187924}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 4078323811564462}
   - component: {fileID: 33025941981610242}
   - component: {fileID: 23896253358180392}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 33183162268459716}
   - component: {fileID: 23288681442873576}
   - component: {fileID: 95910299008818632}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torokko_Wheel_TopRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 4682280343906474}
   - component: {fileID: 33041590403538630}
   - component: {fileID: 23341346605438266}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 4057637624459794}
   - component: {fileID: 33466329037152794}
   - component: {fileID: 23097802133768542}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 33999365601403190}
   - component: {fileID: 23147943802973824}
   - component: {fileID: 95241125649466928}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Torokko_Wheel_BackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 4589665358139062}
   - component: {fileID: 33194510353878736}
   - component: {fileID: 23166142271218628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 4128392247124996}
   - component: {fileID: 33959543870340532}
   - component: {fileID: 23129196588315806}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4954102011090792}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dolly_fix_v1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 4740210022817170}
   - component: {fileID: 33987229296498264}
   - component: {fileID: 23096266976001830}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1236292113190018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 1.45, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4912803862917640}

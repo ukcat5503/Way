@@ -99,6 +99,8 @@ public class PuzzleManager : MonoBehaviour {
 	public static GameObject CameraObject;
 	public static GameObject HeldBlockSlot;
 
+	Vector3 firstCameraPosition;
+
 	public static int CurrentStage = 0;
 	public const float kMapDepth = 0.5f;
 	public const int kMapWidth = 13;
@@ -132,6 +134,8 @@ public class PuzzleManager : MonoBehaviour {
 		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
 		CoinParticleFlyCoinTarget = GameObject.Find("CoinTargetPoint");
 
+		firstCameraPosition = CameraObject.transform.position;
+
 		initialize();
 
 		// cameraObject.transform.position = new Vector3(map.GetLength(2) / 2f - 0.5f, map.GetLength(0) + 0.5f, map.GetLength(1) / 2f - 0.5f);
@@ -160,7 +164,7 @@ public class PuzzleManager : MonoBehaviour {
 			Destroy(child.gameObject);
 		}
 
-
+		CameraObject.transform.position = firstCameraPosition;
 		CurrentStage = 0;
 
 
