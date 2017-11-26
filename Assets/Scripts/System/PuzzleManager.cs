@@ -149,7 +149,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		if(Input.GetKeyDown(KeyCode.N)){
 			"Stage Skip".Log();
-			Destroy(GameObject.Find("Player(Clone)"));
+			Destroy(GameObject.Find("Player"));
 			NextStage();
 		}
 		if(Input.GetKey(KeyCode.A)){

@@ -69,6 +69,7 @@ public class StartPoint : MonoBehaviour {
 		pos.y += -PuzzleManager.kMapDepth;
 
 		currentObj = Instantiate(PuzzleManager.SphereController, pos, Quaternion.identity) as GameObject;
+		currentObj.name = "Player";
 		currentObj.transform.parent = parentTransform;
 		currentCollider = currentObj.GetComponent<Collider>();
 		currentRigidbody = currentObj.GetComponent<Rigidbody>();

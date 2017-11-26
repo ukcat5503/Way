@@ -199,6 +199,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	}
 
 	public static void ResetAndAddBlocks(int block1, int block2, int block3, int block4, int block5, int block6){
+		Destroy(instance.ghostObject);
+
 		instance.partsQty[0] = block1;
 		instance.partsQty[1] = block2;
 		instance.partsQty[2] = block3;
