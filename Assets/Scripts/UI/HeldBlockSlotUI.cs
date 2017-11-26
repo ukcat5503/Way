@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeldBlockSlotUI : MonoBehaviour {
 
@@ -24,14 +25,21 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	Vector3 ghostPos;
 
 	[SerializeField]
-	GameObject block;
+	Sprite[] heldObjSprite;
+	[SerializeField]
+	GameObject[] heldObject;
 
 	[SerializeField]
 	LayerMask targetLayer;
 
+	public int[] partsQty;
+	Text[] textObj;
+
 	void Start () {
 		SlotObject = new RectTransform[slotLength];
 		buttonPosition = new Rect[slotLength];
+		partsQty = new int[slotLength];
+		textObj = new Text[slotLength];
 
 		var length = SlotObject.Length;
 		for (int i = 0; i < length; ++i){
@@ -39,8 +47,12 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			SlotObject[i].SetParent(transform, false);
 			SlotObject[i].transform.name = "BlockSlot " + i;
 			buttonPosition[i] = new Rect(basePosition.x + (positionMargin.x * i), basePosition.y + (positionMargin.y * i), slotSize.x, slotSize.y);
+			
+			SlotObject[i].Find("BlockImage").GetComponent<Image>().sprite = heldObjSprite[i];
+			textObj[i] = SlotObject[i].Find("BlockQty").GetComponent<Text>();
+			textObj[i].text = "88";
 
-			if (true)
+			if (false)
 			{
 				var obj = (Instantiate(rect, new Vector3(buttonPosition[i].x, buttonPosition[i].y, 0), Quaternion.identity) as GameObject).GetComponent<RectTransform>();
 				obj.SetParent(transform.parent);
@@ -64,8 +76,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			var length = buttonPosition.Length;
 			for (int i = 0; i < length; ++i){
 				if (buttonPosition[i].Contains(Input.mousePosition)){
-					ghostObject = Instantiate(block);
-					ghostObject.transform.rotation = block.transform.rotation;
+					ghostObject = Instantiate(heldObject[i]);
+					ghostObject.transform.rotation = heldObject[i].transform.rotation;
 					ghostObject.name = "Ghost Block [" + i + "]";
 					ghostObject.transform.position = ghostPos;
 					ghostObject.layer = 0;

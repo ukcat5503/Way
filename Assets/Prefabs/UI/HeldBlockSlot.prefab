@@ -44,10 +44,24 @@ MonoBehaviour:
   slotSize: {x: 300, y: 130}
   positionMargin: {x: 0, y: -150}
   rect: {fileID: 1731704454271012, guid: a4ba34ee04ba3504182df7a536e6385f, type: 2}
-  block: {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
+  heldObjSprite:
+  - {fileID: 21300000, guid: 74aff0d85b6d04deb9967fd1e6138d8f, type: 3}
+  - {fileID: 21300000, guid: 7b850ef1c6db54d89adb2d4a2d96e684, type: 3}
+  - {fileID: 21300000, guid: c345699b9e3ce42818601f9b79e03390, type: 3}
+  - {fileID: 21300000, guid: d4ec3d186c975448ebfe9909d9f8e5aa, type: 3}
+  - {fileID: 21300000, guid: 12cdb451636894f5cb3ea6336e43fd0c, type: 3}
+  - {fileID: 21300000, guid: 6d380b00891db4fb2bc867aa81a7829d, type: 3}
+  heldObject:
+  - {fileID: 1736556676383748, guid: 6c565265caa4f49d8a007044f53deb9b, type: 2}
+  - {fileID: 1694468382313230, guid: 046cce75a6f044110882ffa1772c88ec, type: 2}
+  - {fileID: 1716180903677676, guid: dbd6468e2a8364babbf1aa811fdd8f4c, type: 2}
+  - {fileID: 1270915283572390, guid: b621b4004be06454eaf56f98c16f8c32, type: 2}
+  - {fileID: 1277271557334330, guid: 3a3065b28e3074b0b95ac1d51dd07c05, type: 2}
+  - {fileID: 1136729095702824, guid: 1a45d55f65841455e9ea4b8dda19d739, type: 2}
   targetLayer:
     serializedVersion: 2
     m_Bits: 512
+  partsQty: 
 --- !u!224 &224412579305533596
 RectTransform:
   m_ObjectHideFlags: 1
