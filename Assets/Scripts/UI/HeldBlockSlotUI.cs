@@ -7,21 +7,6 @@ public class HeldBlockSlotUI : MonoBehaviour {
 
 	static HeldBlockSlotUI instance;
 
-	RectTransform[] SlotObject;
-
-	[SerializeField]
-	int slotLength;
-	[SerializeField]
-	GameObject slotPrefab;
-
-	[SerializeField]
-	Vector2 basePosition, slotSize, positionMargin;
-
-	Rect[] buttonPosition;
-
-	[SerializeField]
-	GameObject rect;
-
 	// ドラッグ時の幻影
 	GameObject ghostObject = null;
 	Vector3 ghostPos;
@@ -40,38 +25,11 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	[SerializeField]
 	LayerMask targetLayer;
 
-	public int[] partsQty;
-	Text[] textObj;
-
-	
 
 	void Awake () {
 		instance = this;
-		SlotObject = new RectTransform[slotLength];
-		buttonPosition = new Rect[slotLength];
-		partsQty = new int[slotLength];
-		textObj = new Text[slotLength];
 		cursorGuideObject = Instantiate(cursorGuideObject) as GameObject;
 		cursorGuideMeshRenderer = cursorGuideObject.GetComponentInChildren<MeshRenderer>();
-
-		var length = SlotObject.Length;
-		for (int i = 0; i < length; ++i){
-			SlotObject[i] = (Instantiate(slotPrefab, new Vector3(60f, -110f + -(i * 150), 0), Quaternion.identity) as GameObject).GetComponent<RectTransform>();
-			SlotObject[i].SetParent(transform, false);
-			SlotObject[i].transform.name = "BlockSlot " + i;
-			buttonPosition[i] = new Rect(basePosition.x + (positionMargin.x * i), basePosition.y + (positionMargin.y * i), slotSize.x, slotSize.y);
-			
-			SlotObject[i].Find("BlockImage").GetComponent<Image>().sprite = heldObjSprite[i];
-			textObj[i] = SlotObject[i].Find("BlockQty").GetComponent<Text>();
-			textObj[i].text = "<color=grey>0</color>";
-
-			if (false)
-			{
-				var obj = (Instantiate(rect, new Vector3(buttonPosition[i].x, buttonPosition[i].y, 0), Quaternion.identity) as GameObject).GetComponent<RectTransform>();
-				obj.SetParent(transform.parent);
-				obj.sizeDelta = new Vector2(slotSize.x, slotSize.y);
-			}
-		}
 	}
 	
 	void Update () {
@@ -99,8 +57,10 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			Cursor.visible = true;
 		}
 
+
 		// 最初にUIクリック
 		if(Input.GetMouseButtonDown(0) && ghostObject == null){
+			/*
 			ghostPos = screenToWorldPointPosition;
 			var length = buttonPosition.Length;
 			for (int i = 0; i < length; ++i){
@@ -114,6 +74,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 					break;
 				}
 			}
+			 */
 		}
 
 		// ドラッグ 位置更新
@@ -140,6 +101,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		
 		// 置く判定
 		if(Input.GetMouseButtonUp(0) && ghostObject != null){
+			/*
 			if(ghostObject != null){
 				var pos = new Vector3(
 					(int)(ghostPos.x + 0.5f),
@@ -185,7 +147,6 @@ public class HeldBlockSlotUI : MonoBehaviour {
 						targetPos = pos;
 						//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
 						targetLocalPos = targetPos - transform.position;
-						*/
 						ghostObject.layer = LayerMask.NameToLayer("Block");
 						ghostObject = null;
 					}else{
@@ -196,36 +157,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				}
 				// Destroy(ghostObject);
 				ghostObject = null;
-			}	
+			}
+			*/	
 		}
-	}
-
-	void refreshView(){
-		for (int i = 0; i < partsQty.Length; ++i){
-			var num = partsQty[i];
-				string str;
-				if(num > 0){
-					str = "<color=blue>" + (num).ToString() + "</color>";
-				}else if(num == 0){
-					str = "<color=grey>0</color>";
-				}else{
-					str = "<color=red>" + (-num).ToString() + "</color>";
-				}
-			textObj[i].text = str;
-
-		}
-	}
-
-	public static void ResetAndAddBlocks(int block1, int block2, int block3, int block4, int block5, int block6){
-		Destroy(instance.ghostObject);
-
-		instance.partsQty[0] = block1;
-		instance.partsQty[1] = block2;
-		instance.partsQty[2] = block3;
-		instance.partsQty[3] = block4;
-		instance.partsQty[4] = block5;
-		instance.partsQty[5] = block6;
-
-		instance.refreshView();
 	}
 }

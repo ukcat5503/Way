@@ -7,13 +7,11 @@ public class PuzzleManager : MonoBehaviour {
 		public int[,] Map { get; private set; }
 		public List<ObjectInfo> Objects { get; private set; }
 		public List<CoinObjectInfo> Coins { get; private set; }
-		public int[] HeldBlocks { get; private set; }
 
 		public StageInfo(int[,] map)
 		{
 			Objects = new List<ObjectInfo>();
 			Coins = new List<CoinObjectInfo>();
-			HeldBlocks = new int[6];
 
 			Map = new int[map.GetLength(0), map.GetLength(1)];
 			for (int z = 0; z < map.GetLength(1); ++z)
@@ -33,15 +31,6 @@ public class PuzzleManager : MonoBehaviour {
 		public void AddCoin(float x, float z, int microCoin)
 		{
 			Coins.Add(new CoinObjectInfo(x, z, microCoin));
-		}
-
-		public void AddHeldBlocks(int block1, int block2, int block3, int block4, int block5, int block6){
-			HeldBlocks[0] = block1;
-			HeldBlocks[1] = block2;
-			HeldBlocks[2] = block3;
-			HeldBlocks[3] = block4;
-			HeldBlocks[4] = block5;
-			HeldBlocks[5] = block6;
 		}
 	}
 
@@ -206,7 +195,6 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(12,6,3);
 		StageData[StageData.Count - 1].AddObject(7,3.5f,12);
-		StageData[StageData.Count - 1].AddHeldBlocks(0,0,0,0,0,0);
 
 
 		map = new int[,]{
@@ -224,7 +212,6 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(2,3,0);
 		StageData[StageData.Count - 1].AddCoin(5,1,100);
-		StageData[StageData.Count - 1].AddHeldBlocks(0,0,0,0,0,0);
 
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -241,7 +228,6 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(9, 5, 2);
 		StageData[StageData.Count - 1].AddCoin(3,4,20);
-		StageData[StageData.Count - 1].AddHeldBlocks(0,0,0,0,1,0);
 
 		map = new int[,]{
 			{ 0,22, 3, 3, 3, 3, 3, 3,23, 0, 0, 0, 0},
@@ -257,7 +243,6 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(1, 2, 0);
-		StageData[StageData.Count - 1].AddHeldBlocks(1,0,0,1,0,0);
 		
 		/*
 		map = new int[,]{
@@ -361,15 +346,6 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(4, 7, 2);
  		*/
 		
-		HeldBlockSlotUI.ResetAndAddBlocks(
-			StageData[0].HeldBlocks[0],
-			StageData[0].HeldBlocks[1],
-			StageData[0].HeldBlocks[2],
-			StageData[0].HeldBlocks[3],
-			StageData[0].HeldBlocks[4],
-			StageData[0].HeldBlocks[5]
-		);
-
 		var height = 0;
 		foreach (var item in StageData)
 		{
@@ -425,14 +401,6 @@ public class PuzzleManager : MonoBehaviour {
 		
 		if(StageObject.Count > CurrentStage){
 			StageObject[CurrentStage].SetActive(true);
-			HeldBlockSlotUI.ResetAndAddBlocks(
-				StageData[CurrentStage].HeldBlocks[0],
-				StageData[CurrentStage].HeldBlocks[1],
-				StageData[CurrentStage].HeldBlocks[2],
-				StageData[CurrentStage].HeldBlocks[3],
-				StageData[CurrentStage].HeldBlocks[4],
-				StageData[CurrentStage].HeldBlocks[5]
-			);
 		}else{
 			"AllClear!".Log();
 		}
