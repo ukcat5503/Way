@@ -27,6 +27,11 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	Vector3 ghostPos;
 	int currentObjNumber;
 
+	// カーソル位置のガイド
+	[SerializeField]
+	GameObject cursorGuideObject;
+	MeshRenderer cursorGuideMeshRenderer;
+
 	[SerializeField]
 	Sprite[] heldObjSprite;
 	[SerializeField]
@@ -38,12 +43,16 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	public int[] partsQty;
 	Text[] textObj;
 
+	
+
 	void Awake () {
 		instance = this;
 		SlotObject = new RectTransform[slotLength];
 		buttonPosition = new Rect[slotLength];
 		partsQty = new int[slotLength];
 		textObj = new Text[slotLength];
+		cursorGuideObject = Instantiate(cursorGuideObject) as GameObject;
+		cursorGuideMeshRenderer = cursorGuideObject.GetComponentInChildren<MeshRenderer>();
 
 		var length = SlotObject.Length;
 		for (int i = 0; i < length; ++i){
@@ -66,16 +75,32 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	}
 	
 	void Update () {
+		// マウス位置演算
+		var position = Input.mousePosition;
+		position.z = 10f;
+		var screenToWorldPointPosition = Camera.main.ScreenToWorldPoint(position);
+
+		var mouseWorldPosition = new Vector3(
+			(int)(screenToWorldPointPosition.x + 0.5f),
+			-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
+			((int)(screenToWorldPointPosition.z + 0.5f )) + 0.25f
+		);
+
+		var mouseLocalPosition = new Vector3(
+			(int)(screenToWorldPointPosition.x + 0.5f),
+			PuzzleManager.CurrentStage,
+			(10 - (int)screenToWorldPointPosition.z + 0.5f)
+		);
+		if(mouseLocalPosition.x >= 0 && mouseLocalPosition.x < PuzzleManager.kMapWidth && mouseLocalPosition.z >= 0 && mouseLocalPosition.z < PuzzleManager.kMapHeight ){
+			cursorGuideObject.transform.position = mouseWorldPosition;
+			Cursor.visible = false;
+		}else{
+			cursorGuideObject.transform.position = new Vector3(-50f, -50f, -50f);
+			Cursor.visible = true;
+		}
 
 		// 最初にUIクリック
 		if(Input.GetMouseButtonDown(0) && ghostObject == null){
-			// Vector3でマウス位置座標を取得する
-			var position = Input.mousePosition;
-			// Z軸修正
-			position.z = 10f;
-			// マウス位置座標をスクリーン座標からワールド座標に変換する
-			var screenToWorldPointPosition = Camera.main.ScreenToWorldPoint(position);
-			// ワールド座標に変換されたマウス座標を代入
 			ghostPos = screenToWorldPointPosition;
 			var length = buttonPosition.Length;
 			for (int i = 0; i < length; ++i){
@@ -93,13 +118,6 @@ public class HeldBlockSlotUI : MonoBehaviour {
 
 		// ドラッグ 位置更新
 		if(Input.GetMouseButton(0) && ghostObject != null){
-			// Vector3でマウス位置座標を取得する
-			var position = Input.mousePosition;
-			// Z軸修正
-			position.z = 10f;
-			// マウス位置座標をスクリーン座標からワールド座標に変換する
-			var screenToWorldPointPosition = Camera.main.ScreenToWorldPoint(position);
-			// ワールド座標に変換されたマウス座標を代入
 			ghostPos = screenToWorldPointPosition;
 
 			// ghostObject.transform.position = ghostPos;

@@ -44,6 +44,8 @@ MonoBehaviour:
   slotSize: {x: 280, y: 130}
   positionMargin: {x: 0, y: -150}
   rect: {fileID: 1731704454271012, guid: a4ba34ee04ba3504182df7a536e6385f, type: 2}
+  cursorGuideObject: {fileID: 1511084491060424, guid: c8b554435b9664412b85f3bcfc5a3ca5,
+    type: 2}
   heldObjSprite:
   - {fileID: 21300000, guid: 74aff0d85b6d04deb9967fd1e6138d8f, type: 3}
   - {fileID: 21300000, guid: 7b850ef1c6db54d89adb2d4a2d96e684, type: 3}
