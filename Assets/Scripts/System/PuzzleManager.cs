@@ -94,7 +94,7 @@ public class PuzzleManager : MonoBehaviour {
 
 	public static int CurrentStage = 0;
 	public const float kMapDepth = 0.5f;
-	public const int kMapWidth = 13;
+	public const int kMapWidth = 15;
 	public const int kMapHeight = 10;
 
 	// スコア
@@ -164,6 +164,20 @@ public class PuzzleManager : MonoBehaviour {
 		StageData = new List<StageInfo>();
 		StageObject = new List<GameObject>();
 
+		map = new int[,]{
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+		};
+		StageData.Add(new StageInfo(map));
+
 		/*
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -179,7 +193,6 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddHeldBlocks(0,1,2,3,4,5);
-		*/
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -195,7 +208,6 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(12,6,3);
 		StageData[StageData.Count - 1].AddObject(7,3.5f,12);
-
 
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -244,7 +256,6 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(1, 2, 0);
 		
-		/*
 		map = new int[,]{
 			{ 0, 0, 0, 0,22, 3, 3, 2, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
