@@ -96,140 +96,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			}
 
 		}else if(animationCurrentFrame++ <= kAnimationFrame){
-			if(upToAnimation){
-
-				if(animationCurrentFrame == kAnimationFrame){
-				var length = imageRectTranTransforms.Length;
-				for (int i = 0; i < length; ++i){
-					imageRectTranTransforms[i].localPosition = imageBasePosition[i];
-					imageRectTranTransforms[i].sizeDelta = imageBaseScale[i];
-					images[i].color = new Color(images[i].color.r, images[i].color.g, images[i].color.b, 1f);
-					images[i].sprite = heldObjSprite[calcFixedIndex(currentObj + i - 2)];
-					}
-				}else{
-					// 1 → 0
-					imageRectTranTransforms[1].transform.position = new Vector3(
-						imageRectTranTransforms[1].transform.position.x,
-						imageRectTranTransforms[1].transform.position.y + 90 / kAnimationFrame,
-						imageRectTranTransforms[1].transform.position.z
-					);
-					imageRectTranTransforms[1].sizeDelta = new Vector2(
-						imageRectTranTransforms[1].sizeDelta.x - 40 / kAnimationFrame ,
-						imageRectTranTransforms[1].sizeDelta.y - 40 / kAnimationFrame
-					);
-				
-					// 2 → 1
-					imageRectTranTransforms[2].transform.position = new Vector3(
-						imageRectTranTransforms[2].transform.position.x,
-						imageRectTranTransforms[2].transform.position.y + 130 / kAnimationFrame,
-						imageRectTranTransforms[2].transform.position.z
-					);
-					imageRectTranTransforms[2].sizeDelta = new Vector2(
-						imageRectTranTransforms[2].sizeDelta.x - 50 / kAnimationFrame,
-						imageRectTranTransforms[2].sizeDelta.y - 50 / kAnimationFrame
-					);
-
-					// 3 → 2
-					imageRectTranTransforms[3].transform.position = new Vector3(
-						imageRectTranTransforms[3].transform.position.x,
-						imageRectTranTransforms[3].transform.position.y + 130 / kAnimationFrame,
-						imageRectTranTransforms[3].transform.position.z
-					);
-					imageRectTranTransforms[3].sizeDelta = new Vector2(
-						imageRectTranTransforms[3].sizeDelta.x + 50 / kAnimationFrame,
-						imageRectTranTransforms[3].sizeDelta.y + 50 / kAnimationFrame
-					);
-
-					// 4 → 3
-					imageRectTranTransforms[4].transform.position = new Vector3(
-						imageRectTranTransforms[4].transform.position.x,
-						imageRectTranTransforms[4].transform.position.y + 90 / kAnimationFrame,
-						imageRectTranTransforms[4].transform.position.z
-					);
-					imageRectTranTransforms[4].sizeDelta = new Vector2(
-						imageRectTranTransforms[4].sizeDelta.x + 40 / kAnimationFrame,
-						imageRectTranTransforms[4].sizeDelta.y + 40 / kAnimationFrame
-					);
-
-					if(animationCurrentFrame <= kAnimationFrame / 2){
-						// 0を徐々に消す
-						images[0].color = new Color(images[0].color.r, images[0].color.g, images[0].color.b, images[0].color.a - images[0].color.a / (kAnimationFrame / 2));
-
-						if(animationCurrentFrame == kAnimationFrame / 2){
-							imageRectTranTransforms[0].localPosition = imageBasePosition[4];
-							images[0].sprite = heldObjSprite[calcFixedIndex(currentObj + 2)];
-						}
-					}else{
-						images[0].color = new Color(images[0].color.r, images[0].color.g, images[0].color.b, images[0].color.a + images[0].color.a / (kAnimationFrame / 2));
-					}
-				}
-			}else{
-				if(animationCurrentFrame == kAnimationFrame){
-				var length = imageRectTranTransforms.Length;
-				for (int i = 0; i < length; ++i){
-					imageRectTranTransforms[i].localPosition = imageBasePosition[i];
-					imageRectTranTransforms[i].sizeDelta = imageBaseScale[i];
-					images[i].color = new Color(images[i].color.r, images[i].color.g, images[i].color.b, 1f);
-					images[i].sprite = heldObjSprite[calcFixedIndex(currentObj + i - 2)];
-					}
-				}else{
-					// 0 → 1
-					imageRectTranTransforms[0].transform.position = new Vector3(
-						imageRectTranTransforms[0].transform.position.x,
-						imageRectTranTransforms[0].transform.position.y - 90 / kAnimationFrame,
-						imageRectTranTransforms[0].transform.position.z
-					);
-					imageRectTranTransforms[0].sizeDelta = new Vector2(
-						imageRectTranTransforms[0].sizeDelta.x + 40 / kAnimationFrame ,
-						imageRectTranTransforms[0].sizeDelta.y + 40 / kAnimationFrame
-					);
-				
-					// 1 → 2
-					imageRectTranTransforms[1].transform.position = new Vector3(
-						imageRectTranTransforms[1].transform.position.x,
-						imageRectTranTransforms[1].transform.position.y - 130 / kAnimationFrame,
-						imageRectTranTransforms[1].transform.position.z
-					);
-					imageRectTranTransforms[1].sizeDelta = new Vector2(
-						imageRectTranTransforms[1].sizeDelta.x + 50 / kAnimationFrame,
-						imageRectTranTransforms[1].sizeDelta.y + 50 / kAnimationFrame
-					);
-
-					// 2 → 3
-					imageRectTranTransforms[2].transform.position = new Vector3(
-						imageRectTranTransforms[2].transform.position.x,
-						imageRectTranTransforms[2].transform.position.y - 130 / kAnimationFrame,
-						imageRectTranTransforms[2].transform.position.z
-					);
-					imageRectTranTransforms[2].sizeDelta = new Vector2(
-						imageRectTranTransforms[2].sizeDelta.x - 50 / kAnimationFrame,
-						imageRectTranTransforms[2].sizeDelta.y - 50 / kAnimationFrame
-					);
-
-					// 3 → 4
-					imageRectTranTransforms[3].transform.position = new Vector3(
-						imageRectTranTransforms[3].transform.position.x,
-						imageRectTranTransforms[3].transform.position.y - 90 / kAnimationFrame,
-						imageRectTranTransforms[3].transform.position.z
-					);
-					imageRectTranTransforms[3].sizeDelta = new Vector2(
-						imageRectTranTransforms[3].sizeDelta.x - 40 / kAnimationFrame,
-						imageRectTranTransforms[3].sizeDelta.y - 40 / kAnimationFrame
-					);
-
-					if(animationCurrentFrame <= kAnimationFrame / 2){
-						// 4を徐々に消す
-						images[4].color = new Color(images[4].color.r, images[4].color.g, images[4].color.b, images[4].color.a - images[4].color.a / (kAnimationFrame / 2));
-
-						if(animationCurrentFrame == kAnimationFrame / 2){
-							imageRectTranTransforms[4].localPosition = imageBasePosition[0];
-							images[4].sprite = heldObjSprite[calcFixedIndex(currentObj - 2)];
-						}
-					}else{
-						images[4].color = new Color(images[4].color.r, images[4].color.g, images[4].color.b, images[4].color.a + images[4].color.a / (kAnimationFrame / 2));
-					}
-				}
-			}
+			playAnimation();
+			
 		}else{
 			wheelValue += Input.GetAxis("Mouse ScrollWheel");
 			if(wheelValue > kWheelSensitivity){
@@ -287,5 +155,141 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		 localPos.x < PuzzleManager.kMapWidth &&
 		 localPos.z >= 0 &&
 		 localPos.z < PuzzleManager.kMapHeight;
+	}
+
+	void playAnimation(){
+		if(upToAnimation){
+			if(animationCurrentFrame == kAnimationFrame){
+			var length = imageRectTranTransforms.Length;
+			for (int i = 0; i < length; ++i){
+				imageRectTranTransforms[i].localPosition = imageBasePosition[i];
+				imageRectTranTransforms[i].sizeDelta = imageBaseScale[i];
+				images[i].color = new Color(images[i].color.r, images[i].color.g, images[i].color.b, 1f);
+				images[i].sprite = heldObjSprite[calcFixedIndex(currentObj + i - 2)];
+				}
+			}else{
+				// 1 → 0
+				imageRectTranTransforms[1].transform.position = new Vector3(
+					imageRectTranTransforms[1].transform.position.x,
+					imageRectTranTransforms[1].transform.position.y + 90 / kAnimationFrame,
+					imageRectTranTransforms[1].transform.position.z
+				);
+				imageRectTranTransforms[1].sizeDelta = new Vector2(
+					imageRectTranTransforms[1].sizeDelta.x - 40 / kAnimationFrame ,
+					imageRectTranTransforms[1].sizeDelta.y - 40 / kAnimationFrame
+				);
+			
+				// 2 → 1
+				imageRectTranTransforms[2].transform.position = new Vector3(
+					imageRectTranTransforms[2].transform.position.x,
+					imageRectTranTransforms[2].transform.position.y + 130 / kAnimationFrame,
+					imageRectTranTransforms[2].transform.position.z
+				);
+				imageRectTranTransforms[2].sizeDelta = new Vector2(
+					imageRectTranTransforms[2].sizeDelta.x - 50 / kAnimationFrame,
+					imageRectTranTransforms[2].sizeDelta.y - 50 / kAnimationFrame
+				);
+
+				// 3 → 2
+				imageRectTranTransforms[3].transform.position = new Vector3(
+					imageRectTranTransforms[3].transform.position.x,
+					imageRectTranTransforms[3].transform.position.y + 130 / kAnimationFrame,
+					imageRectTranTransforms[3].transform.position.z
+				);
+				imageRectTranTransforms[3].sizeDelta = new Vector2(
+					imageRectTranTransforms[3].sizeDelta.x + 50 / kAnimationFrame,
+					imageRectTranTransforms[3].sizeDelta.y + 50 / kAnimationFrame
+				);
+
+				// 4 → 3
+				imageRectTranTransforms[4].transform.position = new Vector3(
+					imageRectTranTransforms[4].transform.position.x,
+					imageRectTranTransforms[4].transform.position.y + 90 / kAnimationFrame,
+					imageRectTranTransforms[4].transform.position.z
+				);
+				imageRectTranTransforms[4].sizeDelta = new Vector2(
+					imageRectTranTransforms[4].sizeDelta.x + 40 / kAnimationFrame,
+					imageRectTranTransforms[4].sizeDelta.y + 40 / kAnimationFrame
+				);
+
+				if(animationCurrentFrame <= kAnimationFrame / 2){
+					// 0を徐々に消す
+					images[0].color = new Color(images[0].color.r, images[0].color.g, images[0].color.b, images[0].color.a - images[0].color.a / (kAnimationFrame / 2));
+
+					if(animationCurrentFrame == kAnimationFrame / 2){
+						imageRectTranTransforms[0].localPosition = imageBasePosition[4];
+						images[0].sprite = heldObjSprite[calcFixedIndex(currentObj + 2)];
+					}
+				}else{
+					images[0].color = new Color(images[0].color.r, images[0].color.g, images[0].color.b, images[0].color.a + images[0].color.a / (kAnimationFrame / 2));
+				}
+			}
+		}else{
+			if(animationCurrentFrame == kAnimationFrame){
+			var length = imageRectTranTransforms.Length;
+			for (int i = 0; i < length; ++i){
+				imageRectTranTransforms[i].localPosition = imageBasePosition[i];
+				imageRectTranTransforms[i].sizeDelta = imageBaseScale[i];
+				images[i].color = new Color(images[i].color.r, images[i].color.g, images[i].color.b, 1f);
+				images[i].sprite = heldObjSprite[calcFixedIndex(currentObj + i - 2)];
+				}
+			}else{
+				// 0 → 1
+				imageRectTranTransforms[0].transform.position = new Vector3(
+					imageRectTranTransforms[0].transform.position.x,
+					imageRectTranTransforms[0].transform.position.y - 90 / kAnimationFrame,
+					imageRectTranTransforms[0].transform.position.z
+				);
+				imageRectTranTransforms[0].sizeDelta = new Vector2(
+					imageRectTranTransforms[0].sizeDelta.x + 40 / kAnimationFrame ,
+					imageRectTranTransforms[0].sizeDelta.y + 40 / kAnimationFrame
+				);
+			
+				// 1 → 2
+				imageRectTranTransforms[1].transform.position = new Vector3(
+					imageRectTranTransforms[1].transform.position.x,
+					imageRectTranTransforms[1].transform.position.y - 130 / kAnimationFrame,
+					imageRectTranTransforms[1].transform.position.z
+				);
+				imageRectTranTransforms[1].sizeDelta = new Vector2(
+					imageRectTranTransforms[1].sizeDelta.x + 50 / kAnimationFrame,
+					imageRectTranTransforms[1].sizeDelta.y + 50 / kAnimationFrame
+				);
+
+				// 2 → 3
+				imageRectTranTransforms[2].transform.position = new Vector3(
+					imageRectTranTransforms[2].transform.position.x,
+					imageRectTranTransforms[2].transform.position.y - 130 / kAnimationFrame,
+					imageRectTranTransforms[2].transform.position.z
+				);
+				imageRectTranTransforms[2].sizeDelta = new Vector2(
+					imageRectTranTransforms[2].sizeDelta.x - 50 / kAnimationFrame,
+					imageRectTranTransforms[2].sizeDelta.y - 50 / kAnimationFrame
+				);
+
+				// 3 → 4
+				imageRectTranTransforms[3].transform.position = new Vector3(
+					imageRectTranTransforms[3].transform.position.x,
+					imageRectTranTransforms[3].transform.position.y - 90 / kAnimationFrame,
+					imageRectTranTransforms[3].transform.position.z
+				);
+				imageRectTranTransforms[3].sizeDelta = new Vector2(
+					imageRectTranTransforms[3].sizeDelta.x - 40 / kAnimationFrame,
+					imageRectTranTransforms[3].sizeDelta.y - 40 / kAnimationFrame
+				);
+
+				if(animationCurrentFrame <= kAnimationFrame / 2){
+					// 4を徐々に消す
+					images[4].color = new Color(images[4].color.r, images[4].color.g, images[4].color.b, images[4].color.a - images[4].color.a / (kAnimationFrame / 2));
+
+					if(animationCurrentFrame == kAnimationFrame / 2){
+						imageRectTranTransforms[4].localPosition = imageBasePosition[0];
+						images[4].sprite = heldObjSprite[calcFixedIndex(currentObj - 2)];
+					}
+				}else{
+					images[4].color = new Color(images[4].color.r, images[4].color.g, images[4].color.b, images[4].color.a + images[4].color.a / (kAnimationFrame / 2));
+				}
+			}
+		}
 	}
 }
