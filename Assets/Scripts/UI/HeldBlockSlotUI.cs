@@ -22,7 +22,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	// 選択中のブロック情報
 	bool isPicking;
 	int currentObj;
-	Vector3 pickingObject;
+	Vector3 pickingObjectWorldPos;
 
 	// ブロックのホイール
 	Image imageTop2, imageTop1, image0, imageUnder1, imageUnder2;
@@ -100,15 +100,19 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0) && !isPicking){
 			isPicking = true;
 			cursorGuideMeshRenderer.material.color = pickingStateColor;
-			pickingObject = mouseWorldPosition;
+			pickingObjectWorldPos = mouseWorldPosition;
 
 			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
 		}else if(Input.GetMouseButtonDown(0) && isPicking){
 			isPicking = false;
 			cursorGuideMeshRenderer.material.color = normalStateColor;
 
-
-			var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObject, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
+			var objs = Physics.OverlapSphere(pickingObjectWorldPos, 0.05f, targetLayer);
+			var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
+			if(objs.Length == 0 && parentObj){
+				var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
+				obj.transform.parent = parentObj.transform;
+			}
 
 			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 
