@@ -49,7 +49,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			PuzzleManager.CurrentStage,
 			(10 - (int)screenToWorldPointPosition.z + 0.5f)
 		);
-		if(mouseLocalPosition.x >= 0 && mouseLocalPosition.x < PuzzleManager.kMapWidth && mouseLocalPosition.z >= 0 && mouseLocalPosition.z < PuzzleManager.kMapHeight ){
+		
+		if(isContainLocalMap(mouseLocalPosition)){
 			cursorGuideObject.transform.position = mouseWorldPosition;
 			Cursor.visible = false;
 		}else{
@@ -160,5 +161,12 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			}
 			*/	
 		}
+	}
+
+	bool isContainLocalMap(Vector3 localPos){
+		return localPos.x >= 0 &&
+		 localPos.x < PuzzleManager.kMapWidth &&
+		 localPos.z >= 0 &&
+		 localPos.z < PuzzleManager.kMapHeight;
 	}
 }
