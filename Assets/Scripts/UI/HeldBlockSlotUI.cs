@@ -115,14 +115,16 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			}
 
 			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
-
-			
+		}else if(Input.GetMouseButtonDown(1) && isPicking){
+			isPicking = false;
+			cursorGuideMeshRenderer.material.color = normalStateColor;
+			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 		}
 	}
 
 	void wheelScrollImage(bool isMoveUp = false){
-		if(isMoveUp)	++currentObj;
-		else			--currentObj;
+		if(isMoveUp)	--currentObj;
+		else			++currentObj;
 
 		imageTop2.sprite = heldObjSprite[calcFixedIndex(currentObj - 2)];
 		imageTop1.sprite = heldObjSprite[calcFixedIndex(currentObj - 1)];
