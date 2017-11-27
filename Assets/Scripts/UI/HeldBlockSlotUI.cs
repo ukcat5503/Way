@@ -16,8 +16,14 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	[SerializeField]
 	GameObject cursorGuideObject;
 	MeshRenderer cursorGuideMeshRenderer;
-
 	[SerializeField]
+	Color normalStateColor, pickingStateColor;
+
+	// 選択中のブロック情報
+	Vector2 pickingWorldPos;
+	bool isPicking;
+
+	[Space(8), SerializeField]
 	Sprite[] heldObjSprite;
 	[SerializeField]
 	GameObject[] heldObject;
@@ -30,6 +36,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		instance = this;
 		cursorGuideObject = Instantiate(cursorGuideObject) as GameObject;
 		cursorGuideMeshRenderer = cursorGuideObject.GetComponentInChildren<MeshRenderer>();
+		cursorGuideMeshRenderer.material.color = normalStateColor;
 	}
 	
 	void Update () {
@@ -49,117 +56,25 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			PuzzleManager.CurrentStage,
 			(10 - (int)screenToWorldPointPosition.z + 0.5f)
 		);
-		
-		if(isContainLocalMap(mouseLocalPosition)){
-			cursorGuideObject.transform.position = mouseWorldPosition;
-			Cursor.visible = false;
-		}else{
-			cursorGuideObject.transform.position = new Vector3(-50f, -50f, -50f);
-			Cursor.visible = true;
-		}
 
+		if(!isPicking){
+			if(isContainLocalMap(mouseLocalPosition)){
+				cursorGuideObject.transform.position = mouseWorldPosition;
+				Cursor.visible = false;
+			}else{
+				cursorGuideObject.transform.position = new Vector3(-50f, -50f, -50f);
+				Cursor.visible = true;
+			}
+		}
 
 		// 最初にUIクリック
-		if(Input.GetMouseButtonDown(0) && ghostObject == null){
-			/*
-			ghostPos = screenToWorldPointPosition;
-			var length = buttonPosition.Length;
-			for (int i = 0; i < length; ++i){
-				if (buttonPosition[i].Contains(Input.mousePosition)){
-					ghostObject = Instantiate(heldObject[i]);
-					ghostObject.transform.rotation = heldObject[i].transform.rotation;
-					ghostObject.name = "Ghost Block [" + i + "]";
-					ghostObject.transform.position = ghostPos;
-					ghostObject.layer = 0;
-					currentObjNumber = i;
-					break;
-				}
-			}
-			 */
-		}
+		if(Input.GetMouseButtonDown(0) && !isPicking){
+			isPicking = true;
+			cursorGuideMeshRenderer.material.color = pickingStateColor;
+		}else if(Input.GetMouseButtonDown(0) && isPicking){
+			isPicking = false;
+			cursorGuideMeshRenderer.material.color = normalStateColor;
 
-		// ドラッグ 位置更新
-		if(Input.GetMouseButton(0) && ghostObject != null){
-			ghostPos = screenToWorldPointPosition;
-
-			// ghostObject.transform.position = ghostPos;
-
-			var pos = new Vector3(
-				(int)(ghostPos.x + 0.5f),
-				-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
-				((int)(ghostPos.z + 0.5f )) + 0.25f
-			);	// ワールド座標
-
-			var mapPos = new Vector3(
-				(int)(ghostPos.x + 0.5f),
-				PuzzleManager.CurrentStage,
-				(10 - (int)ghostPos.z + 0.5f)
-			);	// ローカル座標
-
-			ghostObject.transform.position = pos;
-			("world: " + pos + " local:" + mapPos).Log();
-		}
-		
-		// 置く判定
-		if(Input.GetMouseButtonUp(0) && ghostObject != null){
-			/*
-			if(ghostObject != null){
-				var pos = new Vector3(
-					(int)(ghostPos.x + 0.5f),
-					-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
-					((int)(ghostPos.z + 0.5f )) + 0.25f
-				);	// ワールド座標
-
-				var mapPos = new Vector3(
-					(int)(ghostPos.x + 0.5f),
-					PuzzleManager.CurrentStage,
-					(10 - (int)ghostPos.z + 0.5f)
-				);	// ローカル座標
-				
-				(mapPos + " / " + pos).Log();
-
-				// (mapPos.x + "," + mapPos.z).Log();
-
-				if(mapPos.x >= 0 && mapPos.x < PuzzleManager.kMapWidth && mapPos.z >= 0 && mapPos.z < PuzzleManager.kMapHeight ){
-					var objs = Physics.OverlapSphere(pos, 0.05f, targetLayer);
-					objs.Length.Log();
-					var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
-					if(objs.Length == 0 && parentObj){
-						// (gameObject.name + " → " + mapPos + " [" + pos + "]").Log();
-						("pos: " + pos).Log();
-						ghostObject.transform.position = pos;
-						ghostObject.gameObject.transform.parent = parentObj.transform;
-						
-						var num = --partsQty[currentObjNumber];
-						string str;
-						if(num > 0){
-							str = "<color=blue>" + (num).ToString() + "</color>";
-						}else if(num == 0){
-							str = "<color=grey>0</color>";
-						}else{
-							str = "<color=red>" + (-num).ToString() + "</color>";
-						}
-						textObj[currentObjNumber].text = str;
-
-						/* 
-						// transform.position = objPos;
-						// isAnimating = true;
-						smoothMoveFrame = 0;
-						targetPos = pos;
-						//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
-						targetLocalPos = targetPos - transform.position;
-						ghostObject.layer = LayerMask.NameToLayer("Block");
-						ghostObject = null;
-					}else{
-						Destroy(ghostObject);
-					}
-				}else{
-					Destroy(ghostObject);
-				}
-				// Destroy(ghostObject);
-				ghostObject = null;
-			}
-			*/	
 		}
 	}
 
