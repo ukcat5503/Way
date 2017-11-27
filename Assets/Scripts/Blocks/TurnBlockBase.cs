@@ -297,16 +297,6 @@ public class TurnBlockBase : MonoBehaviour {
 				default:
 				return;
 			}
-			/*
-			if(turnBlockAngle == TurnAngle.TurnLeft){
-				targetAngle = -90f;
-				leftRotate = true;
-			}else if(turnBlockAngle == TurnAngle.TurnRight){
-				targetAngle = 90f;
-			}else if(turnBlockAngle == TurnAngle.TurnFlip){
-				targetAngle = 180f;
-			}
-			*/
 
 			isAnimating = true;
 
@@ -318,6 +308,7 @@ public class TurnBlockBase : MonoBehaviour {
 		}
 	}
 
+	/*
 	public bool ChangeBlock(Vector3 originPos){
 		if(CanMoveFromMouse && !isTouchSphere){
 			// transform.position = originPos;
@@ -329,6 +320,7 @@ public class TurnBlockBase : MonoBehaviour {
 		}
 		return false;
 	}
+	*/
 	
 	virtual protected void OnCollisionEnter(Collision other){
 		isTouchSphere = true;
@@ -353,7 +345,7 @@ public class TurnBlockBase : MonoBehaviour {
 			sphereObjectInfo = null;
 		}
 	}
-
+	/*
 	virtual protected void OnMouseDrag(){
 		if(CanMoveFromMouse){
 			Vector3 objectPointInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
@@ -401,4 +393,6 @@ public class TurnBlockBase : MonoBehaviour {
 		ghostObject = null;
 		}
     }
+	*/
+	
 }
