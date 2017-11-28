@@ -83,7 +83,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		var mouseLocalPosition = new Vector3(
 			(int)(screenToWorldPointPosition.x + 0.5f),
 			PuzzleManager.CurrentStage,
-			(10 - (int)screenToWorldPointPosition.z + 0.5f)
+			(10 - (int)(screenToWorldPointPosition.z + 0.5f))
 		);
 
 		if(!isPicking){
@@ -121,7 +121,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				cursorGuideMeshRenderer.material.color = deleteStateColor;
 
 				// 右クリックでブロック削除
-				if(Input.GetMouseButtonDown(1)){
+				if(Input.GetMouseButton(1)){
 					var length = objs.Length;
 					for (int i = 0; i < length; ++i){
 						Destroy(objs[i].gameObject);
