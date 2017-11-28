@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool IsActive = false;
 
-	const float kSpeedPerSecond = 2.5f;
+	const float kSpeedPerSecond = 5f;
 
 	[SerializeField]
 	float rotateY = 0;
@@ -21,10 +21,8 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update ()
-	{
+	void Update (){
 		if(IsActive){
-
 			var radian = (transform.eulerAngles.y) * Mathf.Deg2Rad;
 			Vector2 vector = new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));
 			transform.position = new Vector3(

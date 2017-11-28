@@ -196,7 +196,7 @@ public class TurnBlockBase : MonoBehaviour {
 				// localPos.Log();
 				// 回転していい位置まで行っていれば回転スタート
 				if((localPos.x >= -kTolerancePotisionToStartRotate && localPos.x < kTolerancePotisionToStartRotate) && (localPos.z >= -kTolerancePotisionToStartRotate && localPos.z < kTolerancePotisionToStartRotate)){
-					sphereObjectInfo.sphere.RotationY(sphereObjectInfo.targetRotate / 10);
+					sphereObjectInfo.sphere.RotationY(sphereObjectInfo.targetRotate / 4);
 				}
 				// sphereObjectInfo.sphere.RotationY(sphereObjectInfo.targetRotate / 17);
 			}
