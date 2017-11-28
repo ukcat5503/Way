@@ -13,6 +13,7 @@ public class StartPoint : MonoBehaviour {
 	PlayerController currentSphereController;
 
 	bool playingAnimation = false;
+	bool setStateToObj = false;
 	float targetPosY = 0f;
 
 	Transform parentTransform;
@@ -45,10 +46,13 @@ public class StartPoint : MonoBehaviour {
 			currentObj.transform.localScale = new Vector3(scale, scale, scale);
 			if(targetPosY < currentObj.transform.position.y){
 				playingAnimation = false;
-				currentCollider.enabled = true;
-				currentRigidbody.isKinematic = false;
-				currentSphereController.IsActive = true;
+				setStateToObj = false;
 			}
+		}else if(PuzzleManager.IsStarted && !setStateToObj){
+			setStateToObj = true;
+			currentCollider.enabled = true;
+			currentRigidbody.isKinematic = false;
+			currentSphereController.IsActive = true;
 		}
 
 		if(currentObj == null){
@@ -59,6 +63,7 @@ public class StartPoint : MonoBehaviour {
 		}else{
 			if(currentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.kMapDepth)){
 				deleteSphere();
+				PuzzleManager.ResetIndicatorAnimation();
 			}
 		}
 	}

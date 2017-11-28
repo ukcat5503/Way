@@ -96,9 +96,9 @@ public class PuzzleManager : MonoBehaviour {
 	// スタートインジケーター関連
 	const int kStartFrame = 60 * 60;
 	static int startFrame = kStartFrame;
-	Image indicatorImage;
-	static bool isStarted = false;
-
+	static Image indicatorImage;
+	public static bool IsStarted = false;
+	static Rect startIndicatorColliderRect;
 
 	public static int CurrentStage = 0;
 	public const float kMapDepth = 0.5f;
@@ -136,18 +136,37 @@ public class PuzzleManager : MonoBehaviour {
 
 		firstCameraPosition = CameraObject.transform.position;
 
+		startIndicatorColliderRect.xMin = 0;
+		startIndicatorColliderRect.xMax = 180;
+		startIndicatorColliderRect.yMin = Screen.height - 180;
+		startIndicatorColliderRect.yMax = Screen.height;
+
 		initialize();
 	}
 
 	void Update(){
 		// スタートしてるか処理
 		if(++startFrame < kStartFrame){
-			indicatorImage.fillAmount = (float)startFrame / (float)kStartFrame;
+			var target = (float)startFrame / (float)kStartFrame;
+			if(target < indicatorImage.fillAmount){
+				indicatorImage.fillAmount -= 0.02f;
+			}else{
+				indicatorImage.fillAmount = target; 
+			}
 		}else if(startFrame == kStartFrame){
-			isStarted = true;
+			IsStarted = true;
 			indicatorImage.fillAmount = 1f;
+			indicatorImage.transform.parent.position = new Vector3(-50f, -50f, -50f);
+		}
+		if(startIndicatorColliderRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0)){
+			IsStarted = true;
+			startFrame = kStartFrame;
+
 		}
 
+		if(IsStarted && indicatorImage.fillAmount < 1f){
+			indicatorImage.fillAmount += 0.02f;
+		}
 
 		if(Input.GetKeyDown(KeyCode.Q)){
 			initialize();
@@ -155,6 +174,7 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.R)){
 			"Stage Reset".Log();
 			Destroy(GameObject.Find("Player"));
+			ResetIndicatorAnimation();
 		}
 		if(Input.GetKeyDown(KeyCode.N)){
 			"Stage Skip".Log();
@@ -177,7 +197,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		CameraObject.transform.position = firstCameraPosition;
 		CurrentStage = 0;
-
+		indicatorImage.fillAmount = 1f;
 
 		StageData = new List<StageInfo>();
 		StageObject = new List<GameObject>();
@@ -197,18 +217,20 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 
 		map = new int[,]{
-			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0,21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddObject(12,6,3);
+		StageData[StageData.Count - 1].AddObject(7,3.5f,12);
 
 		/*
 		map = new int[,]{
@@ -444,11 +466,15 @@ public class PuzzleManager : MonoBehaviour {
 		
 		if(StageObject.Count > CurrentStage){
 			StageObject[CurrentStage].SetActive(true);
-
-			PuzzleManager.startFrame = 0;
-			isStarted = false;
+			ResetIndicatorAnimation();
+			
 		}else{
 			"AllClear!".Log();
 		}
+	}
+
+	public static void ResetIndicatorAnimation(){
+		PuzzleManager.startFrame = 0;
+		IsStarted = false;
 	}
 }
