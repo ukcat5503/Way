@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuzzleManager : MonoBehaviour {
 	public class StageInfo {
@@ -92,6 +93,13 @@ public class PuzzleManager : MonoBehaviour {
 
 	Vector3 firstCameraPosition;
 
+	// スタートインジケーター関連
+	const int kStartFrame = 60 * 60;
+	static int startFrame = kStartFrame;
+	Image indicatorImage;
+	static bool isStarted = false;
+
+
 	public static int CurrentStage = 0;
 	public const float kMapDepth = 0.5f;
 	public const int kMapWidth = 15;
@@ -124,6 +132,7 @@ public class PuzzleManager : MonoBehaviour {
 		CameraObject = GameObject.Find("Main Camera");
 		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
 		CoinParticleFlyCoinTarget = GameObject.Find("CoinTargetPoint");
+		indicatorImage = GameObject.Find("PlayIndicator/Indicator").GetComponent<Image>();
 
 		firstCameraPosition = CameraObject.transform.position;
 
@@ -131,6 +140,15 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	void Update(){
+		// スタートしてるか処理
+		if(++startFrame < kStartFrame){
+			indicatorImage.fillAmount = (float)startFrame / (float)kStartFrame;
+		}else if(startFrame == kStartFrame){
+			isStarted = true;
+			indicatorImage.fillAmount = 1f;
+		}
+
+
 		if(Input.GetKeyDown(KeyCode.Q)){
 			initialize();
 		}
@@ -163,6 +181,20 @@ public class PuzzleManager : MonoBehaviour {
 
 		StageData = new List<StageInfo>();
 		StageObject = new List<GameObject>();
+
+		map = new int[,]{
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
+		};
+		StageData.Add(new StageInfo(map));
 
 		map = new int[,]{
 			{29,29,29,29,29,29,29,29,29,29,29,29,29,29,29},
@@ -412,6 +444,9 @@ public class PuzzleManager : MonoBehaviour {
 		
 		if(StageObject.Count > CurrentStage){
 			StageObject[CurrentStage].SetActive(true);
+
+			PuzzleManager.startFrame = 0;
+			isStarted = false;
 		}else{
 			"AllClear!".Log();
 		}
