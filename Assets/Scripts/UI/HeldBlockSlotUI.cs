@@ -17,7 +17,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	GameObject cursorGuideObject;
 	MeshRenderer cursorGuideMeshRenderer;
 	[SerializeField]
-	Color normalStateColor, pickingStateColor;
+	Color normalStateColor, pickingStateColor, deleteStateColor, disableStateColor;
 
 	// 選択中のブロック情報
 	bool isPicking;
@@ -113,42 +113,67 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				animationCurrentFrame = 0;
 			}
 		}
+
 		if(!PuzzleManager.IsStarted){
-			// 最初にUIクリック
-			if(Input.GetMouseButtonDown(0) && !isPicking){
-				var objs = Physics.OverlapSphere(mouseWorldPosition, 0.05f, targetLayer);
-				if(!isContainLocalMap(mouseLocalPosition) || objs.Length > 0){
-					return;
+			var objs = Physics.OverlapSphere(mouseWorldPosition, 0.05f, targetLayer);
+			if(objs.Length > 0){
+				// 既存のブロックを選択
+				cursorGuideMeshRenderer.material.color = deleteStateColor;
+
+				// 右クリックでブロック削除
+				if(Input.GetMouseButtonDown(1)){
+					var length = objs.Length;
+					for (int i = 0; i < length; ++i){
+						Destroy(objs[i].gameObject);
+					}
 				}
-				isPicking = true;
+
+			}else if(isPicking){
+				// 新規ブロックを選択中
 				cursorGuideMeshRenderer.material.color = pickingStateColor;
-				pickingObjectWorldPos = mouseWorldPosition;
 
-				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
-			}else if(Input.GetMouseButtonDown(0) && isPicking){
-				isPicking = false;
-				cursorGuideMeshRenderer.material.color = normalStateColor;
+				if(Input.GetMouseButtonDown(0)){
+					// 左クリックでブロック設置
+					isPicking = false;
+					cursorGuideMeshRenderer.material.color = normalStateColor;
 
-				var objs = Physics.OverlapSphere(pickingObjectWorldPos, 0.05f, targetLayer);
-				var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
-				if(objs.Length == 0 && parentObj){
-					var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
-					obj.transform.parent = parentObj.transform;
+					var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
+					if(objs.Length == 0 && parentObj){
+						var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
+						obj.transform.parent = parentObj.transform;
+					}
+					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
+
+				}else if(Input.GetMouseButtonDown(1)){
+					// 右クリックで選択解除
+					isPicking = false;
+					
+					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 				}
 
-				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
-			}else if(Input.GetMouseButtonDown(1) && isPicking){
-				isPicking = false;
+			}else{
+				// 何も選択してない
 				cursorGuideMeshRenderer.material.color = normalStateColor;
-				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
+
+				// 最初にUIクリック
+				if(Input.GetMouseButtonDown(0) && !isPicking){
+					if(isContainLocalMap(mouseLocalPosition)){
+						isPicking = true;
+						cursorGuideMeshRenderer.material.color = pickingStateColor;
+						pickingObjectWorldPos = mouseWorldPosition;
+
+						transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
+					}
+				}
 			}
 		}else{
+			// スタートしてない
 			if(isPicking){ 
+				// ブロック選択中なら削除してね
 				isPicking = false;
 				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 			}
 		}
-
 	}
 
 	void wheelScrollImage(bool isMoveUp = false){

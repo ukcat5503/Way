@@ -275,11 +275,6 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 	
 	virtual protected void clickAction(ClickEventType type){
-		if(CanMoveFromMouse && type == ClickEventType.RightClick){
-			Destroy(gameObject);
-			return;
-		}
-
 		if (!isAnimating && turnBlockType != BlockType.NotTurn && !isTouchSphere){
 			TurnAngle turnBlockAngle;
 			switch (type)
