@@ -113,34 +113,42 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				animationCurrentFrame = 0;
 			}
 		}
+		if(!PuzzleManager.IsStarted){
+			// 最初にUIクリック
+			if(Input.GetMouseButtonDown(0) && !isPicking){
+				var objs = Physics.OverlapSphere(mouseWorldPosition, 0.05f, targetLayer);
+				if(!isContainLocalMap(mouseLocalPosition) || objs.Length > 0){
+					return;
+				}
+				isPicking = true;
+				cursorGuideMeshRenderer.material.color = pickingStateColor;
+				pickingObjectWorldPos = mouseWorldPosition;
 
-		// 最初にUIクリック
-		if(Input.GetMouseButtonDown(0) && !isPicking){
-			if(!isContainLocalMap(mouseLocalPosition)){
-				return;
+				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
+			}else if(Input.GetMouseButtonDown(0) && isPicking){
+				isPicking = false;
+				cursorGuideMeshRenderer.material.color = normalStateColor;
+
+				var objs = Physics.OverlapSphere(pickingObjectWorldPos, 0.05f, targetLayer);
+				var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
+				if(objs.Length == 0 && parentObj){
+					var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
+					obj.transform.parent = parentObj.transform;
+				}
+
+				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
+			}else if(Input.GetMouseButtonDown(1) && isPicking){
+				isPicking = false;
+				cursorGuideMeshRenderer.material.color = normalStateColor;
+				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 			}
-			isPicking = true;
-			cursorGuideMeshRenderer.material.color = pickingStateColor;
-			pickingObjectWorldPos = mouseWorldPosition;
-
-			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
-		}else if(Input.GetMouseButtonDown(0) && isPicking){
-			isPicking = false;
-			cursorGuideMeshRenderer.material.color = normalStateColor;
-
-			var objs = Physics.OverlapSphere(pickingObjectWorldPos, 0.05f, targetLayer);
-			var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
-			if(objs.Length == 0 && parentObj){
-				var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
-				obj.transform.parent = parentObj.transform;
+		}else{
+			if(isPicking){ 
+				isPicking = false;
+				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 			}
-
-			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
-		}else if(Input.GetMouseButtonDown(1) && isPicking){
-			isPicking = false;
-			cursorGuideMeshRenderer.material.color = normalStateColor;
-			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 		}
+
 	}
 
 	void wheelScrollImage(bool isMoveUp = false){
