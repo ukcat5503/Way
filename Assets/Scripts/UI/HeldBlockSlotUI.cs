@@ -116,6 +116,9 @@ public class HeldBlockSlotUI : MonoBehaviour {
 
 		// 最初にUIクリック
 		if(Input.GetMouseButtonDown(0) && !isPicking){
+			if(!isContainLocalMap(mouseLocalPosition)){
+				return;
+			}
 			isPicking = true;
 			cursorGuideMeshRenderer.material.color = pickingStateColor;
 			pickingObjectWorldPos = mouseWorldPosition;
