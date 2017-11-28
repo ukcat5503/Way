@@ -168,6 +168,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			}
 		}else{
 			// スタートしてない
+			cursorGuideMeshRenderer.material.color = disableStateColor;
 			if(isPicking){ 
 				// ブロック選択中なら削除してね
 				isPicking = false;
