@@ -156,7 +156,6 @@ public class PuzzleManager : MonoBehaviour {
 		}else if(startFrame == kStartFrame){
 			IsStarted = true;
 			indicatorImage.fillAmount = 1f;
-			indicatorImage.transform.parent.position = new Vector3(-50f, -50f, -50f);
 		}
 		if(startIndicatorColliderRect.Contains(Input.mousePosition) && Input.GetMouseButtonUp(0)){
 			IsStarted = true;
