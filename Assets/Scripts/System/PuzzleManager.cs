@@ -113,12 +113,19 @@ public class PuzzleManager : MonoBehaviour {
 	// スコア
 	public static int MicroCoin;
 
+	// 画面テキスト
+	[SerializeField]
+	GameObject worldSpaceText;
+	public static GameObject WorldSpaceText;
+
 	void Awake () {
 		SphereController = sphereController;
 		NotTurnColor = notTurnColor;
 		TurnColor = turnColor;
 		MoveColor = moveColor;
 		PlaceColor = placeColor;
+
+		WorldSpaceText = worldSpaceText;
 
 		// オブジェクトリスト生成 リリース時取り除く
 		var str = "\n ■ Blocks ■\n";
@@ -410,7 +417,6 @@ public class PuzzleManager : MonoBehaviour {
 					var obj = Instantiate(generateBlocks[item.Map[z,x]],pos, generateBlocks[item.Map[z,x]].transform.rotation) as GameObject;
 					obj.transform.parent = mapObj.transform;
 					obj.name = "[" + x + "," + z + "] " + obj.name;
-					TurnBlockBase turn;
 					obj.layer = LayerMask.NameToLayer("DefaultBlock");
 				}
 			}

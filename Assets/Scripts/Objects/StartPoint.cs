@@ -22,8 +22,7 @@ public class StartPoint : MonoBehaviour {
 
 	static float targetSize;
 
-	[SerializeField]
-	GameObject worldSpaceText;
+	
 
 	// Use this for initialization
 	void Start () {
@@ -62,8 +61,7 @@ public class StartPoint : MonoBehaviour {
 			
 		}else{
 			if(currentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.kMapDepth)){
-				deleteSphere();
-				PuzzleManager.ResetIndicatorAnimation();
+				DeleteSphere();
 			}
 		}
 	}
@@ -90,17 +88,15 @@ public class StartPoint : MonoBehaviour {
 		playingAnimation = true;
 	}
 
-	void deleteSphere(){
+	public static void DeleteSphere(){
 		int addCoin = -(PuzzleManager.MicroCoin / 5) < 0 ? -(PuzzleManager.MicroCoin / 5) : 0;
 		PuzzleManager.MicroCoin += addCoin;
-		var text = (Instantiate(worldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
+		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
 		text.Text = "Miss...";
-		if(addCoin < 0){
-			text.Text += "\n    " + addCoin + "Coin";
-		}
 		
 		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);
 		Destroy(currentObj);
 		currentObj = null;
+		PuzzleManager.ResetIndicatorAnimation();
 	}
 }

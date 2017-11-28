@@ -106,3 +106,5 @@ MonoBehaviour:
   notTurnColor: {r: 0.42647058, g: 0.42647058, b: 0.42647058, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}
   moveColor: {r: 0, g: 0, b: 1, a: 1}
+  worldSpaceText: {fileID: 1347527771685602, guid: bdf14da8da3ac4f2fa6044281c2bcf7c,
+    type: 2}
