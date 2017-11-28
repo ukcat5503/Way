@@ -124,7 +124,9 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				if(Input.GetMouseButton(1)){
 					var length = objs.Length;
 					for (int i = 0; i < length; ++i){
-						Destroy(objs[i].gameObject);
+						if(objs[i].gameObject.layer == LayerMask.NameToLayer("Block")){
+							Destroy(objs[i].gameObject);
+						}
 					}
 				}
 
