@@ -166,7 +166,7 @@ MonoBehaviour:
   - {fileID: 1136729095702824, guid: 1a45d55f65841455e9ea4b8dda19d739, type: 2}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8704
 --- !u!114 &114302350913020610
 MonoBehaviour:
   m_ObjectHideFlags: 1

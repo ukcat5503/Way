@@ -141,6 +141,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 					if(objs.Length == 0 && parentObj){
 						var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
 						obj.transform.parent = parentObj.transform;
+						// obj.GetComponentInChildren<MeshRenderer>().material.color = new Color(1f, 1f, 0f, 1f);
 					}
 					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 

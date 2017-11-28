@@ -127,7 +127,7 @@ public class TurnBlockBase : MonoBehaviour {
 		switch (turnBlockType)
 		{
 			case BlockType.NotTurn:
-				material.color = PuzzleManager.NotTurnColor;
+				// material.color = PuzzleManager.NotTurnColor;
 				material.SetColor("_EmissionColor", new Color(1f,1f,1f));
 				break;
 			case BlockType.Turn:

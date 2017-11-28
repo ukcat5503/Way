@@ -8,6 +8,8 @@ public class PuzzleManager : MonoBehaviour {
 		public int[,] Map { get; private set; }
 		public List<ObjectInfo> Objects { get; private set; }
 		public List<CoinObjectInfo> Coins { get; private set; }
+		public int CoinObjectQty;
+		public int CurrentCoinQty;
 
 		public StageInfo(int[,] map)
 		{
@@ -29,9 +31,14 @@ public class PuzzleManager : MonoBehaviour {
 			Objects.Add(new ObjectInfo(x, z, objectNumber));
 		}
 
-		public void AddCoin(float x, float z, int microCoin)
+		public void AddCoin(float x, float z)
 		{
-			Coins.Add(new CoinObjectInfo(x, z, microCoin));
+			++CoinObjectQty;
+			Coins.Add(new CoinObjectInfo(x, z));
+		}
+
+		public bool IsCollectAllCoin(){
+			return CurrentCoinQty == CoinObjectQty;
 		}
 	}
 
@@ -54,12 +61,10 @@ public class PuzzleManager : MonoBehaviour {
 	public class CoinObjectInfo
 	{
 		public Vector3 pos;
-		public int microCoin;
 
-		public CoinObjectInfo(float x, float z, int microCoin)
+		public CoinObjectInfo(float x, float z)
 		{
 			pos = new Vector2(x, z);
-			this.microCoin = microCoin;
 		}
 
 		public Vector3 GetPos(float height, int length) {
@@ -250,7 +255,7 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(4,3,0);
-		StageData[StageData.Count - 1].AddCoin(5,1,100);
+		StageData[StageData.Count - 1].AddCoin(5,1);
 
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -266,7 +271,7 @@ public class PuzzleManager : MonoBehaviour {
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(9, 5, 2);
-		StageData[StageData.Count - 1].AddCoin(3,4,20);
+		StageData[StageData.Count - 1].AddCoin(3,4);
 
 		map = new int[,]{
 			{ 0,22, 3, 3, 3, 3, 3, 3,23, 0, 0, 0, 0},
@@ -313,14 +318,14 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(7, 0, 1);
 		// 上ルート
-		StageData[StageData.Count - 1].AddCoin(8,4,5);
-		StageData[StageData.Count - 1].AddCoin(7,4,5);
-		StageData[StageData.Count - 1].AddCoin(6,4,5);
+		StageData[StageData.Count - 1].AddCoin(8,4);
+		StageData[StageData.Count - 1].AddCoin(7,4);
+		StageData[StageData.Count - 1].AddCoin(6,4);
 		// 下ルート
-		StageData[StageData.Count - 1].AddCoin(6,6,50);
-		StageData[StageData.Count - 1].AddCoin(5,6,50);
-		StageData[StageData.Count - 1].AddCoin(4,6,50);
-		StageData[StageData.Count - 1].AddCoin(3,6,50);
+		StageData[StageData.Count - 1].AddCoin(6,6);
+		StageData[StageData.Count - 1].AddCoin(5,6);
+		StageData[StageData.Count - 1].AddCoin(4,6);
+		StageData[StageData.Count - 1].AddCoin(3,6);
 
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -401,9 +406,12 @@ public class PuzzleManager : MonoBehaviour {
 				{
 					Vector3 pos = new Vector3(x, -height * kMapDepth, (item.Map.GetLength(0) - z) +0.25f);
 					if(item.Map[z,x] == 0) continue;
-					var obj = Instantiate(generateBlocks[item.Map[z,x]],pos, generateBlocks[item.Map[z,x]].transform.rotation);
+					var obj = Instantiate(generateBlocks[item.Map[z,x]],pos, generateBlocks[item.Map[z,x]].transform.rotation) as GameObject;
 					obj.transform.parent = mapObj.transform;
 					obj.name = "[" + x + "," + z + "] " + obj.name;
+					obj.layer = LayerMask.NameToLayer("DefaultBlock");
+					var mesh = obj.GetComponentInChildren<MeshRenderer>();
+					mesh.material.color = new Color(0,0,0,1);
 				}
 			}
 
@@ -419,7 +427,7 @@ public class PuzzleManager : MonoBehaviour {
 				var obj = Instantiate(coinPrefabs, objItem.GetPos(-height * kMapDepth, item.Map.GetLength(0)), coinPrefabs.transform.rotation);
 				obj.transform.parent = objObj.transform;
 				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
-				obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
+				// obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
 			}
 
 			StageObject[StageObject.Count - 1].SetActive(false);
