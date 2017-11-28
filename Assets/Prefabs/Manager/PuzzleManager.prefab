@@ -102,6 +102,7 @@ MonoBehaviour:
     type: 2}
   coinPrefabs: {fileID: 1555496120189526, guid: d6a8ba4d629f847c5b37839b25ea1c1d,
     type: 2}
-  notTurnColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
+  placeColor: {r: 0.75735295, g: 0.75735295, b: 0.75735295, a: 1}
+  notTurnColor: {r: 0.42647058, g: 0.42647058, b: 0.42647058, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}
   moveColor: {r: 0, g: 0, b: 1, a: 1}

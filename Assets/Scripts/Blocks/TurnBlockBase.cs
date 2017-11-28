@@ -44,10 +44,11 @@ public class TurnBlockBase : MonoBehaviour {
 		TurnLeft
 	}
 
-	enum BlockType{
+	public enum BlockType{
 		NotTurn,
 		Turn,
 		Move,
+		Place,
 	}
 
 	public enum ClickEventType{
@@ -90,6 +91,9 @@ public class TurnBlockBase : MonoBehaviour {
 
 	[SerializeField, Space(6), Header("1動作でどちらにブロックが動作するか")]
 	BlockType turnBlockType;
+	public void SetTurnBlockType(BlockType type){
+		turnBlockType = type;
+	}
 
 	// 回転アニメーション系
 	protected bool isAnimating = false;
@@ -123,24 +127,25 @@ public class TurnBlockBase : MonoBehaviour {
 		*/
 		CanMoveFromMouse = true;
 
-		var material = GetComponentsInChildren<MeshRenderer>()[0].material;
+		var mesh = GetComponentsInChildren<MeshRenderer>()[0];
 		switch (turnBlockType)
 		{
+			case BlockType.Place:
+				mesh.material.color = PuzzleManager.PlaceColor;
+				mesh.material.SetColor("_EmissionColor", new Color(2f,2f,2f));
+			break;			
 			case BlockType.NotTurn:
-				// material.color = PuzzleManager.NotTurnColor;
-				material.SetColor("_EmissionColor", new Color(1f,1f,1f));
+				mesh.material.color = PuzzleManager.NotTurnColor;
+				mesh.material.SetColor("_EmissionColor", new Color(1f,1f,1f));
 				break;
 			case BlockType.Turn:
-				material.color = PuzzleManager.TurnColor;
-				material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2f));
+				mesh.material.color = PuzzleManager.TurnColor;
+				mesh.material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2f));
 				break;
 			case BlockType.Move:
-				material.color = PuzzleManager.MoveColor;
-				material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2.5f));
+				mesh.material.color = PuzzleManager.MoveColor;
+				mesh.material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2.5f));
 				break;
-		}
-		if(CanMoveFromMouse){
-			material.color -= new Color32(50, 50, 50, 0);
 		}
 		Setup();
 	}

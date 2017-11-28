@@ -90,8 +90,8 @@ public class PuzzleManager : MonoBehaviour {
 	public static GameObject CoinParticleFlyCoinTarget{ get; private set;}
 
 	[SerializeField]
-	Color notTurnColor, turnColor, moveColor;
-	public static Color NotTurnColor, TurnColor, MoveColor;
+	Color placeColor, notTurnColor, turnColor, moveColor;
+	public static Color PlaceColor, NotTurnColor, TurnColor, MoveColor;
 
 	public static GameObject CameraObject;
 	public static GameObject HeldBlockSlot;
@@ -113,11 +113,12 @@ public class PuzzleManager : MonoBehaviour {
 	// スコア
 	public static int MicroCoin;
 
-	void Start () {
+	void Awake () {
 		SphereController = sphereController;
 		NotTurnColor = notTurnColor;
 		TurnColor = turnColor;
 		MoveColor = moveColor;
+		PlaceColor = placeColor;
 
 		// オブジェクトリスト生成 リリース時取り除く
 		var str = "\n ■ Blocks ■\n";
@@ -409,9 +410,8 @@ public class PuzzleManager : MonoBehaviour {
 					var obj = Instantiate(generateBlocks[item.Map[z,x]],pos, generateBlocks[item.Map[z,x]].transform.rotation) as GameObject;
 					obj.transform.parent = mapObj.transform;
 					obj.name = "[" + x + "," + z + "] " + obj.name;
+					TurnBlockBase turn;
 					obj.layer = LayerMask.NameToLayer("DefaultBlock");
-					var mesh = obj.GetComponentInChildren<MeshRenderer>();
-					mesh.material.color = new Color(0,0,0,1);
 				}
 			}
 
