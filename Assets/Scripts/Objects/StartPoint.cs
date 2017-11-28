@@ -94,7 +94,7 @@ public class StartPoint : MonoBehaviour {
 		int addCoin = -(PuzzleManager.MicroCoin / 5) < 0 ? -(PuzzleManager.MicroCoin / 5) : 0;
 		PuzzleManager.MicroCoin += addCoin;
 		var text = (Instantiate(worldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
-		text.Text = "Reject!!";
+		text.Text = "Miss...";
 		if(addCoin < 0){
 			text.Text += "\n    " + addCoin + "Coin";
 		}
