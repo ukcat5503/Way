@@ -33,7 +33,7 @@ public class StartPoint : MonoBehaviour {
 			("ステージ数を取得できませんでした。" + transform.parent.parent.name).LogError();
 			Destroy(gameObject);
 		}
-		// generate();
+		generate();
 	}
 	
 	// Update is called once per frame
