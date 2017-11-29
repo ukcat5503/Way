@@ -144,7 +144,7 @@ public class TurnBlockBase : MonoBehaviour {
 				mesh.material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2f));
 				break;
 			case BlockType.TurnRight:
-				mesh.material.color = PuzzleManager.TurnColor;
+				mesh.material.color = PuzzleManager.TurnRightColor;
 				mesh.material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2f));
 				break;
 			case BlockType.Move:

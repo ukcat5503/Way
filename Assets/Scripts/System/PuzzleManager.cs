@@ -84,6 +84,10 @@ public class PuzzleManager : MonoBehaviour {
 	public static List<StageInfo> StageData { get; private set; }
 	public static List<GameObject> StageObject { get; private set; }
 
+	public static int RequirementBlockQty = 0;
+	public static int PlaceBlockQty = 0;
+	public static int DeathCount = 0;
+
 	static PuzzleManager instance;
 
 	[SerializeField]
@@ -167,6 +171,7 @@ public class PuzzleManager : MonoBehaviour {
 	void Update(){
 		currentStageText.text = (CurrentStage + 1).ToString();
 
+		/*
 		if(Input.GetKeyDown(KeyCode.Q)){
 			initialize();
 		}
@@ -185,6 +190,7 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S)){
 			--MicroCoin;
 		}
+		 */
 	}
 
 	void initialize(){
@@ -408,6 +414,7 @@ public class PuzzleManager : MonoBehaviour {
 		
 		var height = 0;
 		foreach (var item in StageData){
+			RequirementBlockQty += item.RequirementBlockQty;
 			GenerateMap(item, height);
 			++height;
 		}
@@ -473,6 +480,9 @@ public class PuzzleManager : MonoBehaviour {
 			destroyObj = GameObject.Find("Stage " + CurrentStage);
 		}
 		Destroy(destroyObj);
+
+		PlaceBlockQty = StageData[CurrentStage].PlaceBlockQty;
+
 		++CurrentStage;
 		CameraManager.CameraDown(kMapDepth);
 		

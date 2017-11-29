@@ -94,7 +94,7 @@ public class StartPoint : MonoBehaviour {
 		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
 		text.Text = "Miss...";
 		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);
-
+		++PuzzleManager.DeathCount;
 		Destroy(currentObj);
 		currentObj = null;
 		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);

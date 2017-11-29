@@ -3,15 +3,19 @@
  2  -
  3  「
  4  L
- 5  ¬
- 6  」
+ 5  I
+ 6  -
+ 7  ¬
+ 8  」
 
  ■ Blocks ■
 0	BlockNone
 1	BlockStart_fix
 2	BlockGoal_fix
+
 3	-_NotTurn0
 4	-_NotTurn90
+
 5	-_Turn0
 6	-_Turn90
 7	-_MoveNorth0
@@ -27,6 +31,7 @@
 17	+_MoveSouth0
 18	+_MoveEast0
 19	+_MoveWest0
+
 20	J_NotTurn0
 21	J_NotTurn90
 22	J_NotTurn180
@@ -38,6 +43,11 @@
 27	J_Turn270
 28	J_Turn270
 29	BarricadeBlock
+
+30	J_TurnRight0
+31	J_TurnRight90
+32	J_TurnRight180
+33	J_TurnRight270
 
  □ Objects □
 0 StartPoint_0 (↑)

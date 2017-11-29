@@ -82,6 +82,10 @@ MonoBehaviour:
   - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
   - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
   - {fileID: 1332277413175422, guid: 553de5e5fc7a34cabb2a8599545869ec, type: 2}
+  - {fileID: 1366812344686522, guid: aa6c49e943f3b440fad06b65135bc729, type: 2}
+  - {fileID: 1827215082490036, guid: a5567ae55e98f4c7a9d206332ea75fbe, type: 2}
+  - {fileID: 1929498767186218, guid: 8620426cb64e44d3a8aa96c6493be786, type: 2}
+  - {fileID: 1031987243843368, guid: 93ea36dd39a254b29aa9df51ed108e01, type: 2}
   generateObjects:
   - {fileID: 1367978722639676, guid: c25d9147a72e84b68835827c4f7ff073, type: 2}
   - {fileID: 1658432892955260, guid: c4af16c049ccf4e9fa93b812c69a5926, type: 2}
@@ -103,10 +107,10 @@ MonoBehaviour:
     type: 2}
   coinPrefabs: {fileID: 1555496120189526, guid: d6a8ba4d629f847c5b37839b25ea1c1d,
     type: 2}
-  placeColor: {r: 0.75735295, g: 0.75735295, b: 0.75735295, a: 1}
+  placeColor: {r: 0.8602941, g: 0.8602941, b: 0.8602941, a: 1}
   notTurnColor: {r: 0.42647058, g: 0.42647058, b: 0.42647058, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}
-  turnRightColor: {r: 0, g: 0, b: 0, a: 0}
+  turnRightColor: {r: 0.9338235, g: 0.8793662, b: 0.14419337, a: 1}
   moveColor: {r: 0, g: 0, b: 1, a: 1}
   worldSpaceText: {fileID: 1347527771685602, guid: bdf14da8da3ac4f2fa6044281c2bcf7c,
     type: 2}
