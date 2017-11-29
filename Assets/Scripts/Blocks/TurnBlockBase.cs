@@ -280,7 +280,7 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 	
 	virtual protected void clickAction(ClickEventType type){
-		if (!isAnimating && turnBlockType != BlockType.NotTurn && !isTouchSphere){
+		if (!isAnimating && turnBlockType != BlockType.NotTurn && turnBlockType != BlockType.Place && !isTouchSphere){
 			TurnAngle turnBlockAngle;
 			switch (type)
 			{
