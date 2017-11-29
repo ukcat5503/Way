@@ -42,6 +42,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		public void AddBlockQtyInfo(int requirementBlockQty){
 			RequirementBlockQty = requirementBlockQty;
+			PlaceBlockQty = requirementBlockQty;
 		}
 
 		public bool IsCollectAllCoin(){
@@ -120,6 +121,8 @@ public class PuzzleManager : MonoBehaviour {
 	public static GameObject WorldSpaceText;
 	Text currentStageText;
 	Text totalStageText;
+	Text currentBlockText;
+	Text totalBlockText;
 
 	void Awake () {
 		instance = this;
@@ -152,6 +155,8 @@ public class PuzzleManager : MonoBehaviour {
 		CoinParticleFlyCoinTarget = GameObject.Find("CoinTargetPoint");
 		currentStageText = GameObject.Find("StageInfo/CurrentStage").GetComponent<Text>();
 		totalStageText = GameObject.Find("StageInfo/TotalStage").GetComponent<Text>();
+		currentBlockText = GameObject.Find("BlockInfo/CurrentBlock").GetComponent<Text>();
+		totalBlockText = GameObject.Find("BlockInfo/TotalBlock").GetComponent<Text>();
 
 		firstCameraPosition = CameraObject.transform.position;
 
@@ -459,6 +464,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 
 		stageObj.SetActive(isActive);
+		ResetMapState();
 	}
 
 	public static void NextStage(GameObject destroyObj = null){
@@ -472,9 +478,30 @@ public class PuzzleManager : MonoBehaviour {
 		
 		if(StageObject.Count > CurrentStage){
 			StageObject[CurrentStage].SetActive(true);
+			instance.currentBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
+			instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
 			
 		}else{
 			"AllClear!".Log();
+		}
+	}
+
+	public static void ResetMapState(){
+		PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty = 0;
+		StageData[CurrentStage].PlaceBlockQty = StageData[CurrentStage].RequirementBlockQty;
+
+		instance.currentBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
+		instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
+	}
+
+	public static void AddTotalBlockText(int add){
+		StageData[CurrentStage].PlaceBlockQty += add;
+		instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
+
+		if(StageData[CurrentStage].PlaceBlockQty < 0){
+			instance.currentBlockText.text = "<color=red>" + (-StageData[CurrentStage].PlaceBlockQty).ToString() + "</color>";
+		}else{
+			instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
 		}
 	}
 }

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 65288006466159424}
   - component: {fileID: 54756244764415050}
   - component: {fileID: 114469623228044004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33935144404313548}
   - component: {fileID: 23365485348037350}
   - component: {fileID: 95116897793230568}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 33238843746984004}
   - component: {fileID: 23778116350479414}
   - component: {fileID: 95697500292586948}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dolly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1064343277236584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4731261257930468}

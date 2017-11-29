@@ -125,6 +125,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				for (int i = 0; i < length; ++i){
 					if(objs[i].gameObject.layer == LayerMask.NameToLayer("Block")){
 						Destroy(objs[i].gameObject);
+						PuzzleManager.AddTotalBlockText(1);
 					}
 				}
 			}
@@ -146,6 +147,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 					if(turn != null){
 						turn.SetTurnBlockType(TurnBlockBase.BlockType.Place);
 					}
+					PuzzleManager.AddTotalBlockText(-1);
 				}
 				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 

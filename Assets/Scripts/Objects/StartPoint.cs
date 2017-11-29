@@ -98,6 +98,5 @@ public class StartPoint : MonoBehaviour {
 		Destroy(currentObj);
 		currentObj = null;
 		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
-		PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty = 0;
 	}
 }
