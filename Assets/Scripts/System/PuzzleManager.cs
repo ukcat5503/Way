@@ -107,10 +107,12 @@ public class PuzzleManager : MonoBehaviour {
 	// スコア
 	public static int MicroCoin;
 
-	// 画面テキスト
+	// 画面テキストなど
 	[SerializeField]
 	GameObject worldSpaceText;
 	public static GameObject WorldSpaceText;
+	Text currentStageText;
+	Text totalStageText;
 
 	void Awake () {
 		instance = this;
@@ -140,6 +142,8 @@ public class PuzzleManager : MonoBehaviour {
 		CameraObject = GameObject.Find("Main Camera");
 		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
 		CoinParticleFlyCoinTarget = GameObject.Find("CoinTargetPoint");
+		currentStageText = GameObject.Find("StageInfo/CurrentStage").GetComponent<Text>();
+		totalStageText = GameObject.Find("StageInfo/TotalStage").GetComponent<Text>();
 
 		firstCameraPosition = CameraObject.transform.position;
 
@@ -148,6 +152,8 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 	void Update(){
+		currentStageText.text = (CurrentStage + 1).ToString();
+
 		if(Input.GetKeyDown(KeyCode.Q)){
 			initialize();
 		}
@@ -196,7 +202,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		*/
 
-map = new int[,]{
+		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -371,6 +377,7 @@ map = new int[,]{
 			++height;
 		}
 		StageObject[0].SetActive(true);
+		totalStageText.text = height.ToString();
 	}
 
 
