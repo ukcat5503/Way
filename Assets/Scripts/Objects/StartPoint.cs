@@ -93,10 +93,12 @@ public class StartPoint : MonoBehaviour {
 		PuzzleManager.MicroCoin += addCoin;
 		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
 		text.Text = "Miss...";
-		
 		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);
+
 		Destroy(currentObj);
 		currentObj = null;
 		PuzzleManager.ResetIndicatorAnimation();
+		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
+		PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty = 0;
 	}
 }
