@@ -115,7 +115,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		}
 
 		if(!PuzzleManager.IsStarted){
-			var objs = Physics.OverlapSphere(mouseWorldPosition, 0.05f, targetLayer);
+			var objs = Physics.OverlapSphere(cursorGuideObject.transform.position, 0.05f, targetLayer);
 			if(objs.Length > 0){
 				// 既存のブロックを選択
 				cursorGuideMeshRenderer.material.color = deleteStateColor;
