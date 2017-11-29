@@ -76,6 +76,7 @@ public class PuzzleManager : MonoBehaviour {
 	public static List<StageInfo> StageData { get; private set; }
 	public static List<GameObject> StageObject { get; private set; }
 
+	static PuzzleManager instance;
 
 	[SerializeField]
 	GameObject[] generateBlocks;
@@ -119,6 +120,7 @@ public class PuzzleManager : MonoBehaviour {
 	public static GameObject WorldSpaceText;
 
 	void Awake () {
+		instance = this;
 		SphereController = sphereController;
 		NotTurnColor = notTurnColor;
 		TurnColor = turnColor;
@@ -398,48 +400,52 @@ public class PuzzleManager : MonoBehaviour {
 
 		
 		var height = 0;
-		foreach (var item in StageData)
-		{
-			var stageObj = new GameObject("Stage " + height);
-			var mapObj = new GameObject("Maps");
-			var objObj = new GameObject("Objects");
-			StageObject.Add(stageObj);
-
-			stageObj.transform.parent = transform;
-			mapObj.transform.parent = stageObj.transform;
-			objObj.transform.parent = stageObj.transform;
-			for (int z = 0; z < item.Map.GetLength(0); ++z)
-			{
-				for (int x = 0; x < item.Map.GetLength(1); ++x)
-				{
-					Vector3 pos = new Vector3(x, -height * kMapDepth, (item.Map.GetLength(0) - z) +0.25f);
-					if(item.Map[z,x] == 0) continue;
-					var obj = Instantiate(generateBlocks[item.Map[z,x]],pos, generateBlocks[item.Map[z,x]].transform.rotation) as GameObject;
-					obj.transform.parent = mapObj.transform;
-					obj.name = "[" + x + "," + z + "] " + obj.name;
-					obj.layer = LayerMask.NameToLayer("DefaultBlock");
-				}
-			}
-
-			foreach (var objItem in item.Objects)
-			{
-				var obj = Instantiate(generateObjects[objItem.obj], objItem.GetPos(-height * kMapDepth, item.Map.GetLength(0)), generateObjects[objItem.obj].transform.rotation);
-				obj.transform.parent = objObj.transform;
-				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
-			}
-
-			foreach (var objItem in item.Coins)
-			{
-				var obj = Instantiate(coinPrefabs, objItem.GetPos(-height * kMapDepth, item.Map.GetLength(0)), coinPrefabs.transform.rotation);
-				obj.transform.parent = objObj.transform;
-				obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
-				// obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
-			}
-
-			StageObject[StageObject.Count - 1].SetActive(false);
+		foreach (var item in StageData){
+			GenerateMap(item, height);
 			++height;
 		}
 		StageObject[0].SetActive(true);
+	}
+
+
+	public static void GenerateMap(StageInfo item, int stageNumber){
+		var stageObj = new GameObject("Stage " + stageNumber);
+		var mapObj = new GameObject("Maps");
+		var objObj = new GameObject("Objects");
+		StageObject.Add(stageObj);
+
+		stageObj.transform.parent = instance.transform;
+		mapObj.transform.parent = stageObj.transform;
+		objObj.transform.parent = stageObj.transform;
+		for (int z = 0; z < item.Map.GetLength(0); ++z)
+		{
+			for (int x = 0; x < item.Map.GetLength(1); ++x)
+			{
+				Vector3 pos = new Vector3(x, -stageNumber * kMapDepth, (item.Map.GetLength(0) - z) + 0.25f);
+				if (item.Map[z, x] == 0) continue;
+				var obj = Instantiate(instance.generateBlocks[item.Map[z, x]], pos, instance.generateBlocks[item.Map[z, x]].transform.rotation) as GameObject;
+				obj.transform.parent = mapObj.transform;
+				obj.name = "[" + x + "," + z + "] " + obj.name;
+				obj.layer = LayerMask.NameToLayer("DefaultBlock");
+			}
+		}
+
+		foreach (var objItem in item.Objects)
+		{
+			var obj = Instantiate(instance.generateObjects[objItem.obj], objItem.GetPos(-stageNumber * kMapDepth, item.Map.GetLength(0)), instance.generateObjects[objItem.obj].transform.rotation);
+			obj.transform.parent = objObj.transform;
+			obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
+		}
+
+		foreach (var objItem in item.Coins)
+		{
+			var obj = Instantiate(instance.coinPrefabs, objItem.GetPos(-stageNumber * kMapDepth, item.Map.GetLength(0)), instance.coinPrefabs.transform.rotation);
+			obj.transform.parent = objObj.transform;
+			obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
+			// obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
+		}
+
+		StageObject[stageNumber].SetActive(false);
 	}
 
 	public static void NextStage(GameObject destroyObj = null){
