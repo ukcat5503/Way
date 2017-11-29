@@ -89,7 +89,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		if(!isPicking){
 			if(isContainLocalMap(mouseLocalPosition)){
 				cursorGuideObject.transform.position = mouseWorldPosition;
-				Cursor.visible = false;
+				// Cursor.visible = false;
 			}else{
 				cursorGuideObject.transform.position = new Vector3(-50f, -50f, -50f);
 				Cursor.visible = true;

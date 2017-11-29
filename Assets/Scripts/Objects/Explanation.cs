@@ -21,12 +21,13 @@ public class Explanation : MonoBehaviour {
 	}
 
 	[SerializeField]
-	GameObject debugRect;
-	[SerializeField]
 	GameObject voiceWindow;
 
 	[SerializeField]
 	string[] message;
+
+	[SerializeField]
+	Vector3[] objPos;
 
 	[SerializeField]
 	Vector2[] rectPos;
@@ -52,7 +53,7 @@ public class Explanation : MonoBehaviour {
 
 		var length = message.Length;
 		for (int i = 0; i < length; ++i){
-			objs.Add(Instantiate(voiceWindow, new Vector3(rectPos[i].x, rectPos[i].y, 0f), Quaternion.identity) as GameObject);
+			objs.Add(Instantiate(voiceWindow, objPos[i], Quaternion.identity) as GameObject);
 			Rect r = new Rect();
 			r.x = rectPos[i].x;
 			r.y = rectPos[i].y;
@@ -60,21 +61,18 @@ public class Explanation : MonoBehaviour {
 			r.height = rectSize[i].y;
 			rect.Add(r);
 			objs[i].transform.parent = canvas;
+			objs[i].name = message[i];
 			objs[i].SetActive(false);
-			if(debugRect != null){
-				var rt = Instantiate(debugRect).GetComponent<RectTransform>();
-				rt.transform.position = new Vector3(r.x - r.width, r.y - (r.height / 2), 0f);
-				rt.sizeDelta = new Vector2(r.width, r.height);
-				rt.transform.parent = canvas;
-			}
 		}
 		objs[0].SetActive(true);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		Input.mousePosition.Log();
 		if(currentObj < rect.Count){
-			if(rect[currentObj].Contains(Input.mousePosition)){
+			rect[currentObj].Contains(Input.mousePosition).Log();
+			if(rect[currentObj].Contains(Input.mousePosition) && isControl(controlType[currentObj])){
 				Destroy(objs[currentObj]);
 				++currentObj;
 				if(currentObj < rect.Count){
@@ -101,7 +99,7 @@ public class Explanation : MonoBehaviour {
 
 			case ControlType.GetMouseWheelUp:			return Input.GetAxis("Mouse ScrollWheel") > 0;
 			case ControlType.GetMouseWheelDown:			return Input.GetAxis("Mouse ScrollWheel") < 0;
-			case ControlType.GetMouseWheelEither:			return Input.GetAxis("Mouse ScrollWheel") != 0;
+			case ControlType.GetMouseWheelEither:		return Input.GetAxis("Mouse ScrollWheel") != 0;
 		
 
 			default: ("操作タイプが不明です。常に既定値falseを使用します。").LogWarning();
