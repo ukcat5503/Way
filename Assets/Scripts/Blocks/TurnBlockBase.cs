@@ -46,9 +46,10 @@ public class TurnBlockBase : MonoBehaviour {
 
 	public enum BlockType{
 		NotTurn,
-		Turn,
+		TurnLeft,
 		Move,
 		Place,
+		TurnRight,
 	}
 
 	public enum ClickEventType{
@@ -138,7 +139,11 @@ public class TurnBlockBase : MonoBehaviour {
 				mesh.material.color = PuzzleManager.NotTurnColor;
 				mesh.material.SetColor("_EmissionColor", new Color(1f,1f,1f));
 				break;
-			case BlockType.Turn:
+			case BlockType.TurnLeft:
+				mesh.material.color = PuzzleManager.TurnColor;
+				mesh.material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2f));
+				break;
+			case BlockType.TurnRight:
 				mesh.material.color = PuzzleManager.TurnColor;
 				mesh.material.SetColor("_EmissionColor", new Color(2.5f,2.5f,2f));
 				break;
@@ -274,10 +279,12 @@ public class TurnBlockBase : MonoBehaviour {
 		return position;
 	}
 
+	/*
 	public void ClickObject(ClickEventType type){
 		// (transform.name + "をクリック" + "  type: " + type).Log();
 		clickAction(type);
 	}
+	*/
 	
 	virtual protected void clickAction(ClickEventType type){
 		if (!isAnimating && turnBlockType != BlockType.NotTurn && turnBlockType != BlockType.Place && !isTouchSphere){
@@ -344,55 +351,28 @@ public class TurnBlockBase : MonoBehaviour {
 			sphereObjectInfo.obj.transform.eulerAngles = new Vector3(0f, sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate, 0f);
 			sphereObjectInfo = null;
 		}
+
+		// ブロック移動
+		TurnAngle turnBlockAngle;
+		switch (turnBlockType){
+			case BlockType.TurnLeft:
+				targetAngle = -90f;
+				leftRotate = true;
+				turnBlockAngle = TurnAngle.TurnLeft;
+			break;
+			case BlockType.TurnRight:
+				targetAngle = 90f;
+				leftRotate = false;
+				turnBlockAngle = TurnAngle.TurnRight;
+			break;
+			default:	return;
+		}
+			isAnimating = true;
+
+			finalAngle = currentAngle + targetAngle;
+			finalViewAngle = transform.eulerAngles.y + targetAngle;
+
+			TurnBlock((int)turnBlockAngle);
+			Setup();
 	}
-	/*
-	virtual protected void OnMouseDrag(){
-		if(CanMoveFromMouse){
-			Vector3 objectPointInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
-
-			Vector3 mousePointInScreen = new Vector3(Input.mousePosition.x, Input.mousePosition.y, objectPointInScreen.z);
-			
-			Vector3 mousePointInWorld = Camera.main.ScreenToWorldPoint(mousePointInScreen);
-			mousePointInWorld.y = this.transform.position.y;
-			ghostPos = mousePointInWorld;
-
-			if(ghostObject == null){
-				var obj = gameObject.transform.GetChild(0).gameObject;
-				ghostObject = Instantiate(obj);
-				ghostObject.transform.rotation = gameObject.transform.GetChild(0).transform.rotation;
-				ghostObject.name = "Ghost Block (" + transform.name + ")";
-				var m = ghostObject.GetComponent<MeshRenderer>();
-				m.material.color = new Color(m.material.color.r, m.material.color.g, m.material.color.b, 0.3f);
-				ghostObject.transform.parent = transform.parent.parent;
-			}
-			ghostObject.transform.position = ghostPos;
-		}
-    }
-
-	virtual protected void OnMouseUp() {
-		if(CanMoveFromMouse && ghostObject != null){
-			// (((int)(ghostObject.transform.position.x + 0.5f)) + ":" + (10 - (int)ghostObject.transform.position.z)).Log();
-
-			var objs = Physics.OverlapSphere(ghostObject.transform.position, 0.05f);
-			if(objs.Length > 0){
-				(gameObject.name + " ⇔ " + objs[0].name).Log();
-				TurnBlockBase s;
-				if(!isTouchSphere && (s = objs[0].GetComponent<TurnBlockBase>())){
-					var objPos = s.transform.position;
-					if(s.ChangeBlock(transform.position)){
-						// transform.position = objPos;
-						// isAnimating = true;
-						smoothMoveFrame = 0;
-						targetPos = objPos;
-						//targetLocalPos = transform.InverseTransformDirection(targetPos - transform.position);
-						targetLocalPos = targetPos - transform.position;
-					}
-				}
-			}
-		Destroy(ghostObject);
-		ghostObject = null;
-		}
-    }
-	*/
-	
 }

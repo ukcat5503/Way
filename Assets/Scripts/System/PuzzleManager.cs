@@ -11,6 +11,9 @@ public class PuzzleManager : MonoBehaviour {
 		public int CoinObjectQty;
 		public int CurrentCoinQty;
 
+		public int RequirementBlockQty;
+		public int PlaceBlockQty;
+
 		public StageInfo(int[,] map)
 		{
 			Objects = new List<ObjectInfo>();
@@ -35,6 +38,10 @@ public class PuzzleManager : MonoBehaviour {
 		{
 			++CoinObjectQty;
 			Coins.Add(new CoinObjectInfo(x, z));
+		}
+
+		public void AddBlockQtyInfo(int requirementBlockQty){
+			RequirementBlockQty = requirementBlockQty;
 		}
 
 		public bool IsCollectAllCoin(){
@@ -91,8 +98,8 @@ public class PuzzleManager : MonoBehaviour {
 	public static GameObject CoinParticleFlyCoinTarget{ get; private set;}
 
 	[SerializeField]
-	Color placeColor, notTurnColor, turnColor, moveColor;
-	public static Color PlaceColor, NotTurnColor, TurnColor, MoveColor;
+	Color placeColor, notTurnColor, turnColor, turnRightColor, moveColor;
+	public static Color PlaceColor, NotTurnColor, TurnColor, TurnRightColor, MoveColor;
 
 	public static GameObject CameraObject;
 	public static GameObject HeldBlockSlot;
@@ -119,6 +126,7 @@ public class PuzzleManager : MonoBehaviour {
 		SphereController = sphereController;
 		NotTurnColor = notTurnColor;
 		TurnColor = turnColor;
+		TurnRightColor = turnRightColor;
 		MoveColor = moveColor;
 		PlaceColor = placeColor;
 
@@ -206,10 +214,10 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 4, 0,29,29, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0,21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
+			{ 0, 0, 0,25, 3, 7, 7, 3, 3, 3, 3, 3, 3, 1, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
@@ -217,6 +225,27 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddObject(13,6,3);
 		StageData[StageData.Count - 1].AddObject(8,3.5f,12);
+		
+
+		map = new int[,]{
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0,22, 0, 0, 0, 0, 0, 3,23, 0, 0, 0},
+			{ 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,23},
+			{ 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 4, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,20}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddObject(0,0,2);
+		StageData[StageData.Count - 1].AddCoin(14,5);
+		StageData[StageData.Count - 1].AddCoin(11,5);
+		StageData[StageData.Count - 1].AddCoin(7,2);
+		StageData[StageData.Count - 1].AddCoin(4,6);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(12);
 
 		
 		map = new int[,]{

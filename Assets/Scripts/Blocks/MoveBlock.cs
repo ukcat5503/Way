@@ -95,30 +95,20 @@ public class MoveBlock : TurnBlockBase
 		}
 	}
 
-	override protected void clickAction(ClickEventType type){
+	new void OnCollisionExit(Collision other){
+		isTouchSphere = false;
+		if(sphereObjectInfo != null){
+			sphereObjectInfo.obj.transform.eulerAngles = new Vector3(0f, sphereObjectInfo.currentRotate + sphereObjectInfo.targetRotate, 0f);
+			sphereObjectInfo = null;
+		}
+		
 		if (currentFrame > kAnimationFrame)
 		{
-			bool decide = false;
-			switch(moveDirection){
-				case MoveDirection.North:
-				case MoveDirection.West:
-					decide = type == ClickEventType.WheelUp;
-				break;
-
-				case MoveDirection.South:
-				case MoveDirection.East:
-					 decide = type == ClickEventType.WheelDown;
-				break;
-			}
-
-			if(decide){
-				isAnimating = true;
-				currentFrame = 0;
-				movePos = GetCollidePosition();
-				moveLocalPos = transform.InverseTransformDirection(movePos - transform.position);
-				// transform.position = pos;
-				changeDirection();
-			}
+			isAnimating = true;
+			currentFrame = 0;
+			movePos = GetCollidePosition();
+			moveLocalPos = transform.InverseTransformDirection(movePos - transform.position);
+			changeDirection();
 		}
 	}
 }
