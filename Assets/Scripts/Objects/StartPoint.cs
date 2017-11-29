@@ -46,12 +46,12 @@ public class StartPoint : MonoBehaviour {
 			if(targetPosY < currentObj.transform.position.y){
 				playingAnimation = false;
 				setStateToObj = false;
+
+				setStateToObj = true;
+				currentCollider.enabled = true;
+				currentRigidbody.isKinematic = false;
+				currentSphereController.IsActive = true;
 			}
-		}else if(PuzzleManager.IsStarted && !setStateToObj){
-			setStateToObj = true;
-			currentCollider.enabled = true;
-			currentRigidbody.isKinematic = false;
-			currentSphereController.IsActive = true;
 		}
 
 		if(currentObj == null){
@@ -97,7 +97,6 @@ public class StartPoint : MonoBehaviour {
 
 		Destroy(currentObj);
 		currentObj = null;
-		PuzzleManager.ResetIndicatorAnimation();
 		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
 		PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty = 0;
 	}

@@ -114,71 +114,61 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			}
 		}
 
-		if(!PuzzleManager.IsStarted){
-			var objs = Physics.OverlapSphere(cursorGuideObject.transform.position, 0.05f, targetLayer);
-			if(objs.Length > 0){
-				// 既存のブロックを選択
-				cursorGuideMeshRenderer.material.color = deleteStateColor;
+		var objs = Physics.OverlapSphere(cursorGuideObject.transform.position, 0.05f, targetLayer);
+		if(objs.Length > 0){
+			// 既存のブロックを選択
+			cursorGuideMeshRenderer.material.color = deleteStateColor;
 
-				// 右クリックでブロック削除
-				if(Input.GetMouseButton(1)){
-					var length = objs.Length;
-					for (int i = 0; i < length; ++i){
-						if(objs[i].gameObject.layer == LayerMask.NameToLayer("Block")){
-							Destroy(objs[i].gameObject);
-						}
-					}
-				}
-
-			}else if(isPicking){
-				// 新規ブロックを選択中
-				cursorGuideMeshRenderer.material.color = pickingStateColor;
-
-				if(Input.GetMouseButtonDown(0)){
-					// 左クリックでブロック設置
-					isPicking = false;
-					cursorGuideMeshRenderer.material.color = normalStateColor;
-
-					var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
-					if(objs.Length == 0 && parentObj){
-						var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
-						obj.transform.parent = parentObj.transform;
-						var turn = obj.GetComponent<TurnBlockBase>();
-						if(turn != null){
-							turn.SetTurnBlockType(TurnBlockBase.BlockType.Place);
-						}
-					}
-					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
-
-				}else if(Input.GetMouseButtonDown(1)){
-					// 右クリックで選択解除
-					isPicking = false;
-					
-					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
-				}
-
-			}else{
-				// 何も選択してない
-				cursorGuideMeshRenderer.material.color = normalStateColor;
-
-				// 最初にUIクリック
-				if(Input.GetMouseButtonDown(0) && !isPicking){
-					if(isContainLocalMap(mouseLocalPosition)){
-						isPicking = true;
-						cursorGuideMeshRenderer.material.color = pickingStateColor;
-						pickingObjectWorldPos = mouseWorldPosition;
-
-						transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
+			// 右クリックでブロック削除
+			if(Input.GetMouseButton(1)){
+				var length = objs.Length;
+				for (int i = 0; i < length; ++i){
+					if(objs[i].gameObject.layer == LayerMask.NameToLayer("Block")){
+						Destroy(objs[i].gameObject);
 					}
 				}
 			}
-		}else{
-			// スタートしてない
-			cursorGuideMeshRenderer.material.color = disableStateColor;
-			if(isPicking){ 
-				// ブロック選択中なら削除してね
+
+		}else if(isPicking){
+			// 新規ブロックを選択中
+			cursorGuideMeshRenderer.material.color = pickingStateColor;
+
+			if(Input.GetMouseButtonDown(0)){
+				// 左クリックでブロック設置
 				isPicking = false;
+				cursorGuideMeshRenderer.material.color = normalStateColor;
+
+				var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
+				if(objs.Length == 0 && parentObj){
+					var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
+					obj.transform.parent = parentObj.transform;
+					var turn = obj.GetComponent<TurnBlockBase>();
+					if(turn != null){
+						turn.SetTurnBlockType(TurnBlockBase.BlockType.Place);
+					}
+				}
 				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
+
+			}else if(Input.GetMouseButtonDown(1)){
+				// 右クリックで選択解除
+				isPicking = false;
+				
+				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
+			}
+
+		}else{
+			// 何も選択してない
+			cursorGuideMeshRenderer.material.color = normalStateColor;
+
+			// 最初にUIクリック
+			if(Input.GetMouseButtonDown(0) && !isPicking){
+				if(isContainLocalMap(mouseLocalPosition)){
+					isPicking = true;
+					cursorGuideMeshRenderer.material.color = pickingStateColor;
+					pickingObjectWorldPos = mouseWorldPosition;
+
+					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
+				}
 			}
 		}
 	}
