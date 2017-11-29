@@ -51,7 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2661daf9817624e029abcf1b23d11d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugRect: {fileID: 1731704454271012, guid: a4ba34ee04ba3504182df7a536e6385f, type: 2}
   voiceWindow: {fileID: 1943888565969686, guid: 9cd56c8fd2b324845ab9d4441e5d965d,
     type: 2}
   message:
@@ -73,5 +72,5 @@ MonoBehaviour:
   - {x: 100, y: 100}
   - {x: 1920, y: 1080}
   - {x: 100, y: 100}
-  - {x: 64, y: 64}
-  controlType: 030000000a0000000200000000000000
+  - {x: 1920, y: 1080}
+  controlType: 030000000a0000000200000002000000
