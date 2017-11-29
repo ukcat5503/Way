@@ -99,13 +99,14 @@ MonoBehaviour:
   - {fileID: 1404284206903620, guid: ff92410ef01c34dc9b3f30265a90bcfe, type: 2}
   - {fileID: 1367039494367920, guid: 4bafc97a8b5b2478ea032262afa35129, type: 2}
   - {fileID: 1479086913072354, guid: 2a160f04b15e04b27a08f10435640aeb, type: 2}
-  sphereController: {fileID: 1285996417392754, guid: 7cb58f6f3c7284fbbba9df3cc9127dd4,
+  sphereController: {fileID: 1064343277236584, guid: 20463fe93c26e42f29b0e92c30669c29,
     type: 2}
   coinPrefabs: {fileID: 1555496120189526, guid: d6a8ba4d629f847c5b37839b25ea1c1d,
     type: 2}
   placeColor: {r: 0.75735295, g: 0.75735295, b: 0.75735295, a: 1}
   notTurnColor: {r: 0.42647058, g: 0.42647058, b: 0.42647058, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}
+  turnRightColor: {r: 0, g: 0, b: 0, a: 0}
   moveColor: {r: 0, g: 0, b: 1, a: 1}
   worldSpaceText: {fileID: 1347527771685602, guid: bdf14da8da3ac4f2fa6044281c2bcf7c,
     type: 2}
