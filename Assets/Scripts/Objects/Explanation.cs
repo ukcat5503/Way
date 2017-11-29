@@ -69,9 +69,7 @@ public class Explanation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Input.mousePosition.Log();
 		if(currentObj < rect.Count){
-			rect[currentObj].Contains(Input.mousePosition).Log();
 			if(rect[currentObj].Contains(Input.mousePosition) && isControl(controlType[currentObj])){
 				Destroy(objs[currentObj]);
 				++currentObj;
