@@ -1130,4 +1130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsActive: 0
+  targerLayer:
+    serializedVersion: 2
+    m_Bits: 8704
   rotateY: 0
