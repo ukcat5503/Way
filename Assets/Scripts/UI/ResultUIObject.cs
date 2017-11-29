@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class ResultUIObject : MonoBehaviour {
 	
-	Image backGround;
+	Image BackGround;
+	Image BackGroundBlack;
 	Text Result;
 
 	Text PlaceBlock;
@@ -21,7 +22,8 @@ public class ResultUIObject : MonoBehaviour {
 
 	void Start () {
 
-		backGround = transform.Find("BackGround").GetComponent<Image>();
+		BackGround = transform.Find("BackGround").GetComponent<Image>();
+		BackGroundBlack = transform.Find("BackGroundBlack").GetComponent<Image>();
 		Result = transform.Find("Result").GetComponent<Text>();
 		
 		PlaceBlock = transform.Find("PlaceBlock").GetComponent<Text>();
@@ -33,8 +35,10 @@ public class ResultUIObject : MonoBehaviour {
 		RankValue = transform.Find("RankValue").GetComponent<Text>();
 
 
-		backGround.color = new Color(backGround.color.r, backGround.color.g, backGround.color.b, 0f);
+		BackGround.color = new Color(BackGround.color.r, BackGround.color.g, BackGround.color.b, 0f);
+		BackGroundBlack.color = new Color(BackGroundBlack.color.r, BackGroundBlack.color.g, BackGroundBlack.color.b, 0f);
 		Result.color = new Color(Result.color.r, Result.color.g, Result.color.b, 0f);
+		
 
 		PlaceBlock.color = new Color(PlaceBlock.color.r, PlaceBlock.color.g, PlaceBlock.color.b, 0f);
 		DeathCount.color = new Color(DeathCount.color.r, DeathCount.color.g, DeathCount.color.b, 0f);
@@ -48,8 +52,8 @@ public class ResultUIObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(count == 0){
-			backGround.color = new Color(backGround.color.r, backGround.color.g, backGround.color.b, backGround.color.a + 0.01f);
-			if(backGround.color.a > 1f){
+			BackGround.color = new Color(BackGround.color.r, BackGround.color.g, BackGround.color.b, BackGround.color.a + 0.01f);
+			if(BackGround.color.a > 1f){
 				++count;
 			}
 		}else if(count == 1){
@@ -90,6 +94,15 @@ public class ResultUIObject : MonoBehaviour {
 			RankValue.color = new Color(RankValue.color.r, RankValue.color.g, RankValue.color.b, RankValue.color.a + 0.05f);
 			if(RankValue.color.a > 1f){
 				++count;
+			}
+		}else if(count == 9){
+			if(Input.GetMouseButtonUp(0)){
+				++count;
+			}
+		}else if(count == 10){
+			BackGroundBlack.color = new Color(BackGroundBlack.color.r, BackGroundBlack.color.g, BackGroundBlack.color.b, BackGroundBlack.color.a + 0.01f);
+			if(BackGroundBlack.color.a > 1f){
+				// おわり
 			}
 		}
 	}
