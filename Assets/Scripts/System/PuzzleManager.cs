@@ -408,11 +408,21 @@ public class PuzzleManager : MonoBehaviour {
 	}
 
 
-	public static void GenerateMap(StageInfo item, int stageNumber){
+	public static void GenerateMap(StageInfo item, int stageNumber, bool isActive = false){
+		var old = GameObject.Find("Stage " + stageNumber);
+
 		var stageObj = new GameObject("Stage " + stageNumber);
 		var mapObj = new GameObject("Maps");
 		var objObj = new GameObject("Objects");
-		StageObject.Add(stageObj);
+
+		if (old){
+			Destroy(old);
+			StageObject[stageNumber] = stageObj;
+		}
+		else
+		{
+			StageObject.Add(stageObj);
+		}
 
 		stageObj.transform.parent = instance.transform;
 		mapObj.transform.parent = stageObj.transform;
@@ -445,7 +455,7 @@ public class PuzzleManager : MonoBehaviour {
 			// obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
 		}
 
-		StageObject[stageNumber].SetActive(false);
+		stageObj.SetActive(isActive);
 	}
 
 	public static void NextStage(GameObject destroyObj = null){
