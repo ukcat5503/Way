@@ -20,12 +20,12 @@ public class BackGroundManager : MonoBehaviour {
 	void Update () {
 		var length = _spriteRenderers.Length;
 		for (int i = 0; i < length; ++i){
-			_spriteRenderers[i].color = new Color(_spriteRenderers[i].color.r, _spriteRenderers[i].color.g, _spriteRenderers[i].color.b, _spriteRenderers[i].color.a + (isClearing ? -0.02f: +0.02f));
+			_spriteRenderers[i].color = new Color(_spriteRenderers[i].color.r, _spriteRenderers[i].color.g, _spriteRenderers[i].color.b, _spriteRenderers[i].color.a + (isClearing ? -0.01f: +0.01f));
 		}
 
 		if(!isClearing && _spriteRenderers[0].color.a >= 1){
 			isClearing = true;
-		}else if(isClearing && _spriteRenderers[0].color.a <= 0){
+		}else if(isClearing && _spriteRenderers[0].color.a <= 0.2f){
 			isClearing = false;
 		}
 	}
