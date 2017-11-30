@@ -297,7 +297,7 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(11, 5, 2);
+		StageData[StageData.Count - 1].AddObject( 0, 0, 1);
 		StageData[StageData.Count - 1].AddCoin(3,4);
 
 		map = new int[,]{
