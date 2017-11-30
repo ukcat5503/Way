@@ -57,7 +57,7 @@ public class ResultUIObject : MonoBehaviour {
 
 		// スコアボーダー
 		scoreBorder = new int[] { 20, 0, -30, -60, -100 };
-		scoreChar = new string[] {"S", "A", "B", "C", "D" };
+		scoreChar = new string[] {"S", "A", "B", "C", "D", "E" };
 
 
 		//スコア計算
@@ -66,7 +66,7 @@ public class ResultUIObject : MonoBehaviour {
 		PlaceBlockValue.text = PuzzleManager.PlaceBlockQty.ToString() + "/" + PuzzleManager.RequirementBlockQty.ToString();
 		DeathCountValue.text = PuzzleManager.DeathCount.ToString();
 
-		RankValue.text = "-";
+		RankValue.text = scoreChar[scoreChar.Length - 1];
 		RankValue.color = new Color(scoreColor[scoreColor.Length - 1].r, scoreColor[scoreColor.Length - 1].g, scoreColor[scoreColor.Length - 1].b, 0f);
 		for (int i = 0; i < scoreBorder.Length; ++i){
 			if (scoreBorder[i] < score)
