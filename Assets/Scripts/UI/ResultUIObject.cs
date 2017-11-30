@@ -56,7 +56,7 @@ public class ResultUIObject : MonoBehaviour {
 		
 
 		// スコアボーダー
-		scoreBorder = new int[] { 20, 0, -30, -60, -100 };
+		scoreBorder = new int[] { 1, 0, -30, -60, -100 };
 		scoreChar = new string[] {"S", "A", "B", "C", "D", "E" };
 
 
