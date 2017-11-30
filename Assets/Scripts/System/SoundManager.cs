@@ -10,7 +10,9 @@ public class SoundManager : MonoBehaviour
 		select,
 		push,
 		cancel,
-		move
+		move,
+		clear,
+		miss
 	}
 
 	public enum BGM

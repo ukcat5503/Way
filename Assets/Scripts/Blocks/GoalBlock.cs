@@ -7,7 +7,10 @@ public class GoalBlock : MonoBehaviour {
 		if(PuzzleManager.StageData[PuzzleManager.CurrentStage].IsCollectAllCoin()){
 			Destroy(other.gameObject);
 			PuzzleManager.NextStage(transform.parent.parent.gameObject);
-		}else{
+			SoundManager.PlaySE(SoundManager.SE.clear);
+		}
+		else
+		{
 			StartPoint.DeleteSphere();
 		}
 	}

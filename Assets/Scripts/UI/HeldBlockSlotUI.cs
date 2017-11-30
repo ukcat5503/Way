@@ -45,6 +45,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	[SerializeField]
 	LayerMask targetLayer;
 
+	int targerStage = 0;
+
 
 	void Awake () {
 		instance = this;
@@ -101,17 +103,26 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		}else{
 			wheelValue += Input.GetAxis("Mouse ScrollWheel");
 			if(wheelValue > kWheelSensitivity){
+				SoundManager.PlaySE(SoundManager.SE.move);
 				wheelValue = 0f;
 				wheelScrollImage(true);
 				upToAnimation = true;
 				animationCurrentFrame = 0;
 
 			}else if(wheelValue < -kWheelSensitivity){
+				SoundManager.PlaySE(SoundManager.SE.move);
 				wheelValue = 0f;
 				wheelScrollImage();
 				upToAnimation = false;
 				animationCurrentFrame = 0;
 			}
+		}
+
+		// ステージ変わったら選択やめる
+		if (targerStage != PuzzleManager.CurrentStage)
+		{
+			isPicking = false;
+			transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, new Vector3(-50f, -50f, -50f));
 		}
 
 		var objs = Physics.OverlapSphere(cursorGuideObject.transform.position, 0.05f, targetLayer);
@@ -148,13 +159,15 @@ public class HeldBlockSlotUI : MonoBehaviour {
 						turn.SetTurnBlockType(TurnBlockBase.BlockType.Place);
 					}
 					PuzzleManager.AddTotalBlockText(-1);
+					SoundManager.PlaySE(SoundManager.SE.push);
+
 				}
 				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 
 			}else if(Input.GetMouseButtonDown(1)){
 				// 右クリックで選択解除
 				isPicking = false;
-				
+				SoundManager.PlaySE(SoundManager.SE.cancel);
 				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 			}
 
@@ -165,9 +178,11 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			// 最初にUIクリック
 			if(Input.GetMouseButtonDown(0) && !isPicking){
 				if(isContainLocalMap(mouseLocalPosition)){
+					targerStage = PuzzleManager.CurrentStage;
 					isPicking = true;
 					cursorGuideMeshRenderer.material.color = pickingStateColor;
 					pickingObjectWorldPos = mouseWorldPosition;
+					SoundManager.PlaySE(SoundManager.SE.select);
 
 					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
 				}

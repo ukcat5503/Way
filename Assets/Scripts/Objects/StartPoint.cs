@@ -97,6 +97,7 @@ public class StartPoint : MonoBehaviour {
 		++PuzzleManager.DeathCount;
 		Destroy(currentObj);
 		currentObj = null;
+		SoundManager.PlaySE(SoundManager.SE.miss);
 		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
 	}
 }
