@@ -145,4 +145,4 @@ MonoBehaviour:
   moveDirection: 0
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8704
