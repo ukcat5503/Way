@@ -44,6 +44,7 @@ public class CameraManager : MonoBehaviour
     {
         //cameraControl();
 
+        /*
         if (Input.GetMouseButtonDown(0)) {
             sendEventToHit(TurnBlockBase.ClickEventType.LeftClick);
         }
@@ -63,7 +64,7 @@ public class CameraManager : MonoBehaviour
         if(Input.GetAxis("Mouse ScrollWheel") < 0f){
             sendEventToHit(TurnBlockBase.ClickEventType.WheelDown);
         }
-
+        */
 
         if(leftOverDown > 0f){
             PuzzleManager.CameraObject.transform.position = new Vector3(PuzzleManager.CameraObject.transform.position.x, PuzzleManager.CameraObject.transform.position.y - downSpeed, PuzzleManager.CameraObject.transform.position.z);
@@ -72,6 +73,7 @@ public class CameraManager : MonoBehaviour
 		}
     }
 
+    /*
     void sendEventToHit(TurnBlockBase.ClickEventType type){
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new RaycastHit();
@@ -82,6 +84,7 @@ public class CameraManager : MonoBehaviour
             }
         }
     }
+    */
 
     /// <summary>
     /// Settings the camera from device.

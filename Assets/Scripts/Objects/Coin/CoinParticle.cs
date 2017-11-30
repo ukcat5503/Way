@@ -22,8 +22,7 @@ public class CoinParticle : MonoBehaviour {
 	[SerializeField]
 	GameObject particlePrefab;
 
-	[SerializeField]
-	public int microCoin;
+	int microCoin;
 
 	const int coinPerParticle = 1;
 	bool isIgnition;
@@ -33,6 +32,7 @@ public class CoinParticle : MonoBehaviour {
 
 	void Start () {
 		objList = new List<ParticleInfo>();
+		microCoin = 50;
 
 		float color = 3f + microCoin / 10;
 		_spriteRenderer = GetComponent<SpriteRenderer>();
@@ -50,6 +50,7 @@ public class CoinParticle : MonoBehaviour {
 		if(!isIgnition){
 			_spriteRenderer.enabled = false;
 			isIgnition = true;
+			++PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty;
 
 			int particleQty = microCoin / coinPerParticle;
 			for (int i = particleQty; i > 0; --i){

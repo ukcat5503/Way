@@ -13,6 +13,7 @@ public class StartPoint : MonoBehaviour {
 	PlayerController currentSphereController;
 
 	bool playingAnimation = false;
+	bool setStateToObj = false;
 	float targetPosY = 0f;
 
 	Transform parentTransform;
@@ -21,8 +22,7 @@ public class StartPoint : MonoBehaviour {
 
 	static float targetSize;
 
-	[SerializeField]
-	GameObject worldSpaceText;
+	
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +32,7 @@ public class StartPoint : MonoBehaviour {
 			("ステージ数を取得できませんでした。" + transform.parent.parent.name).LogError();
 			Destroy(gameObject);
 		}
-		// generate();
+		generate();
 	}
 	
 	// Update is called once per frame
@@ -45,6 +45,9 @@ public class StartPoint : MonoBehaviour {
 			currentObj.transform.localScale = new Vector3(scale, scale, scale);
 			if(targetPosY < currentObj.transform.position.y){
 				playingAnimation = false;
+				setStateToObj = false;
+
+				setStateToObj = true;
 				currentCollider.enabled = true;
 				currentRigidbody.isKinematic = false;
 				currentSphereController.IsActive = true;
@@ -58,7 +61,7 @@ public class StartPoint : MonoBehaviour {
 			
 		}else{
 			if(currentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.kMapDepth)){
-				deleteSphere();
+				DeleteSphere();
 			}
 		}
 	}
@@ -85,17 +88,15 @@ public class StartPoint : MonoBehaviour {
 		playingAnimation = true;
 	}
 
-	void deleteSphere(){
+	public static void DeleteSphere(){
 		int addCoin = -(PuzzleManager.MicroCoin / 5) < 0 ? -(PuzzleManager.MicroCoin / 5) : 0;
 		PuzzleManager.MicroCoin += addCoin;
-		var text = (Instantiate(worldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
-		text.Text = "Reject!!";
-		if(addCoin < 0){
-			text.Text += "\n    " + addCoin + "Coin";
-		}
-		
+		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
+		text.Text = "Miss...";
 		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);
+		++PuzzleManager.DeathCount;
 		Destroy(currentObj);
 		currentObj = null;
+		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
 	}
 }

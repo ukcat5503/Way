@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-	Rigidbody rigidBody;
+	Collider _collider;
 
 	public bool IsActive = false;
 
-	const float kSpeedPerSecond = 2.5f;
+	const float kSpeedPerSecond = 2f;
+
+	[SerializeField]
+	LayerMask targerLayer;
 
 	[SerializeField]
 	float rotateY = 0;
@@ -19,12 +22,15 @@ public class PlayerController : MonoBehaviour {
 			return rotateY;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		if(IsActive){
 
+	void Start()
+	{
+		_collider = GetComponent<Collider>();
+	}
+
+	// Update is called once per frame
+	void Update (){
+		if(IsActive){
 			var radian = (transform.eulerAngles.y) * Mathf.Deg2Rad;
 			Vector2 vector = new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));
 			transform.position = new Vector3(
@@ -32,6 +38,12 @@ public class PlayerController : MonoBehaviour {
 				transform.position.y,
 				(vector.y * kSpeedPerSecond / 60f) + transform.position.z
 			);
+		}
+
+		RaycastHit hit;
+		var isHit = Physics.SphereCast(transform.position, 0.1f, Vector3.down, out hit, 100f, targerLayer);
+		if (!isHit){
+			_collider.enabled = false;
 		}
 	}
 

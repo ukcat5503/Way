@@ -82,6 +82,10 @@ MonoBehaviour:
   - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
   - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
   - {fileID: 1332277413175422, guid: 553de5e5fc7a34cabb2a8599545869ec, type: 2}
+  - {fileID: 1366812344686522, guid: aa6c49e943f3b440fad06b65135bc729, type: 2}
+  - {fileID: 1827215082490036, guid: a5567ae55e98f4c7a9d206332ea75fbe, type: 2}
+  - {fileID: 1929498767186218, guid: 8620426cb64e44d3a8aa96c6493be786, type: 2}
+  - {fileID: 1031987243843368, guid: 93ea36dd39a254b29aa9df51ed108e01, type: 2}
   generateObjects:
   - {fileID: 1367978722639676, guid: c25d9147a72e84b68835827c4f7ff073, type: 2}
   - {fileID: 1658432892955260, guid: c4af16c049ccf4e9fa93b812c69a5926, type: 2}
@@ -98,10 +102,15 @@ MonoBehaviour:
   - {fileID: 1401624621902160, guid: 013051202b0044f10a08d4f5c40ebac7, type: 2}
   - {fileID: 1404284206903620, guid: ff92410ef01c34dc9b3f30265a90bcfe, type: 2}
   - {fileID: 1367039494367920, guid: 4bafc97a8b5b2478ea032262afa35129, type: 2}
-  sphereController: {fileID: 1236292113190018, guid: 7cb58f6f3c7284fbbba9df3cc9127dd4,
+  - {fileID: 1479086913072354, guid: 2a160f04b15e04b27a08f10435640aeb, type: 2}
+  sphereController: {fileID: 1064343277236584, guid: 20463fe93c26e42f29b0e92c30669c29,
     type: 2}
   coinPrefabs: {fileID: 1555496120189526, guid: d6a8ba4d629f847c5b37839b25ea1c1d,
     type: 2}
-  notTurnColor: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
+  placeColor: {r: 0.8602941, g: 0.8602941, b: 0.8602941, a: 1}
+  notTurnColor: {r: 0.42647058, g: 0.42647058, b: 0.42647058, a: 1}
   turnColor: {r: 0, g: 1, b: 0, a: 1}
+  turnRightColor: {r: 0.9338235, g: 0.8793662, b: 0.14419337, a: 1}
   moveColor: {r: 0, g: 0, b: 1, a: 1}
+  worldSpaceText: {fileID: 1347527771685602, guid: bdf14da8da3ac4f2fa6044281c2bcf7c,
+    type: 2}
