@@ -312,9 +312,40 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(5, 4);
 		StageData[StageData.Count - 1].AddCoin(7, 4);
 		StageData[StageData.Count - 1].AddCoin(9, 4);
-		
 
-		
+
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3,23, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0,29, 3, 3,33, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(12);
+		StageData[StageData.Count - 1].AddObject(12, 9, 0);
+		StageData[StageData.Count - 1].AddCoin(10, 5);
+		StageData[StageData.Count - 1].AddCoin(6, 5);
+		StageData[StageData.Count - 1].AddCoin(3, 7);
+
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+
 		var height = 0;
 		foreach (var item in StageData){
 			RequirementBlockQty += item.RequirementBlockQty;
@@ -398,6 +429,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		else
 		{
+			--CurrentStage;
 			instance.googleAnalytics.LogScreen("All Clear!");
 			var obj = Instantiate(instance.resultPrefab) as GameObject;
 			obj.transform.SetParent(GameObject.Find("Canvas").transform, true);
