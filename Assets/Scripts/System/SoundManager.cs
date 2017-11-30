@@ -23,6 +23,7 @@ public class SoundManager : MonoBehaviour {
 		Blue_Ever
 	}
 
+
 	static List<AudioClip> se = new List<AudioClip>();
 	static List<AudioClip> bgm = new List<AudioClip>();
 
