@@ -76,9 +76,12 @@ public class ResultUIObject : MonoBehaviour {
 				break;
 			}
 		}
-		
+
+		PuzzleManager.instance.googleAnalytics.LogScreen("Score" + score);
+
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if(count == 0){

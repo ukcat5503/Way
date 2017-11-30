@@ -88,7 +88,7 @@ public class PuzzleManager : MonoBehaviour {
 	public static int PlaceBlockQty = 0;
 	public static int DeathCount = 0;
 
-	static PuzzleManager instance;
+	public static PuzzleManager instance;
 
 	[SerializeField]
 	GameObject[] generateBlocks;
@@ -130,7 +130,13 @@ public class PuzzleManager : MonoBehaviour {
 	Text currentBlockText;
 	Text totalBlockText;
 
+	public GoogleAnalyticsV4 googleAnalytics;
+
 	void Awake () {
+		googleAnalytics = GameObject.Find("GAv4").GetComponent<GoogleAnalyticsV4>();
+		googleAnalytics.StartSession();
+		googleAnalytics.LogScreen("Game Start");
+
 		instance = this;
 		SphereController = sphereController;
 		NotTurnColor = notTurnColor;
@@ -503,8 +509,12 @@ public class PuzzleManager : MonoBehaviour {
 			StageObject[CurrentStage].SetActive(true);
 			instance.currentBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
 			instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
-			
-		}else{
+			instance.googleAnalytics.LogScreen("Stage " + CurrentStage);
+
+		}
+		else
+		{
+			instance.googleAnalytics.LogScreen("All Clear!");
 			var obj = Instantiate(instance.resultPrefab) as GameObject;
 			obj.transform.SetParent(GameObject.Find("Canvas").transform, true);
 			obj.transform.localPosition = new Vector3(0,0,0);
