@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ResultUIObject : MonoBehaviour {
 	
@@ -19,6 +20,12 @@ public class ResultUIObject : MonoBehaviour {
 
 	int count;
 	int frame;
+	int score;
+
+	int[] scoreBorder;
+	string[] scoreChar;
+	[SerializeField]
+	Color[] scoreColor;
 
 	void Start () {
 
@@ -46,7 +53,30 @@ public class ResultUIObject : MonoBehaviour {
 
 		PlaceBlockValue.color = new Color(PlaceBlockValue.color.r, PlaceBlockValue.color.g, PlaceBlockValue.color.b, 0f);
 		DeathCountValue.color = new Color(DeathCountValue.color.r, DeathCountValue.color.g, DeathCountValue.color.b, 0f);
-		RankValue.color = new Color(RankValue.color.r, RankValue.color.g, RankValue.color.b, 0f);
+		
+
+		// スコアボーダー
+		scoreBorder = new int[] { 20, 0, -30, -60, -100 };
+		scoreChar = new string[] {"S", "A", "B", "C", "D" };
+
+
+		//スコア計算
+		score = PuzzleManager.RequirementBlockQty - PuzzleManager.PlaceBlockQty - (PuzzleManager.DeathCount * 10);
+
+		PlaceBlockValue.text = PuzzleManager.PlaceBlockQty.ToString() + "/" + PuzzleManager.RequirementBlockQty.ToString();
+		DeathCountValue.text = PuzzleManager.DeathCount.ToString();
+
+		RankValue.text = "-";
+		RankValue.color = new Color(scoreColor[scoreColor.Length - 1].r, scoreColor[scoreColor.Length - 1].g, scoreColor[scoreColor.Length - 1].b, 0f);
+		for (int i = 0; i < scoreBorder.Length; ++i){
+			if (scoreBorder[i] < score)
+			{
+				RankValue.text = scoreChar[i];
+				RankValue.color = new Color(scoreColor[i].r, scoreColor[i].g, scoreColor[i].b, 0f);
+				break;
+			}
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -87,7 +117,7 @@ public class ResultUIObject : MonoBehaviour {
 				++count;
 			}
 		}else if(count == 7){
-			if(++frame > 120){
+			if(++frame > 90){
 				++count;
 			}
 		}else if(count == 8){
@@ -102,7 +132,7 @@ public class ResultUIObject : MonoBehaviour {
 		}else if(count == 10){
 			BackGroundBlack.color = new Color(BackGroundBlack.color.r, BackGroundBlack.color.g, BackGroundBlack.color.b, BackGroundBlack.color.a + 0.01f);
 			if(BackGroundBlack.color.a > 1f){
-				// おわり
+				SceneManager.LoadScene("Loading");
 			}
 		}
 	}

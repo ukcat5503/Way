@@ -98,6 +98,8 @@ public class PuzzleManager : MonoBehaviour {
 	GameObject sphereController;
 	[SerializeField]
 	GameObject coinPrefabs;
+	[SerializeField]
+	GameObject resultPrefab;
 
 	public static GameObject SphereController;
 	public static GameObject CoinParticleFlyCoinTarget{ get; private set;}
@@ -171,7 +173,6 @@ public class PuzzleManager : MonoBehaviour {
 	void Update(){
 		currentStageText.text = (CurrentStage + 1).ToString();
 
-		/*
 		if(Input.GetKeyDown(KeyCode.Q)){
 			initialize();
 		}
@@ -190,7 +191,6 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S)){
 			--MicroCoin;
 		}
-		 */
 	}
 
 	void initialize(){
@@ -492,7 +492,9 @@ public class PuzzleManager : MonoBehaviour {
 			instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
 			
 		}else{
-			"AllClear!".Log();
+			var obj = Instantiate(instance.resultPrefab) as GameObject;
+			obj.transform.SetParent(GameObject.Find("Canvas").transform, true);
+			obj.transform.localPosition = new Vector3(0,0,0);
 		}
 	}
 
