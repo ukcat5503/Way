@@ -45,6 +45,8 @@ public class Explanation : MonoBehaviour {
 
 	int currentObj;
 
+	int frame;
+
 	// Use this for initialization
 	void Start () {
 		objs = new List<GameObject>();
@@ -60,7 +62,7 @@ public class Explanation : MonoBehaviour {
 			r.width = rectSize[i].x;
 			r.height = rectSize[i].y;
 			rect.Add(r);
-			objs[i].transform.parent = canvas;
+			objs[i].transform.SetParent(canvas);
 			objs[i].name = message[i];
 			objs[i].SetActive(false);
 		}
@@ -78,6 +80,13 @@ public class Explanation : MonoBehaviour {
 				}else{
 					Destroy(gameObject);
 				}
+			}
+		}
+
+		if (++frame > 400)
+		{
+			for (int i = currentObj; i < objs.Count; ++i){
+				Destroy(objs[i]);
 			}
 		}
 	}
