@@ -82,11 +82,11 @@ public class Explanation : MonoBehaviour {
 				}
 			}
 		}
-
-		if (++frame > 400)
+		if (currentObj == objs.Count - 1)
 		{
-			for (int i = currentObj; i < objs.Count; ++i){
-				Destroy(objs[i]);
+			if (++frame > 120)
+			{
+				Destroy(objs[objs.Count - 1]);
 			}
 		}
 	}
