@@ -136,7 +136,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				for (int i = 0; i < length; ++i){
 					if(objs[i].gameObject.layer == LayerMask.NameToLayer("Block")){
 						Destroy(objs[i].gameObject);
-						PuzzleManager.AddTotalBlockText(1);
+						// PuzzleManager.AddTotalBlockText(1);
 					}
 				}
 			}
