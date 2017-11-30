@@ -51,10 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9613b8deaaf38422ba6dd4031a2a94e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  androidTrackingCode: 'UA-110493957-1 '
-  IOSTrackingCode: 'UA-110493957-1 '
-  otherTrackingCode: 'UA-110493957-1 '
-  productName: 2017_Way
+  androidTrackingCode: UA-110493957-1
+  IOSTrackingCode: UA-110493957-1
+  otherTrackingCode: UA-110493957-1
+  productName: 
   bundleIdentifier: 
   bundleVersion: 1
   dispatchPeriod: 5
