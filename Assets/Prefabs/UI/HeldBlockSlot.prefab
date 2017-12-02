@@ -143,9 +143,8 @@ MonoBehaviour:
   cursorGuideObject: {fileID: 1511084491060424, guid: c8b554435b9664412b85f3bcfc5a3ca5,
     type: 2}
   normalStateColor: {r: 0, g: 0.70980394, b: 1, a: 1}
-  pickingStateColor: {r: 1, g: 0.8482759, b: 0, a: 1}
-  deleteStateColor: {r: 1, g: 0, b: 0, a: 1}
-  disableStateColor: {r: 0.32352942, g: 0.32352942, b: 0.32352942, a: 1}
+  deleteStateColor: {r: 1, g: 0.84705883, b: 0, a: 1}
+  disableStateColor: {r: 1, g: 0, b: 0, a: 1}
   heldObjSprite:
   - {fileID: 21300000, guid: 74aff0d85b6d04deb9967fd1e6138d8f, type: 3}
   - {fileID: 21300000, guid: 7b850ef1c6db54d89adb2d4a2d96e684, type: 3}

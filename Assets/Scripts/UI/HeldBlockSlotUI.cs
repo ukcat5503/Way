@@ -17,14 +17,17 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	GameObject cursorGuideObject;
 	MeshRenderer cursorGuideMeshRenderer;
 	[SerializeField]
-	Color normalStateColor, pickingStateColor, deleteStateColor, disableStateColor;
+	Color normalStateColor, deleteStateColor, disableStateColor;
 
 	// 選択中のブロック情報
-	bool isPicking;
 	int currentObj;
-	Vector3 pickingObjectWorldPos;
+
+	// UIの表示状況
+	const int uiVisibleFrame = 60;
+	int uiVisibleCurrentFrame = uiVisibleFrame;
 
 	// ブロックのホイール
+	Image slotImages;
 	Image[] images;
 	RectTransform[] imageRectTranTransforms;
 	Vector3[] imageBasePosition;
@@ -53,6 +56,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		cursorGuideObject = Instantiate(cursorGuideObject) as GameObject;
 		cursorGuideMeshRenderer = cursorGuideObject.GetComponentInChildren<MeshRenderer>();
 		cursorGuideMeshRenderer.material.color = normalStateColor;
+
+		slotImages = transform.Find("BackGround").GetComponent<Image>();
 
 		images = new Image[5];
 		imageRectTranTransforms = new RectTransform[images.Length];
@@ -88,19 +93,10 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			(10 - (int)(screenToWorldPointPosition.z + 0.5f))
 		);
 
-		if(!isPicking){
-			if(isContainLocalMap(mouseLocalPosition)){
-				cursorGuideObject.transform.position = mouseWorldPosition;
-				Cursor.visible = false;
-			}else{
-				cursorGuideObject.transform.position = new Vector3(-50f, -50f, -50f);
-				Cursor.visible = true;
-			}
-
-		}else if(animationCurrentFrame++ <= kAnimationFrame){
+		if(animationCurrentFrame++ <= kAnimationFrame){
 			playAnimation();
 			
-		}else{
+		}else if(isContainLocalMap(mouseLocalPosition)){
 			wheelValue += Input.GetAxis("Mouse ScrollWheel");
 			if(wheelValue > kWheelSensitivity){
 				SoundManager.PlaySE(SoundManager.SE.move);
@@ -108,6 +104,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				wheelScrollImage(true);
 				upToAnimation = true;
 				animationCurrentFrame = 0;
+				slotUiVisible(mouseWorldPosition);
 
 			}else if(wheelValue < -kWheelSensitivity){
 				SoundManager.PlaySE(SoundManager.SE.move);
@@ -115,78 +112,91 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				wheelScrollImage();
 				upToAnimation = false;
 				animationCurrentFrame = 0;
+				slotUiVisible(mouseWorldPosition);
+
 			}
 		}
 
-		// ステージ変わったら選択やめる
-		if (targerStage != PuzzleManager.CurrentStage)
-		{
-			isPicking = false;
-			transform.position = RectTransformUtility.WorldToScreenPoint(Camera.main, new Vector3(-50f, -50f, -50f));
+		// 選択していない時 カーソルを動かす
+		if(isContainLocalMap(mouseLocalPosition)){
+			cursorGuideObject.transform.position = mouseWorldPosition;
+			Cursor.visible = false;
+		}else{
+			cursorGuideObject.transform.position = new Vector3(-50f, -50f, -50f);
+			Cursor.visible = true;
 		}
 
-		var objs = Physics.OverlapSphere(cursorGuideObject.transform.position, 0.05f, targetLayer);
-		if(objs.Length > 0){
-			// 既存のブロックを選択
-			cursorGuideMeshRenderer.material.color = deleteStateColor;
+		// スロットそのもののアニメーション
+		if(++uiVisibleCurrentFrame > uiVisibleFrame){
+			var alpha = slotImages.color.a - (1f / uiVisibleFrame * 3);
+			slotImages.color = new Color(1f, 1f, 1f, alpha);
 
+			var length = images.Length;
+			for (int i = 0; i < length; ++i){
+				images[i].color = new Color(1f, 1f, 1f, alpha);
+			}
+		}
+		
+		// 選択中かのステータス達
+		bool isSelectObj;
+		bool isSelectUserPlaceBlock;
+		GameObject selectBlock;
+		{
+			var objs = Physics.OverlapSphere(cursorGuideObject.transform.position, 0.05f, targetLayer);
+			isSelectObj = objs.Length != 0;
+			if(isSelectObj){
+				selectBlock = objs[0].gameObject;
+				isSelectUserPlaceBlock = selectBlock.layer == LayerMask.NameToLayer("Block");
+				if(isSelectUserPlaceBlock){
+					cursorGuideMeshRenderer.material.color = deleteStateColor;
+				}else{
+					cursorGuideMeshRenderer.material.color = disableStateColor;
+				}
+			}else{
+				selectBlock = null;
+				isSelectUserPlaceBlock = false;
+				cursorGuideMeshRenderer.material.color = normalStateColor;
+			}
+		}
+
+		
+		if(isSelectObj){
 			// 右クリックでブロック削除
 			if(Input.GetMouseButton(1)){
-				var length = objs.Length;
-				for (int i = 0; i < length; ++i){
-					if(objs[i].gameObject.layer == LayerMask.NameToLayer("Block")){
-						Destroy(objs[i].gameObject);
-						// PuzzleManager.AddTotalBlockText(1);
-					}
+				if(isSelectUserPlaceBlock){
+					Destroy(selectBlock);
+					SoundManager.PlaySE(SoundManager.SE.cancel);
 				}
 			}
+		}
 
-		}else if(isPicking){
-			// 新規ブロックを選択中
-			cursorGuideMeshRenderer.material.color = pickingStateColor;
-
-			if(Input.GetMouseButtonDown(0)){
-				// 左クリックでブロック設置
-				isPicking = false;
-				cursorGuideMeshRenderer.material.color = normalStateColor;
-
-				var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
-				if(objs.Length == 0 && parentObj){
-					var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], pickingObjectWorldPos, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
-					obj.transform.parent = parentObj.transform;
-					var turn = obj.GetComponent<TurnBlockBase>();
-					if(turn != null){
-						turn.SetTurnBlockType(TurnBlockBase.BlockType.Place);
-					}
-					PuzzleManager.AddTotalBlockText(-1);
-					SoundManager.PlaySE(SoundManager.SE.push);
-
+		if(Input.GetMouseButton(0)){
+			// 左クリックでブロック設置
+			var parentObj = GameObject.Find("Stage " + PuzzleManager.CurrentStage + "/Maps");
+			if(!isSelectObj && isContainLocalMap(mouseLocalPosition)){
+				var obj = Instantiate(heldObject[calcFixedIndex(currentObj)], mouseWorldPosition, heldObject[calcFixedIndex(currentObj)].transform.rotation) as GameObject;
+				obj.transform.parent = parentObj.transform;
+				var turn = obj.GetComponent<TurnBlockBase>();
+				if(turn != null){
+					turn.SetTurnBlockType(TurnBlockBase.BlockType.Place);
 				}
-				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
+				PuzzleManager.AddTotalBlockText(-1);
+				SoundManager.PlaySE(SoundManager.SE.push);
 
-			}else if(Input.GetMouseButtonDown(1)){
-				// 右クリックで選択解除
-				isPicking = false;
-				SoundManager.PlaySE(SoundManager.SE.cancel);
-				transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 			}
+			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
+		}
+	}
 
-		}else{
-			// 何も選択してない
-			cursorGuideMeshRenderer.material.color = normalStateColor;
+	void slotUiVisible(Vector3 pos){
+		transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, pos);
 
-			// 最初にUIクリック
-			if(Input.GetMouseButtonDown(0) && !isPicking){
-				if(isContainLocalMap(mouseLocalPosition)){
-					targerStage = PuzzleManager.CurrentStage;
-					isPicking = true;
-					cursorGuideMeshRenderer.material.color = pickingStateColor;
-					pickingObjectWorldPos = mouseWorldPosition;
-					SoundManager.PlaySE(SoundManager.SE.select);
+		uiVisibleCurrentFrame = 0;
 
-					transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, mouseWorldPosition);
-				}
-			}
+		slotImages.color = new Color(1f, 1f, 1f, 1f);
+		var length = images.Length;
+		for (int i = 0; i < length; ++i){
+			images[i].color = new Color(1f, 1f, 1f, 1f);
 		}
 	}
 
@@ -208,6 +218,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 	}
 
 	void playAnimation(){
+		// スクロールアニメーション
 		if(upToAnimation){
 			if(animationCurrentFrame == kAnimationFrame){
 			var length = imageRectTranTransforms.Length;
