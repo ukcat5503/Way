@@ -97,6 +97,30 @@ public class HeldBlockSlotUI : MonoBehaviour {
 			playAnimation();
 			
 		}else if(isContainLocalMap(mouseLocalPosition)){
+			var uiPos = mouseWorldPosition;
+			uiPos.x -= 1f;
+			if(mouseLocalPosition.x < 3){
+				// 画面端の時はUIを逆側にする
+				uiPos.x += 4f;
+			}
+			if(mouseLocalPosition.z == 0){
+				// Uiが上端ならすこしずらす
+				uiPos.z -= 2f;
+				
+			}else if(mouseLocalPosition.z == 1){
+				// Uiが上端ならすこしずらす
+				uiPos.z -= 1f;
+
+			}else if(mouseLocalPosition.z == 8){
+				// uiが下端なら少しずらす
+				uiPos.z += 0.5f;
+
+			}else if(mouseLocalPosition.z == 9){
+				// uiが下端なら少しずらす
+				uiPos.z += 1f;
+			}
+			mouseLocalPosition.z.Log();
+
 			wheelValue += Input.GetAxis("Mouse ScrollWheel");
 			if(wheelValue > kWheelSensitivity){
 				SoundManager.PlaySE(SoundManager.SE.move);
@@ -104,7 +128,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				wheelScrollImage(true);
 				upToAnimation = true;
 				animationCurrentFrame = 0;
-				slotUiVisible(mouseWorldPosition);
+				slotUiVisible(uiPos);
 
 			}else if(wheelValue < -kWheelSensitivity){
 				SoundManager.PlaySE(SoundManager.SE.move);
@@ -112,7 +136,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				wheelScrollImage();
 				upToAnimation = false;
 				animationCurrentFrame = 0;
-				slotUiVisible(mouseWorldPosition);
+				slotUiVisible(uiPos);
 
 			}
 		}
