@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool IsActive = false;
 
-	const float kSpeedPerSecond = 2f;
+	const float kSpeedPerSecond = 1.75f;
 
 	[SerializeField]
 	LayerMask targerLayer;

@@ -104,7 +104,7 @@ public class TurnBlockBase : MonoBehaviour {
 	public float currentAngle = 0f;
 	bool leftRotate = false;
 	const int kAnimationFrame = 20;
-	const float kTolerancePotisionToStartRotate = 0.30f;
+	const float kTolerancePotisionToStartRotate = 0.20f;
 	
 
 	// ドラッグの幻影系

@@ -926,6 +926,7 @@ SpriteRenderer:
   m_Size: {x: 10.8, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!1 &774017213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,6 +1085,7 @@ SpriteRenderer:
   m_Size: {x: 10.8, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!1001 &1155436423
 Prefab:
   m_ObjectHideFlags: 0
@@ -1122,6 +1124,11 @@ Prefab:
     - target: {fileID: 497732, guid: bbc182e4479ba4d21ad61ccd1ffc0944, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114531908067335576, guid: bbc182e4479ba4d21ad61ccd1ffc0944,
+        type: 2}
+      propertyPath: logLevel
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbc182e4479ba4d21ad61ccd1ffc0944, type: 2}
