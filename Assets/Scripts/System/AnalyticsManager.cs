@@ -6,10 +6,13 @@ public class AnalyticsManager : MonoBehaviour {
 
 	[SerializeField]
 	GameObject GAv4Prefab;
+	
 	static GoogleAnalyticsV4 googleAnalytics;
 
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad(this);
+
 		googleAnalytics = (Instantiate(GAv4Prefab) as GameObject).GetComponent<GoogleAnalyticsV4>();
 	}
 
@@ -24,7 +27,7 @@ public class AnalyticsManager : MonoBehaviour {
 	public static void LogScreen(string eventName){
 		googleAnalytics.LogScreen(eventName);
 	}
-	
+
 	public static void LogEvent(string eventCategory, string eventAction, string eventLabel, long value){
 		googleAnalytics.LogEvent(eventCategory, eventAction, eventLabel, value);
 	}
