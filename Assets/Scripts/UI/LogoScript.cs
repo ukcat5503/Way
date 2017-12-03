@@ -10,8 +10,6 @@
 	バージョン：	1.1
 */
 
-// なんでUI表示するのにSpriteRendererなんだ・・・？
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
