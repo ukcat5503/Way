@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateObjects:
+  - {fileID: 1177277136731816, guid: af26f31f32471485aa5749476a0fc8e7, type: 2}
   - {fileID: 1340613031713494, guid: 53744cfa6c6cd4d2b83c08e3be4e3000, type: 2}
   nextSceneName: Logo
 --- !u!4 &746044762

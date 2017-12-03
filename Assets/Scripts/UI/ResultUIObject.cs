@@ -77,7 +77,7 @@ public class ResultUIObject : MonoBehaviour {
 			}
 		}
 
-		PuzzleManager.instance.googleAnalytics.LogScreen("Score" + score);
+		AnalyticsManager.LogScreen("Score" + score);
 
 
 	}
