@@ -171,6 +171,8 @@ public class PuzzleManager : MonoBehaviour {
 		totalBlockText = GameObject.Find("BlockInfo/TotalBlock").GetComponent<Text>();
 
 		firstCameraPosition = CameraObject.transform.position;
+		
+		SoundManager.PlayBGM(SoundManager.BGM.Blue_Ever);
 
 
 		initialize();

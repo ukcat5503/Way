@@ -28,6 +28,8 @@ public class SoundManager : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
+		DontDestroyOnLoad(this);
+
 		audioSource = GetComponent<AudioSource>();
 
 		foreach (SE key in SE.GetValues(typeof(SE)))
@@ -40,11 +42,6 @@ public class SoundManager : MonoBehaviour
 			bgm.Add(Resources.Load("Audio/BGM/" + key.ToString()) as AudioClip);
 		}
 
-	}
-
-	void Start()
-	{
-		PlayBGM(BGM.Blue_Ever);
 	}
 
 	public static void PlaySE(SE play)

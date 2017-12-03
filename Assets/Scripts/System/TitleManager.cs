@@ -40,6 +40,7 @@ public class TitleManager : MonoBehaviour {
 			// ゲームへ
 			nextSceneName = gameSceneName;
 			state = TitleState.FadeOut;
+			SoundManager.PlaySE(SoundManager.SE.select);
 		}else if(state == TitleState.Waiting && timeElapsed > 60){
 			// 学校ロゴへ
 			nextSceneName = logoSceneName;
