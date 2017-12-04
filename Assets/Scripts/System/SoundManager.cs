@@ -46,11 +46,21 @@ public class SoundManager : MonoBehaviour
 
 	public static void PlaySE(SE play)
 	{
+		if(audioSource == null){
+			("audioSourceが生成されていません。\nPlay: " + play.ToString()).LogWarning();
+			return;
+		}
+
 		audioSource.PlayOneShot(se[(int)play], 1f);
 	}
 
 	public static void PlayBGM(BGM play)
 	{
+		if(audioSource == null){
+			("audioSourceが生成されていません。\nPlay: " + play.ToString()).LogWarning();
+			return;
+		}
+		
 		audioSource.clip = bgm[(int)play];
 		audioSource.Play();
 	}
