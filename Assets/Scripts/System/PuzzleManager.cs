@@ -179,7 +179,6 @@ public class PuzzleManager : MonoBehaviour {
 	void Update(){
 		currentStageText.text = (CurrentStage + 1).ToString();
 
-		/*
 		if(Input.GetKeyDown(KeyCode.Q)){
 			initialize();
 		}
@@ -198,7 +197,6 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S)){
 			--MicroCoin;
 		}
-		*/
 		if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			Application.Quit();
