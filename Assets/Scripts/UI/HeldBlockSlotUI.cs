@@ -119,7 +119,6 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				// uiが下端なら少しずらす
 				uiPos.z += 1f;
 			}
-			mouseLocalPosition.z.Log();
 
 			wheelValue += Input.GetAxis("Mouse ScrollWheel");
 			if(wheelValue > kWheelSensitivity){
