@@ -10,6 +10,10 @@ public class WakeUpApplication : MonoBehaviour {
 
 	[SerializeField]
 	string nextSceneName;
+
+	void Awake(){
+		Application.targetFrameRate = 60;
+	}
 	
 	void Start () {
 		foreach (var item in instantiateObjects)
