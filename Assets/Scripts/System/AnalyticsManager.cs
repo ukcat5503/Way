@@ -17,18 +17,35 @@ public class AnalyticsManager : MonoBehaviour {
 	}
 
 	public static void StartSession(){
-		googleAnalytics.StartSession();
+		if(googleAnalytics != null){
+			googleAnalytics.StartSession();
+		}else{
+			"googleAnalyticsがnullです".LogWarning();
+		}
+		
 	}
 
 	public static void StopSession(){
-		googleAnalytics.StopSession();
+		if(googleAnalytics != null){
+			googleAnalytics.StopSession();
+		}else{
+			"googleAnalyticsがnullです".LogWarning();
+		}
 	}
 	
 	public static void LogScreen(string eventName){
-		googleAnalytics.LogScreen(eventName);
+		if(googleAnalytics != null){
+			googleAnalytics.LogScreen(eventName);
+		}else{
+			"googleAnalyticsがnullです".LogWarning();
+		}
 	}
 
 	public static void LogEvent(string eventCategory, string eventAction, string eventLabel, long value){
-		googleAnalytics.LogEvent(eventCategory, eventAction, eventLabel, value);
+		if(googleAnalytics != null){
+			googleAnalytics.LogEvent(eventCategory, eventAction, eventLabel, value);
+		}else{
+			"googleAnalyticsがnullです".LogWarning();
+		}
 	}
 }
