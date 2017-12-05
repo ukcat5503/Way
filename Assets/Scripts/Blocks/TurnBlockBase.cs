@@ -70,7 +70,7 @@ public class TurnBlockBase : MonoBehaviour {
 		return RotateAngle.Zero;
 	}
 
-
+	Collider _collider;
 
 	protected int[] targetPoint = new int[4];
 	protected ObjectInfo sphereObjectInfo = null;
@@ -117,6 +117,10 @@ public class TurnBlockBase : MonoBehaviour {
 	Vector3 targetLocalPos;
 	const int kSmoothMoveFrame = 10;
 	const float	popupHeight = 2f / kSmoothMoveFrame * 0.75f;
+
+	// ブロック回転のため
+	const int kWaitRotateFrame = 30;
+	int waitRotateCurrentFrame = kWaitRotateFrame;
 	
 
 
@@ -128,6 +132,7 @@ public class TurnBlockBase : MonoBehaviour {
 		*/
 		CanMoveFromMouse = true;
 
+		_collider = GetComponent<Collider>();
 		var mesh = GetComponentsInChildren<MeshRenderer>()[0];
 		switch (turnBlockType)
 		{
@@ -156,6 +161,10 @@ public class TurnBlockBase : MonoBehaviour {
 	}
 	
 	virtual protected void Update () {
+		if(++waitRotateCurrentFrame == kWaitRotateFrame){
+			_collider.enabled = true;
+		}
+
 		if(isAnimating){
 			rotateY(targetAngle / kAnimationFrame);
 
@@ -378,5 +387,7 @@ public class TurnBlockBase : MonoBehaviour {
 
 			TurnBlock((int)turnBlockAngle);
 			Setup();
+			waitRotateCurrentFrame = 0;
+			_collider.enabled = false;
 	}
 }
