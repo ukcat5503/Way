@@ -47,6 +47,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 
 	[SerializeField]
 	LayerMask targetLayer;
+	public static LayerMask TargetLayer;
 
 	int targerStage = 0;
 
@@ -58,6 +59,8 @@ public class HeldBlockSlotUI : MonoBehaviour {
 		cursorGuideMeshRenderer.material.color = normalStateColor;
 
 		slotImages = transform.Find("BackGround").GetComponent<Image>();
+
+		TargetLayer = targetLayer;
 
 		images = new Image[5];
 		imageRectTranTransforms = new RectTransform[images.Length];

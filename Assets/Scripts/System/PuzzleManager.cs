@@ -179,6 +179,10 @@ public class PuzzleManager : MonoBehaviour {
 	void Update(){
 		currentStageText.text = (CurrentStage + 1).ToString();
 
+		
+		if(Input.GetKeyDown(KeyCode.M)){
+			IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction).Log();
+		}
 		if(Input.GetKeyDown(KeyCode.Q)){
 			initialize();
 		}
@@ -548,5 +552,76 @@ public class PuzzleManager : MonoBehaviour {
 		}else{
 			instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
 		}
+	}
+
+	/// <summary>
+	/// ゴールにブロックが接続されているかをチェックする
+	/// </summary>
+	/// <returns>接続されているか</returns>
+	public static bool IsConnectToGoalBlock(Vector3 pos, TurnBlockBase.StartPosition direction){
+		float blockWidth = 1f;
+
+		pos.y -= kMapDepth + SphereController.transform.position.y;
+		Vector3 newPos = pos;
+		// 無限ループ防止
+		for (int i = 0; i < 20; ++i){
+			var objs = Physics.OverlapSphere(newPos, 0.1f, HeldBlockSlotUI.TargetLayer);
+
+			if(objs.Length == 0){
+				break;
+			}
+
+			if(objs[0].GetComponent<GoalBlock>() != null){
+				return true;
+			}
+
+			TurnBlockBase block = objs[0].GetComponent<TurnBlockBase>();
+			if(block != null){
+				switch (direction)
+				{
+					case TurnBlockBase.StartPosition.North:
+						direction = angleToStartPosition(direction, (int)block.TargetFromSouth);	break;
+					case TurnBlockBase.StartPosition.South:
+						direction = angleToStartPosition(direction, (int)block.TargetFromNorth);	break;
+					case TurnBlockBase.StartPosition.East:
+						direction = angleToStartPosition(direction, (int)block.TargetFromWest);	break;
+					case TurnBlockBase.StartPosition.West:
+						direction = angleToStartPosition(direction, (int)block.TargetFromEast);	
+						break;
+				}
+
+				Vector3 dire;
+				switch (direction)
+				{
+					case TurnBlockBase.StartPosition.North:
+						dire = new Vector3(0,0,blockWidth);		break;
+					case TurnBlockBase.StartPosition.South:
+						dire = new Vector3(0,0,-blockWidth);	break;
+					case TurnBlockBase.StartPosition.East:
+						dire = new Vector3(blockWidth,0,0);	break;
+					case TurnBlockBase.StartPosition.West:
+						dire = new Vector3(-blockWidth,0,0);		break;
+					default: 
+						dire = new Vector3(0,0,0);				break;
+				}
+				newPos += dire;
+			}else{
+				break;
+			}
+		}
+		return false;
+	}
+
+	static TurnBlockBase.StartPosition angleToStartPosition(TurnBlockBase.StartPosition direction, int rotateAngle){
+		int rotateCount = 0;
+		switch (rotateAngle)
+		{
+			case 0:		rotateCount = 0;	break;
+			case -90:	rotateCount = 3;	break;
+			case 180:	rotateCount = 2;	break;
+			case 90:	rotateCount = 1;	break;
+		}
+
+		return (TurnBlockBase.StartPosition)(((int)direction + rotateCount) % 4);
 	}
 }
