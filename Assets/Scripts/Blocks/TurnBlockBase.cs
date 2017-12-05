@@ -81,14 +81,14 @@ public class TurnBlockBase : MonoBehaviour {
 	[HideInInspector]
 	public bool CanMoveFromMouse;
 
-	[SerializeField, Space(6), Header("入って来た角度から見てどのように曲がるかを指定")]
-	RotateAngle targetFromWest;
-	[SerializeField]
-	RotateAngle targetFromNorth;
-	[SerializeField]
-	RotateAngle targetFromEast;
-	[SerializeField]
-	RotateAngle targetFromSouth;
+	[UnityEngine.Serialization.FormerlySerializedAs("targetFromWest")]
+	public RotateAngle TargetFromWest;
+	[UnityEngine.Serialization.FormerlySerializedAs("targetFromNorth")]
+	public RotateAngle TargetFromNorth;
+	[UnityEngine.Serialization.FormerlySerializedAs("targetFromEast")]
+	public RotateAngle TargetFromEast;
+	[UnityEngine.Serialization.FormerlySerializedAs("targetFromSouth")]
+	public RotateAngle TargetFromSouth;
 
 	[SerializeField, Space(6), Header("1動作でどちらにブロックが動作するか")]
 	BlockType turnBlockType;
@@ -216,26 +216,26 @@ public class TurnBlockBase : MonoBehaviour {
 
 	void TurnBlock(int turnCount)
 	{
-		targetFromEast = ValueToRotateAngle(targetPoint[(int)StartPosition.East]);
-		targetFromNorth = ValueToRotateAngle(targetPoint[(int)StartPosition.North]);
-		targetFromWest = ValueToRotateAngle(targetPoint[(int)StartPosition.West]);
-		targetFromSouth = ValueToRotateAngle(targetPoint[(int)StartPosition.South]);
+		TargetFromEast = ValueToRotateAngle(targetPoint[(int)StartPosition.East]);
+		TargetFromNorth = ValueToRotateAngle(targetPoint[(int)StartPosition.North]);
+		TargetFromWest = ValueToRotateAngle(targetPoint[(int)StartPosition.West]);
+		TargetFromSouth = ValueToRotateAngle(targetPoint[(int)StartPosition.South]);
 		for (;turnCount > 0; --turnCount)
 		{
-			var temp = targetFromEast;
-			targetFromEast = targetFromNorth;
-			targetFromNorth = targetFromWest;
-			targetFromWest = targetFromSouth;
-			targetFromSouth = temp;
+			var temp = TargetFromEast;
+			TargetFromEast = TargetFromNorth;
+			TargetFromNorth = TargetFromWest;
+			TargetFromWest = TargetFromSouth;
+			TargetFromSouth = temp;
 		}
 	}
 
 	void Setup()
 	{
-		targetPoint[(int)StartPosition.West] = (int)targetFromWest;
-		targetPoint[(int)StartPosition.East] = (int)targetFromEast;
-		targetPoint[(int)StartPosition.North] = (int)targetFromNorth;
-		targetPoint[(int)StartPosition.South] = (int)targetFromSouth;
+		targetPoint[(int)StartPosition.West] = (int)TargetFromWest;
+		targetPoint[(int)StartPosition.East] = (int)TargetFromEast;
+		targetPoint[(int)StartPosition.North] = (int)TargetFromNorth;
+		targetPoint[(int)StartPosition.South] = (int)TargetFromSouth;
 	}
 
 	[ContextMenu("Output")]
