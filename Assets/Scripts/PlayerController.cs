@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 
 	public static bool IsSpeedUp = false;
 
+	int frame = 0;
 
 	[SerializeField]
 	LayerMask targerLayer;
@@ -36,6 +37,13 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update (){
+		if(!PlayerController.IsSpeedUp && ++frame % 60 == 0){
+			if(PuzzleManager.IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction)){
+				PlayerController.IsSpeedUp = true;
+			}
+		}
+
+
 		Pos = transform.position;
 
 		// 移動方向求める
