@@ -53,7 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSprite:
-  - {fileID: 21300000, guid: 8911fdc1db5c846ac9c6b9c261e651f5, type: 3}
+  - {fileID: 21300000, guid: 01c0031f6b8644b45835b2d2f8179d3b, type: 3}
   animationPerFrame: 0
   useBillBoard: 0
   visibleFrame: 30
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8911fdc1db5c846ac9c6b9c261e651f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 01c0031f6b8644b45835b2d2f8179d3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
