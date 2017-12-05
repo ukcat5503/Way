@@ -8,6 +8,7 @@ public class GoalBlock : MonoBehaviour {
 			Destroy(other.gameObject);
 			PuzzleManager.NextStage(transform.parent.parent.gameObject);
 			SoundManager.PlaySE(SoundManager.SE.clear);
+			PlayerController.IsSpeedUp = false;
 		}
 		else
 		{

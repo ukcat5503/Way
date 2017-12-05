@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour {
 	public static TurnBlockBase.StartPosition Direction;
 	public static Vector3 Pos;
 
+	public static bool IsSpeedUp = false;
+
 
 	[SerializeField]
 	LayerMask targerLayer;
@@ -52,11 +54,19 @@ public class PlayerController : MonoBehaviour {
 		if(IsActive){
 			var radian = (transform.eulerAngles.y) * Mathf.Deg2Rad;
 			Vector2 vector = new Vector2(Mathf.Sin(radian), Mathf.Cos(radian));
-			transform.position = new Vector3(
-				(vector.x * kSpeedPerSecond / 60f) + transform.position.x,
-				transform.position.y,
-				(vector.y * kSpeedPerSecond / 60f) + transform.position.z
-			);
+			if(IsSpeedUp){
+				transform.position = new Vector3(
+					(vector.x * kSpeedPerSecond * 4 / 60f) + transform.position.x,
+					transform.position.y,
+					(vector.y * kSpeedPerSecond * 4 / 60f) + transform.position.z
+				);
+			}else{
+				transform.position = new Vector3(
+					(vector.x * kSpeedPerSecond / 60f) + transform.position.x,
+					transform.position.y,
+					(vector.y * kSpeedPerSecond / 60f) + transform.position.z
+				);
+			}
 		}
 
 		RaycastHit hit;

@@ -564,7 +564,7 @@ public class PuzzleManager : MonoBehaviour {
 		pos.y -= kMapDepth + SphereController.transform.position.y;
 		Vector3 newPos = pos;
 		// 無限ループ防止
-		for (int i = 0; i < 20; ++i){
+		for (int i = 0; i < 100; ++i){
 			var objs = Physics.OverlapSphere(newPos, 0.1f, HeldBlockSlotUI.TargetLayer);
 
 			if(objs.Length == 0){

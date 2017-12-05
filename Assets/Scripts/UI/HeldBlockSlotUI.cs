@@ -209,6 +209,9 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				PuzzleManager.AddTotalBlockText(-1);
 				SoundManager.PlaySE(SoundManager.SE.push);
 
+				if(PuzzleManager.IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction)){
+					PlayerController.IsSpeedUp = true;
+				}
 			}
 			transform.position = RectTransformUtility.WorldToScreenPoint (Camera.main, new Vector3(-50f, -50f, -50f));
 		}
