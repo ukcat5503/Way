@@ -252,7 +252,6 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
 
 		StageData[StageData.Count - 1].AddObject(4, 3, 0);
-		StageData[StageData.Count - 1].AddObject(0, 0, 15);
 		StageData[StageData.Count - 1].AddCoin(5, 1);
 		StageData[StageData.Count - 1].AddCoin(7, 1);
 		StageData[StageData.Count - 1].AddCoin(9, 1);
@@ -561,8 +560,15 @@ public class PuzzleManager : MonoBehaviour {
 	public static bool IsConnectToGoalBlock(Vector3 pos, TurnBlockBase.StartPosition direction){
 		float blockWidth = 1f;
 
-		pos.y -= kMapDepth + SphereController.transform.position.y;
-		Vector3 newPos = pos;
+		// pos.y -= kMapDepth + SphereController.transform.position.y;
+
+
+		Vector3 newPos = new Vector3(
+			(int)(pos.x + 0.5f),
+			-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
+			((int)(pos.z + 0.5f )) + 0.25f
+		);
+
 		// 無限ループ防止
 		for (int i = 0; i < 100; ++i){
 			var objs = Physics.OverlapSphere(newPos, 0.1f, HeldBlockSlotUI.TargetLayer);
