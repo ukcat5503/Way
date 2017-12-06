@@ -512,7 +512,7 @@ public class PuzzleManager : MonoBehaviour {
 		}
 		Destroy(destroyObj);
 
-		PlaceBlockQty = StageData[CurrentStage].PlaceBlockQty;
+		PlaceBlockQty += StageData[CurrentStage].PlaceBlockQty;
 
 		++CurrentStage;
 		CameraManager.CameraDown(kMapDepth);

@@ -61,15 +61,17 @@ public class ResultUIObject : MonoBehaviour {
 
 
 		//スコア計算
-		score = PuzzleManager.RequirementBlockQty - PuzzleManager.PlaceBlockQty - (PuzzleManager.DeathCount * 10);
+		score = PuzzleManager.RequirementBlockQty - (PuzzleManager.PlaceBlockQty + (PuzzleManager.DeathCount * 10));
 
 		PlaceBlockValue.text = PuzzleManager.PlaceBlockQty.ToString() + "/" + PuzzleManager.RequirementBlockQty.ToString();
 		DeathCountValue.text = PuzzleManager.DeathCount.ToString();
 
 		RankValue.text = scoreChar[scoreChar.Length - 1];
+
 		RankValue.color = new Color(scoreColor[scoreColor.Length - 1].r, scoreColor[scoreColor.Length - 1].g, scoreColor[scoreColor.Length - 1].b, 0f);
+		
 		for (int i = 0; i < scoreBorder.Length; ++i){
-			if (scoreBorder[i] < score)
+			if (scoreBorder[i] <= score)
 			{
 				RankValue.text = scoreChar[i];
 				RankValue.color = new Color(scoreColor[i].r, scoreColor[i].g, scoreColor[i].b, 0f);
@@ -77,6 +79,7 @@ public class ResultUIObject : MonoBehaviour {
 			}
 		}
 
+		("Score: " + score).Log();
 		AnalyticsManager.LogScreen("Score" + score);
 
 
