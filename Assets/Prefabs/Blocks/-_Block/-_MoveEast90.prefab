@@ -136,13 +136,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTouchSphere: 0
   CanMoveFromMouse: 0
-  targetFromWest: 180
-  targetFromNorth: 0
-  targetFromEast: 180
-  targetFromSouth: 0
+  TargetFromWest: 180
+  TargetFromNorth: 0
+  TargetFromEast: 180
+  TargetFromSouth: 0
   turnBlockType: 2
   currentAngle: 0
   moveDirection: 2
   targetLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8704
