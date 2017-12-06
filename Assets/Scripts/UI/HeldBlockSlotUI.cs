@@ -206,7 +206,7 @@ public class HeldBlockSlotUI : MonoBehaviour {
 				if(turn != null){
 					turn.SetTurnBlockType(TurnBlockBase.BlockType.Place);
 				}
-				PuzzleManager.AddTotalBlockText(-1);
+				PuzzleManager.AddTotalBlockText(1);
 				SoundManager.PlaySE(SoundManager.SE.push);
 
 				if(PuzzleManager.IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction)){

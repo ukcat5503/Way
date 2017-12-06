@@ -42,7 +42,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		public void AddBlockQtyInfo(int requirementBlockQty){
 			RequirementBlockQty = requirementBlockQty;
-			PlaceBlockQty = requirementBlockQty;
+			PlaceBlockQty = 0;
 		}
 
 		public bool IsCollectAllCoin(){
@@ -519,7 +519,7 @@ public class PuzzleManager : MonoBehaviour {
 		
 		if(StageObject.Count > CurrentStage){
 			StageObject[CurrentStage].SetActive(true);
-			instance.currentBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
+			instance.currentBlockText.text = 0.ToString();
 			instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
 			AnalyticsManager.LogScreen("Stage " + CurrentStage);
 
@@ -546,8 +546,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[CurrentStage].PlaceBlockQty += add;
 		instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
 
-		if(StageData[CurrentStage].PlaceBlockQty < 0){
-			instance.currentBlockText.text = "<color=red>" + (-StageData[CurrentStage].PlaceBlockQty).ToString() + "</color>";
+		if(StageData[CurrentStage].PlaceBlockQty > StageData[CurrentStage].RequirementBlockQty){
+			instance.currentBlockText.text = "<color=red>" + StageData[CurrentStage].PlaceBlockQty.ToString() + "</color>";
 		}else{
 			instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
 		}
