@@ -67,7 +67,9 @@ public class MoveBlock : TurnBlockBase
 			checkpos += vector;
 			var objs = Physics.OverlapSphere(checkpos, 0.25f, targetLayer);
 
-			if (objs.Length != 0)
+
+
+			if (objs.Length != 0 || checkpos.x < 0 || checkpos.x >= PuzzleManager.kMapWidth || checkpos.z < 0 || checkpos.z >= PuzzleManager.kMapHeight + 1)
 			{
 				checkpos -= vector;
 				break;
