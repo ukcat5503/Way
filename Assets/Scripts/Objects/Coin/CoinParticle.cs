@@ -52,6 +52,8 @@ public class CoinParticle : MonoBehaviour {
 			isIgnition = true;
 			++PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty;
 
+			SoundManager.PlaySE(SoundManager.SE.coin);
+
 			int particleQty = microCoin / coinPerParticle;
 			for (int i = particleQty; i > 0; --i){
 

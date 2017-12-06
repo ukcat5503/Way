@@ -12,7 +12,8 @@ public class SoundManager : MonoBehaviour
 		cancel,
 		move,
 		clear,
-		miss
+		miss,
+		coin
 	}
 
 	public enum BGM
