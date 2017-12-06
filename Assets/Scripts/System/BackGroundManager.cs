@@ -3,30 +3,85 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BackGroundManager : MonoBehaviour {
-	
-	SpriteRenderer[] _spriteRenderers;
 
-	bool isClearing = false;
-
-	// Use this for initialization
-	void Start () {
-		_spriteRenderers = new SpriteRenderer[2];
-		var length = _spriteRenderers.Length;
-		for (int i = 0; i < length; ++i){
-			_spriteRenderers[i] = GameObject.Find("bg_" + i).GetComponent<SpriteRenderer>();
+	class BackGroundPartsInfo{
+		public GameObject obj;
+		public SpriteRenderer _spriteRenderer;
+		public int deleteStartFrame;
+		public float speed;
+		public bool isVisible = false;
+		public BackGroundPartsInfo(GameObject o, SpriteRenderer sr, int deleteFrame, float s){
+			obj = o;
+			_spriteRenderer = sr;
+			deleteStartFrame = deleteFrame;
+			speed = s;
 		}
 	}
 	
+	[SerializeField]
+	GameObject backgroundParts;
+
+	List<BackGroundPartsInfo> list = new List<BackGroundPartsInfo>();
+
+	int frame = 0;
+
+	Vector2 minInstantiatePosition = new Vector2(-4f,-2f);
+	Vector2 maxInstantiatePosition = new Vector2(20f,12f);
+
+	int minDeleteFrame = 90;
+	int maxDeleteFrame = 180;
+
+	float minSpeed = 0.5f / 60f;
+	float maxSpeed = 2.0f / 60f;
+
+	float minSize = 2f;
+	float maxSize = 5f;
+
+	float targetAlphaColor = 0.1f;
+
 	void Update () {
-		var length = _spriteRenderers.Length;
-		for (int i = 0; i < length; ++i){
-			_spriteRenderers[i].color = new Color(_spriteRenderers[i].color.r, _spriteRenderers[i].color.g, _spriteRenderers[i].color.b, _spriteRenderers[i].color.a + (isClearing ? -0.01f: +0.01f));
+
+		if(++frame % 3 == 0){
+			var obj = Instantiate(backgroundParts, new Vector3(0,0,0), backgroundParts.transform.rotation) as GameObject;
+
+			obj.transform.parent = transform;
+
+			float size = Random.Range(minSize, maxSize);
+			obj.transform.localScale = new Vector3(size, size, size);
+
+			Vector3 pos = new Vector3(Random.Range(minInstantiatePosition.x, maxInstantiatePosition.x), Random.Range(minInstantiatePosition.y, maxInstantiatePosition.y), 0);
+			obj.transform.localPosition = pos;
+			
+
+			int delete = frame + Random.Range(minDeleteFrame, maxDeleteFrame);
+			list.Add(new BackGroundPartsInfo(obj, obj.GetComponent<SpriteRenderer>(), delete, Random.Range(minSpeed, maxSpeed)));
 		}
 
-		if(!isClearing && _spriteRenderers[0].color.a >= 1){
-			isClearing = true;
-		}else if(isClearing && _spriteRenderers[0].color.a <= 0.2f){
-			isClearing = false;
+		int length = list.Count;
+
+		for (int i = length - 1; i >= 0; --i){
+			if(frame > list[i].deleteStartFrame){
+				var c = list[i]._spriteRenderer.color;
+				c.a -= targetAlphaColor / 60f;
+				list[i]._spriteRenderer.color = c;
+
+				if(list[i]._spriteRenderer.color.a < 0){
+					Destroy(list[i].obj);
+					list.RemoveAt(i);
+				}
+			}else{
+				if(!list[i].isVisible){
+					var c = list[i]._spriteRenderer.color;
+					c.a += targetAlphaColor / 60f;
+					list[i]._spriteRenderer.color = c;
+
+					if(list[i]._spriteRenderer.color.a > targetAlphaColor){
+						list[i].isVisible = true;
+					}
+				}
+			}
+			list[i].obj.transform.position = new Vector3(list[i].obj.transform.position.x + list[i].speed, list[i].obj.transform.position.y, list[i].obj.transform.position.z);
 		}
+		
 	}
 }
