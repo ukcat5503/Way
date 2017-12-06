@@ -94,8 +94,8 @@ public class Tutorial_Decide : MonoBehaviour {
 		blocks[2].enabled = false;
 		leftButton.enabled = false;
 
-		mouse.transform.position = new Vector3(-1.5f, -0.5f, 0f);
-		cursor.transform.position = new Vector3(-1.5f, 0.69f, 0f);
+		mouse.transform.position = new Vector3(-1.5f, 0f, -0.5f);
+		cursor.transform.position = new Vector3(-1.5f, 0f, 0.69f);
 		frame = 0;
 	}
 }
