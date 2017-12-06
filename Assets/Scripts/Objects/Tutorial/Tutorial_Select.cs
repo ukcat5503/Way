@@ -7,6 +7,7 @@ public class Tutorial_Select : MonoBehaviour {
 
 	SpriteRenderer[] blocks = new SpriteRenderer[3];
 	SpriteRenderer allow;
+	SpriteRenderer rollButton;
 
 
 	int frame = 0;
@@ -17,12 +18,17 @@ public class Tutorial_Select : MonoBehaviour {
 		blocks[1] = transform.Find("Block2").GetComponent<SpriteRenderer>();
 		blocks[2] = transform.Find("Block3").GetComponent<SpriteRenderer>();
 		allow = transform.Find("AllowUp").GetComponent<SpriteRenderer>();
+		rollButton = transform.Find("RollButton").GetComponent<SpriteRenderer>();
+		rollButton.enabled = false;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		if(frame > 90 && frame <= 120){
+			rollButton.enabled = true;
+			
 			blocks[1].transform.position = new Vector3(blocks[1].transform.position.x, blocks[1].transform.position.y + (0.6f / 30f), blocks[1].transform.position.z);
 			blocks[2].transform.position = new Vector3(blocks[2].transform.position.x, blocks[2].transform.position.y + (0.6f / 30f), blocks[2].transform.position.z);
 			allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y + (1f / 30f), allow.transform.position.z);
@@ -40,10 +46,12 @@ public class Tutorial_Select : MonoBehaviour {
 
 			if(frame == 120){
 				allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y - 1f, allow.transform.position.z);
+				rollButton.enabled = false;
 			}
 		}
 
 		if(frame > 210 && frame <= 240){
+			rollButton.enabled = true;
 			blocks[2].transform.position = new Vector3(blocks[2].transform.position.x, blocks[2].transform.position.y + (0.6f / 30f), blocks[2].transform.position.z);
 			blocks[0].transform.position = new Vector3(blocks[0].transform.position.x, blocks[0].transform.position.y + (0.6f / 30f), blocks[0].transform.position.z);
 			allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y + (1f / 30f), allow.transform.position.z);
@@ -61,10 +69,12 @@ public class Tutorial_Select : MonoBehaviour {
 
 			if(frame == 240){
 				allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y - 1f, allow.transform.position.z);
+				rollButton.enabled = false;
 			}
 		}
 
 		if(frame > 330 && frame <= 360){
+			rollButton.enabled = true;
 			blocks[0].transform.position = new Vector3(blocks[0].transform.position.x, blocks[0].transform.position.y + (0.6f / 30f), blocks[0].transform.position.z);
 			blocks[1].transform.position = new Vector3(blocks[1].transform.position.x, blocks[1].transform.position.y + (0.6f / 30f), blocks[1].transform.position.z);
 			allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y + (1f / 30f), allow.transform.position.z);
@@ -82,6 +92,7 @@ public class Tutorial_Select : MonoBehaviour {
 
 			if(frame == 360){
 				allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y - 1f, allow.transform.position.z);
+				rollButton.enabled = false;
 			}
 		}
 		
