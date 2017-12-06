@@ -5,65 +5,83 @@ using UnityEngine.UI;
 
 public class Tutorial_Select : MonoBehaviour {
 
-	SpriteRenderer[] Blocks = new SpriteRenderer[3];
+	SpriteRenderer[] blocks = new SpriteRenderer[3];
+	SpriteRenderer allow;
 
 
 	int frame = 0;
 
 	// Use this for initialization
 	void Start () {
-		Blocks[0] = transform.Find("Block1").GetComponent<SpriteRenderer>();
-		Blocks[1] = transform.Find("Block2").GetComponent<SpriteRenderer>();
-		Blocks[2] = transform.Find("Block3").GetComponent<SpriteRenderer>();
-
+		blocks[0] = transform.Find("Block1").GetComponent<SpriteRenderer>();
+		blocks[1] = transform.Find("Block2").GetComponent<SpriteRenderer>();
+		blocks[2] = transform.Find("Block3").GetComponent<SpriteRenderer>();
+		allow = transform.Find("AllowUp").GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(frame == 0){
-			// 初期化
-			
-		}
 
 		if(frame > 90 && frame <= 120){
-			Blocks[1].transform.position = new Vector3(Blocks[1].transform.position.x, Blocks[1].transform.position.y + (0.6f / 30f), Blocks[1].transform.position.z);
-			Blocks[2].transform.position = new Vector3(Blocks[2].transform.position.x, Blocks[2].transform.position.y + (0.6f / 30f), Blocks[2].transform.position.z);
+			blocks[1].transform.position = new Vector3(blocks[1].transform.position.x, blocks[1].transform.position.y + (0.6f / 30f), blocks[1].transform.position.z);
+			blocks[2].transform.position = new Vector3(blocks[2].transform.position.x, blocks[2].transform.position.y + (0.6f / 30f), blocks[2].transform.position.z);
+			allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y + (1f / 30f), allow.transform.position.z);
 
 			if(frame < 105){
-				Blocks[0].color = new Color(Blocks[0].color.r, Blocks[0].color.g, Blocks[0].color.b, Blocks[0].color.a - (1f / 15f));
+				blocks[0].color = new Color(blocks[0].color.r, blocks[0].color.g, blocks[0].color.b, blocks[0].color.a - (1f / 15f));
+				allow.color = new Color(allow.color.r, allow.color.g, allow.color.b, allow.color.a + (1f / 15f));
 			}else if(frame == 105){
-				Blocks[0].color = new Color(Blocks[0].color.r, Blocks[0].color.g, Blocks[0].color.b, 0);
-				Blocks[0].transform.position = new Vector3(Blocks[0].transform.position.x, Blocks[0].transform.position.y - (0.6f * 2f), Blocks[0].transform.position.z);
+				blocks[0].color = new Color(blocks[0].color.r, blocks[0].color.g, blocks[0].color.b, 0);
+				blocks[0].transform.position = new Vector3(blocks[0].transform.position.x, blocks[0].transform.position.y - (0.6f * 2f), blocks[0].transform.position.z);
 			}else{
-				Blocks[0].color = new Color(Blocks[0].color.r, Blocks[0].color.g, Blocks[0].color.b, Blocks[0].color.a + (1f / 15f));
+				blocks[0].color = new Color(blocks[0].color.r, blocks[0].color.g, blocks[0].color.b, blocks[0].color.a + (1f / 15f));
+				allow.color = new Color(allow.color.r, allow.color.g, allow.color.b, allow.color.a - (1f / 15f));
+			}
+
+			if(frame == 120){
+				allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y - 1f, allow.transform.position.z);
 			}
 		}
 
 		if(frame > 210 && frame <= 240){
-			Blocks[2].transform.position = new Vector3(Blocks[2].transform.position.x, Blocks[2].transform.position.y + (0.6f / 30f), Blocks[2].transform.position.z);
-			Blocks[0].transform.position = new Vector3(Blocks[0].transform.position.x, Blocks[0].transform.position.y + (0.6f / 30f), Blocks[0].transform.position.z);
+			blocks[2].transform.position = new Vector3(blocks[2].transform.position.x, blocks[2].transform.position.y + (0.6f / 30f), blocks[2].transform.position.z);
+			blocks[0].transform.position = new Vector3(blocks[0].transform.position.x, blocks[0].transform.position.y + (0.6f / 30f), blocks[0].transform.position.z);
+			allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y + (1f / 30f), allow.transform.position.z);
 
 			if(frame < 225){
-				Blocks[1].color = new Color(Blocks[1].color.r, Blocks[1].color.g, Blocks[1].color.b, Blocks[1].color.a - (1f / 15f));
+				blocks[1].color = new Color(blocks[1].color.r, blocks[1].color.g, blocks[1].color.b, blocks[1].color.a - (1f / 15f));
+				allow.color = new Color(allow.color.r, allow.color.g, allow.color.b, allow.color.a + (1f / 15f));
 			}else if(frame == 225){
-				Blocks[1].color = new Color(Blocks[1].color.r, Blocks[1].color.g, Blocks[1].color.b, 0);
-				Blocks[1].transform.position = new Vector3(Blocks[1].transform.position.x, Blocks[1].transform.position.y - (0.6f * 2f), Blocks[1].transform.position.z);
+				blocks[1].color = new Color(blocks[1].color.r, blocks[1].color.g, blocks[1].color.b, 0);
+				blocks[1].transform.position = new Vector3(blocks[1].transform.position.x, blocks[1].transform.position.y - (0.6f * 2f), blocks[1].transform.position.z);
 			}else{
-				Blocks[1].color = new Color(Blocks[1].color.r, Blocks[1].color.g, Blocks[1].color.b, Blocks[1].color.a + (1f / 15f));
+				blocks[1].color = new Color(blocks[1].color.r, blocks[1].color.g, blocks[1].color.b, blocks[1].color.a + (1f / 15f));
+				allow.color = new Color(allow.color.r, allow.color.g, allow.color.b, allow.color.a - (1f / 15f));
+			}
+
+			if(frame == 240){
+				allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y - 1f, allow.transform.position.z);
 			}
 		}
 
 		if(frame > 330 && frame <= 360){
-			Blocks[0].transform.position = new Vector3(Blocks[0].transform.position.x, Blocks[0].transform.position.y + (0.6f / 30f), Blocks[0].transform.position.z);
-			Blocks[1].transform.position = new Vector3(Blocks[1].transform.position.x, Blocks[1].transform.position.y + (0.6f / 30f), Blocks[1].transform.position.z);
+			blocks[0].transform.position = new Vector3(blocks[0].transform.position.x, blocks[0].transform.position.y + (0.6f / 30f), blocks[0].transform.position.z);
+			blocks[1].transform.position = new Vector3(blocks[1].transform.position.x, blocks[1].transform.position.y + (0.6f / 30f), blocks[1].transform.position.z);
+			allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y + (1f / 30f), allow.transform.position.z);
 
 			if(frame < 345){
-				Blocks[2].color = new Color(Blocks[2].color.r, Blocks[2].color.g, Blocks[2].color.b, Blocks[2].color.a - (1f / 15f));
+				blocks[2].color = new Color(blocks[2].color.r, blocks[2].color.g, blocks[2].color.b, blocks[2].color.a - (1f / 15f));
+				allow.color = new Color(allow.color.r, allow.color.g, allow.color.b, allow.color.a + (1f / 15f));
 			}else if(frame == 345){
-				Blocks[2].color = new Color(Blocks[2].color.r, Blocks[2].color.g, Blocks[2].color.b, 0);
-				Blocks[2].transform.position = new Vector3(Blocks[2].transform.position.x, Blocks[2].transform.position.y - (0.6f * 2f), Blocks[2].transform.position.z);
+				blocks[2].color = new Color(blocks[2].color.r, blocks[2].color.g, blocks[2].color.b, 0);
+				blocks[2].transform.position = new Vector3(blocks[2].transform.position.x, blocks[2].transform.position.y - (0.6f * 2f), blocks[2].transform.position.z);
 			}else{
-				Blocks[2].color = new Color(Blocks[2].color.r, Blocks[2].color.g, Blocks[2].color.b, Blocks[2].color.a + (1f / 15f));
+				blocks[2].color = new Color(blocks[2].color.r, blocks[2].color.g, blocks[2].color.b, blocks[2].color.a + (1f / 15f));
+				allow.color = new Color(allow.color.r, allow.color.g, allow.color.b, allow.color.a - (1f / 15f));
+			}
+
+			if(frame == 360){
+				allow.transform.position = new Vector3(allow.transform.position.x, allow.transform.position.y - 1f, allow.transform.position.z);
 			}
 		}
 		
@@ -71,13 +89,14 @@ public class Tutorial_Select : MonoBehaviour {
 
 		if(frame > 360){
 			// リセット処理
-			Blocks[0].color = new Color(Blocks[0].color.r, Blocks[0].color.g, Blocks[0].color.b, 1f);
-			Blocks[1].color = new Color(Blocks[1].color.r, Blocks[1].color.g, Blocks[1].color.b, 1f);
-			Blocks[2].color = new Color(Blocks[2].color.r, Blocks[2].color.g, Blocks[2].color.b, 1f);
+			blocks[0].color = new Color(blocks[0].color.r, blocks[0].color.g, blocks[0].color.b, 1f);
+			blocks[1].color = new Color(blocks[1].color.r, blocks[1].color.g, blocks[1].color.b, 1f);
+			blocks[2].color = new Color(blocks[2].color.r, blocks[2].color.g, blocks[2].color.b, 1f);
 
-			Blocks[0].transform.position = new Vector3(-1f, 0.6f, 0f);
-			Blocks[1].transform.position = new Vector3(-1f, 0f, 0f);
-			Blocks[2].transform.position = new Vector3(-1f, -0.6f, 0f);
+			allow.transform.position = new Vector3(1.1f, -0.2f, 0f);
+			blocks[0].transform.position = new Vector3(-1f, 0.6f, 0f);
+			blocks[1].transform.position = new Vector3(-1f, 0f, 0f);
+			blocks[2].transform.position = new Vector3(-1f, -0.6f, 0f);
 			frame = 0;
 		}
 	}
