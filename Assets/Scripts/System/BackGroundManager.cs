@@ -25,23 +25,23 @@ public class BackGroundManager : MonoBehaviour {
 
 	int frame = 0;
 
-	Vector2 minInstantiatePosition = new Vector2(-4f,-2f);
-	Vector2 maxInstantiatePosition = new Vector2(20f,12f);
+	Vector2 minInstantiatePosition = new Vector2(-10f,-7f);
+	Vector2 maxInstantiatePosition = new Vector2(20f,17f);
 
 	int minDeleteFrame = 90;
 	int maxDeleteFrame = 180;
 
-	float minSpeed = 0.5f / 60f;
-	float maxSpeed = 2.0f / 60f;
+	float minSpeed = 0.2f / 60f;
+	float maxSpeed = 1.2f / 60f;
 
 	float minSize = 2f;
 	float maxSize = 5f;
 
-	float targetAlphaColor = 0.1f;
+	float targetAlphaColor = 0.08f;
 
 	void Update () {
 
-		if(++frame % 3 == 0){
+		if(++frame % 2 == 0){
 			var obj = Instantiate(backgroundParts, new Vector3(0,0,0), backgroundParts.transform.rotation) as GameObject;
 
 			obj.transform.parent = transform;

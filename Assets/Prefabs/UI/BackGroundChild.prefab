@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationSprite: []
   animationPerFrame: 0
-  useBillBoard: 1
+  useBillBoard: 0
 --- !u!212 &212089904443487760
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -87,8 +87,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0f3f32098055e694aa6c8314ac5dc0c5, type: 3}
+  m_Color: {r: 0.32850346, g: 0.7205882, b: 0.284, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
