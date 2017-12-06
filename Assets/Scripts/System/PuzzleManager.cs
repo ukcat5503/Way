@@ -252,6 +252,9 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
 
 		StageData[StageData.Count - 1].AddObject(4, 3, 0);
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		// StageData[StageData.Count - 1].AddObject(7.5f, 8.5f, 17);
+		// StageData[StageData.Count - 1].AddObject(13.5f, 8.5f, 18);
 		StageData[StageData.Count - 1].AddCoin(5, 1);
 		StageData[StageData.Count - 1].AddCoin(7, 1);
 		StageData[StageData.Count - 1].AddCoin(9, 1);

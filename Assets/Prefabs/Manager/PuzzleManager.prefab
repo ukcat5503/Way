@@ -103,6 +103,9 @@ MonoBehaviour:
   - {fileID: 1404284206903620, guid: ff92410ef01c34dc9b3f30265a90bcfe, type: 2}
   - {fileID: 1367039494367920, guid: 4bafc97a8b5b2478ea032262afa35129, type: 2}
   - {fileID: 1479086913072354, guid: 2a160f04b15e04b27a08f10435640aeb, type: 2}
+  - {fileID: 1586090094593756, guid: 6bf25dcf931eb4162aab4468f1a3b30e, type: 2}
+  - {fileID: 1809669814635316, guid: 84b94908f641246ceb2cfd8e3e959a60, type: 2}
+  - {fileID: 1204667303293868, guid: 20fec00fd88ae405f92dc801eb863c95, type: 2}
   sphereController: {fileID: 1064343277236584, guid: 20463fe93c26e42f29b0e92c30669c29,
     type: 2}
   coinPrefabs: {fileID: 1555496120189526, guid: d6a8ba4d629f847c5b37839b25ea1c1d,
