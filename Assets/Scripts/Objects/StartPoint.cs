@@ -7,7 +7,7 @@ public class StartPoint : MonoBehaviour {
 	[SerializeField]
 	float RotateY;
 
-	static GameObject currentObj = null;
+	public static GameObject CurrentObj = null;
 	Collider currentCollider;
 	Rigidbody currentRigidbody;
 	PlayerController currentSphereController;
@@ -38,12 +38,12 @@ public class StartPoint : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(playingAnimation){
-			currentObj.transform.position = new Vector3(currentObj.transform.position.x, currentObj.transform.position.y + 0.05f, currentObj.transform.position.z);
-			var target = currentObj.transform.localScale.x + 0.08f;
-			float scale = (target >= targetSize ? targetSize : currentObj.transform.localScale.x + 0.08f);
+			CurrentObj.transform.position = new Vector3(CurrentObj.transform.position.x, CurrentObj.transform.position.y + 0.05f, CurrentObj.transform.position.z);
+			var target = CurrentObj.transform.localScale.x + 0.08f;
+			float scale = (target >= targetSize ? targetSize : CurrentObj.transform.localScale.x + 0.08f);
 
-			currentObj.transform.localScale = new Vector3(scale, scale, scale);
-			if(targetPosY < currentObj.transform.position.y){
+			CurrentObj.transform.localScale = new Vector3(scale, scale, scale);
+			if(targetPosY < CurrentObj.transform.position.y){
 				playingAnimation = false;
 				setStateToObj = false;
 
@@ -54,13 +54,13 @@ public class StartPoint : MonoBehaviour {
 			}
 		}
 
-		if(currentObj == null){
+		if(CurrentObj == null){
 			if(myStage == PuzzleManager.CurrentStage){
 				generate();
 			}
 			
 		}else{
-			if(currentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.kMapDepth)){
+			if(CurrentObj.transform.position.y < -3f + -(PuzzleManager.CurrentStage * PuzzleManager.kMapDepth)){
 				DeleteSphere();
 			}
 		}
@@ -71,15 +71,15 @@ public class StartPoint : MonoBehaviour {
 		pos += PuzzleManager.SphereController.transform.position;
 		pos.y += -PuzzleManager.kMapDepth;
 
-		currentObj = Instantiate(PuzzleManager.SphereController, pos, Quaternion.identity) as GameObject;
-		currentObj.name = "Player";
-		currentObj.transform.parent = parentTransform;
-		currentCollider = currentObj.GetComponent<Collider>();
-		currentRigidbody = currentObj.GetComponent<Rigidbody>();
-		currentSphereController = currentObj.GetComponent<PlayerController>();
+		CurrentObj = Instantiate(PuzzleManager.SphereController, pos, Quaternion.identity) as GameObject;
+		CurrentObj.name = "Player";
+		CurrentObj.transform.parent = parentTransform;
+		currentCollider = CurrentObj.GetComponent<Collider>();
+		currentRigidbody = CurrentObj.GetComponent<Rigidbody>();
+		currentSphereController = CurrentObj.GetComponent<PlayerController>();
 
 		currentSphereController.RotationY(RotateY);
-		currentObj.transform.localScale = new Vector3(0f, 0f, 0f);
+		CurrentObj.transform.localScale = new Vector3(0f, 0f, 0f);
 
 		targetPosY = pos.y + PuzzleManager.kMapDepth;
 		currentCollider.enabled = false;
@@ -93,10 +93,10 @@ public class StartPoint : MonoBehaviour {
 		PuzzleManager.MicroCoin += addCoin;
 		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
 		text.Text = "Miss...";
-		text.WorldPosition = new Vector3(currentObj.transform.position.x, -PuzzleManager.CurrentStage, currentObj.transform.position.z);
+		text.WorldPosition = new Vector3(CurrentObj.transform.position.x, -PuzzleManager.CurrentStage, CurrentObj.transform.position.z);
 		++PuzzleManager.DeathCount;
-		Destroy(currentObj);
-		currentObj = null;
+		Destroy(CurrentObj);
+		CurrentObj = null;
 		SoundManager.PlaySE(SoundManager.SE.miss);
 		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
 

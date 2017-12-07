@@ -19,6 +19,9 @@ public class ParticleChild : MonoBehaviour {
 	void Update () {
 		if(++frame >= 30){
 			_Rigidbody.velocity = CloseToZero(_Rigidbody.velocity);
+			if(frame >= destroyFrame / 1.5f && StartPoint.CurrentObj != null){
+				transform.position = Vector3.Lerp(transform.position, StartPoint.CurrentObj.transform.position, Time.deltaTime * 2f);
+			}
 			if(frame >= destroyFrame){
 				_SpriteRenderer.color = new Color(_SpriteRenderer.color.r, _SpriteRenderer.color.g, _SpriteRenderer.color.b, _SpriteRenderer.color.a - 0.05f);
 				if(_SpriteRenderer.color.a < 0){
@@ -29,7 +32,7 @@ public class ParticleChild : MonoBehaviour {
 		}
 	}
 
-		Vector3 CloseToZero(Vector3 v3, float distance = 0.001f){
+		Vector3 CloseToZero(Vector3 v3, float distance = 0.005f){
 		if(v3 == Vector3.zero)	return Vector3.zero;
 		if(v3.x > 0){
 			v3.x = (v3.x - distance > 0 ? v3.x - distance : 0f);
