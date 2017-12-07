@@ -344,10 +344,10 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(3, 7);
 
 		map = new int[,]{
-			{ 1, 0, 0, 3, 3, 9, 9, 9, 9, 9, 3,23, 0, 0, 0},
+			{ 1, 0, 0, 0, 0, 9, 9, 9, 9, 9, 0,23, 0, 0, 0},
 			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-			{ 4,12, 0, 0,29, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-			{ 4,12, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 4,12, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 4,12, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 4,21, 3,30, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
@@ -356,7 +356,7 @@ public class PuzzleManager : MonoBehaviour {
 			{21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,20, 0, 0, 0},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(9);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(15);
 		StageData[StageData.Count - 1].AddObject(0, 0, 2);
 		StageData[StageData.Count - 1].AddCoin(11, 0);
 		StageData[StageData.Count - 1].AddCoin(1, 0);
