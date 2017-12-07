@@ -20,7 +20,7 @@ public class ParticleChild : MonoBehaviour {
 		if(++frame >= 30){
 			_Rigidbody.velocity = CloseToZero(_Rigidbody.velocity);
 			if(frame >= destroyFrame / 1.5f && StartPoint.CurrentObj != null){
-				transform.position = Vector3.Lerp(transform.position, StartPoint.CurrentObj.transform.position, Time.deltaTime * 2f);
+				transform.position = Vector3.Lerp(transform.position, StartPoint.CurrentObj.transform.position, Time.deltaTime * 5f);
 			}
 			if(frame >= destroyFrame){
 				_SpriteRenderer.color = new Color(_SpriteRenderer.color.r, _SpriteRenderer.color.g, _SpriteRenderer.color.b, _SpriteRenderer.color.a - 0.05f);
