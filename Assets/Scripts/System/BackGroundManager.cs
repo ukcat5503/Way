@@ -37,7 +37,7 @@ public class BackGroundManager : MonoBehaviour {
 	float minSize = 2f;
 	float maxSize = 5f;
 
-	float targetAlphaColor = 0.08f;
+	float targetAlphaColor = 0.1f;
 
 	void Update () {
 
