@@ -10,6 +10,9 @@ public class Tutorial_Decide : MonoBehaviour {
 	SpriteRenderer leftButton;
 	SpriteRenderer cursor;
 
+	Vector2 mouseLocalPos;
+	Vector2 cursorLocalPos;
+
 
 	int frame = 0;
 
@@ -22,6 +25,9 @@ public class Tutorial_Decide : MonoBehaviour {
 		mouse = transform.Find("Mouse").GetComponent<SpriteRenderer>();
 		leftButton = transform.Find("Mouse/LeftButton").GetComponent<SpriteRenderer>();
 		cursor = transform.Find("Cursor").GetComponent<SpriteRenderer>();
+
+		mouseLocalPos = mouse.transform.localPosition;
+		cursorLocalPos = cursor.transform.localPosition;
 
 		initialize();
 	}
@@ -94,8 +100,8 @@ public class Tutorial_Decide : MonoBehaviour {
 		blocks[2].enabled = false;
 		leftButton.enabled = false;
 
-		mouse.transform.position = new Vector3(-1.5f, 0f, -0.5f);
-		cursor.transform.position = new Vector3(-1.5f, 0f, 0.69f);
+		mouse.transform.localPosition = mouseLocalPos;
+		cursor.transform.localPosition = cursorLocalPos;
 		frame = 0;
 	}
 }
