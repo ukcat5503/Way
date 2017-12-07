@@ -539,9 +539,9 @@ public class PuzzleManager : MonoBehaviour {
 
 	public static void ResetMapState(){
 		PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty = 0;
-		StageData[CurrentStage].PlaceBlockQty = StageData[CurrentStage].RequirementBlockQty;
+		StageData[CurrentStage].PlaceBlockQty = 0;
 
-		instance.currentBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
+		instance.currentBlockText.text = 0.ToString();
 		instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
 	}
 
