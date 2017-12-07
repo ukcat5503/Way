@@ -9,6 +9,8 @@ public class Tutorial_Select : MonoBehaviour {
 	SpriteRenderer allow;
 	SpriteRenderer rollButton;
 
+	Vector3[] blocksLocalPos = new Vector3[3];
+	Vector3 allowLocalPos;
 
 	int frame = 0;
 
@@ -20,7 +22,11 @@ public class Tutorial_Select : MonoBehaviour {
 		allow = transform.Find("AllowUp").GetComponent<SpriteRenderer>();
 		rollButton = transform.Find("RollButton").GetComponent<SpriteRenderer>();
 		rollButton.enabled = false;
-
+		
+		blocksLocalPos[0] = blocks[0].transform.localPosition;
+		blocksLocalPos[1] = blocks[1].transform.localPosition;
+		blocksLocalPos[2] = blocks[2].transform.localPosition;
+		allowLocalPos = allow.transform.localPosition;
 	}
 	
 	// Update is called once per frame
@@ -104,10 +110,10 @@ public class Tutorial_Select : MonoBehaviour {
 			blocks[1].color = new Color(blocks[1].color.r, blocks[1].color.g, blocks[1].color.b, 1f);
 			blocks[2].color = new Color(blocks[2].color.r, blocks[2].color.g, blocks[2].color.b, 1f);
 
-			allow.transform.position = new Vector3(1.1f, -0.2f, 0f);
-			blocks[0].transform.position = new Vector3(-1f, 0f, 0.6f);
-			blocks[1].transform.position = new Vector3(-1f, 0f, 0f);
-			blocks[2].transform.position = new Vector3(-1f, 0f, -0.6f);
+			allow.transform.localPosition = allowLocalPos;
+			blocks[0].transform.localPosition = blocksLocalPos[0];
+			blocks[1].transform.localPosition = blocksLocalPos[1];
+			blocks[2].transform.localPosition = blocksLocalPos[2];
 			frame = 0;
 		}
 	}
