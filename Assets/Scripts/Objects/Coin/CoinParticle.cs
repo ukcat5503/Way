@@ -64,7 +64,7 @@ public class CoinParticle : MonoBehaviour {
 
 				float angle = Random.Range(0f,360f);
 				var shotVector = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad),0f , Mathf.Cos(angle * Mathf.Deg2Rad));
-				script._Rigidbody.AddForce(shotVector * Random.Range(0.5f, 1.5f), ForceMode.Impulse);
+				script._Rigidbody.AddForce(shotVector * Random.Range(1.5f, 2.5f), ForceMode.Impulse);
 
 				int coinQty = 1;
 				// 全部大きくなると見栄えが悪いので少し小さいのも出す
