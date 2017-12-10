@@ -450,7 +450,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
 		// ========================================================
-		// stage 11
+		// stage 12
 		map = new int[,]{
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -472,7 +472,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(4,6);
 		
 		// ========================================================
-		// stage 12
+		// stage 13
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -490,7 +490,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(4, 7, 0);
 		
 		// ========================================================
-		// stage 13
+		// stage 14
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
