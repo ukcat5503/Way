@@ -98,7 +98,7 @@ public class StartPoint : MonoBehaviour {
 		Destroy(CurrentObj);
 		CurrentObj = null;
 		SoundManager.PlaySE(SoundManager.SE.miss);
-		// PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
+		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
 
 		PlayerController.IsSpeedUp = false;
 	}
