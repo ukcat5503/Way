@@ -136,7 +136,7 @@ public class ResultUIObject : MonoBehaviour {
 		}else if(count == 10){
 			BackGroundBlack.color = new Color(BackGroundBlack.color.r, BackGroundBlack.color.g, BackGroundBlack.color.b, BackGroundBlack.color.a + 0.01f);
 			if(BackGroundBlack.color.a > 1f){
-				SceneManager.LoadScene("Loading");
+				SceneManager.LoadScene("Logo");
 			}
 		}
 	}
