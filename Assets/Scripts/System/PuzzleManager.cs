@@ -583,11 +583,17 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[CurrentStage].PlaceBlockQty += add;
 		instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
 
+		string str;
 		if(StageData[CurrentStage].PlaceBlockQty > StageData[CurrentStage].RequirementBlockQty){
-			instance.currentBlockText.text = "<color=red>" + StageData[CurrentStage].PlaceBlockQty.ToString() + "</color>";
+			str = "<color=red>" + StageData[CurrentStage].PlaceBlockQty.ToString() + "</color>";
 		}else{
-			instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
+			str = StageData[CurrentStage].PlaceBlockQty.ToString();
 		}
+
+		if(StageData[CurrentStage].PlaceBlockQty >= 100){
+			str = "<size=50>" + str + "</size>";
+		}
+		instance.currentBlockText.text = str;
 	}
 
 	/// <summary>
