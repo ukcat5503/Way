@@ -241,7 +241,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(13,6,3);
 
 		StageData[StageData.Count - 1].AddObject(7f,2f,12);
-		
+
 		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
@@ -471,6 +471,43 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(7,2);
 		StageData[StageData.Count - 1].AddCoin(4,6);
 		
+		// ========================================================
+		// stage 12
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 3, 0, 0, 0, 3,23, 0, 0, 0, 0},
+			{ 0, 0, 0,29,12, 0, 0, 0, 0, 0, 0,29, 0, 0, 0},
+			{ 0, 0, 0,29,12, 0, 0, 0, 0, 0, 0,29, 0, 0, 0},
+			{ 0, 0, 0,29,12, 0, 0, 0, 0, 0, 0,29, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(3);
+		StageData[StageData.Count - 1].AddObject(4, 7, 0);
+		
+		// ========================================================
+		// stage 13
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 3, 7, 7, 7,23, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 2, 3, 0, 0, 0, 3, 3,20, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(2);
+		StageData[StageData.Count - 1].AddObject(9, 7, 0);
+		
+
 
 
 		map = new int[,]{
