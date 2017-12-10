@@ -224,8 +224,8 @@ public class PuzzleManager : MonoBehaviour {
 		// ========================================================
 		// stage 1
 		map = new int[,]{
-			{ 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4},
-			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -236,10 +236,11 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(0);
 
 		StageData[StageData.Count - 1].AddObject(13,6,3);
 
+		StageData[StageData.Count - 1].AddObject(7.5f,2f,12);
 		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
@@ -425,6 +426,30 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
+		// ========================================================
+		// stage 10
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 0, 0, 0,23, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,21, 3,27, 3,20, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 1, 3, 3, 3,30, 0, 0, 0, 0, 3, 2, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(7);
+		StageData[StageData.Count - 1].AddObject(2, 6, 1);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		// ========================================================
+		// stage 11
 		map = new int[,]{
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
