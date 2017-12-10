@@ -26,12 +26,17 @@ public class SoundManager : MonoBehaviour
 
 	static AudioSource audioSource;
 
+	static float firstVolume;
+
+	static bool IsFadeOuting = false;
+
 	// Use this for initialization
 	void Awake()
 	{
 		DontDestroyOnLoad(this);
 
 		audioSource = GetComponent<AudioSource>();
+		firstVolume = audioSource.volume;
 
 		foreach (SE key in SE.GetValues(typeof(SE)))
 		{
@@ -43,6 +48,17 @@ public class SoundManager : MonoBehaviour
 			bgm.Add(Resources.Load("Audio/BGM/" + key.ToString()) as AudioClip);
 		}
 
+	}
+
+	void Update(){
+		if(IsFadeOuting){
+			audioSource.volume -= 0.2f;
+			if(audioSource.volume < 0){
+				audioSource.Stop();
+				audioSource.volume = firstVolume;
+				IsFadeOuting = false;
+			}
+		}
 	}
 
 	public static void PlaySE(SE play)
@@ -64,5 +80,9 @@ public class SoundManager : MonoBehaviour
 		
 		audioSource.clip = bgm[(int)play];
 		audioSource.Play();
+	}
+
+	public static void FadeOutBgm(){
+		IsFadeOuting = true;
 	}
 }
