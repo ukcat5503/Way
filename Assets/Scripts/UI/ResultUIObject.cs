@@ -8,38 +8,38 @@ public class ResultUIObject : MonoBehaviour {
 	
 	Image BackGround;
 	Image BackGroundBlack;
-	Text Result;
+	Image Result;
 
-	Text PlaceBlock;
-	Text DeathCount;
-	Text Rank;
+	Image PlaceBlock;
+	Image DeathCount;
+	Image Rank;
 
 	Text PlaceBlockValue;
 	Text DeathCountValue;
-	Text RankValue;
+	Image RankValue;
 
 	int count;
 	int frame;
 	int score;
 
 	int[] scoreBorder;
-	string[] scoreChar;
+
 	[SerializeField]
-	Color[] scoreColor;
+	Sprite[] scoreImage;
 
 	void Start () {
 
 		BackGround = transform.Find("BackGround").GetComponent<Image>();
 		BackGroundBlack = transform.Find("BackGroundBlack").GetComponent<Image>();
-		Result = transform.Find("Result").GetComponent<Text>();
+		Result = transform.Find("Result").GetComponent<Image>();
 		
-		PlaceBlock = transform.Find("PlaceBlock").GetComponent<Text>();
-		DeathCount = transform.Find("DeathCount").GetComponent<Text>();
-		Rank = transform.Find("Rank").GetComponent<Text>();
+		PlaceBlock = transform.Find("PlaceBlock").GetComponent<Image>();
+		DeathCount = transform.Find("DeathCount").GetComponent<Image>();
+		Rank = transform.Find("Rank").GetComponent<Image>();
 
 		PlaceBlockValue = transform.Find("PlaceBlockValue").GetComponent<Text>();
 		DeathCountValue = transform.Find("DeathCountValue").GetComponent<Text>();
-		RankValue = transform.Find("RankValue").GetComponent<Text>();
+		RankValue = transform.Find("RankValue").GetComponent<Image>();
 
 
 		BackGround.color = new Color(BackGround.color.r, BackGround.color.g, BackGround.color.b, 0f);
@@ -57,7 +57,6 @@ public class ResultUIObject : MonoBehaviour {
 
 		// スコアボーダー
 		scoreBorder = new int[] { 1, 0, -30, -60, -100 };
-		scoreChar = new string[] {"S", "A", "B", "C", "D", "E" };
 
 
 		//スコア計算
@@ -66,15 +65,14 @@ public class ResultUIObject : MonoBehaviour {
 		PlaceBlockValue.text = PuzzleManager.PlaceBlockQty.ToString() + "/" + PuzzleManager.RequirementBlockQty.ToString();
 		DeathCountValue.text = PuzzleManager.DeathCount.ToString();
 
-		RankValue.text = scoreChar[scoreChar.Length - 1];
+		RankValue.sprite = scoreImage[scoreImage.Length - 1];
 
-		RankValue.color = new Color(scoreColor[scoreColor.Length - 1].r, scoreColor[scoreColor.Length - 1].g, scoreColor[scoreColor.Length - 1].b, 0f);
+		RankValue.color = new Color(1f,1f,1f,0f);
 		
 		for (int i = 0; i < scoreBorder.Length; ++i){
 			if (scoreBorder[i] <= score)
 			{
-				RankValue.text = scoreChar[i];
-				RankValue.color = new Color(scoreColor[i].r, scoreColor[i].g, scoreColor[i].b, 0f);
+				RankValue.sprite = scoreImage[i];
 				break;
 			}
 		}
