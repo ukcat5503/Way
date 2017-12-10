@@ -39,14 +39,13 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update (){
+		Pos = transform.position;
+
 		if(!PlayerController.IsSpeedUp && ++frame % 60 == 0 && frame > 180 && PuzzleManager.CurrentStage != 0){
 			if(PuzzleManager.IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction)){
-				PlayerController.IsSpeedUp = true;
+				PlayerController.SpeedUp();
 			}
 		}
-
-
-		Pos = transform.position;
 
 		// 移動方向求める
 		float angleDir = transform.eulerAngles.y * (Mathf.PI / 180.0f);
@@ -104,5 +103,13 @@ public class PlayerController : MonoBehaviour {
 		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
 		text.Text = reason;
 		text.WorldPosition = new Vector3(transform.position.x, -PuzzleManager.CurrentStage, transform.position.z);
+	}
+
+
+	public static void SpeedUp(){
+		IsSpeedUp = true;
+		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
+		text.Text = "SpeedUp!";
+		text.WorldPosition = new Vector3(PlayerController.Pos.x, -PuzzleManager.CurrentStage, PlayerController.Pos.z);
 	}
 }
