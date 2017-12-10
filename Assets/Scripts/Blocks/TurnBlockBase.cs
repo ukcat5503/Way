@@ -351,7 +351,7 @@ public class TurnBlockBase : MonoBehaviour {
 				if(PlayerController.IsTurnFromPrevBlock){
 					// 脱線する
 					PlayerController.IsTurnFromPrevBlock = false;
-					"ぶれーく！".Log();
+					s.BreakPlayer();
 				}else{
 					PlayerController.IsTurnFromPrevBlock = false;
 					s.RotationY(180);
@@ -362,7 +362,6 @@ public class TurnBlockBase : MonoBehaviour {
 				sphereObjectInfo = new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s);
 			}
 		}
-		PlayerController.IsTurnFromPrevBlock.Log();
 	}
 
 	virtual protected void OnCollisionExit(Collision other){
