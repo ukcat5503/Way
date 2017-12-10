@@ -57,7 +57,7 @@ MonoBehaviour:
   animationPerFrame: 0
   useBillBoard: 0
   visibleFrame: 30
-  invisibleFrame: 180
+  invisibleFrame: 270
   animateFrame: 60
   frame: 0
 --- !u!212 &212241582967644294

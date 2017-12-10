@@ -240,7 +240,8 @@ public class PuzzleManager : MonoBehaviour {
 
 		StageData[StageData.Count - 1].AddObject(13,6,3);
 
-		StageData[StageData.Count - 1].AddObject(7.5f,2f,12);
+		StageData[StageData.Count - 1].AddObject(7f,2f,12);
+		
 		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
