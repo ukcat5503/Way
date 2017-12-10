@@ -34,7 +34,6 @@ public class TitleManager : MonoBehaviour {
 
 	void Update () {
 		timeElapsed += Time.deltaTime;
-		timeElapsed.Log();
 
 		if(state == TitleState.Waiting && ( Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))){
 			// ゲームへ
