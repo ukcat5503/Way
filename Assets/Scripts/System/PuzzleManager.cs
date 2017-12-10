@@ -636,7 +636,7 @@ public class PuzzleManager : MonoBehaviour {
 			{21, 3, 3, 3, 3, 3, 3,30, 3, 3, 3, 3, 3,20, 0},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(7);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(6);
 		StageData[StageData.Count - 1].AddObject(0, 0, 2);
 		StageData[StageData.Count - 1].AddCoin(7, 3);
 		StageData[StageData.Count - 1].AddCoin(11, 3);
@@ -657,7 +657,7 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,21, 3,20},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(13);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(12);
 		StageData[StageData.Count - 1].AddObject(0, 0, 1);
 		StageData[StageData.Count - 1].AddCoin(12, 3);
 		StageData[StageData.Count - 1].AddCoin(12, 5);
