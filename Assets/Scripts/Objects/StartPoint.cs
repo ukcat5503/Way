@@ -14,7 +14,7 @@ public class StartPoint : MonoBehaviour {
 
 	bool playingAnimation = false;
 	bool setStateToObj = false;
-	float targetPosY = 0f;
+	float targetPosY = -1f;
 
 	Transform parentTransform;
 
@@ -92,13 +92,13 @@ public class StartPoint : MonoBehaviour {
 		int addCoin = -(PuzzleManager.MicroCoin / 5) < 0 ? -(PuzzleManager.MicroCoin / 5) : 0;
 		PuzzleManager.MicroCoin += addCoin;
 		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
-		text.Text = "Miss...";
+		text.Text = "Miss.";
 		text.WorldPosition = new Vector3(CurrentObj.transform.position.x, -PuzzleManager.CurrentStage, CurrentObj.transform.position.z);
 		++PuzzleManager.DeathCount;
 		Destroy(CurrentObj);
 		CurrentObj = null;
 		SoundManager.PlaySE(SoundManager.SE.miss);
-		PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
+		// PuzzleManager.GenerateMap(PuzzleManager.StageData[PuzzleManager.CurrentStage], PuzzleManager.CurrentStage, true);
 
 		PlayerController.IsSpeedUp = false;
 	}
