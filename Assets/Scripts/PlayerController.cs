@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-	public void BreakPlayer(){
+	public void BreakPlayer(string reason){
 		var v = new Vector3(0.7f, 0.7f, 0.5f);
 
 		var r = GetComponent<Rigidbody>();
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour {
 		_collider.enabled = false;
 
 		var text = (Instantiate(PuzzleManager.WorldSpaceText) as GameObject).GetComponent<WorldSpaceText>();
-		text.Text = "Break!!";
+		text.Text = reason;
 		text.WorldPosition = new Vector3(transform.position.x, -PuzzleManager.CurrentStage, transform.position.z);
 	}
 }

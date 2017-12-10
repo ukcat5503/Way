@@ -351,7 +351,7 @@ public class TurnBlockBase : MonoBehaviour {
 				if(PlayerController.IsTurnFromPrevBlock){
 					// 脱線する
 					PlayerController.IsTurnFromPrevBlock = false;
-					s.BreakPlayer();
+					s.BreakPlayer("Break!!");
 				}else{
 					PlayerController.IsTurnFromPrevBlock = false;
 					s.RotationY(180);

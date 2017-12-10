@@ -27,7 +27,7 @@ public class StraightBlock : TurnBlockBase {
 				{
 					if(PlayerController.IsTurnFromPrevBlock){
 						// 脱線する
-						PlayerController.IsTurnFromPrevBlock = false;					s.BreakPlayer();
+						PlayerController.IsTurnFromPrevBlock = false;					s.BreakPlayer("Break!!");
 					}else{
 						PlayerController.IsTurnFromPrevBlock = false;
 						s.RotationY(180);

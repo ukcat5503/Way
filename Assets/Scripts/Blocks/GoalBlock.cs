@@ -13,7 +13,7 @@ public class GoalBlock : MonoBehaviour {
 		}
 		else
 		{
-			StartPoint.DeleteSphere();
+			other.GetComponent<PlayerController>().BreakPlayer("Collect all coins!!");
 		}
 	}
 }
