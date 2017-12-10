@@ -181,7 +181,7 @@ public class PuzzleManager : MonoBehaviour {
 	void Update(){
 		currentStageText.text = (CurrentStage + 1).ToString();
 
-		
+		/*
 		if(Input.GetKeyDown(KeyCode.M)){
 			IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction).Log();
 		}
@@ -203,6 +203,7 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S)){
 			--MicroCoin;
 		}
+		 */
 		if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			Application.Quit();
