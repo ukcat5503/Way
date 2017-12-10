@@ -67,7 +67,10 @@ public class StraightBlock : TurnBlockBase {
 						other.transform.eulerAngles = eular;
 					}
 				}
+			}else{
+				PlayerController.IsTurnFromPrevBlock = false;
 			}
+			
 		}
 	}
 
