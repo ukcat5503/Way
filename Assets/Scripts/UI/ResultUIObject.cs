@@ -131,6 +131,8 @@ public class ResultUIObject : MonoBehaviour {
 			}
 		}else if(count == 9){
 			if(Input.GetMouseButtonUp(0)){
+				SoundManager.FadeOutBgm();
+				SoundManager.PlaySE(SoundManager.SE.select);
 				++count;
 			}
 		}else if(count == 10){

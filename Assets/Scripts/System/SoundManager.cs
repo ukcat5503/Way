@@ -52,8 +52,8 @@ public class SoundManager : MonoBehaviour
 
 	void Update(){
 		if(IsFadeOuting){
-			audioSource.volume -= 0.2f;
-			if(audioSource.volume < 0){
+			audioSource.volume -= (firstVolume / 100f);
+			if(audioSource.volume <= 0f){
 				audioSource.Stop();
 				audioSource.volume = firstVolume;
 				IsFadeOuting = false;
