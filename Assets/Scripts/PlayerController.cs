@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update (){
-		if(!PlayerController.IsSpeedUp && ++frame % 60 == 0 && PuzzleManager.CurrentStage != 0){
+		if(!PlayerController.IsSpeedUp && ++frame % 60 == 0 && frame > 180 && PuzzleManager.CurrentStage != 0){
 			if(PuzzleManager.IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction)){
 				PlayerController.IsSpeedUp = true;
 			}
