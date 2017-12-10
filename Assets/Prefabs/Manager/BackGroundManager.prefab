@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4447816365660208}
   - component: {fileID: 114534905451118680}
   m_Layer: 0
-  m_Name: BackGround
+  m_Name: BackGroundManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,3 +53,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundParts: {fileID: 1620881184188050, guid: 96ccad39ee8ea428db8e2009f8e8bfb1,
     type: 2}
+  partsAngle: {x: 0, y: 0, z: 0}
