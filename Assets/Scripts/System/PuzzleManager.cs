@@ -146,6 +146,7 @@ public class PuzzleManager : MonoBehaviour {
 		WorldSpaceText = worldSpaceText;
 
 		// オブジェクトリスト生成 リリース時取り除く
+		/*
 		var str = "\n ■ Blocks ■\n";
 		for (int i = 0; i < generateBlocks.Length; ++i)
 		{
@@ -159,6 +160,7 @@ public class PuzzleManager : MonoBehaviour {
 			str += i + "\t" + generateObjects[i].name + "\n";
 		}
 		str.Log();
+		 */
 
 		CameraObject = GameObject.Find("Main Camera");
 		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
