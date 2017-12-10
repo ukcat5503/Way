@@ -21,11 +21,14 @@ public class BackGroundManager : MonoBehaviour {
 	[SerializeField]
 	GameObject backgroundParts;
 
+	[SerializeField]
+	Vector3 partsAngle;	
+
 	List<BackGroundPartsInfo> list = new List<BackGroundPartsInfo>();
 
 	int frame = 0;
 
-	Vector2 minInstantiatePosition = new Vector2(-10f,-7f);
+	Vector2 minInstantiatePosition = new Vector2(-12f,-7f);
 	Vector2 maxInstantiatePosition = new Vector2(20f,17f);
 
 	int minDeleteFrame = 90;
@@ -42,7 +45,7 @@ public class BackGroundManager : MonoBehaviour {
 	void Update () {
 
 		if(++frame % 2 == 0){
-			var obj = Instantiate(backgroundParts, new Vector3(0,0,0), backgroundParts.transform.rotation) as GameObject;
+			var obj = Instantiate(backgroundParts, new Vector3(0,0,0), Quaternion.Euler(partsAngle)) as GameObject;
 
 			obj.transform.parent = transform;
 
