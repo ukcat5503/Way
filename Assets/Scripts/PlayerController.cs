@@ -14,9 +14,11 @@ public class PlayerController : MonoBehaviour {
 	public static TurnBlockBase.StartPosition Direction;
 	public static Vector3 Pos;
 
+	public static bool IsTurnFromPrevBlock = false;
 	public static bool IsSpeedUp = false;
 
 	int frame = 0;
+
 
 	[SerializeField]
 	LayerMask targerLayer;

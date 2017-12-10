@@ -15,7 +15,9 @@ public class StraightBlock : TurnBlockBase {
 
 	new void OnCollisionEnter(Collision other){
 		var position = base.CalcStartPosition(other);
+
 		isTouchSphere = true;
+
 		if (sphereObjectInfo == null)
 		{
 			if (targetPoint[(int)position] != 0f)
@@ -23,10 +25,18 @@ public class StraightBlock : TurnBlockBase {
 				var s = other.gameObject.GetComponent<PlayerController>();
 				if (targetPoint[(int)position] == 180f)
 				{
-					s.RotationY(180);
+					if(PlayerController.IsTurnFromPrevBlock){
+						// 脱線する
+						PlayerController.IsTurnFromPrevBlock = false;
+						"ぶれーく！".Log();
+					}else{
+						PlayerController.IsTurnFromPrevBlock = false;
+						s.RotationY(180);
+					}
 				}
 				else
 				{
+					PlayerController.IsTurnFromPrevBlock = false;
 					// position.Log();
 					var eular = other.transform.eulerAngles;
 

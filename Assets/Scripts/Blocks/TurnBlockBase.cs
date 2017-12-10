@@ -346,16 +346,23 @@ public class TurnBlockBase : MonoBehaviour {
 		isTouchSphere = true;
 		if (sphereObjectInfo == null){
 			var position = CalcStartPosition(other);
-			if(targetPoint[(int)position] != 0f){
-				var s = other.gameObject.GetComponent<PlayerController>();
-				if (targetPoint[(int)position] == 180f){
-					s.RotationY(180);
+			var s = other.gameObject.GetComponent<PlayerController>();
+			if (targetPoint[(int)position] == 180f){
+				if(PlayerController.IsTurnFromPrevBlock){
+					// 脱線する
+					PlayerController.IsTurnFromPrevBlock = false;
+					"ぶれーく！".Log();
 				}else{
-					// ("from " + position.ToString() + " / " + targetPoint[(int)position] + "する" + " 現在:" + s.RotateY + " 目標:" + (s.RotateY + targetPoint[(int)position])).Log();
-					sphereObjectInfo = new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s);
+					PlayerController.IsTurnFromPrevBlock = false;
+					s.RotationY(180);
 				}
+			}else{
+				// 90f || -90f
+				PlayerController.IsTurnFromPrevBlock = true;
+				sphereObjectInfo = new ObjectInfo(s.RotateY, targetPoint[(int)position], other.gameObject, s);
 			}
 		}
+		PlayerController.IsTurnFromPrevBlock.Log();
 	}
 
 	virtual protected void OnCollisionExit(Collision other){

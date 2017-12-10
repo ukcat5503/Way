@@ -9,6 +9,7 @@ public class GoalBlock : MonoBehaviour {
 			PuzzleManager.NextStage(transform.parent.parent.gameObject);
 			SoundManager.PlaySE(SoundManager.SE.clear);
 			PlayerController.IsSpeedUp = false;
+			PlayerController.IsTurnFromPrevBlock = false;
 		}
 		else
 		{
