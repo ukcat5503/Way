@@ -221,7 +221,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData = new List<StageInfo>();
 		StageObject = new List<GameObject>();
 
-
+		// ========================================================
 		// stage 1
 		map = new int[,]{
 			{ 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4},
@@ -244,6 +244,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
+		// ========================================================
 		//stage 2
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -265,14 +266,35 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 		
-
-
-
+		// ========================================================
+		// stage 3
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0,22, 3, 3, 3, 3, 3, 3,23, 0, 0, 0},
-			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 2, 3, 3, 3, 3,23, 0, 0, 0, 0, 1, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,21, 3, 3, 3, 3,20, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(12, 1, 2);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		// ========================================================
+		// stage 4
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 1, 3, 3, 3, 3, 3, 3, 3, 3,23, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
 			{ 0, 0, 0, 0, 2, 3, 3, 3, 0, 3, 3,20, 0, 0, 0},
@@ -286,13 +308,122 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
-		StageData[StageData.Count - 1].AddObject(4, 3, 0);
-
+		StageData[StageData.Count - 1].AddObject(2, 1, 1);
 
 		StageData[StageData.Count - 1].AddCoin(5, 1);
 		StageData[StageData.Count - 1].AddCoin(7, 1);
 		StageData[StageData.Count - 1].AddCoin(9, 1);
 
+		// ========================================================
+		// stage 5
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 3, 3, 3, 3, 3, 0, 0, 3, 2, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(2);
+		StageData[StageData.Count - 1].AddObject(4, 6, 0);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		
+		// ========================================================
+		// stage 6
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3,20, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(13, 1, 2);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		// ========================================================
+		// stage 7
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0,22, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 3, 3, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(3);
+		StageData[StageData.Count - 1].AddObject(7, 1, 3);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+		
+		// ========================================================
+		// stage 8
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,21, 3, 3, 3, 3,23, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 3,20, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(5);
+		StageData[StageData.Count - 1].AddObject(7, 6, 1);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		// ========================================================
+		// stage 9
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0,31, 3, 3, 3, 3, 0, 0, 0, 3,29, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(2, 1, 2);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
 		map = new int[,]{
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
