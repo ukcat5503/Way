@@ -246,6 +246,13 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
+		StageData[StageData.Count - 1].AddCoin(11,6);
+		StageData[StageData.Count - 1].AddCoin(9,6);
+		StageData[StageData.Count - 1].AddCoin(7,6);
+		StageData[StageData.Count - 1].AddCoin(5,6);
+		StageData[StageData.Count - 1].AddCoin(3,6);
+		
+
 		// ========================================================
 		//stage 2
 		map = new int[,]{
@@ -267,6 +274,9 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(9,1);
+		
 		
 		// ========================================================
 		// stage 3
@@ -290,6 +300,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
+		StageData[StageData.Count - 1].AddCoin(7,3);
+
 		// ========================================================
 		// stage 4
 		map = new int[,]{
@@ -312,9 +324,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		StageData[StageData.Count - 1].AddObject(2, 1, 1);
 
-		StageData[StageData.Count - 1].AddCoin(5, 1);
-		StageData[StageData.Count - 1].AddCoin(7, 1);
-		StageData[StageData.Count - 1].AddCoin(9, 1);
+		StageData[StageData.Count - 1].AddCoin(8, 6);
 
 		// ========================================================
 		// stage 5
@@ -338,6 +348,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
+		StageData[StageData.Count - 1].AddCoin(10,1);
+		StageData[StageData.Count - 1].AddCoin(11,1);
 		
 		// ========================================================
 		// stage 6
@@ -361,6 +373,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
+		StageData[StageData.Count - 1].AddCoin(7,5);
+
 		// ========================================================
 		// stage 7
 		map = new int[,]{
@@ -382,6 +396,9 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(2,5);
+		
 		
 		// ========================================================
 		// stage 8
@@ -405,6 +422,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
+		StageData[StageData.Count - 1].AddCoin(7,1);
+
 		// ========================================================
 		// stage 9
 		map = new int[,]{
@@ -420,12 +439,14 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(3);
 		StageData[StageData.Count - 1].AddObject(2, 1, 2);
 		
 		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(10,4);
 
 		// ========================================================
 		// stage 10
@@ -448,6 +469,10 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(6,1);
+		StageData[StageData.Count - 1].AddCoin(7,6);
+		StageData[StageData.Count - 1].AddCoin(9,6);
 
 		// ========================================================
 		// stage 12
@@ -506,10 +531,30 @@ public class PuzzleManager : MonoBehaviour {
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddBlockQtyInfo(2);
 		StageData[StageData.Count - 1].AddObject(9, 7, 0);
+
+		// ========================================================
+		// stage 14
+		map = new int[,]{
+			{ 1, 3, 3, 3, 3, 9, 9, 9, 9, 9, 3, 3, 3, 3,23},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0,29,29,29,29,29, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 2, 0, 0,29, 0, 0, 0, 0, 0, 0,20},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(8);
+		StageData[StageData.Count - 1].AddObject(0, 0, 1);
+		StageData[StageData.Count - 1].AddCoin(5, 4);
+		StageData[StageData.Count - 1].AddCoin(7, 4);
+		StageData[StageData.Count - 1].AddCoin(9, 4);
 		
-
-
-
+		// ========================================================
+		// stage 15
 		map = new int[,]{
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -530,28 +575,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(8, 4);
 		StageData[StageData.Count - 1].AddCoin(11, 7);
 		
-
-
-		map = new int[,]{
-			{ 1, 3, 3, 3, 3, 9, 9, 9, 9, 9, 3, 3, 3, 3,23},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-			{ 0, 0, 0, 0, 0,29,29,29,29,29, 0, 0, 0, 0, 4},
-			{ 0, 0, 0, 0, 2, 0, 0,29, 0, 0, 0, 0, 0, 0,20},
-			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0}
-		};
-		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(8);
-		StageData[StageData.Count - 1].AddObject(0, 0, 1);
-		StageData[StageData.Count - 1].AddCoin(5, 4);
-		StageData[StageData.Count - 1].AddCoin(7, 4);
-		StageData[StageData.Count - 1].AddCoin(9, 4);
-
-
+		// ========================================================
+		// stage 16
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3,23, 0, 0},
@@ -571,6 +596,8 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(6, 5);
 		StageData[StageData.Count - 1].AddCoin(3, 7);
 
+		// ========================================================
+		// stage 17
 		map = new int[,]{
 			{ 1, 0, 0, 0, 0, 9, 9, 9, 9, 9, 0,23, 0, 0, 0},
 			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
@@ -590,36 +617,40 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(1, 0);
 		StageData[StageData.Count - 1].AddCoin(7, 6);
 
+		// ========================================================
+		// stage 18
 		map = new int[,]{
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 4, 0, 0, 0, 0, 0, 0,14, 0, 0, 0, 4, 0, 0, 0},
-			{ 4, 0, 0, 0, 0, 0, 0,14, 0, 0, 0, 4, 0, 0, 0},
-			{ 4, 0, 0, 0, 0, 0, 0,14, 0, 0, 0, 4, 0, 0, 0},
-			{ 4, 0, 0, 0, 0, 0, 0,14, 3, 3, 3,20, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3,20, 0, 0, 0},
 			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, 0},
 			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
 			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
 			{21, 3, 3, 3, 3, 3, 3,30, 3, 3, 3, 3, 3,20, 0},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(6);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(7);
 		StageData[StageData.Count - 1].AddObject(0, 0, 2);
 		StageData[StageData.Count - 1].AddCoin(7, 3);
 		StageData[StageData.Count - 1].AddCoin(11, 3);
 		StageData[StageData.Count - 1].AddCoin(9, 5);
 
+		// ========================================================
+		// stage 19
 		map = new int[,]{
-			{ 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,27},
+			{ 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,23},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,23, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0,29, 0, 0,14, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0,14, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4},
-			{ 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0,14, 0, 4},
-			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4},
-			{ 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0,14, 0, 4},
-			{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,25, 3,24},
+			{ 0, 0, 0, 0, 0, 0, 0,29,29,29, 0, 0,14, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 4, 0, 4},
+			{ 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0,14, 0, 4},
+			{ 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 4, 0, 4},
+			{ 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0,14, 0, 4},
+			{ 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4},
+			{ 0, 0,29,29, 0, 0, 0, 0, 0, 0, 0, 0,14, 0, 4},
+			{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,25, 3,20},
 		};
 		StageData.Add(new StageInfo(map));
 		StageData[StageData.Count - 1].AddBlockQtyInfo(13);
@@ -628,20 +659,113 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(12, 5);
 		StageData[StageData.Count - 1].AddCoin(12, 7);
 
+		// ========================================================
+		// stage 20
 		map = new int[,]{
-			{ 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,23},
-			{26, 3, 3, 3, 3, 3, 3,23, 2, 3, 3, 3, 3,23, 4},
-			{ 4,29,29,29,29,29,29, 4,29,29,29,29,29, 4, 4},
-			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0,29,29,29, 0, 4},
-			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 4},
-			{ 4, 0, 0,29, 0, 0,29, 0,29, 0, 0, 0, 0, 0, 4},
-			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0,29,29,29, 0, 4},
-			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
-			{25, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,24},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 2, 3, 0, 0, 0, 3, 3, 3,23, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0,22, 3, 3, 3, 9, 9, 9, 3,23, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
+			{ 0, 0, 4, 0,22, 3, 0, 0, 0, 3,20, 0, 0, 0, 0},
+			{ 0, 0, 4, 0,21, 3, 0, 0, 0, 3, 3, 3,20, 0, 0},
+			{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddBlockQtyInfo(42);
+		StageData[StageData.Count - 1].AddBlockQtyInfo(7);
+		StageData[StageData.Count - 1].AddObject(2, 9, 0);
+		StageData[StageData.Count - 1].AddCoin(7, 3);
+		StageData[StageData.Count - 1].AddCoin(7, 5);
+		StageData[StageData.Count - 1].AddCoin(7, 7);
+
+		// ========================================================
+		// stage 21
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0,22, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,22, 3,23, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0},
+			{ 0,31, 3, 3, 3, 0, 0, 0, 0, 0,15, 3,24, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,21, 3,20, 0, 0},
+			{ 0,21, 3, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(10);
+		StageData[StageData.Count - 1].AddObject(4, 3, 3);
+		StageData[StageData.Count - 1].AddCoin(7, 6);
+		StageData[StageData.Count - 1].AddCoin(11,4);
+		StageData[StageData.Count - 1].AddCoin(11,8);
+
+		// ========================================================
+		// stage 22
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0,22, 0,23, 0, 0, 0},
+			{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0,29, 0, 0, 0, 0, 0, 0,12, 0, 0,29, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0,21, 0, 0, 0, 0, 0,15, 0,20, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(10);
+		StageData[StageData.Count - 1].AddObject(9, 9, 0);
+		StageData[StageData.Count - 1].AddCoin(3,3);
+		StageData[StageData.Count - 1].AddCoin(9,3);
+		StageData[StageData.Count - 1].AddCoin(11,3);
+
+		// ========================================================
+		// stage 23
+		map = new int[,]{
+			{ 2, 3,23,22, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,23},
+			{ 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 4, 1, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 4,29, 4, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 3,20},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(24);
+		StageData[StageData.Count - 1].AddObject(3, 2, 0);
+
+		StageData[StageData.Count - 1].AddCoin(2,2);
+		StageData[StageData.Count - 1].AddCoin(3,4);
+		StageData[StageData.Count - 1].AddCoin(4,6);
+		StageData[StageData.Count - 1].AddCoin(5,8);
+		StageData[StageData.Count - 1].AddCoin(7,8);
+		StageData[StageData.Count - 1].AddCoin(8,6);
+		StageData[StageData.Count - 1].AddCoin(9,4);
+		StageData[StageData.Count - 1].AddCoin(10,2);
+		
+
+		// ========================================================
+		// stage 24
+		map = new int[,]{
+			{ 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,19},
+			{22, 3, 3, 3, 3, 3, 3,23,29, 2, 3, 3, 3,23, 4},
+			{ 4,29,29,29,29,29,29, 4,29,29,29,29,29, 4, 4},
+			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 4},
+			{ 4, 0, 0, 3, 0, 0, 0, 0, 0, 0,29,29,29, 0, 4},
+			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 4},
+			{ 4, 0, 0,29, 0, 0,29, 4,29, 0, 0, 0, 0, 0, 4},
+			{ 4, 0, 0, 3, 0, 0, 0, 0, 0, 0,29,29,29, 4, 4},
+			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 3, 3, 3,20, 4},
+			{21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,20},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(36);
 		StageData[StageData.Count - 1].AddObject(0, 0, 1);
 		StageData[StageData.Count - 1].AddCoin(7,6);
 		StageData[StageData.Count - 1].AddCoin(3,4);
@@ -649,20 +773,22 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddCoin(11,3);
 		StageData[StageData.Count - 1].AddCoin(11,8);
 
+		// ========================================================
+		// stage 25
 		map = new int[,]{
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{ 0, 0, 0,21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 		};
 		StageData.Add(new StageInfo(map));
-		StageData[StageData.Count - 1].AddObject(3, 2, 2); 
+		StageData[StageData.Count - 1].AddObject(1, 6, 1); 
 		StageData[StageData.Count - 1].AddBlockQtyInfo(0);
 		StageData[StageData.Count - 1].AddCoin(5,6);
 		StageData[StageData.Count - 1].AddCoin(6,6);
