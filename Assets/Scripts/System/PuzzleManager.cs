@@ -1,228 +1,1006 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class PuzzleManager : MonoBehaviour {
+	public class StageInfo {
+		public int[,] Map { get; private set; }
+		public List<ObjectInfo> Objects { get; private set; }
+		public List<CoinObjectInfo> Coins { get; private set; }
+		public int CoinObjectQty;
+		public int CurrentCoinQty;
 
-	const int blockLength = 3;
+		public int RequirementBlockQty;
+		public int PlaceBlockQty;
 
-	const float margin = 2f;
-	static readonly Vector3[] instantiatePosition = new Vector3[blockLength * blockLength]{
-		new Vector3(margin,0,margin),
-		new Vector3(0,0,margin),
-		new Vector3(-margin,0,margin),
-		new Vector3(margin,0,0),
-		new Vector3(0,0,0),
-		new Vector3(-margin,0,0),
-		new Vector3(margin,0,-margin),
-		new Vector3(0,0,-margin),
-		new Vector3(-margin,0,-margin)
-	};
-
-	struct BlockInfo{
-		public int id;
-		public GameObject obj;
-		public PuzzleBlock blockScript;
-	}
-
-	// string question = "012012012,012012012,333333333,012012012,012012012,210210210,012012012,012012012,210210210";
-	// string question = "123000000";
-	string question = "222222222,111111111,222222222";
-
-	int height;
-
-	List<BlockInfo>[,] BlockList = new List<BlockInfo>[blockLength,blockLength];
-
-	List<int[]> DeleteBlocks = new List<int[]>();
-
-	[SerializeField]
-	GameObject blockPrefab;
-
-	[SerializeField]
-	GameObject breakBlockPrefab;
-	[SerializeField]
-	GameObject goalBlockPrefab;
-	[SerializeField]
-	GameObject buildingPrefab;
-	
-	GameObject puzzleParentObject;
-	GameObject goalObject;
-	GameObject stageObject;
-
-
-	// Use this for initialization
-	void Start () {
-		// List初期化
-		for (int x = 0; x < blockLength; ++x)
+		public StageInfo(int[,] map)
 		{
-			for (int y = 0; y < blockLength; ++y)
+			Objects = new List<ObjectInfo>();
+			Coins = new List<CoinObjectInfo>();
+
+			Map = new int[map.GetLength(0), map.GetLength(1)];
+			for (int z = 0; z < map.GetLength(1); ++z)
 			{
-				BlockList[x,y] = new List<BlockInfo>();
+				for (int x = 0; x < map.GetLength(0); ++x)
+				{
+					Map[x, z] = map[x, z];
+				}
 			}
 		}
 
-		stageObject = GameObject.Find("StageMaster/Stage");
-		puzzleParentObject = GameObject.Find("StageMaster/PuzzleObject");
-		initializePuzzle(question);
-	}
-	
-	void LateUpdate(){
-		deleteBlocksFromList();
-	}
-
-	void initializePuzzle(string question){
-		height = 0;
-
-		string[] questionArr = question.Split(',');
-
-		foreach (var item in questionArr.Select((v, i) => new {Value = v, Index = i }))
+		public void AddObject(float x, float z, int objectNumber)
 		{
-			if(item.Value.Length % (blockLength * blockLength) != 0){
-				(item.Index + "段の指定がおかしいです。" + blockLength * blockLength + "桁で指定して下さい。").LogWarning();
-			}
-			for (int x = 0; x < blockLength; ++x)
-			{
-				for (int y = 0; y < blockLength; ++y)
-				{
-					BlockInfo blockinfo = new BlockInfo();
-
-					GameObject obj = Instantiate(blockPrefab,new Vector3(instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].x, margin * (item.Index + 1), instantiatePosition[(x * blockLength + y) % (blockLength * blockLength)].z), Quaternion.Euler(Vector3.zero)) as GameObject;
-					obj.name = "PuzzleBlock (" + x + "," + y + ":" + item.Index + ")";
-					obj.transform.parent = puzzleParentObject.transform;
-					blockinfo.id = obj.GetInstanceID();
-					blockinfo.obj = obj;
-					blockinfo.blockScript = obj.GetComponent<PuzzleBlock>();
-					blockinfo.blockScript.SetColorByInt((int)char.GetNumericValue(item.Value[(x * 3 ) + y]));
-					blockinfo.blockScript.SetCoordinates(x, y, item.Index);
-					BlockList[x,y].Add(blockinfo);
-				}
-			}
-		++height;
+			Objects.Add(new ObjectInfo(x, z, objectNumber));
 		}
 
-		// ゴール生成
-		goalObject = Instantiate(goalBlockPrefab,new Vector3(0, height * 2 + 4, 0), Quaternion.identity) as GameObject;
-		goalObject.name = "GoalBlock";
-		goalObject.transform.parent = puzzleParentObject.transform;
-	}
+		public void AddCoin(float x, float z)
+		{
+			++CoinObjectQty;
+			Coins.Add(new CoinObjectInfo(x, z));
+		}
 
-	void deleteBlocksFromList(){
-		if(DeleteBlocks.Count != 0){
-			DeleteBlocks.Sort((a, b) => (int)b[2] - (int)a[2]);
-			foreach (var item in DeleteBlocks)
-			{
-				// 上の要素の座標を変更しておく
-				for (int i = (int)item[2] + 1; i < BlockList[(int)item[0],(int)item[1]].Count; ++i)
-				{
-					BlockList[(int)item[0],(int)item[1]][i].blockScript.SetCoordinates(item[0], item[1], i - 1);
-				}
-				BlockList[(int)item[0],(int)item[1]].RemoveAt((int)item[2]);
-			}
-			DeleteBlocks.Clear();
+		public void AddBlockQtyInfo(int requirementBlockQty){
+			RequirementBlockQty = requirementBlockQty;
+			PlaceBlockQty = 0;
+		}
+
+		public bool IsCollectAllCoin(){
+			return CurrentCoinQty == CoinObjectQty;
 		}
 	}
 
-	void destroyAroundDesignation(int x, int y, int z){
-		// 上
-		if(z != height - 1){
-			if(BlockList[x,y].Count() > z + 1){
-				if(BlockList[x,y][z + 1].blockScript != null){
-					if(!BlockList[x,y][z + 1].blockScript.BreakWait){
-						if(BlockList[x,y][z + 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x,y][z + 1].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
+	public class ObjectInfo
+	{
+		public Vector3 pos;
+		public int obj;
+
+		public ObjectInfo(float x, float z, int objectNumber)
+		{
+			pos = new Vector2(x, z);
+			obj = objectNumber;
 		}
-		// 下
-		if(z != 0){
-			if(BlockList[x,y][z - 1].blockScript != null){
-				if(!BlockList[x,y][z - 1].blockScript.BreakWait){
-					if(BlockList[x,y][z - 1].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-						BlockList[x,y][z - 1].blockScript.BreakBlock();
-					}
-				}
-			}
-		}
-		// 左
-		if(y != 0){
-			if(BlockList[x,y - 1].Count() > z && BlockList[x,y - 1].Count() != 0){
-				if(BlockList[x,y - 1][z].blockScript != null){
-					if(!BlockList[x,y - 1][z].blockScript.BreakWait){
-						if(BlockList[x,y - 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x,y - 1][z].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
-		}
-		// 右
-		if(y != blockLength - 1){
-			if(BlockList[x,y + 1].Count() > z && BlockList[x,y + 1].Count() != 0){
-				if(BlockList[x,y + 1][z].blockScript != null){
-					if(!BlockList[x,y + 1][z].blockScript.BreakWait){
-						if(BlockList[x,y + 1][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x,y + 1][z].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
-		}
-		// 手前
-		if(x != blockLength - 1){
-			if(BlockList[x + 1,y].Count() > z && BlockList[x + 1,y].Count() != 0){
-				if(BlockList[x + 1,y][z].blockScript != null){
-					if(!BlockList[x + 1,y][z].blockScript.BreakWait){
-						if(BlockList[x + 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x + 1,y][z].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
-		}
-		// 奥
-		if(x != 0){
-			if(BlockList[x - 1,y].Count() > z && BlockList[x - 1,y].Count() != 0){
-				if(BlockList[x - 1,y][z].blockScript != null){
-					if(!BlockList[x - 1,y][z].blockScript.BreakWait){
-						if(BlockList[x - 1,y][z].blockScript.MyColor == BlockList[x,y][z].blockScript.MyColor){
-							BlockList[x - 1,y][z].blockScript.BreakBlock();
-						}
-					}
-				}
-			}
+
+		public Vector3 GetPos(float height, int length) {
+			return new Vector3(pos.x, height, length - pos.y + 0.2f);
 		}
 	}
 
-	public void DestroyTheBlock(int x, int y, int z){
-		var obj = BlockList[x, y][z];
-		BlockList[x, y][z].blockScript.BreakWait = true;
-		destroyAroundDesignation(x, y, z);
+	public class CoinObjectInfo
+	{
+		public Vector3 pos;
 
-		BlockInfo b = new BlockInfo();
-		b.blockScript = null;
-		b.obj = null;
-		BlockList[x, y][z] = b;
+		public CoinObjectInfo(float x, float z)
+		{
+			pos = new Vector2(x, z);
+		}
+
+		public Vector3 GetPos(float height, int length) {
+			return new Vector3(pos.x, height + 1f, length - pos.y + 0.2f);
+		}
+	}
+
+	int[,] map;
+	public static List<StageInfo> StageData { get; private set; }
+	public static List<GameObject> StageObject { get; private set; }
+
+	public static int RequirementBlockQty = 0;
+	public static int PlaceBlockQty = 0;
+	public static int DeathCount = 0;
+
+	public static PuzzleManager instance;
+
+	[SerializeField]
+	GameObject[] generateBlocks;
+	[SerializeField]
+	GameObject[] generateObjects;
+	[SerializeField, Space(6)]
+	GameObject sphereController;
+	[SerializeField]
+	GameObject coinPrefabs;
+	[SerializeField]
+	GameObject resultPrefab;
+
+	public static GameObject SphereController;
+	public static GameObject CoinParticleFlyCoinTarget{ get; private set;}
+
+	[SerializeField]
+	Color placeColor, notTurnColor, turnColor, turnRightColor, moveColor;
+	public static Color PlaceColor, NotTurnColor, TurnColor, TurnRightColor, MoveColor;
+
+	public static GameObject CameraObject;
+	public static GameObject HeldBlockSlot;
+
+	Vector3 firstCameraPosition;
+
+	public static int CurrentStage = 0;
+	public const float kMapDepth = 0.5f;
+	public const int kMapWidth = 15;
+	public const int kMapHeight = 10;
+
+	// スコア
+	public static int MicroCoin;
+
+	// 画面テキストなど
+	[SerializeField]
+	GameObject worldSpaceText;
+	public static GameObject WorldSpaceText;
+	Text currentStageText;
+	Text totalStageText;
+	Text currentBlockText;
+	Text totalBlockText;
+
+
+	void Awake () {
+		AnalyticsManager.LogScreen("Game Start");
+
+
+		instance = this;
+		SphereController = sphereController;
+		NotTurnColor = notTurnColor;
+		TurnColor = turnColor;
+		TurnRightColor = turnRightColor;
+		MoveColor = moveColor;
+		PlaceColor = placeColor;
+
+		WorldSpaceText = worldSpaceText;
+
+		// オブジェクトリスト生成 リリース時取り除く
+		/*
+		var str = "\n ■ Blocks ■\n";
+		for (int i = 0; i < generateBlocks.Length; ++i)
+		{
+			str += i + "\t" + generateBlocks[i].name + "\n";
+		}
+		str.Log();
+
+		str = "\n □ Objects □\n";
+		for (int i = 0; i < generateObjects.Length; ++i)
+		{
+			str += i + "\t" + generateObjects[i].name + "\n";
+		}
+		str.Log();
+		 */
+
+		CameraObject = GameObject.Find("Main Camera");
+		HeldBlockSlot = GameObject.Find("HeldBlockSlot");
+		CoinParticleFlyCoinTarget = GameObject.Find("CoinTargetPoint");
+		currentStageText = GameObject.Find("StageInfo/CurrentStage").GetComponent<Text>();
+		totalStageText = GameObject.Find("StageInfo/TotalStage").GetComponent<Text>();
+		currentBlockText = GameObject.Find("BlockInfo/CurrentBlock").GetComponent<Text>();
+		totalBlockText = GameObject.Find("BlockInfo/TotalBlock").GetComponent<Text>();
+
+		firstCameraPosition = CameraObject.transform.position;
 		
-		int[] c = {x, y, z};
-		DeleteBlocks.Add(c);
-		var breakObj = Instantiate(breakBlockPrefab, obj.obj.transform.position, obj.obj.transform.rotation) as GameObject;
-		breakObj.GetComponent<BreakBlockParticle>().CubeColor = obj.blockScript.GetColor();
-		Destroy(obj.obj);
+		SoundManager.PlayBGM(SoundManager.BGM.Blue_Ever);
+
+
+		initialize();
 	}
 
-	public void StageClear(){
-		Instantiate(buildingPrefab, new Vector3(0 + buildingPrefab.transform.position.x,4 + buildingPrefab.transform.position.y,0 + buildingPrefab.transform.position.z), buildingPrefab.transform.rotation);
+	void Update(){
+		currentStageText.text = (CurrentStage + 1).ToString();
 
-		// 次のパズルを生成
-		StartCoroutine("NextStage");
+		/*
+		if(Input.GetKeyDown(KeyCode.M)){
+			IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction).Log();
+		}
+		if(Input.GetKeyDown(KeyCode.Q)){
+			initialize();
+		}
+		if(Input.GetKeyDown(KeyCode.R)){
+			"Stage Reset".Log();
+			Destroy(GameObject.Find("Player"));
+		}
+		if(Input.GetKeyDown(KeyCode.N)){
+			"Stage Skip".Log();
+			Destroy(GameObject.Find("Player"));
+			NextStage();
+		}
+		if(Input.GetKey(KeyCode.A)){
+			++MicroCoin;
+		}
+		if(Input.GetKey(KeyCode.S)){
+			--MicroCoin;
+		}
+		*/
+		if (Input.GetKeyUp(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
 	}
 
-	IEnumerator NextStage() {  
-        yield return new WaitForSeconds (2.0f);
-		initializePuzzle(question);
-    } 
+	void initialize(){
+		foreach (Transform child in transform)
+		{
+			Destroy(child.gameObject);
+		}
+
+		CameraObject.transform.position = firstCameraPosition;
+		CurrentStage = 0;
+
+		StageData = new List<StageInfo>();
+		StageObject = new List<GameObject>();
+
+		// ========================================================
+		// stage 1
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(0);
+
+		StageData[StageData.Count - 1].AddObject(13,6,3);
+
+		StageData[StageData.Count - 1].AddObject(7f,2f,12);
+
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(11,6);
+		StageData[StageData.Count - 1].AddCoin(9,6);
+		StageData[StageData.Count - 1].AddCoin(7,6);
+		StageData[StageData.Count - 1].AddCoin(5,6);
+		StageData[StageData.Count - 1].AddCoin(3,6);
+		
+
+		// ========================================================
+		//stage 2
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0,22, 3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 2, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(1, 6, 0);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(6,1);
+
+
+		// ========================================================
+		// stage 3
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 2, 3, 3, 3, 3,23, 0, 0, 0, 0, 1, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,21, 3, 3, 3, 3,20, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(12, 1, 2);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(5,1);
+
+		// ========================================================
+		// stage 4
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 1, 3, 3, 3, 3, 3, 3, 3, 3,23, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 2, 3, 3, 3, 0, 3, 3,20, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddObject(2, 1, 1);
+
+		StageData[StageData.Count - 1].AddCoin(6, 6);
+
+		// ========================================================
+		// stage 5
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 3, 3, 3, 3, 3, 0, 0, 3, 2, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(2);
+		StageData[StageData.Count - 1].AddObject(4, 6, 0);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(8,1);
+		
+		// ========================================================
+		// stage 6
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3,20, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(13, 1, 2);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(7,3);
+
+		// ========================================================
+		// stage 7
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0,22, 3, 3, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 3, 3, 3, 3, 2, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(3);
+		StageData[StageData.Count - 1].AddObject(7, 1, 3);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(2,2);
+		
+		
+		// ========================================================
+		// stage 8
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 2, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,21, 3, 3, 3, 3,23, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 1, 3, 3, 3, 3,20, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(5);
+		StageData[StageData.Count - 1].AddObject(7, 6, 1);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(4,1);
+
+		// ========================================================
+		// stage 9
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0,31, 3, 3, 3, 3, 0, 0, 0, 3,29, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(3);
+		StageData[StageData.Count - 1].AddObject(2, 1, 2);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(10,4);
+
+		// ========================================================
+		// stage 10
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 0, 0, 0,23, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,21, 3,27, 3,20, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 1, 3, 3, 3,30, 0, 0, 0, 0, 3, 2, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(7);
+		StageData[StageData.Count - 1].AddObject(2, 6, 1);
+		
+		StageData[StageData.Count - 1].AddObject(1.5f, 8.5f, 16);
+		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
+		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
+
+		StageData[StageData.Count - 1].AddCoin(6,1);
+		StageData[StageData.Count - 1].AddCoin(11,6);
+
+		// ========================================================
+		// stage 12
+		map = new int[,]{
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0,22, 0, 3, 3, 3, 0, 3,23, 0, 0, 0},
+			{ 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,23},
+			{ 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 4, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,20}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(9);
+		StageData[StageData.Count - 1].AddObject(0,0,2);
+		StageData[StageData.Count - 1].AddCoin(14,5);
+		StageData[StageData.Count - 1].AddCoin(11,5);
+		StageData[StageData.Count - 1].AddCoin(7,2);
+		StageData[StageData.Count - 1].AddCoin(4,6);
+		
+		// ========================================================
+		// stage 13
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 3, 0, 0, 0, 3,23, 0, 0, 0, 0},
+			{ 0, 0, 0,29,12, 0, 0, 0, 0, 0, 0,29, 0, 0, 0},
+			{ 0, 0, 0,29,12, 0, 0, 0, 0, 0, 0,29, 0, 0, 0},
+			{ 0, 0, 0,29,12, 0, 0, 0, 0, 0, 0,29, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(3);
+		StageData[StageData.Count - 1].AddObject(4, 7, 0);
+		StageData[StageData.Count - 1].AddCoin(7, 2);
+		
+		
+		// ========================================================
+		// stage 14
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0,22, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0,21, 3, 7, 7, 7,23, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0, 2, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(2);
+		StageData[StageData.Count - 1].AddObject(9, 7, 0);
+		StageData[StageData.Count - 1].AddCoin(7, 2);
+		StageData[StageData.Count - 1].AddCoin(7, 8);
+
+		// ========================================================
+		// stage 14
+		map = new int[,]{
+			{ 1, 3, 3, 3, 3, 9, 9, 9, 9, 9, 3, 3, 3, 3,23},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0,29,29,29,29,29, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 2, 0, 0,29, 0, 0, 0, 0, 0, 0,20},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(8);
+		StageData[StageData.Count - 1].AddObject(0, 0, 1);
+		StageData[StageData.Count - 1].AddCoin(5, 4);
+		StageData[StageData.Count - 1].AddCoin(7, 4);
+		StageData[StageData.Count - 1].AddCoin(9, 4);
+		
+		// ========================================================
+		// stage 15
+		map = new int[,]{
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0,22, 0, 0,23, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0,21, 0, 0,15, 0, 0, 0,23, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 3, 3, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 2, 0},
+			{21, 3, 3, 3, 3, 3,20, 0, 0, 0, 0, 0, 0, 0, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(12);
+		StageData[StageData.Count - 1].AddObject(0, 0, 2);
+		StageData[StageData.Count - 1].AddCoin(4, 2);
+		StageData[StageData.Count - 1].AddCoin(5, 4);
+		StageData[StageData.Count - 1].AddCoin(8, 4);
+		StageData[StageData.Count - 1].AddCoin(11, 7);
+		
+		// ========================================================
+		// stage 16
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 2, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3,23, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0,29, 3, 3,33, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(12);
+		StageData[StageData.Count - 1].AddObject(12, 9, 0);
+		StageData[StageData.Count - 1].AddCoin(10, 5);
+		StageData[StageData.Count - 1].AddCoin(6, 5);
+		StageData[StageData.Count - 1].AddCoin(3, 7);
+
+		// ========================================================
+		// stage 17
+		map = new int[,]{
+			{ 1, 0, 0, 0, 0, 9, 9, 9, 9, 9, 0,23, 0, 0, 0},
+			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4,12, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4,12, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4,21, 3,30, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0,29,29,29,29,29, 0,26, 0, 0,29},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
+			{21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,20, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(16);
+		StageData[StageData.Count - 1].AddObject(0, 0, 2);
+		StageData[StageData.Count - 1].AddCoin(11, 0);
+		StageData[StageData.Count - 1].AddCoin(1, 0);
+		StageData[StageData.Count - 1].AddCoin(7, 6);
+
+		// ========================================================
+		// stage 18
+		map = new int[,]{
+			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3,20, 0, 0, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{ 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0},
+			{21, 3, 3, 3, 3, 3, 3,30, 3, 3, 3, 3, 3,20, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(6);
+		StageData[StageData.Count - 1].AddObject(0, 0, 2);
+		StageData[StageData.Count - 1].AddCoin(7, 3);
+		StageData[StageData.Count - 1].AddCoin(11, 3);
+		StageData[StageData.Count - 1].AddCoin(9, 5);
+
+		// ========================================================
+		// stage 19
+		map = new int[,]{
+			{ 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,23},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,23, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0,29,29,29, 0, 0,14, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 4, 0, 4},
+			{ 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0,14, 0, 4},
+			{ 0, 0, 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 4, 0, 4},
+			{ 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0,14, 0, 4},
+			{ 0, 0, 0,29, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4},
+			{ 0, 0,29,29, 0, 0, 0, 0, 0, 0, 0, 0,14, 0, 4},
+			{ 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,21, 3,20},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(12);
+		StageData[StageData.Count - 1].AddObject(0, 0, 1);
+		StageData[StageData.Count - 1].AddCoin(12, 3);
+		StageData[StageData.Count - 1].AddCoin(12, 5);
+		StageData[StageData.Count - 1].AddCoin(12, 7);
+
+		// ========================================================
+		// stage 20
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 2, 3, 0, 0, 0, 3, 3, 3,23, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0,22, 3, 3, 3, 9, 9, 9, 3,23, 0, 0, 0, 0},
+			{ 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0},
+			{ 0, 0, 4, 0,22, 3, 0, 0, 0, 3,20, 0, 0, 0, 0},
+			{ 0, 0, 4, 0,21, 3, 0, 0, 0, 3, 3, 3,20, 0, 0},
+			{ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(7);
+		StageData[StageData.Count - 1].AddObject(2, 9, 0);
+		StageData[StageData.Count - 1].AddCoin(7, 3);
+		StageData[StageData.Count - 1].AddCoin(7, 5);
+		StageData[StageData.Count - 1].AddCoin(7, 7);
+
+		// ========================================================
+		// stage 21
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0,22, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,22, 3,23, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0},
+			{ 0,31, 3, 3, 3, 0, 0, 0, 0, 0,15, 3,24, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0},
+			{ 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,21, 3,20, 0, 0},
+			{ 0,21, 3, 0, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(10);
+		StageData[StageData.Count - 1].AddObject(4, 3, 3);
+		StageData[StageData.Count - 1].AddCoin(7, 6);
+		StageData[StageData.Count - 1].AddCoin(11,4);
+		StageData[StageData.Count - 1].AddCoin(11,8);
+
+		// ========================================================
+		// stage 22
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0,22, 0,23, 0, 0, 0},
+			{ 0, 0, 0, 2, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0,29, 0, 0, 0, 0, 0, 0,12, 0, 0,29, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0,21, 0, 0, 0, 0, 0,15, 0,20, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(10);
+		StageData[StageData.Count - 1].AddObject(9, 9, 0);
+		StageData[StageData.Count - 1].AddCoin(3,3);
+		StageData[StageData.Count - 1].AddCoin(9,3);
+		StageData[StageData.Count - 1].AddCoin(11,3);
+
+		// ========================================================
+		// stage 23
+		map = new int[,]{
+			{ 2, 3,23,22, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,23},
+			{ 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 4, 1, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 4,29, 4, 0, 0, 0, 0, 0, 0, 4},
+			{ 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 3,20},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(24);
+		StageData[StageData.Count - 1].AddObject(3, 2, 0);
+
+		StageData[StageData.Count - 1].AddCoin(2,2);
+		StageData[StageData.Count - 1].AddCoin(3,4);
+		StageData[StageData.Count - 1].AddCoin(4,6);
+		StageData[StageData.Count - 1].AddCoin(5,8);
+		StageData[StageData.Count - 1].AddCoin(7,8);
+		StageData[StageData.Count - 1].AddCoin(8,6);
+		StageData[StageData.Count - 1].AddCoin(9,4);
+		StageData[StageData.Count - 1].AddCoin(10,2);
+		
+
+		// ========================================================
+		// stage 24
+		map = new int[,]{
+			{ 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,23},
+			{22, 3, 3, 3, 3, 3, 3,23,29, 2, 3, 3, 3,23, 4},
+			{ 4,29,29,29,29,29,29, 4,29,29,29,29,29, 4, 4},
+			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 3, 3, 3, 0, 4},
+			{ 4, 0, 0, 3, 0, 0, 0, 0, 0, 0,29,29,29, 0, 4},
+			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0,29, 0, 0, 0, 4},
+			{ 4, 0, 0,29, 0, 0,29, 4,29, 0, 0, 0, 0, 0, 4},
+			{ 4, 0, 0, 3, 0, 0, 0, 0, 0, 0,29,29,29, 4, 4},
+			{ 4, 0, 0,29, 0, 0, 0, 0, 0, 0, 3, 3, 3,20, 4},
+			{21, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,20},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(36);
+		StageData[StageData.Count - 1].AddObject(0, 0, 1);
+		StageData[StageData.Count - 1].AddCoin(7,6);
+		StageData[StageData.Count - 1].AddCoin(3,4);
+		StageData[StageData.Count - 1].AddCoin(3,7);
+		StageData[StageData.Count - 1].AddCoin(11,3);
+		StageData[StageData.Count - 1].AddCoin(11,8);
+
+		// ========================================================
+		// stage 25
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0}
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddObject(1, 9, 1); 
+		StageData[StageData.Count - 1].AddObject(0, 0, 13); 
+		StageData[StageData.Count - 1].AddBlockQtyInfo(0);
+		StageData[StageData.Count - 1].AddCoin(3,9);
+		StageData[StageData.Count - 1].AddCoin(4,9);
+		StageData[StageData.Count - 1].AddCoin(5,9);
+		StageData[StageData.Count - 1].AddCoin(6,9);
+		StageData[StageData.Count - 1].AddCoin(7,9);
+		StageData[StageData.Count - 1].AddCoin(8,9);
+		StageData[StageData.Count - 1].AddCoin(9,9);
+		StageData[StageData.Count - 1].AddCoin(10,9);
+		StageData[StageData.Count - 1].AddCoin(11,9);
+
+
+
+		var height = 0;
+		foreach (var item in StageData){
+			RequirementBlockQty += item.RequirementBlockQty;
+			GenerateMap(item, height);
+			++height;
+		}
+		StageObject[0].SetActive(true);
+		totalStageText.text = height.ToString();
+	}
+
+
+	public static void GenerateMap(StageInfo item, int stageNumber, bool isActive = false){
+		var old = GameObject.Find("Stage " + stageNumber);
+
+		var stageObj = new GameObject("Stage " + stageNumber);
+		var mapObj = new GameObject("Maps");
+		var objObj = new GameObject("Objects");
+
+		if (old){
+			Destroy(old);
+			StageObject[stageNumber] = stageObj;
+		}
+		else
+		{
+			StageObject.Add(stageObj);
+		}
+
+		stageObj.transform.parent = instance.transform;
+		mapObj.transform.parent = stageObj.transform;
+		objObj.transform.parent = stageObj.transform;
+		for (int z = 0; z < item.Map.GetLength(0); ++z)
+		{
+			for (int x = 0; x < item.Map.GetLength(1); ++x)
+			{
+				Vector3 pos = new Vector3(x, -stageNumber * kMapDepth, (item.Map.GetLength(0) - z) + 0.25f);
+				if (item.Map[z, x] == 0) continue;
+				var obj = Instantiate(instance.generateBlocks[item.Map[z, x]], pos, instance.generateBlocks[item.Map[z, x]].transform.rotation) as GameObject;
+				obj.transform.parent = mapObj.transform;
+				obj.name = "[" + x + "," + z + "] " + obj.name;
+				obj.layer = LayerMask.NameToLayer("DefaultBlock");
+			}
+		}
+
+		foreach (var objItem in item.Objects)
+		{
+			var obj = Instantiate(instance.generateObjects[objItem.obj], objItem.GetPos(-stageNumber * kMapDepth, item.Map.GetLength(0)), instance.generateObjects[objItem.obj].transform.rotation);
+			obj.transform.parent = objObj.transform;
+			obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
+		}
+
+		foreach (var objItem in item.Coins)
+		{
+			var obj = Instantiate(instance.coinPrefabs, objItem.GetPos(-stageNumber * kMapDepth, item.Map.GetLength(0)), instance.coinPrefabs.transform.rotation);
+			obj.transform.parent = objObj.transform;
+			obj.name = "[" + objItem.pos.x + "," + objItem.pos.z + "] " + obj.name;
+			// obj.GetComponent<CoinParticle>().microCoin = objItem.microCoin;
+		}
+
+		stageObj.SetActive(isActive);
+		ResetMapState();
+	}
+
+	public static void NextStage(GameObject destroyObj = null){
+		"Next Stage".Log();
+		if(destroyObj == null){
+			destroyObj = GameObject.Find("Stage " + CurrentStage);
+		}
+		Destroy(destroyObj);
+
+		PlaceBlockQty += StageData[CurrentStage].PlaceBlockQty;
+
+		++CurrentStage;
+		CameraManager.CameraDown(kMapDepth);
+		
+		if(StageObject.Count > CurrentStage){
+			StageObject[CurrentStage].SetActive(true);
+			instance.currentBlockText.text = 0.ToString();
+			instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
+			AnalyticsManager.LogScreen("Stage " + CurrentStage);
+
+		}
+		else
+		{
+			--CurrentStage;
+			AnalyticsManager.LogScreen("All Clear!");
+			var obj = Instantiate(instance.resultPrefab) as GameObject;
+			obj.transform.SetParent(GameObject.Find("Canvas").transform, true);
+			obj.transform.localPosition = new Vector3(0,0,0);
+		}
+	}
+
+	public static void ResetMapState(){
+		PuzzleManager.StageData[PuzzleManager.CurrentStage].CurrentCoinQty = 0;
+		StageData[CurrentStage].PlaceBlockQty = 0;
+
+		instance.currentBlockText.text = 0.ToString();
+		instance.totalBlockText.text = (StageData[CurrentStage].RequirementBlockQty).ToString();
+	}
+
+	public static void AddTotalBlockText(int add){
+		StageData[CurrentStage].PlaceBlockQty += add;
+		instance.currentBlockText.text = StageData[CurrentStage].PlaceBlockQty.ToString();
+
+		string str;
+		if(StageData[CurrentStage].PlaceBlockQty > StageData[CurrentStage].RequirementBlockQty){
+			str = "<color=red>" + StageData[CurrentStage].PlaceBlockQty.ToString() + "</color>";
+		}else{
+			str = StageData[CurrentStage].PlaceBlockQty.ToString();
+		}
+
+		if(StageData[CurrentStage].PlaceBlockQty >= 100){
+			str = "<size=50>" + str + "</size>";
+		}
+		instance.currentBlockText.text = str;
+	}
+
+	/// <summary>
+	/// ゴールにブロックが接続されているかをチェックする
+	/// </summary>
+	/// <returns>接続されているか</returns>
+	public static bool IsConnectToGoalBlock(Vector3 pos, TurnBlockBase.StartPosition direction){
+		if (PlayerController.IsTurnFromPrevBlock)
+		{
+			return false;
+		}
+		float blockWidth = 1f;
+
+		// pos.y -= kMapDepth + SphereController.transform.position.y;
+
+
+		Vector3 newPos = new Vector3(
+			(int)(pos.x + 0.5f),
+			-PuzzleManager.CurrentStage * PuzzleManager.kMapDepth,
+			((int)(pos.z + 0.5f )) + 0.25f
+		);
+
+		// 無限ループ防止
+		for (int i = 0; i < 100; ++i){
+			var objs = Physics.OverlapSphere(newPos, 0.1f, HeldBlockSlotUI.TargetLayer);
+
+			if(objs.Length == 0){
+				break;
+			}
+
+			if(objs[0].GetComponent<GoalBlock>() != null){
+				return true;
+			}
+
+			TurnBlockBase block = objs[0].GetComponent<TurnBlockBase>();
+			if(block != null){
+				switch (direction)
+				{
+					case TurnBlockBase.StartPosition.North:
+						direction = angleToStartPosition(direction, (int)block.TargetFromSouth);	break;
+					case TurnBlockBase.StartPosition.South:
+						direction = angleToStartPosition(direction, (int)block.TargetFromNorth);	break;
+					case TurnBlockBase.StartPosition.East:
+						direction = angleToStartPosition(direction, (int)block.TargetFromWest);	break;
+					case TurnBlockBase.StartPosition.West:
+						direction = angleToStartPosition(direction, (int)block.TargetFromEast);	
+						break;
+				}
+
+				Vector3 dire;
+				switch (direction)
+				{
+					case TurnBlockBase.StartPosition.North:
+						dire = new Vector3(0,0,blockWidth);		break;
+					case TurnBlockBase.StartPosition.South:
+						dire = new Vector3(0,0,-blockWidth);	break;
+					case TurnBlockBase.StartPosition.East:
+						dire = new Vector3(blockWidth,0,0);	break;
+					case TurnBlockBase.StartPosition.West:
+						dire = new Vector3(-blockWidth,0,0);		break;
+					default: 
+						dire = new Vector3(0,0,0);				break;
+				}
+				newPos += dire;
+			}else{
+				break;
+			}
+		}
+		return false;
+	}
+
+	static TurnBlockBase.StartPosition angleToStartPosition(TurnBlockBase.StartPosition direction, int rotateAngle){
+		int rotateCount = 0;
+		switch (rotateAngle)
+		{
+			case 0:		rotateCount = 0;	break;
+			case -90:	rotateCount = 3;	break;
+			case 180:	rotateCount = 2;	break;
+			case 90:	rotateCount = 1;	break;
+		}
+
+		return (TurnBlockBase.StartPosition)(((int)direction + rotateCount) % 4);
+	}
 }

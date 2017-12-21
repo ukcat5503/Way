@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1315719431523700}
+  m_IsPrefabParent: 1
+--- !u!1 &1315719431523700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4937806356811534}
+  - component: {fileID: 114311155871625162}
+  m_Layer: 0
+  m_Name: PuzzleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4937806356811534
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1315719431523700}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114311155871625162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1315719431523700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d677c40d7ef284d0b89af3db9d3fdeae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generateBlocks:
+  - {fileID: 1921976209133338, guid: 018eb062982054547bbc69f3559e4d8e, type: 2}
+  - {fileID: 1806149517846172, guid: 43805246b4bb746588fa303c6acfab99, type: 2}
+  - {fileID: 1218425002853256, guid: 42a804c54e0f3b849b84db4a82583b36, type: 2}
+  - {fileID: 1694468382313230, guid: 046cce75a6f044110882ffa1772c88ec, type: 2}
+  - {fileID: 1736556676383748, guid: 6c565265caa4f49d8a007044f53deb9b, type: 2}
+  - {fileID: 1812988001123674, guid: 04103a2a6cb124873a675fb12e51f8f8, type: 2}
+  - {fileID: 1768986615830718, guid: 07dbb00abdb184338b0774f02b540aa1, type: 2}
+  - {fileID: 1989271173880230, guid: eea46b7cb65b74c25868d3c4dbb1371f, type: 2}
+  - {fileID: 1708502132858390, guid: caccb62d85cd84ba5911b3676b99249d, type: 2}
+  - {fileID: 1797780996783152, guid: fb2739c46235c42f7b31dbaae0f67b61, type: 2}
+  - {fileID: 1629910700294800, guid: 405a4a94a844742efb44a7040b87eb55, type: 2}
+  - {fileID: 1272276266831562, guid: 664440bd945fbd84a97119cc402515b9, type: 2}
+  - {fileID: 1921730550247808, guid: c1584d996dba9fb4185d90255939b0ba, type: 2}
+  - {fileID: 1936333791295710, guid: 04634903b4977479ca9c36cace1e5f8f, type: 2}
+  - {fileID: 1617267544886762, guid: a6b14b0312b2b4203bcac0b2a32e5331, type: 2}
+  - {fileID: 1675506441829970, guid: 097167ea4efea4163a487c34d6286bc9, type: 2}
+  - {fileID: 1827910255472622, guid: ff0bb3ceb851d4c6993b1ab22647b648, type: 2}
+  - {fileID: 1827471382287014, guid: 53d7290bc4758430a822b52f46211c75, type: 2}
+  - {fileID: 1558824593886898, guid: e6b023de39e3d4d4e9d628aae5404abe, type: 2}
+  - {fileID: 1560886761911364, guid: cb52a0c029ea349ec8476c7aa871413e, type: 2}
+  - {fileID: 1136729095702824, guid: 1a45d55f65841455e9ea4b8dda19d739, type: 2}
+  - {fileID: 1716180903677676, guid: dbd6468e2a8364babbf1aa811fdd8f4c, type: 2}
+  - {fileID: 1270915283572390, guid: b621b4004be06454eaf56f98c16f8c32, type: 2}
+  - {fileID: 1277271557334330, guid: 3a3065b28e3074b0b95ac1d51dd07c05, type: 2}
+  - {fileID: 1727426670870176, guid: 81ebb8b1e6eb0478f9ab6050227469ff, type: 2}
+  - {fileID: 1465251259976858, guid: 219e5a82b461341efb96fe4f5e6e9744, type: 2}
+  - {fileID: 1774125024148412, guid: 54c168d5112c74305ba3e466b34664cc, type: 2}
+  - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
+  - {fileID: 1180815198424126, guid: e22fa0b3b75b44376a42f83fd64c4844, type: 2}
+  - {fileID: 1332277413175422, guid: 553de5e5fc7a34cabb2a8599545869ec, type: 2}
+  - {fileID: 1366812344686522, guid: aa6c49e943f3b440fad06b65135bc729, type: 2}
+  - {fileID: 1827215082490036, guid: a5567ae55e98f4c7a9d206332ea75fbe, type: 2}
+  - {fileID: 1929498767186218, guid: 8620426cb64e44d3a8aa96c6493be786, type: 2}
+  - {fileID: 1031987243843368, guid: 93ea36dd39a254b29aa9df51ed108e01, type: 2}
+  generateObjects:
+  - {fileID: 1367978722639676, guid: c25d9147a72e84b68835827c4f7ff073, type: 2}
+  - {fileID: 1658432892955260, guid: c4af16c049ccf4e9fa93b812c69a5926, type: 2}
+  - {fileID: 1572328899166890, guid: 4aa52483264bc483bb07c7b52455aeb4, type: 2}
+  - {fileID: 1265272998315250, guid: 00286bb240cf74275bd371c5d1a33e96, type: 2}
+  - {fileID: 1290495573100648, guid: ff28a6a904b2c464f863ec59d9f842c6, type: 2}
+  - {fileID: 1917434175666036, guid: 1021e3f7d3d5f4744bd56ae9699f51b9, type: 2}
+  - {fileID: 1801178978039626, guid: 3e69af427c8c4468085a3abd6c2b9178, type: 2}
+  - {fileID: 1370034606874094, guid: 5cfabc6ad975b4b12bd418b95d4ece22, type: 2}
+  - {fileID: 1791808182697610, guid: 5b7f5497bf9404bc5a1a81b96de43e36, type: 2}
+  - {fileID: 1083819276278894, guid: efb67075789794163905e8908f2ad907, type: 2}
+  - {fileID: 1871522217959146, guid: 2ddaf2abd7c4343fb84218ef69796f45, type: 2}
+  - {fileID: 1186718006562212, guid: da4eb4b21fa8746989426cf25f95789f, type: 2}
+  - {fileID: 1401624621902160, guid: 013051202b0044f10a08d4f5c40ebac7, type: 2}
+  - {fileID: 1681554649894440, guid: b4de7ae131b064317bbb4d94f65b2a58, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 1586090094593756, guid: 6bf25dcf931eb4162aab4468f1a3b30e, type: 2}
+  - {fileID: 1809669814635316, guid: 84b94908f641246ceb2cfd8e3e959a60, type: 2}
+  - {fileID: 1204667303293868, guid: 20fec00fd88ae405f92dc801eb863c95, type: 2}
+  sphereController: {fileID: 1064343277236584, guid: 20463fe93c26e42f29b0e92c30669c29,
+    type: 2}
+  coinPrefabs: {fileID: 1555496120189526, guid: d6a8ba4d629f847c5b37839b25ea1c1d,
+    type: 2}
+  resultPrefab: {fileID: 1224369749733538, guid: cc17be5e7a9834567b287c2b6b7c2b61,
+    type: 2}
+  placeColor: {r: 0.8602941, g: 0.8602941, b: 0.8602941, a: 1}
+  notTurnColor: {r: 0.42647058, g: 0.42647058, b: 0.42647058, a: 1}
+  turnColor: {r: 0, g: 1, b: 0, a: 1}
+  turnRightColor: {r: 0.9338235, g: 0.8793662, b: 0.14419337, a: 1}
+  moveColor: {r: 0, g: 0, b: 1, a: 1}
+  worldSpaceText: {fileID: 1347527771685602, guid: bdf14da8da3ac4f2fa6044281c2bcf7c,
+    type: 2}

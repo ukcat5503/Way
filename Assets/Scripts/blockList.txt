@@ -1,0 +1,84 @@
+﻿ ■ HeldSlot ■
+ 1  I
+ 2  -
+ 3  「
+ 4  L
+ 5  I
+ 6  -
+ 7  ¬
+ 8  」
+
+ ■ Blocks ■
+0	BlockNone
+1	BlockStart_fix
+2	BlockGoal_fix
+
+3	-_NotTurn0
+4	-_NotTurn90
+
+5	-_Turn0
+6	-_Turn90
+7	-_MoveNorth0
+8	-_MoveNorth90
+9	-_MoveSouth0
+10	-_MoveSouth90
+11	-_MoveEast0
+12	-_MoveEast90
+13	-_MoveWest0
+14	-_MoveWest90
+15	+_NotTurn0
+16	+_MoveNorth0
+17	+_MoveSouth0
+18	+_MoveEast0
+19	+_MoveWest0
+
+20	J_NotTurn0
+21	J_NotTurn90
+22	J_NotTurn180
+23	J_NotTurn270
+
+24	J_Turn0
+25	J_Turn90
+26	J_Turn180
+27	J_Turn270
+28	J_Turn270
+29	BarricadeBlock
+
+30	J_TurnRight0
+31	J_TurnRight90
+32	J_TurnRight180
+33	J_TurnRight270
+
+ □ Objects □
+0 StartPoint_0 (↑)
+1 StartPoint_90 (→)
+2 StartPoint_180 (↓)
+3 StartPoint_270 (←)
+4 NoteObject_1
+5 NoteObject_2
+6 NoteObject_3
+7 NoteObject_4
+8 NoteObject_5
+9 NoteObject_6
+10 NoteObject_7
+11 NoteObject_8
+
+
+
+// ========================================================
+		// stage 
+		map = new int[,]{
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		};
+		StageData.Add(new StageInfo(map));
+		StageData[StageData.Count - 1].AddBlockQtyInfo(1);
+		StageData[StageData.Count - 1].AddObject(4, 3, 0);

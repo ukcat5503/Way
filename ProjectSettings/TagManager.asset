@@ -3,9 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Opaque
-  - Stage
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -15,12 +13,12 @@ TagManager:
   - UI
   - 
   - 
-  - Enable Reycast from Player
-  - Break Blocks
-  - 
-  - 
-  - 
-  - 
+  - Sphere
+  - Block
+  - HeldBlock
+  - HeldBlockWall
+  - CoinParticle
+  - DefaultBlock
   - 
   - 
   - 
@@ -42,4 +40,34 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 1
+    uniqueID: 97087247
+    locked: 0
+  - name: 2
+    uniqueID: 3855333029
+    locked: 0
+  - name: 3
+    uniqueID: 2147079277
+    locked: 0
+  - name: 4
+    uniqueID: 4051166021
+    locked: 0
+  - name: 5
+    uniqueID: 1612238953
+    locked: 0
+  - name: 6
+    uniqueID: 955096977
+    locked: 0
+  - name: 7
+    uniqueID: 32350469
+    locked: 0
+  - name: 8
+    uniqueID: 1691019155
+    locked: 0
+  - name: 9
+    uniqueID: 71383089
+    locked: 0
+  - name: 10
+    uniqueID: 1126842421
     locked: 0

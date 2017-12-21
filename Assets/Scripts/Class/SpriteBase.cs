@@ -7,12 +7,12 @@ using UnityEngine;
 /// <summary>
 /// スプライトを表示するクラスです。
 /// </summary>
-public class SpriteManager : MonoBehaviour {
+public class SpriteBase : MonoBehaviour {
 
 	/// <summary>
 	/// SpriteRendererをキャッシュしておくため
 	/// </summary>
-	SpriteRenderer spriteRenderer;
+	protected SpriteRenderer spriteRenderer;
 
 	/// <summary>
 	/// アニメーションに使用するスプライトの配列
@@ -30,7 +30,7 @@ public class SpriteManager : MonoBehaviour {
 	/// オブジェクトが常にカメラの方向を向くか
 	/// </summary>
 	[SerializeField]
-	bool useBillBoard;	
+	bool useBillBoard = false;	
 
 	/// <summary>
 	/// アニメーション時、変更してから何フレーム目か。
@@ -43,7 +43,7 @@ public class SpriteManager : MonoBehaviour {
 	int currentSprite = 0;
 
 	// Use this for initialization
-	void Start () {
+	protected void Start () {
 		spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
 		if(animationSprite.Length == 1){
@@ -56,7 +56,7 @@ public class SpriteManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 		// ２枚以上なければアニメーションの必要なし
 		if(animationSprite.Length >= 2){
 			// アニメーションすべきフレームになったらスプライトを変更
@@ -64,14 +64,16 @@ public class SpriteManager : MonoBehaviour {
 				if(++currentSprite >= animationSprite.Length){
 					currentSprite = 0;
 				}
-				spriteRenderer.sprite = animationSprite[currentSprite];
+				if(animationSprite[currentSprite]){
+					spriteRenderer.sprite = animationSprite[currentSprite];
+				}
 				currentFrameCount = 0;
 			}
 		}
-
+		
 		if(useBillBoard){
 			Vector3 p = Camera.main.transform.position;
-			p.y = transform.position.y;
+			// p.y = transform.position.y;
 			transform.LookAt (p);
 		}
 	}

@@ -10,8 +10,6 @@ public class FPSCalc : MonoBehaviour
     private int frameCount;
     private float prevTime;
 
-    DebugText debugText;
-
     // FPSをDebugLogで出力するかどうか。 使うとログが荒れるけど正確な値が見られる。
     public bool UseFpsToDebugLog;
 

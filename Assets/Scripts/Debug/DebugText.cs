@@ -3,9 +3,6 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// デバッグ用 FSPを表示するだけ
-/// </summary>
 public class DebugText : MonoBehaviour
 {
     Text keyText;
@@ -17,8 +14,8 @@ public class DebugText : MonoBehaviour
     static Dictionary<string, string> outputMessage = new Dictionary<string, string>();
 
     void Start(){
-        keyText =  gameObject.transform.FindChild("Key").GetComponent<Text>();
-        valueText =  gameObject.transform.FindChild("Value").GetComponent<Text>();
+        keyText =  gameObject.transform.Find("Key").GetComponent<Text>();
+        valueText =  gameObject.transform.Find("Value").GetComponent<Text>();
         valueRectTransform = valueText.gameObject.GetComponent<RectTransform>();
     }
 
