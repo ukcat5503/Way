@@ -181,6 +181,7 @@ public class PuzzleManager : MonoBehaviour {
 	void Update(){
 		currentStageText.text = (CurrentStage + 1).ToString();
 
+		/*
 		if(Input.GetKeyDown(KeyCode.M)){
 			IsConnectToGoalBlock(PlayerController.Pos, PlayerController.Direction).Log();
 		}
@@ -202,6 +203,7 @@ public class PuzzleManager : MonoBehaviour {
 		if(Input.GetKey(KeyCode.S)){
 			--MicroCoin;
 		}
+		*/
 		if (Input.GetKeyUp(KeyCode.Escape))
 		{
 			Application.Quit();
@@ -274,9 +276,9 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
-		StageData[StageData.Count - 1].AddCoin(9,1);
-		
-		
+		StageData[StageData.Count - 1].AddCoin(6,1);
+
+
 		// ========================================================
 		// stage 3
 		map = new int[,]{
@@ -299,7 +301,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
-		StageData[StageData.Count - 1].AddCoin(7,3);
+		StageData[StageData.Count - 1].AddCoin(5,1);
 
 		// ========================================================
 		// stage 4
@@ -323,7 +325,7 @@ public class PuzzleManager : MonoBehaviour {
 
 		StageData[StageData.Count - 1].AddObject(2, 1, 1);
 
-		StageData[StageData.Count - 1].AddCoin(8, 6);
+		StageData[StageData.Count - 1].AddCoin(6, 6);
 
 		// ========================================================
 		// stage 5
@@ -347,8 +349,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
-		StageData[StageData.Count - 1].AddCoin(10,1);
-		StageData[StageData.Count - 1].AddCoin(11,1);
+		StageData[StageData.Count - 1].AddCoin(8,1);
 		
 		// ========================================================
 		// stage 6
@@ -372,7 +373,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
-		StageData[StageData.Count - 1].AddCoin(7,5);
+		StageData[StageData.Count - 1].AddCoin(7,3);
 
 		// ========================================================
 		// stage 7
@@ -396,7 +397,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
-		StageData[StageData.Count - 1].AddCoin(2,5);
+		StageData[StageData.Count - 1].AddCoin(2,2);
 		
 		
 		// ========================================================
@@ -421,7 +422,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(7.0f, 8.5f, 17);
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
-		StageData[StageData.Count - 1].AddCoin(7,1);
+		StageData[StageData.Count - 1].AddCoin(4,1);
 
 		// ========================================================
 		// stage 9
@@ -470,8 +471,7 @@ public class PuzzleManager : MonoBehaviour {
 		StageData[StageData.Count - 1].AddObject(12.5f, 8.5f, 18);
 
 		StageData[StageData.Count - 1].AddCoin(6,1);
-		StageData[StageData.Count - 1].AddCoin(7,6);
-		StageData[StageData.Count - 1].AddCoin(9,6);
+		StageData[StageData.Count - 1].AddCoin(11,6);
 
 		// ========================================================
 		// stage 12
@@ -523,10 +523,10 @@ public class PuzzleManager : MonoBehaviour {
 			{ 0, 0, 0, 0,22, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
 			{ 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0},
-			{ 0, 0, 0, 0, 0, 3, 7, 7, 7,23, 0, 4, 0, 0, 0},
+			{ 0, 0, 0, 0,21, 3, 7, 7, 7,23, 0, 4, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0, 0},
-			{ 0, 0, 0, 0, 2, 3, 0, 0, 0, 3, 3,20, 0, 0, 0},
+			{ 0, 0, 0, 0, 2, 3, 0, 0, 0, 3, 3, 0, 0, 0, 0},
 			{ 0, 0, 0, 0, 0, 0,29,29,29, 0, 0, 0, 0, 0, 0},
 		};
 		StageData.Add(new StageInfo(map));
@@ -927,6 +927,10 @@ public class PuzzleManager : MonoBehaviour {
 	/// </summary>
 	/// <returns>接続されているか</returns>
 	public static bool IsConnectToGoalBlock(Vector3 pos, TurnBlockBase.StartPosition direction){
+		if (PlayerController.IsTurnFromPrevBlock)
+		{
+			return false;
+		}
 		float blockWidth = 1f;
 
 		// pos.y -= kMapDepth + SphereController.transform.position.y;

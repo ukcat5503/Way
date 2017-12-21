@@ -38,11 +38,11 @@ public class BackGroundUIManager : MonoBehaviour {
 	int minDeleteFrame = 90;
 	int maxDeleteFrame = 180;
 
-	float minSpeed = 120f / 60f;
-	float maxSpeed = 360f / 60f;
+	float minSpeed = 60f / 60f;
+	float maxSpeed = 120f / 60f;
 
 	float minSize = 0.25f;
-	float maxSize = 2f;
+	float maxSize = 1.5f;
 
 	float targetAlphaColor = 0.1f;
 

@@ -37,8 +37,8 @@ public class BackGroundManager : MonoBehaviour {
 	float minSpeed = 0.2f / 60f;
 	float maxSpeed = 1.2f / 60f;
 
-	float minSize = 2f;
-	float maxSize = 5f;
+	float minSize = 1f;
+	float maxSize = 3f;
 
 	float targetAlphaColor = 0.1f;
 

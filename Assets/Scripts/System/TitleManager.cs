@@ -35,7 +35,12 @@ public class TitleManager : MonoBehaviour {
 	void Update () {
 		timeElapsed += Time.deltaTime;
 
-		if(state == TitleState.Waiting && ( Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))){
+		if (Input.GetKeyUp(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
+
+		if (state == TitleState.Waiting && ( Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))){
 			// ゲームへ
 			nextSceneName = gameSceneName;
 			state = TitleState.FadeOut;
